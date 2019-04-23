@@ -1,0 +1,156 @@
+@import "~nav-frontend-lenker-style";
+@import "~nav-frontend-typografi-style";
+@import "~nav-frontend-knapper-style";
+@import "~nav-frontend-grid-style";
+@import "~nav-frontend-chevron-style";
+@import "~nav-frontend-skjema-style";
+@import "~nav-frontend-paneler-style";
+@import "~nav-frontend-spinner-style";
+@import "~nav-frontend-ekspanderbartpanel-style";
+@import "~nav-frontend-alertstriper-style";
+@import "~nav-frontend-hjelpetekst-style";
+@import "~nav-frontend-veilederpanel-style";
+@import "~nav-frontend-veileder-style";
+@import "~nav-frontend-lesmerpanel-style";
+
+@import "./sider/1-forside/Forside.less";
+@import "./sider/1-forside/seksjoner/kategorier/Kategorier.less";
+@import "./sider/2-soknadsvelger/Soknadsvelger.less";
+@import "./sider/3-soknadstilpasser/felles/personalia/Personalia.less";
+@import "./sider/3-soknadstilpasser/felles/DineVedlegg.less";
+@import "./sider/3-soknadstilpasser/soknad/velgvedlegg/VelgVedlegg.less";
+@import "./sider/3-soknadstilpasser/ettersendelse/DigitalEllerPapirEttersendelse.less";
+@import "./sider/4-avslutning/Avslutning.less";
+@import "./sider/4-avslutning/steg/LastNedPDF.less";
+@import "./sider/4-avslutning/steg/VedleggSjekkbokser.less";
+@import "./sider/4-avslutning/steg/Sprak.less";
+@import "./sider/404/404.less";
+@import "./sider/interne/skjemautlisting/Oversikt.less";
+
+@import "./komponenter/header/sprak/SprakVelger.less";
+@import "./komponenter/header/typer/Typer.less";
+@import "./komponenter/errors/HttpError.less";
+@import "./komponenter/spinner/Spinner.less";
+@import "./komponenter/bannere/Underbanner.less";
+@import "./komponenter/bannere/Hovedbanner.less";
+@import "./komponenter/bannere/Steg.less";
+
+@import (less) "../node_modules/react-table/react-table.css";
+
+// Responsive innstillinger
+@desktop: ~"all and (min-width: @{screen-md-min})";
+@tablet: ~"all and (max-width: @{screen-md-max})";
+@mobile: ~"all and (max-width: @{screen-sm-max})";
+
+// Felles variabler
+@pageWidth: 800px;
+
+// Global styling
+body {
+  background-color: @navLysGra;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.app {
+  display: flex;
+  min-height: 20rem;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.side {
+  &__wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 0.2rem;
+
+    .seksjon {
+      margin: 0 0 0.2rem 0;
+    }
+  }
+}
+
+.spinner--xl {
+  display: block;
+  margin: 0 auto;
+}
+
+.litenavstand {
+  padding: 0.5rem;
+}
+
+.storavstand {
+  padding: 2rem;
+}
+
+.toppogbunnavstand {
+  padding-bottom: 2rem;
+  padding-top: 2rem;
+}
+
+.sentrert {
+  text-align: center;
+}
+
+.knapp {
+  text-align: center;
+  &__neste {
+    text-align: right;
+    margin: 1rem;
+  }
+}
+
+.litenmargin {
+  margin: 1rem;
+}
+
+.stegindikator {
+  margin-top: 1rem;
+}
+
+.stormargin {
+  margin: 2rem;
+}
+
+@media @mobile {
+  .veiviser-wrapper {
+    padding: 1rem 0.5rem 1rem 0.5rem;
+
+    .seksjon {
+      margin-bottom: 1rem;
+
+      &:last-child:after {
+        margin-bottom: 0rem;
+      }
+      .item {
+        margin-bottom: 1.5rem;
+
+        &:first-child {
+          margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .sprakvelger {
+    max-width: 60%;
+  }
+
+  .storavstand {
+    padding: 1rem;
+  }
+  .ikonWrapper {
+    display: none;
+  }
+
+  .stormargin {
+    margin: 1rem;
+  }
+
+  .litenmargin {
+    margin: 0.5rem;
+  }
+}

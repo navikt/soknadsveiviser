@@ -1,0 +1,37 @@
+.ettersendelse {
+  &__container {
+    background-color: white;
+    border-radius: 2px;
+    margin-bottom: 0.2rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: row;
+
+    @media @mobile {
+      flex-direction: column;
+    }
+  }
+  &__innhold {
+    flex: 1;
+  }
+  &__note {
+    margin: 0.5rem 0;
+  }
+  &__knapper {
+    display: flex;
+    padding: 0.5rem 0;
+    .knapp {
+      align-self: flex-end;
+    }
+
+    @media @desktop {
+      margin-left: 25px;
+    }
+  }
+  &__beskrivelse {
+    margin: 1rem 0 0 0;
+  }
+  &__filler {
+    flex-grow: 1;
+  }
+}

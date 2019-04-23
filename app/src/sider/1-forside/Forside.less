@@ -1,0 +1,37 @@
+.forside {
+  &__wrapper {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    padding: 0 0.5rem 7.5rem 0.5rem;
+
+    .seksjon {
+      margin-bottom: 1rem;
+
+      .item {
+        margin-bottom: 2rem;
+
+        &:first-child {
+          margin-top: 1.5rem;
+        }
+      }
+    }
+  }
+}
+
+.filler {
+  width: 200px;
+}
+
+.margin-mellom-lenkebokser {
+  margin: 0.25rem;
+}
+
+@media all and (max-width: (769px)) {
+  .kategorier {
+    flex-direction: column;
+  }
+  .kategori-boks {
+    flex: auto;
+  }
+}

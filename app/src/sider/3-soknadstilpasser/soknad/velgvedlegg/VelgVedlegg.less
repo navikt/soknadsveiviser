@@ -1,0 +1,83 @@
+.vedlegg {
+
+  &__sjekkbokser {
+    width: 100%;
+
+    //Overskriver tags fra radiopanelgruppe
+    .inputPanelGruppe__inner {
+      display: flex;
+    }
+    .inputPanel {
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+      width: 100%;
+    }
+  }
+
+  &__sjekkbokser-vedleggsnavn{
+    margin-top: 1rem;
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: 475px) {
+      flex-direction: column;
+    }
+  }
+
+  &__nummerering {
+    display: flex;
+    flex-direction: column;
+    margin-right: 1rem;
+
+    @media (max-width: 475px) {
+      margin-right: 0;
+    }
+  }
+
+  &__vertikal-linje {
+    width: 0;
+    height: 100%;
+    color: @navLysGra;
+
+    @media (max-width: 475px) {
+      display: none;
+    }
+  }
+
+  &__tall {
+    color: @navMorkGra;
+    position: relative;
+    top: calc(50% - 1.625rem/2);
+  }
+
+  &__lesmer {
+    .lesMerPanel__toggle {
+      justify-content: flex-start;
+    }
+  }
+
+  &__sporsmal {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.circle {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  text-align: center;
+
+  &__nummer {
+    @media (max-width: 475px) {
+      margin: 0.5rem auto;
+    }
+  }
+}
+
+.maks-bredde {
+  width: 100%;
+}

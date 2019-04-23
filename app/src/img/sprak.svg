@@ -1,0 +1,11 @@
+
+<svg contentScriptType="text/ecmascript" width="24"
+     xmlns:xlink="http://www.w3.org/1999/xlink" zoomAndPan="magnify"
+     contentStyleType="text/css" viewBox="0 0 24 24" height="24"
+     preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg"
+     version="1.0">
+    <g fill="none" stroke-miterlimit="10" stroke="#3e3832"
+       stroke-linejoin="round" stroke-linecap="round">
+        <path d="M.927 10.199l2.787 4.151 3.205-3.838M23.5 14.5l-2.786-4.15-3.206 3.837M20.677 10.387c.834 4.408-2.273 8.729-6.509 9.729-2.954.699-5.916-.239-7.931-2.225M3.719 14.324c-1.314-4.883 1.969-9.674 6.538-10.753 3.156-.747 6.316.372 8.324 2.641"/>
+    </g>
+</svg>

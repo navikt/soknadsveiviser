@@ -1,0 +1,38 @@
+image: docker.adeo.no:5000/sbl/soknadsveiviser
+team: personbruker
+replicas:
+  min: 2
+  max: 4
+  cpuThresholdPercentage: 50
+port: 8080
+healthcheck:
+  liveness:
+    path: soknadsveiviser/internal/alive
+  readiness:
+    path: soknadsveiviser/internal/ready
+fasitResources:
+  used:
+  - alias: "soknadsveiviser.properties"
+    resourceType: applicationproperties
+  - alias: appres.cms
+    resourceType: baseUrl
+  - alias: tjenester
+    resourceType: baseUrl
+  - alias: soknadsveiviserproxy
+    resourceType: baseUrl
+  - alias: soknadsveiviser-enheterRS-apiKey
+    resourceType: credential
+  - alias: soknadsveiviser-foerstesidegenerator-service-apiKey
+    resourceType: credential
+  - alias: srvsoknadsveiviser
+    resourceType: credential
+  - alias: soknadsveiviser-security-token-service-token-apiKey
+    resourceType: credential
+  - alias: loadbalancer:soknadsveiviser-opppdatenhetsinfo
+    resourceType: loadbalancerconfig
+  - alias: enheterRS
+    resourceType: restservice
+  - alias: foerstesidegenerator-service
+    resourceType: restservice
+  - alias: security-token-service-token
+    resourceType: restservice

@@ -1,0 +1,77 @@
+.papirsoknader {
+  padding: 1.5rem;
+  background-color: #fafafa;
+  box-shadow: 0px 2px 1px 1px #b6b6b6;
+  margin: 0 1px 4px 1px;
+
+  .beskrivelse {
+    padding: 1.5rem 0 1.5rem 0;
+  }
+}
+
+.soknadsobjekt {
+  display: flex;
+  margin-bottom: 4px;
+  background-color: white;
+  padding: 1.5rem;
+
+  @media @mobile {
+    flex-direction: column;
+  }
+
+  .knapper-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    @media @desktop {
+      margin-left: 25px;
+    }
+  }
+
+  &__relevant-info {
+    padding-top: 12px;
+    border-top: 2px solid @navLysGra;
+  }
+
+  &__lenke {
+    text-align: center;
+  }
+
+  &__lenke,
+  &__knapp {
+    margin-top: 13px;
+  }
+
+  &__innhold {
+    flex: 1;
+  }
+
+  &__beskrivelse {
+    padding: 5px 0 5px 0;
+  }
+
+  &__knapper {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__lenkeliste {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__lenkeliste-element {
+    padding-bottom: 1rem;
+    padding-right: 2rem;
+
+    @media (min-width: 475px) {
+      flex: 1 1 50%;
+    }
+  }
+}
+
+.soknadpanel {
+  margin-bottom: 5px;
+}
