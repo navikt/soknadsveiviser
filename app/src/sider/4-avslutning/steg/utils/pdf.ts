@@ -43,6 +43,5 @@ export const mergePDF = (
 
 export const lastNedPDF = (pdf: string, title: string) => {
   console.log("Laster ned sammenslått pdf");
-  const fileName = title;
-  FileSaver.saveAs(b64toBlob(pdf), `${fileName}.pdf`);
+  FileSaver.saveAs(b64toBlob(pdf), `${title}.pdf`);
 };
