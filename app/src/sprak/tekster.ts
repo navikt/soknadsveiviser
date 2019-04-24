@@ -192,6 +192,7 @@ export default {
     "klage.knapp": `Appeal`,
     "klage.tittel.underbanner": `Appeal`,
     "ettersendelser.knapp": `Forward`,
+    "ettersendelser.tittel.underbanner": `Choose attachments to forward`,
     "ettersendelser.mellomledd.tittel": `Forward documentation`,
     "ettersendelser.mellomledd.undertittel": `Application`,
     "ettersendelser.mellomledd.digital.tittel": `Forward to electronic application`,
