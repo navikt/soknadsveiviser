@@ -28,7 +28,7 @@ export const hentPDFobjekt = (
     ? globalLocale
     : `nb`;
 
-  return pdf[`${PDFsprak}`];
+  return pdf[PDFsprak];
 };
 
 export const mergePDF = (
