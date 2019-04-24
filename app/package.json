@@ -108,6 +108,7 @@
     "@types/react-router-hash-link": "^1.2.0",
     "@types/react-select": "^2.0.13",
     "@types/react-table": "^6.7.12",
+    "@types/request-promise": "^4.1.43",
     "fetch-mock": "^7.3.1",
     "less": "^3.5.3",
     "less-watch-compiler": "1.13.0",
