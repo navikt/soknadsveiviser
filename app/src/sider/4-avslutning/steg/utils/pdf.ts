@@ -65,5 +65,7 @@ export const lastNedPDF = (pdf: string, title: string) => {
 
 export const lastNedFil = (url: string, tittel: string, filtype: string) => {
   console.log("Laster ned " + tittel);
-  FileSaver.saveAs(url, `${tittel}.${filtype}`);
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => FileSaver.saveAs(blob, `${tittel}.${filtype}`));
 };
