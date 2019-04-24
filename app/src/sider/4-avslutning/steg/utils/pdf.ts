@@ -1,6 +1,8 @@
 import { getSanityDataset, getProxyUrl } from "../../../../config";
 import { sjekkForFeil } from "../../../../klienter/felles";
 import { parseJson } from "../../../../klienter/parser";
+import { b64toBlob } from "./blob";
+import FileSaver from "file-saver";
 
 export const hentPDFurl = (
   pdf: any,
@@ -39,14 +41,7 @@ export const mergePDF = (
       .catch(reject);
   });
 
-export const lastNedPDF = (pdf: string) => {
+export const lastNedPDF = (pdf: string, title: string) => {
   console.log("Laster ned sammenslått pdf");
-  const linkSource = `data:application/pdf;base64,${pdf}`;
-  const downloadLink = document.createElement("a");
-  const fileName = "forside.pdf";
-
-  downloadLink.href = linkSource;
-  downloadLink.download = fileName;
-  document.body.appendChild(downloadLink); // for firefox
-  downloadLink.click();
+  FileSaver.saveAs(b64toBlob(pdf), `${title}.pdf`);
 };

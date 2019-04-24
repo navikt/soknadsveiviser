@@ -11,6 +11,7 @@ import {
   PersonaliaKontekst
 } from "../../../states/providers/Personalia";
 import { FormattedMessage } from "react-intl";
+import { localeTekst } from "../../../utils/sprak";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { hentForsteside } from "./utils/forsteside/forsteside";
 import { mergePDF, lastNedPDF, hentPDFurl } from "./utils/pdf";
@@ -58,6 +59,7 @@ const LastNedPDF = (props: MergedProps) => {
     const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
+    const pdfNavn = localeTekst(hovedskjema.navn, valgtLocale);
 
     const vedleggTilNedlasting = relevanteVedlegg
       .filter(v => !v.skalEttersendes)
@@ -99,7 +101,7 @@ const LastNedPDF = (props: MergedProps) => {
       })
       .then(samletPdf => {
         setState({ status: "DOWNLOAD" });
-        return lastNedPDF(samletPdf);
+        return lastNedPDF(samletPdf, pdfNavn);
       })
       .then(() => {
         setState({ status: "READY" });
