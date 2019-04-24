@@ -10,7 +10,7 @@ interface Props {
 }
 
 const Header = ({ visTyper, inngang }: Props) => (
-  <section className="seksjon oversikt">
+  <section className="header__wrapper seksjon oversikt">
     <section className="filler" />
     <section className="innhold__container">
       <SprakVelger />
