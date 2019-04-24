@@ -3,32 +3,38 @@ import { sjekkForFeil } from "../../../../klienter/felles";
 import { parseJson } from "../../../../klienter/parser";
 import { b64toBlob } from "./blob";
 import FileSaver from "file-saver";
+import { LocalePDFObjekt } from "../../../../typer/pdf";
 
 export const hentPDFurl = (
-  pdf: any,
+  pdfObjekt: LocalePDFObjekt,
   valgtLocale: string,
   globalLocale: string
-) => hentPDFasset(pdf, valgtLocale, globalLocale).url;
+) => hentPDFasset(pdfObjekt, valgtLocale, globalLocale).url;
 
 export const hentPDFasset = (
-  pdf: any,
+  pdfObjekt: LocalePDFObjekt,
   valgtLocale: string,
   globalLocale: string
-) => hentPDFobjekt(pdf, valgtLocale, globalLocale).asset;
+) => hentPDFobjekt(pdfObjekt, valgtLocale, globalLocale).asset;
 
 export const hentPDFobjekt = (
-  pdf: any,
+  pdfObjekt: LocalePDFObjekt,
   valgtLocale: string,
   globalLocale: string
 ) => {
   // Generer url til hovedskjema og vedlegg
-  const PDFsprak = pdf[valgtLocale]
+  const PDFsprak = pdfObjekt[valgtLocale]
     ? valgtLocale
-    : pdf[globalLocale]
+    : pdfObjekt[globalLocale]
     ? globalLocale
     : `nb`;
+  const pdf = pdfObjekt[PDFsprak];
 
-  return pdf[PDFsprak];
+  if (pdf) {
+    return pdf;
+  } else {
+    throw new Error("Dokumentet har ikke et gyldig språk");
+  }
 };
 
 export const mergePDF = (
