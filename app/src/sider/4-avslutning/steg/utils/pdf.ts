@@ -1,4 +1,4 @@
-import { getSanityDataset, getProxyUrl } from "../../../../config";
+import { getProxyUrl } from "../../../../config";
 import { sjekkForFeil } from "../../../../klienter/felles";
 import { parseJson } from "../../../../klienter/parser";
 import { b64toBlob } from "./blob";
@@ -8,16 +8,27 @@ export const hentPDFurl = (
   pdf: any,
   valgtLocale: string,
   globalLocale: string
+) => hentPDFasset(pdf, valgtLocale, globalLocale).url;
+
+export const hentPDFasset = (
+  pdf: any,
+  valgtLocale: string,
+  globalLocale: string
+) => hentPDFobjekt(pdf, valgtLocale, globalLocale).asset;
+
+export const hentPDFobjekt = (
+  pdf: any,
+  valgtLocale: string,
+  globalLocale: string
 ) => {
   // Generer url til hovedskjema og vedlegg
-  let PDFsprak = pdf[valgtLocale] ? valgtLocale : globalLocale;
-  PDFsprak = pdf[`${PDFsprak}`] ? PDFsprak : `nb`;
+  const PDFsprak = pdf[valgtLocale]
+    ? valgtLocale
+    : pdf[globalLocale]
+    ? globalLocale
+    : `nb`;
 
-  const reg = new RegExp("file-(.*)-pdf");
-  const regResultat = reg.exec(pdf[`${PDFsprak}`].asset._ref);
-  const sanityUrl = `http://cdn.sanity.io/files/gx9wf39f/${getSanityDataset()}/`;
-  const fil = regResultat ? regResultat[1] : "";
-  return sanityUrl + fil + ".pdf?dl";
+  return pdf[`${PDFsprak}`];
 };
 
 export const mergePDF = (
