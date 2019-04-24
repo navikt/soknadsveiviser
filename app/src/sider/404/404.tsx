@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { Sidetittel, Ingress, Normaltekst } from "nav-frontend-typografi";
+import { Sidetittel, Normaltekst } from "nav-frontend-typografi";
 import { Link } from "react-router-dom";
 import { FormattedMessage } from "react-intl";
 import errorIcon from "../../img/error.png";
@@ -10,7 +10,7 @@ interface Props {
 }
 const NotFound = (props: Props) => (
   <div className="notFound__container" style={props.style}>
-    <img className="notFound__icon" src={errorIcon} />
+    <img className="notFound__icon" alt={props.message} src={errorIcon} />
     <div className="notFound__title">
       <Sidetittel>
         <FormattedMessage id="notFound.tittel" />

@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { SyntheticEvent } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { Dispatch } from "redux";
@@ -36,8 +36,10 @@ const Sjekkbokser = (props: MergedProps) => {
     return null;
   }
 
-  const handleOnChange = ({}, value?: string) =>
-    value && toggleValgtVedleggForEttersendelse(value, soknadsobjekt._id);
+  const handleOnChange = (
+    event: SyntheticEvent<EventTarget, Event>,
+    value?: string
+  ) => value && toggleValgtVedleggForEttersendelse(value, soknadsobjekt._id);
 
   const lagCheckboks = (vedleggsobjekt: Vedleggsobjekt) => {
     const { vedlegg, _key } = vedleggsobjekt;

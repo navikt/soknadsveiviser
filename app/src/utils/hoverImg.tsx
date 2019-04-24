@@ -1,9 +1,6 @@
-import * as React from "react";
+import React, { Component } from "react";
 
-class HoverImg extends React.Component<
-  { src: any; onHover: any },
-  { img: any }
-> {
+class HoverImg extends Component<{ src: any; onHover: any }, { img: any }> {
   constructor(props: { src: any; onHover: any }) {
     super(props);
     this.handleMouseOver = this.handleMouseOver.bind(this);
@@ -22,6 +19,7 @@ class HoverImg extends React.Component<
   render() {
     return (
       <img
+        alt={this.state.img}
         onMouseOver={this.handleMouseOver}
         onMouseOut={this.handleMouseOut}
         src={this.state.img}

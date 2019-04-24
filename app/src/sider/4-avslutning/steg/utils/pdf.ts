@@ -1,7 +1,6 @@
 import { getProxyUrl } from "../../../../config";
 import { sjekkForFeil } from "../../../../klienter/felles";
 import { parseJson } from "../../../../klienter/parser";
-import request from "request-promise";
 import { b64toBlob } from "./blob";
 import FileSaver from "file-saver";
 import { LocalePDFObjekt } from "../../../../typer/pdf";
@@ -66,8 +65,7 @@ export const lastNedPDF = (pdf: string, title: string) => {
 
 export const lastNedFil = (url: string, tittel: string, filtype: string) => {
   console.log("Laster ned " + tittel);
-  request
-    .get({ url: url, encoding: null })
-    .then(response => new Blob([response]))
+  fetch(url)
+    .then(response => response.blob())
     .then(blob => FileSaver.saveAs(blob, `${tittel}.${filtype}`));
 };

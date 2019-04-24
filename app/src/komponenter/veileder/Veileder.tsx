@@ -24,7 +24,7 @@ const Veileder = (props: Props) => {
     <Veilederpanel
       type={erMobil ? "plakat" : "normal"}
       kompakt={erMobil}
-      svg={<img src={veileder} />}
+      svg={<img alt="Veileder" src={veileder} />}
     >
       {props.children}
     </Veilederpanel>

@@ -23,12 +23,7 @@ export interface IntlProviderWrapperContextType
 }
 
 class IntlProviderWrapper extends Component<{}, IntlProviderWrapperState> {
-  constructor(props: {}) {
-    super(props);
-    this.settLocale = this.settLocale.bind(this);
-  }
-
-  settLocale(localeString: string) {
+  settLocale = (localeString: string) => {
     let tekster;
     if (localeString === "en") {
       addLocaleData(en);
@@ -38,7 +33,7 @@ class IntlProviderWrapper extends Component<{}, IntlProviderWrapperState> {
       tekster = alleTekster.nb;
     }
     this.setState({ locale: localeString, tekster: tekster });
-  }
+  };
 
   componentDidMount() {
     const pathname = window.location.pathname;

@@ -14,7 +14,7 @@ interface Props {
   underkategori: Underkategori;
 }
 const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
-  const { kategori, underkategori, soknadsobjekt, intl } = props;
+  const { kategori, underkategori, soknadsobjekt } = props;
 
   const { hovedskjema } = soknadsobjekt;
   const soknadsdialog = underkategori.inngangtilsoknadsdialog !== undefined;

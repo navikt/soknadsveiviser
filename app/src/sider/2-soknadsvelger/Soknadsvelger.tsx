@@ -58,6 +58,7 @@ class Soknadsobjekter extends Component<MergedProps> {
       <Wrapper>
         {(() => {
           switch (soknader.status) {
+            default:
             case "LOADING":
               return <Spinner style={{ backgroundColor: "white" }} />;
             case "RESULT":

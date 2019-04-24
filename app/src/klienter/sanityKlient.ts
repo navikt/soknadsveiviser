@@ -45,42 +45,43 @@ export const apiKallSoknadsobjektForKlage = () =>
   >;
 
 // Benytt api kall og oppdater store
-export const apiHentAlleKategorier = () => (dispatch: Dispatch) => (
-  dispatch(settKategorierRequest()),
+export const apiHentAlleKategorier = () => (dispatch: Dispatch) => {
+  dispatch(settKategorierRequest());
   apiKallAlleKategorier()
     .then((result: Kategori[]) => dispatch(settKategorierResult(result)))
-    .catch((error: HTTPError) => dispatch(settKategorierHttpError(error)))
-);
+    .catch((error: HTTPError) => dispatch(settKategorierHttpError(error)));
+};
 
 export const apiHentSoknader = (kategori: String, underkategori: string) => (
   dispatch: Dispatch
-) => (
-  dispatch(settSoknaderRequest()),
+) => {
+  dispatch(settSoknaderRequest());
   apiKallSoknader(kategori, underkategori)
     .then((result: Soknader) => dispatch(settSoknaderResult(result)))
-    .catch((error: HTTPError) => dispatch(settSoknaderHttpError(error)))
-);
+    .catch((error: HTTPError) => dispatch(settSoknaderHttpError(error)));
+};
 
 export const apiHentSoknadsobjekt = (
   kategori: String,
   underkategori: string,
   skjemanummer: string
-) => (dispatch: Dispatch) => (
-  dispatch(settSoknadsobjektRequest()),
+) => (dispatch: Dispatch) => {
+  dispatch(settSoknadsobjektRequest());
   apiKallSoknader(kategori, underkategori)
     .then((soknader: Soknader) => filtrerSoknadsojekt(soknader, skjemanummer))
     .then(soknadsobjekt => {
       dispatch(settValgtSoknadsobjekt(soknadsobjekt));
       dispatch(settVedlegg(soknadsobjekt));
     })
-    .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)))
-);
-export const apiHentSoknadsobjektForKlage = () => (dispatch: Dispatch) => (
-  dispatch(settSoknadsobjektRequest()),
+    .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)));
+};
+
+export const apiHentSoknadsobjektForKlage = () => (dispatch: Dispatch) => {
+  dispatch(settSoknadsobjektRequest());
   apiKallSoknadsobjektForKlage()
     .then((klageSoknadsobjekt: Soknadsobjekt) => {
       dispatch(settKlageSoknadsobjekt(klageSoknadsobjekt));
       dispatch(settVedlegg(klageSoknadsobjekt));
     })
-    .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)))
-);
+    .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)));
+};

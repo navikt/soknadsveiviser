@@ -47,9 +47,6 @@ const Wrapper = (props: MergedProps) => {
         <div className="innhold__container">
           {(() => {
             switch (props.kategorier.status) {
-              case "LOADING":
-                break;
-
               case "RESULT": {
                 const { valgtKategori, valgtUnderkategori } = props.kategorier;
                 return (
@@ -61,6 +58,8 @@ const Wrapper = (props: MergedProps) => {
                   />
                 );
               }
+              default:
+              case "LOADING":
               case "HTTP_ERROR":
                 break;
             }

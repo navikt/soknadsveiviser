@@ -1,12 +1,8 @@
-import * as React from "react";
+import React, { Component } from "react";
 import { IntlProvider as Provider } from "react-intl";
 import { IntlProviderWrapperState } from "./IntlProviderWrapper";
 
-class IntlProvider extends React.Component<IntlProviderWrapperState> {
-  constructor(props: IntlProviderWrapperState) {
-    super(props);
-  }
-
+class IntlProvider extends Component<IntlProviderWrapperState> {
   render() {
     const { children, ...props } = this.props;
 
