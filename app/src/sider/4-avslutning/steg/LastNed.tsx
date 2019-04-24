@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 import { localeTekst } from "../../../utils/sprak";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { hentForsteside } from "./utils/forsteside/forsteside";
-import { mergePDF, lastNedPDF, hentPDFurl } from "./utils/pdf";
+import { mergePDF, lastNedPDF, hentPDFurl, lastNedFil } from "./utils/pdf";
 import { Hovedknapp } from "nav-frontend-knapper";
 
 interface Routes {
@@ -65,26 +65,43 @@ const LastNedPDF = (props: MergedProps) => {
       .filter(v => !v.skalEttersendes)
       .filter(({ vedlegg }) => vedlegg.skjematilvedlegg);
 
+    const skjemaTilNedlasting = vedleggTilNedlasting
+      .map(({ vedlegg }) => vedlegg)
+      .map(({ skjematilvedlegg }) => skjematilvedlegg!);
+
     // Generer liste med pdf url-er
     // Ink. søknad og vedlegg
     const pdfListe = [] as string[];
+    const docListe = [] as { url: string; tittel: string; filtype: string }[];
+
     if (!ettersendelse) {
       pdfListe.push(hentPDFurl(hovedskjema.pdf, valgtLocale, globalLocale));
     }
 
-    vedleggTilNedlasting.map(vedlegg =>
-      pdfListe.push(
-        hentPDFurl(
-          vedlegg.vedlegg.skjematilvedlegg!.pdf,
-          valgtLocale,
-          globalLocale
-        )
-      )
-    );
+    //Legg pdf-er i egen liste
+    skjemaTilNedlasting
+      .map(({ pdf }) => hentPDFurl(pdf, valgtLocale, globalLocale))
+      .filter(url => url.split(".").pop() === "pdf")
+      .map(url => pdfListe.push(url));
+
+    //Andre vedlegg som ikke er pdf
+    skjemaTilNedlasting
+      .map(skjema => {
+        const url = hentPDFurl(skjema.pdf, valgtLocale, globalLocale);
+        const filType = url.split(".").pop() || "pdf";
+        return {
+          url: url,
+          tittel: localeTekst(skjema.navn, valgtLocale),
+          filtype: filType
+        };
+      })
+      .filter(fil => fil.filtype !== "pdf")
+      .map(fil => docListe.push(fil));
 
     // 1) Generer førsteside
-    // 2) Merge med søknad og vedlegg
-    // 3) Last ned
+    // 2) Merge med søknad og vedlegg som er pdf-er
+    // 3) Last ned sammenslått pdf
+    // 4) Last ned andre vedlegg
     setState({ status: "FETCH_COVER" });
     hentForsteside(
       relevanteVedlegg,
@@ -103,6 +120,9 @@ const LastNedPDF = (props: MergedProps) => {
         setState({ status: "DOWNLOAD" });
         return lastNedPDF(samletPdf, pdfNavn);
       })
+      .then(() =>
+        docListe.map(fil => lastNedFil(fil.url, fil.tittel, fil.filtype))
+      )
       .then(() => {
         setState({ status: "READY" });
       })

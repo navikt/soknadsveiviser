@@ -17,7 +17,7 @@ import Underbanner from "../../komponenter/bannere/Underbanner";
 import VedleggSjekkbokser from "./steg/VedleggSjekkbokser";
 import Sprak from "./steg/Sprak";
 import VedleggListe from "./steg/VedleggListe";
-import LastNedPDF from "./steg/LastNedPDF";
+import LastNed from "./steg/LastNed";
 import { loggEvent } from "../../utils/logger";
 import { localeTekst } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
@@ -130,7 +130,7 @@ class Avslutning extends Component<MergedProps, State> {
             skjemaSprak={skjemaSprak}
             byttSprak={this.byttSprak}
           />
-          <LastNedPDF
+          <LastNed
             steg={++steg}
             valgtSoknadsobjekt={valgtSoknadsobjekt}
             relevanteVedlegg={relevanteVedlegg}
