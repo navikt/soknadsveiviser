@@ -47,7 +47,7 @@ type State =
   | { status: "ERROR"; error: HTTPError };
 type StatusCheck = { [key in State["status"]]: any };
 
-const LastNedPDF = (props: MergedProps) => {
+const LastNed = (props: MergedProps) => {
   const [state, setState] = useState({ status: "READY" } as State);
 
   const genererPDF = async () => {
@@ -170,6 +170,6 @@ const LastNedPDF = (props: MergedProps) => {
 
 export default injectIntl<Props & InjectedIntlProps>(
   withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
-    medPersonalia<Props & InjectedIntlProps & RouteComponentProps>(LastNedPDF)
+    medPersonalia<Props & InjectedIntlProps & RouteComponentProps>(LastNed)
   )
 );
