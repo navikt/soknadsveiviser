@@ -132,7 +132,6 @@ class Avslutning extends Component<MergedProps, State> {
           />
           <LastNed
             steg={++steg}
-            valgtSoknadsobjekt={valgtSoknadsobjekt}
             relevanteVedlegg={relevanteVedlegg}
             personaliaKontekst={personaliaKontekst}
             skjemaSprak={skjemaSprak}

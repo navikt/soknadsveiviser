@@ -16,15 +16,20 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { hentForsteside } from "./utils/forsteside/forsteside";
 import { mergePDF, lastNedPDF, hentPDFurl, lastNedFil } from "./utils/pdf";
 import { Hovedknapp } from "nav-frontend-knapper";
+import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Routes {
   ettersendelse?: string;
   klage?: string;
 }
 
+interface ValgtSoknad {
+  valgtSoknadsobjekt: Soknadsobjekt;
+  klageSoknadsobjekt: Soknadsobjekt;
+}
+
 interface Props {
   steg: number;
-  valgtSoknadsobjekt: Soknadsobjekt;
   relevanteVedlegg: Vedleggsobjekt[];
   skjemaSprak: string;
 }
@@ -34,6 +39,7 @@ interface Personalia {
 }
 
 type MergedProps = Props &
+  ValgtSoknad &
   Personalia &
   InjectedIntlProps &
   RouteComponentProps<Routes>;
@@ -45,6 +51,7 @@ type State =
   | { status: "MERGE" }
   | { status: "DOWNLOAD" }
   | { status: "ERROR"; error: HTTPError };
+
 type StatusCheck = { [key in State["status"]]: any };
 
 const LastNed = (props: MergedProps) => {
@@ -53,10 +60,12 @@ const LastNed = (props: MergedProps) => {
   const genererPDF = async () => {
     setState({ status: "LOADING" });
 
-    const { valgtSoknadsobjekt, relevanteVedlegg } = props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt, relevanteVedlegg } = props;
     const { ettersendelse, klage } = props.match.params;
     const personalia = props.personaliaKontekst;
-    const hovedskjema = valgtSoknadsobjekt.hovedskjema;
+    const hovedskjema = klage
+      ? klageSoknadsobjekt.hovedskjema
+      : valgtSoknadsobjekt.hovedskjema;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
     const pdfNavn = localeTekst(hovedskjema.navn, valgtLocale);
@@ -168,8 +177,14 @@ const LastNed = (props: MergedProps) => {
   );
 };
 
-export default injectIntl<Props & InjectedIntlProps>(
-  withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
-    medPersonalia<Props & InjectedIntlProps & RouteComponentProps>(LastNed)
+export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
+  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
+    withRouter<
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+    >(
+      medPersonalia<
+        Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps
+      >(LastNed)
+    )
   )
 );
