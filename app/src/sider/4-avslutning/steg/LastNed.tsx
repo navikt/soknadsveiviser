@@ -61,7 +61,6 @@ const LastNed = (props: MergedProps) => {
     setState({ status: "LOADING" });
 
     const { klage } = props;
-    console.log(klage);
     const { valgtSoknadsobjekt, klageSoknadsobjekt, relevanteVedlegg } = props;
     const hovedskjema = klage
       ? klageSoknadsobjekt.hovedskjema
@@ -86,14 +85,13 @@ const LastNed = (props: MergedProps) => {
     const docListe = [] as { url: string; tittel: string; filtype: string }[];
 
     if (!ettersendelse) {
-      console.log(hovedskjema);
       const url = hentPDFurl(hovedskjema.pdf, valgtLocale, globalLocale);
       const tittel = localeTekst(hovedskjema.navn, valgtLocale);
       const filtype = url.split(".").pop() || "pdf";
 
       // Dersom hovedskjema er PDF; merge with resten, ellers last ned
       if (filtype === "pdf") {
-        pdfListe.push(hentPDFurl(hovedskjema.pdf, valgtLocale, globalLocale));
+        pdfListe.push(url);
       } else {
         lastNedFil(url, tittel, filtype);
       }
