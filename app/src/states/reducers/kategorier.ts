@@ -96,7 +96,7 @@ export const kategorier = (
       const valgtUnderkategori =
         valgtKategori &&
         valgtKategori.underkategorier
-          .filter(kategori => urlUnderkategori == kategori.urlparam)
+          .filter(kategori => urlUnderkategori === kategori.urlparam)
           .shift();
 
       return !valgtKategori

@@ -40,7 +40,11 @@ const SprakVelger = (props: MergedProps) => {
                 key={language.code}
               >
                 {language.language}
-                <img className="sprakvelger__ikon" src={sprakIcon} />
+                <img
+                  alt="Ikon til språkvelger"
+                  className="sprakvelger__ikon"
+                  src={sprakIcon}
+                />
               </Link>
             )
         )}

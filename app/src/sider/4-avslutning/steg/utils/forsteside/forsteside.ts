@@ -1,5 +1,4 @@
 import { PersonaliaKontekst } from "../../../../../states/providers/Personalia";
-import { apiKallSoknadsobjektForKlage } from "../../../../../klienter/sanityKlient";
 import { hentVedleggslisteForJoark, hentDokumentliste } from "./lister";
 import { Vedleggsobjekt } from "../../../../../typer/vedlegg";
 import { adresseOgBrukerInfo } from "./json/brukerInfo";
@@ -9,43 +8,44 @@ import { parseJson } from "../../../../../klienter/parser";
 import { sjekkForFeil } from "../../../../../klienter/felles";
 import { localeTekst } from "../../../../../utils/sprak";
 
-export const hentForsteside = (
-  relevanteVedlegg: Vedleggsobjekt[],
-  personaliaKontekst: PersonaliaKontekst,
-  valgtLocale: string,
-  globalLocale: string,
-  valgtSoknadsobjekt: Soknadsobjekt,
-  ettersendelse?: string,
-  klage?: string
-): Promise<string> =>
+export interface Params {
+  personalia: PersonaliaKontekst;
+  relevanteVedlegg: Vedleggsobjekt[];
+  valgtSoknadsobjekt: Soknadsobjekt;
+  klageSoknadsobjekt: Soknadsobjekt;
+  globalLocale: string;
+  valgtLocale: string;
+  ettersendelse?: string;
+  klage?: boolean;
+}
+
+export const hentForsteside = (params: Params): Promise<string> =>
   new Promise(async (resolve, reject) => {
     const url = "/soknadsveiviser/api/forsteside";
-    const soknadsobjekt = klage
-      ? await apiKallSoknadsobjektForKlage()
-      : valgtSoknadsobjekt;
-
+    const { klage, klageSoknadsobjekt, valgtSoknadsobjekt } = params;
+    const soknadsobjekt = klage ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
-    const locale = velgGyldigLocale(valgtLocale, globalLocale);
-    const vedleggSomSkalSendes = relevanteVedlegg
+    const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
+    const vedleggSomSkalSendes = params.relevanteVedlegg
       .filter(vedlegg => !vedlegg.skalEttersendes)
       .map(vedlegg => vedlegg.vedlegg);
 
     const json = {
-      foerstesidetype: ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
+      foerstesidetype: params.ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
       navSkjemaId: hovedskjema.skjemanummer,
       spraakkode: locale.toUpperCase(),
       overskriftstittel: `${localeTekst(navn, locale)} ${
         hovedskjema.skjemanummer
       }`,
-      tema: valgtSoknadsobjekt.tema.temakode,
+      tema: params.valgtSoknadsobjekt.tema.temakode,
       vedleggsliste: hentVedleggslisteForJoark(vedleggSomSkalSendes, locale),
       dokumentlisteFoersteside: hentDokumentliste(
         vedleggSomSkalSendes,
         hovedskjema,
-        valgtLocale,
-        ettersendelse
+        params.valgtLocale,
+        params.ettersendelse
       ),
-      ...adresseOgBrukerInfo(innsendingsmate, personaliaKontekst)
+      ...adresseOgBrukerInfo(innsendingsmate, params.personalia)
     };
 
     console.group("Innsending førsteside-generator");

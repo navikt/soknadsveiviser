@@ -21,14 +21,15 @@
 @import "./sider/3-soknadstilpasser/soknad/velgvedlegg/VelgVedlegg.less";
 @import "./sider/3-soknadstilpasser/ettersendelse/DigitalEllerPapirEttersendelse.less";
 @import "./sider/4-avslutning/Avslutning.less";
-@import "./sider/4-avslutning/steg/LastNedPDF.less";
+@import "./sider/4-avslutning/steg/LastNed.less";
 @import "./sider/4-avslutning/steg/VedleggSjekkbokser.less";
 @import "./sider/4-avslutning/steg/Sprak.less";
 @import "./sider/404/404.less";
 @import "./sider/interne/skjemautlisting/Oversikt.less";
 
-@import "./komponenter/header/sprak/SprakVelger.less";
+@import "./komponenter/header/Header.less";
 @import "./komponenter/header/typer/Typer.less";
+@import "./komponenter/header/sprak/SprakVelger.less";
 @import "./komponenter/errors/HttpError.less";
 @import "./komponenter/spinner/Spinner.less";
 @import "./komponenter/bannere/Underbanner.less";
@@ -66,6 +67,7 @@ body {
     display: flex;
     justify-content: center;
     padding: 2rem 0.2rem;
+    max-width: 100%;
 
     .seksjon {
       margin: 0 0 0.2rem 0;

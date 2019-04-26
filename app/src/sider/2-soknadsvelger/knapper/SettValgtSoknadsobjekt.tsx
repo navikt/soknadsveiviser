@@ -37,10 +37,10 @@ const Postinnsending = (props: MergedProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  settValgtSoknadsobjekt: async (soknadsobjekt: Soknadsobjekt) => (
-    dispatch(settValgtSoknadsobjekt(soknadsobjekt)),
-    dispatch(settVedlegg(soknadsobjekt))
-  )
+  settValgtSoknadsobjekt: async (soknadsobjekt: Soknadsobjekt) => {
+    dispatch(settValgtSoknadsobjekt(soknadsobjekt));
+    dispatch(settVedlegg(soknadsobjekt));
+  }
 });
 
 export default withRouter<Props & RouteComponentProps>(

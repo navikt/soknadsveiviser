@@ -28,7 +28,7 @@ const Steg = (props: MergedProps) => {
     <div className="stegBanner">
       <div className="stegBanner__ikon-wrapper">
         <div className="circle" style={{ background: kategoriFarge }}>
-          <img src={dokument} className="stegBanner__ikon" />
+          <img alt="Steg" src={dokument} className="stegBanner__ikon" />
         </div>
       </div>
       {props.tittel && (

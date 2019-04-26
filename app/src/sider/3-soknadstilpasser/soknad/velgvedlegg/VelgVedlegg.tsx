@@ -51,7 +51,10 @@ const VelgVedlegg = (props: MergedProps) => {
           ? vedleggsobj.vedlegg.navn
           : vedleggsobj.situasjon || vedleggsobj.vedlegg.navn;
 
-        vedleggsobj.skalSendes === undefined ? ukjentValg++ : null; // logikk for bare å vise èn og en
+        if (vedleggsobj.skalSendes === undefined) {
+          // logikk for bare å vise èn og en
+          ukjentValg++;
+        }
 
         if (ukjentValg > 1) {
           return null;

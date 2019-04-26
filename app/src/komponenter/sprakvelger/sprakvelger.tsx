@@ -1,7 +1,7 @@
 import { Select } from "nav-frontend-skjema";
 import * as React from "react";
 import { SprakString } from "../../typer/sprak";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 
 interface Props {
   byttSprak: (sprak: string) => void;
@@ -33,7 +33,7 @@ class Sprakvelger extends React.PureComponent<Props & InjectedIntlProps> {
       pl: this.props.intl.formatMessage({ id: "avslutning.sprakvelger.pl" })
     };
 
-    const options = this.skjemasprak.map(([locale, verdi]) => (
+    const options = this.skjemasprak.map(([locale]) => (
       <option value={locale} key={locale} id={locale}>
         {muligesprak[locale]}
       </option>

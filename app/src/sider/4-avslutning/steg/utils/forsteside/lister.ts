@@ -28,12 +28,12 @@ export const hentDokumentliste = (
       : localeTekst(vedlegg.navn, locale)
   );
 
-  !ettersendelse
-    ? dokumentlisteTilVisning.unshift(
-        `${hovedskjema.skjemanummer} ${hovedskjema.navn[locale] ||
-          hovedskjema.navn.nb}`
-      )
-    : dokumentlisteTilVisning;
+  if (!ettersendelse) {
+    dokumentlisteTilVisning.unshift(
+      `${hovedskjema.skjemanummer} ${hovedskjema.navn[locale] ||
+        hovedskjema.navn.nb}`
+    );
+  }
 
   return dokumentlisteTilVisning;
 };

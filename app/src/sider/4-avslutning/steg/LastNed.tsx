@@ -13,18 +13,23 @@ import {
 import { FormattedMessage } from "react-intl";
 import { localeTekst } from "../../../utils/sprak";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import { hentForsteside } from "./utils/forsteside/forsteside";
-import { mergePDF, lastNedPDF, hentPDFurl } from "./utils/pdf";
+import { hentForsteside, Params } from "./utils/forsteside/forsteside";
+import { mergePDF, lastNedPDF, hentPDFurl, lastNedFil } from "./utils/pdf";
 import { Hovedknapp } from "nav-frontend-knapper";
+import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Routes {
   ettersendelse?: string;
-  klage?: string;
+}
+
+interface ValgtSoknad {
+  valgtSoknadsobjekt: Soknadsobjekt;
+  klageSoknadsobjekt: Soknadsobjekt;
 }
 
 interface Props {
   steg: number;
-  valgtSoknadsobjekt: Soknadsobjekt;
+  klage?: boolean;
   relevanteVedlegg: Vedleggsobjekt[];
   skjemaSprak: string;
 }
@@ -34,6 +39,7 @@ interface Personalia {
 }
 
 type MergedProps = Props &
+  ValgtSoknad &
   Personalia &
   InjectedIntlProps &
   RouteComponentProps<Routes>;
@@ -45,18 +51,22 @@ type State =
   | { status: "MERGE" }
   | { status: "DOWNLOAD" }
   | { status: "ERROR"; error: HTTPError };
+
 type StatusCheck = { [key in State["status"]]: any };
 
-const LastNedPDF = (props: MergedProps) => {
+const LastNed = (props: MergedProps) => {
   const [state, setState] = useState({ status: "READY" } as State);
 
   const genererPDF = async () => {
     setState({ status: "LOADING" });
 
-    const { valgtSoknadsobjekt, relevanteVedlegg } = props;
-    const { ettersendelse, klage } = props.match.params;
+    const { klage } = props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt, relevanteVedlegg } = props;
+    const hovedskjema = klage
+      ? klageSoknadsobjekt.hovedskjema
+      : valgtSoknadsobjekt.hovedskjema;
+    const { ettersendelse } = props.match.params;
     const personalia = props.personaliaKontekst;
-    const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
     const pdfNavn = localeTekst(hovedskjema.navn, valgtLocale);
@@ -65,36 +75,65 @@ const LastNedPDF = (props: MergedProps) => {
       .filter(v => !v.skalEttersendes)
       .filter(({ vedlegg }) => vedlegg.skjematilvedlegg);
 
+    const skjemaTilNedlasting = vedleggTilNedlasting
+      .map(({ vedlegg }) => vedlegg)
+      .map(({ skjematilvedlegg }) => skjematilvedlegg!);
+
     // Generer liste med pdf url-er
     // Ink. søknad og vedlegg
     const pdfListe = [] as string[];
+    const docListe = [] as { url: string; tittel: string; filtype: string }[];
+
     if (!ettersendelse) {
-      pdfListe.push(hentPDFurl(hovedskjema.pdf, valgtLocale, globalLocale));
+      const url = hentPDFurl(hovedskjema.pdf, valgtLocale, globalLocale);
+      const tittel = localeTekst(hovedskjema.navn, valgtLocale);
+      const filtype = url.split(".").pop() || "pdf";
+
+      // Dersom hovedskjema er PDF; merge with resten, ellers last ned
+      if (filtype === "pdf") {
+        pdfListe.push(url);
+      } else {
+        lastNedFil(url, tittel, filtype);
+      }
     }
 
-    vedleggTilNedlasting.map(vedlegg =>
-      pdfListe.push(
-        hentPDFurl(
-          vedlegg.vedlegg.skjematilvedlegg!.pdf,
-          valgtLocale,
-          globalLocale
-        )
-      )
-    );
+    //Legg pdf-er i egen liste
+    skjemaTilNedlasting
+      .map(({ pdf }) => hentPDFurl(pdf, valgtLocale, globalLocale))
+      .filter(url => url.split(".").pop() === "pdf")
+      .map(url => pdfListe.push(url));
 
-    // 1) Generer førsteside
-    // 2) Merge med søknad og vedlegg
-    // 3) Last ned
-    setState({ status: "FETCH_COVER" });
-    hentForsteside(
-      relevanteVedlegg,
+    //Andre vedlegg som ikke er pdf
+    skjemaTilNedlasting
+      .map(skjema => {
+        const url = hentPDFurl(skjema.pdf, valgtLocale, globalLocale);
+        const filtype = url.split(".").pop() || "pdf";
+        return {
+          url: url,
+          tittel: localeTekst(skjema.navn, valgtLocale),
+          filtype: filtype
+        };
+      })
+      .filter(fil => fil.filtype !== "pdf")
+      .map(fil => docListe.push(fil));
+
+    const foerstesideParams = {
       personalia,
-      valgtLocale,
-      globalLocale,
+      relevanteVedlegg,
       valgtSoknadsobjekt,
+      klageSoknadsobjekt,
+      globalLocale,
+      valgtLocale,
       ettersendelse,
       klage
-    )
+    } as Params;
+
+    // 1) Generer førsteside
+    // 2) Merge med søknad og vedlegg som er pdf-er
+    // 3) Last ned sammenslått pdf
+    // 4) Last ned andre vedlegg
+    setState({ status: "FETCH_COVER" });
+    hentForsteside(foerstesideParams)
       .then(foersteside => {
         setState({ status: "MERGE" });
         return mergePDF(foersteside, pdfListe);
@@ -103,6 +142,9 @@ const LastNedPDF = (props: MergedProps) => {
         setState({ status: "DOWNLOAD" });
         return lastNedPDF(samletPdf, pdfNavn);
       })
+      .then(() =>
+        docListe.map(fil => lastNedFil(fil.url, fil.tittel, fil.filtype))
+      )
       .then(() => {
         setState({ status: "READY" });
       })
@@ -148,8 +190,14 @@ const LastNedPDF = (props: MergedProps) => {
   );
 };
 
-export default injectIntl<Props & InjectedIntlProps>(
-  withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
-    medPersonalia<Props & InjectedIntlProps & RouteComponentProps>(LastNedPDF)
+export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
+  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
+    withRouter<
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+    >(
+      medPersonalia<
+        Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps
+      >(LastNed)
+    )
   )
 );
