@@ -126,6 +126,7 @@ class Avslutning extends Component<MergedProps, State> {
           />
           <LastNed
             steg={++steg}
+            klage={true}
             relevanteVedlegg={relevanteVedlegg}
             personaliaKontekst={personaliaKontekst}
             skjemaSprak={skjemaSprak}
