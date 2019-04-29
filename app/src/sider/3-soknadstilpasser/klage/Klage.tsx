@@ -3,12 +3,14 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Store } from "../../../typer/store";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Klage } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/DineVedlegg";
 import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
+import SkalEttersende from "./SkalEttersende";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
 import { localeTekst } from "../../../utils/sprak";
@@ -21,6 +23,7 @@ interface Props {
 }
 
 interface ReduxProps {
+  klage: Klage;
   valgteVedlegg: Vedleggsobjekt[];
   hentKlageSoknadsobjekt: () => void;
 }
@@ -37,7 +40,7 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class Klage extends React.Component<MergedProps> {
+class VisKlage extends React.Component<MergedProps> {
   componentDidMount = () =>
     !this.props.klageSoknadsobjekt && this.props.hentKlageSoknadsobjekt();
 
@@ -46,13 +49,12 @@ class Klage extends React.Component<MergedProps> {
       return null;
     }
 
-    console.log(this.props.match.params.ettersendelse);
-
     const {
       valgteVedlegg,
       valgtSoknadsobjekt,
       klageSoknadsobjekt,
-      intl
+      intl,
+      klage
     } = this.props;
 
     const relevanteVedlegg = valgteVedlegg
@@ -69,8 +71,13 @@ class Klage extends React.Component<MergedProps> {
           skjemanummer={klageskjema.skjemanummer}
         />
         <Steg tittel="klage.tittel.underbanner" />
-        <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+        <SkalEttersende />
+        {klage.skalEttersende && (
+          <>
+            <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
+            <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+          </>
+        )}
         <Personalia {...this.props} />
       </>
     );
@@ -78,6 +85,7 @@ class Klage extends React.Component<MergedProps> {
 }
 
 const mapStateToProps = (store: Store) => ({
+  klage: store.klage,
   valgteVedlegg: store.vedlegg.valgteVedlegg
 });
 
@@ -91,7 +99,7 @@ export default medValgtSoknadsobjekt<Props>(
       connect(
         mapStateToProps,
         mapDispatchToProps
-      )(Klage)
+      )(VisKlage)
     )
   )
 );

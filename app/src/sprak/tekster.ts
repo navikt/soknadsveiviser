@@ -62,6 +62,7 @@ export default {
     "personalia.undertekstbold.tiltaksbedrift": `Forklarende tekst for tiltaksbedrifter. Forklarende tekst for tiltaksbedrifter. Du må velge NAV-kontor som du har hatt kontakt med.`,
     "klage.knapp": `Klage på vedtak`,
     "klage.tittel.underbanner": `Klage på vedtak`,
+    "klage.ettersende": `Skal du ettersende dokumentasjon til en tidligere innsendt klage?`,
     "ettersendelser.knapp": `Ettersendelse`,
     "ettersendelser.tittel.underbanner": `Velg hvilken dokumentasjon du skal ettersende`,
     "ettersendelser.mellomledd.digital.tittel": `Ettersende til elektronisk søknad`,
