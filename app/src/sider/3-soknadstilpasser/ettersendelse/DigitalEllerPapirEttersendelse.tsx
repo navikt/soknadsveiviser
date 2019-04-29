@@ -5,6 +5,7 @@ import Underbanner from "../../../komponenter/bannere/Underbanner";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import DigitalEttersendelse from "./seksjoner/Digital";
 import PapirEttersendelse from "./seksjoner/Papir";
+import KlageEttersendelse from "./seksjoner/Klage";
 import { localeTekst } from "../../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
@@ -33,6 +34,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
         />
         <DigitalEttersendelse />
         <PapirEttersendelse />
+        <KlageEttersendelse />
       </>
     );
   }

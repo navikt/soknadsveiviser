@@ -7,7 +7,7 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/DineVedlegg";
-import VelgVedlegg from "./velgvedlegg/VelgVedlegg";
+import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
@@ -26,6 +26,7 @@ interface ReduxProps {
 }
 
 interface Routes {
+  ettersendelse: string;
   skjemanummer: string;
   kategori: string;
   underkategori: string;
@@ -44,6 +45,8 @@ class Klage extends React.Component<MergedProps> {
     if (!this.props.klageSoknadsobjekt) {
       return null;
     }
+
+    console.log(this.props.match.params.ettersendelse);
 
     const {
       valgteVedlegg,

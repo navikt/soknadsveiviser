@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import VelgVedlegg from "./soknad/velgvedlegg/VelgVedlegg";
+import VelgVedlegg from "./felles/velgvedlegg/VelgVedlegg";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
