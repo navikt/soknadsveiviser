@@ -20,6 +20,13 @@ export const settVedlegg = (soknadsobjekt?: Soknadsobjekt) => ({
   soknadsobjekt
 });
 
+export const settVedleggSkalSendesForSoknadsobjekt = (
+  soknadsobjekt: Soknadsobjekt
+) => ({
+  type: "SETT_VEDLEGG_SKAL_SENDES",
+  soknadsobjekt
+});
+
 export const toggleValgtVedlegg = (
   _key: string,
   soknadsobjektId: string,
@@ -76,6 +83,21 @@ export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
       return {
         ...state,
         valgteVedlegg: [...state.valgteVedlegg, ...vedlegg]
+      };
+    }
+
+    case "SETT_VEDLEGG_SKAL_SENDES": {
+      const { soknadsobjekt } = action;
+      const { valgteVedlegg } = root.vedlegg;
+
+      return {
+        ...state,
+        valgteVedlegg: valgteVedlegg
+          .filter(v => v.soknadsobjektId === soknadsobjekt._id)
+          .map(vedlegg => ({
+            ...vedlegg,
+            skalSendes: true
+          }))
       };
     }
 

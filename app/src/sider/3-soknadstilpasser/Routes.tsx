@@ -53,7 +53,7 @@ class SkjemaVelgerRoutes extends Component<MergedProps> {
               />
               <Route
                 exact
-                path={`${path}/brev/klage/avslutning`}
+                path={`${path}/brev/klage/:ettersendelse(ettersendelse)?/avslutning`}
                 render={props => <AvslutningKlage {...props} />}
               />
               <Route

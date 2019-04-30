@@ -5,9 +5,14 @@ import { Store } from "../../../typer/store";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { Klage } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
+import { settEttersendTilKlage } from "../../../states/reducers/klage";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/DineVedlegg";
+import {
+  toggleValgtVedlegg,
+  settVedleggSkalSendesForSoknadsobjekt
+} from "../../../states/reducers/vedlegg";
 import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import SkalEttersende from "./SkalEttersende";
@@ -25,7 +30,14 @@ interface Props {
 interface ReduxProps {
   klage: Klage;
   valgteVedlegg: Vedleggsobjekt[];
-  hentKlageSoknadsobjekt: () => void;
+  hentKlageSoknadsobjekt: (skalEttersende: boolean) => void;
+  settEttersendTilKlage: (skalEttersende: string) => void;
+  settVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) => void;
+  toggleValgtVedlegg?: (
+    _key: string,
+    soknadsobjektId: string,
+    klage: boolean
+  ) => void;
 }
 
 interface Routes {
@@ -41,8 +53,17 @@ type MergedProps = Props &
   InjectedIntlProps;
 
 class VisKlage extends React.Component<MergedProps> {
-  componentDidMount = () =>
-    !this.props.klageSoknadsobjekt && this.props.hentKlageSoknadsobjekt();
+  componentDidMount = () => {
+    const { klageSoknadsobjekt, match, klage } = this.props;
+    if (match.params.ettersendelse && !klage.skalEttersende) {
+      this.props.settEttersendTilKlage("ja");
+    }
+    if (!klageSoknadsobjekt) {
+      this.props.hentKlageSoknadsobjekt(klage.skalEttersende);
+    } else {
+      this.props.settVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
+    }
+  };
 
   render() {
     if (!this.props.klageSoknadsobjekt) {
@@ -54,7 +75,8 @@ class VisKlage extends React.Component<MergedProps> {
       valgtSoknadsobjekt,
       klageSoknadsobjekt,
       intl,
-      klage
+      klage,
+      match
     } = this.props;
 
     const relevanteVedlegg = valgteVedlegg
@@ -71,8 +93,8 @@ class VisKlage extends React.Component<MergedProps> {
           skjemanummer={klageskjema.skjemanummer}
         />
         <Steg tittel="klage.tittel.underbanner" />
-        <SkalEttersende />
-        {klage.skalEttersende && (
+        {!match.params.ettersendelse && <SkalEttersende />}
+        {!klage.skalEttersende && (
           <>
             <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
             <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
@@ -90,7 +112,14 @@ const mapStateToProps = (store: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  hentKlageSoknadsobjekt: () => apiHentSoknadsobjektForKlage()(dispatch)
+  hentKlageSoknadsobjekt: (skalEttersende: boolean) =>
+    apiHentSoknadsobjektForKlage(skalEttersende)(dispatch),
+  settEttersendTilKlage: (skalEttersende: string) =>
+    dispatch(settEttersendTilKlage(skalEttersende)),
+  toggleValgtVedlegg: (_key: string, soknadsobjektId: string, klage: boolean) =>
+    dispatch(toggleValgtVedlegg(_key, soknadsobjektId, klage)),
+  settVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
+    dispatch(settVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
 });
 
 export default medValgtSoknadsobjekt<Props>(

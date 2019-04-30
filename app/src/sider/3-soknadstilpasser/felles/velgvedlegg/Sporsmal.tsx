@@ -24,10 +24,11 @@ interface Props {
   label: SprakString;
   vedleggsobj: Vedleggsobjekt;
   valgtSoknadsobjekt: Soknadsobjekt;
+  klageSoknadsobjekt: Soknadsobjekt;
 }
 
 interface ReduxProps {
-  toggleValgtVedlegg?: (
+  toggleValgtVedlegg: (
     _key: string,
     soknadsobjektId: string,
     klage: boolean
@@ -50,9 +51,7 @@ const Sporsmal = (props: MergedProps) => {
   const { klage } = props.match.params;
 
   const handleOnChange = ({}, value?: string) =>
-    value && toggleValgtVedlegg
-      ? toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage)
-      : console.error("Fant ikke togglefunksjon");
+    value && toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage);
 
   return (
     <div className="maks-bredde vedlegg__sporsmal">
