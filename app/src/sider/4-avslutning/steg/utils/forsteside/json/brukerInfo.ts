@@ -1,6 +1,6 @@
 import { Personalia } from "../../../../../../states/providers/Personalia";
 import { Innsendingsmate } from "../../../../../../typer/soknad";
-import { mottakerAdresse } from "./mottakerAdresse";
+import { mottakerAdresse, enhetAdresse } from "./mottakerAdresse";
 
 export const adresseOgBrukerInfo = (
   innsendingsmate: Innsendingsmate,
@@ -15,18 +15,7 @@ export const adresseOgBrukerInfo = (
     ? // Bedrift
       flerePersonerEllerTiltaksbedrift === "flerepersoner"
       ? // Flere personer
-        {
-          adresse: {
-            adresselinje1: enhet.enhetsnavn,
-            adresselinje2: enhet.postboks
-              ? "Postboks " + enhet.postboks
-              : `${enhet.postGatenavn || ""} ` +
-                (enhet.postHusnummer || "") +
-                (enhet.postHusbokstav || ""),
-            postnummer: enhet.postnummer,
-            poststed: enhet.poststed
-          }
-        }
+        { ...enhetAdresse(enhet) }
       : // Tiltaksbedrift
         {
           enhetsnummer: enhet.enhetsnummer,
@@ -48,12 +37,12 @@ export const adresseOgBrukerInfo = (
                 `${adresse.postnummer || ""} ` +
                 `${adresse.sted || ""} ` +
                 `${adresse.land || ""}. ` +
-                (adresse.valgtEnhet
+                (adresse.kontaktetEnhet
                   ? ` Har tidligere vært i kontakt med ${
-                      adresse.valgtEnhet.label
+                      adresse.kontaktetEnhet.label
                     } om saken`
                   : "")
             }),
-        ...mottakerAdresse(innsendingsmate)
+        ...mottakerAdresse(innsendingsmate, enhet)
       };
 };
