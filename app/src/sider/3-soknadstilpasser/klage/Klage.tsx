@@ -95,11 +95,9 @@ class VisKlage extends React.Component<MergedProps> {
         <Steg tittel="klage.tittel.underbanner" />
         {!match.params.ettersendelse && <SkalEttersende />}
         {!klage.skalEttersende && (
-          <>
-            <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
-            <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
-          </>
+          <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
+        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
         <Personalia {...this.props} />
       </>
     );
