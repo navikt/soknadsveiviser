@@ -55,7 +55,6 @@ export interface Personalia extends State {
 const initState = {
   fodselsnummer: {} as Fodselsnummer,
   adresse: {} as Adresse,
-  brukervelgerenhet: {} as Adresse,
   touched: {} as IsTouched,
   bedrift: {} as ValgtEnhet
 };

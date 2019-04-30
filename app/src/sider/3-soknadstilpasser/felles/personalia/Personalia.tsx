@@ -33,10 +33,10 @@ type MergedProps = ValgtSoknad &
 
 class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
-    console.log(e);
     const { history, match } = this.props;
     this.props.resetState();
     if (
+      e.fodselsnummer.valgtEnhet !== "ikkeValgt" &&
       e.fodselsnummer.fodselsnummer &&
       erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
     ) {
