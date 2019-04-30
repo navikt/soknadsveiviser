@@ -63,7 +63,7 @@ class PapirSoknad extends Component<MergedProps> {
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
         <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
-        <Personalia {...this.props} />
+        <Personalia />
       </>
     );
   }

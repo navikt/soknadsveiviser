@@ -1,4 +1,4 @@
-import { PersonaliaKontekst } from "../../../../../states/providers/Personalia";
+import { Personalia } from "../../../../../states/providers/Personalia";
 import { hentVedleggslisteForJoark, hentDokumentliste } from "./lister";
 import { Vedleggsobjekt } from "../../../../../typer/vedlegg";
 import { adresseOgBrukerInfo } from "./json/brukerInfo";
@@ -9,7 +9,7 @@ import { sjekkForFeil } from "../../../../../klienter/felles";
 import { localeTekst } from "../../../../../utils/sprak";
 
 export interface Params {
-  personalia: PersonaliaKontekst;
+  personalia: Personalia;
   relevanteVedlegg: Vedleggsobjekt[];
   valgtSoknadsobjekt: Soknadsobjekt;
   klageSoknadsobjekt: Soknadsobjekt;

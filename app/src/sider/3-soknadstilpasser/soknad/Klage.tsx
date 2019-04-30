@@ -68,7 +68,7 @@ class Klage extends React.Component<MergedProps> {
         <Steg tittel="klage.tittel.underbanner" />
         <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
-        <Personalia {...this.props} />
+        <Personalia />
       </>
     );
   }

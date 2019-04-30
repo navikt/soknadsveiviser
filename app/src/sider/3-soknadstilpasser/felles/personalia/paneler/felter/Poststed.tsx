@@ -2,21 +2,19 @@ import * as React from "react";
 import { Input } from "nav-frontend-skjema";
 import { injectIntl } from "react-intl";
 import { FieldProps } from "formik";
-import { PersonaliaKontekst } from "../../../../../../states/providers/Personalia";
+import {
+  Personalia,
+  medPersonalia
+} from "../../../../../../states/providers/Personalia";
 import { InjectedIntlProps } from "react-intl";
 
 interface Fields {
   postnummer?: string;
 }
 
-interface Props {
-  context: PersonaliaKontekst;
-}
-
-type MergedProps = FieldProps<Fields> & Props & InjectedIntlProps;
+type MergedProps = FieldProps<Fields> & Personalia & InjectedIntlProps;
 const Poststed = (props: MergedProps) => {
-  const { intl, field, context } = props;
-  const { settTouched, touched } = context;
+  const { intl, field, settTouched, touched } = props;
   return (
     <Input
       bredde="XL"
@@ -41,4 +39,4 @@ const Poststed = (props: MergedProps) => {
   );
 };
 
-export default injectIntl(Poststed);
+export default medPersonalia(injectIntl(Poststed));

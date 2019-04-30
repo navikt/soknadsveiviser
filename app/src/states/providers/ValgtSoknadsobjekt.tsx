@@ -11,6 +11,11 @@ import { Dispatch } from "redux";
 import { Store } from "../../typer/store";
 import { connect } from "react-redux";
 
+export interface ValgtSoknad {
+  valgtSoknadsobjekt: Soknadsobjekt;
+  klageSoknadsobjekt?: Soknadsobjekt;
+}
+
 interface Props {
   children?: JSX.Element | JSX.Element[];
 }
@@ -19,11 +24,6 @@ interface Routes {
   skjemanummer: string;
   kategori: string;
   underkategori: string;
-}
-
-interface Context {
-  valgtSoknadsobjekt: Soknadsobjekt;
-  klageSoknadsobjekt?: Soknadsobjekt;
 }
 
 interface ReduxProps {
@@ -40,7 +40,7 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-const { Provider, Consumer } = React.createContext<Context | null>(null);
+const { Provider, Consumer } = React.createContext<ValgtSoknad | null>(null);
 class MedValgtSoknadsobjekt extends Component<MergedProps> {
   componentDidMount() {
     const { hentSoknadsobjekt, valgtSoknad } = this.props;
@@ -88,11 +88,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   ) => apiHentSoknadsobjekt(kategori, underkategori, skjemanummer)(dispatch)
 });
 
-export const medValgtSoknadsobjekt = <P extends Context>(
+export const medValgtSoknadsobjekt = <P extends ValgtSoknad>(
   Component: ComponentType<P>
-) => (props: Pick<P, Exclude<keyof P, keyof Context>>) => (
+) => (props: Pick<P, Exclude<keyof P, keyof ValgtSoknad>>) => (
   <Consumer>
-    {value => <Component {...value as Context} {...props as P} />}
+    {value => <Component {...value as ValgtSoknad} {...props as P} />}
   </Consumer>
 );
 

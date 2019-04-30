@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { FieldProps } from "formik/dist/Field";
 import {
   Adresse,
-  PersonaliaKontekst
+  Personalia,
+  medPersonalia
 } from "../../../../../states/providers/Personalia";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
@@ -15,15 +16,11 @@ import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
 
-interface Props {
-  context: PersonaliaKontekst;
-}
-
 interface State {
   tidligereKontaktMedNAV: boolean;
 }
 
-type MergedProps = Props & FieldProps<Adresse> & InjectedIntlProps;
+type MergedProps = Personalia & FieldProps<Adresse> & InjectedIntlProps;
 class AdresseFelter extends Component<MergedProps, State> {
   state = { tidligereKontaktMedNAV: false };
   toggleTidligereKontaktMedNav = () =>
@@ -32,9 +29,8 @@ class AdresseFelter extends Component<MergedProps, State> {
     });
 
   render() {
-    const { context, intl } = this.props;
+    const { intl, touched } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
-    const { touched } = context;
     return touched ? (
       <>
         <UndertekstBold className="litenavstand">
@@ -69,4 +65,4 @@ class AdresseFelter extends Component<MergedProps, State> {
   }
 }
 
-export default injectIntl(AdresseFelter);
+export default medPersonalia(injectIntl(AdresseFelter));

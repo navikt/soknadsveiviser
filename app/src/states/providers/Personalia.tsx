@@ -31,7 +31,7 @@ export interface State {
   bedrift: ValgtEnhet;
 }
 
-export interface PersonaliaKontekst extends State {
+export interface Personalia extends State {
   resetState(): void;
   settFodselsnummer(fodselsnummer: string): void;
   settAdresse(adresse: Adresse): void;
@@ -52,18 +52,7 @@ const initState = {
   bedrift: {} as ValgtEnhet
 };
 
-const initKontekst = {
-  ...initState,
-  resetState: () => {}, // tslint:disable-line:no-empty
-  settFodselsnummer: () => {}, // tslint:disable-line:no-empty
-  settAdresse: () => {}, // tslint:disable-line:no-empty
-  settTouched: () => {}, // tslint:disable-line:no-empty
-  settValgtEnhet: () => {} // tslint:disable-line:no-empty
-};
-
-export const PersonaliaKontekst = React.createContext<PersonaliaKontekst>(
-  initKontekst
-);
+const { Provider, Consumer } = React.createContext<Personalia | null>(null);
 
 class MedPersonalia extends Component<{}, State> {
   state = initState;
@@ -79,10 +68,7 @@ class MedPersonalia extends Component<{}, State> {
 
   settValgtEnhet = (
     valgtEnhet: EnhetOption,
-    flerePersonerEllerTiltaksbedrift:
-      | "flerepersoner"
-      | "tiltaksbedrift"
-      | undefined
+    flerePersonerEllerTiltaksbedrift?: "flerepersoner" | "tiltaksbedrift"
   ) =>
     this.setState({
       ...this.state,
@@ -90,7 +76,7 @@ class MedPersonalia extends Component<{}, State> {
     });
 
   render() {
-    const context: PersonaliaKontekst = {
+    const context = {
       ...this.state,
       resetState: this.resetState,
       settFodselsnummer: this.settFodselsnummer,
@@ -98,24 +84,16 @@ class MedPersonalia extends Component<{}, State> {
       settTouched: this.settTouched,
       settValgtEnhet: this.settValgtEnhet
     };
-    return (
-      <PersonaliaKontekst.Provider value={context}>
-        {this.props.children}
-      </PersonaliaKontekst.Provider>
-    );
+    return <Provider value={context}>{this.props.children}</Provider>;
   }
 }
 
-export function medPersonalia<PROPS>(
-  Component: ComponentType<PROPS & { personaliaKontekst: PersonaliaKontekst }>
-): ComponentType<PROPS> {
-  return (props: PROPS) => (
-    <PersonaliaKontekst.Consumer>
-      {personaliaKontekst => (
-        <Component personaliaKontekst={personaliaKontekst} {...props} />
-      )}
-    </PersonaliaKontekst.Consumer>
-  );
-}
+export const medPersonalia = <P extends Personalia>(
+  Component: ComponentType<P>
+) => (props: Pick<P, Exclude<keyof P, keyof Personalia>>) => (
+  <Consumer>
+    {value => <Component {...value as Personalia} {...props as P} />}
+  </Consumer>
+);
 
 export default MedPersonalia;

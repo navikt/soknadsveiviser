@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  medPersonalia,
-  PersonaliaKontekst
-} from "../../states/providers/Personalia";
+import { medPersonalia, Personalia } from "../../states/providers/Personalia";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Normaltekst } from "nav-frontend-typografi";
@@ -31,10 +28,6 @@ interface ValgtSoknad {
   klageSoknadsobjekt: Soknadsobjekt;
 }
 
-interface Personalia {
-  personaliaKontekst: PersonaliaKontekst;
-}
-
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
 }
@@ -60,12 +53,11 @@ class Avslutning extends Component<MergedProps, State> {
 
   render() {
     const { props } = this;
-    const { personaliaKontekst } = props;
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = props;
     const { url } = props.match;
     const { ettersendelse } = props.match.params;
     const { skjemaSprak } = this.state;
-    const { bedrift, adresse, fodselsnummer } = personaliaKontekst;
+    const { bedrift, adresse, fodselsnummer } = props;
     const locale = props.intl.locale;
     const { valgteVedlegg } = props;
     const harPersonalia = fodselsnummer || !erTom(adresse) || !erTom(bedrift);
@@ -128,9 +120,7 @@ class Avslutning extends Component<MergedProps, State> {
             steg={++steg}
             klage={true}
             relevanteVedlegg={relevanteVedlegg}
-            personaliaKontekst={personaliaKontekst}
             skjemaSprak={skjemaSprak}
-            {...this.props}
           />
           <div className="steg__rad">
             <StegOverskrift
@@ -165,7 +155,10 @@ export default medValgtSoknadsobjekt<ValgtSoknad>(
   injectIntl<ValgtSoknad & InjectedIntlProps>(
     withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>>(
       medPersonalia<
-        ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+        Personalia &
+          ValgtSoknad &
+          InjectedIntlProps &
+          RouteComponentProps<Routes>
       >(connect(mapStateToProps)(Avslutning))
     )
   )

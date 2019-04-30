@@ -1,14 +1,14 @@
-import { PersonaliaKontekst } from "../../../../../../states/providers/Personalia";
+import { Personalia } from "../../../../../../states/providers/Personalia";
 import { Innsendingsmate } from "../../../../../../typer/soknad";
 import { mottakerAdresse } from "./mottakerAdresse";
 
 export const adresseOgBrukerInfo = (
   innsendingsmate: Innsendingsmate,
-  personaliaKontekst: PersonaliaKontekst
+  personalia: Personalia
 ) => {
-  const { bedrift } = personaliaKontekst;
+  const { bedrift } = personalia;
   const { flerePersonerEllerTiltaksbedrift } = bedrift;
-  const { fodselsnummer, adresse } = personaliaKontekst;
+  const { fodselsnummer, adresse } = personalia;
   const enhet = bedrift.valgtEnhet && bedrift.valgtEnhet.value;
 
   return flerePersonerEllerTiltaksbedrift

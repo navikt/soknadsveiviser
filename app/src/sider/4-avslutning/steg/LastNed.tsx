@@ -8,7 +8,7 @@ import { HTTPError } from "../../../typer/errors";
 import { withRouter } from "react-router";
 import {
   medPersonalia,
-  PersonaliaKontekst
+  Personalia
 } from "../../../states/providers/Personalia";
 import { FormattedMessage } from "react-intl";
 import { localeTekst } from "../../../utils/sprak";
@@ -32,10 +32,6 @@ interface Props {
   klage?: boolean;
   relevanteVedlegg: Vedleggsobjekt[];
   skjemaSprak: string;
-}
-
-interface Personalia {
-  personaliaKontekst: PersonaliaKontekst;
 }
 
 type MergedProps = Props &
@@ -66,10 +62,15 @@ const LastNed = (props: MergedProps) => {
       ? klageSoknadsobjekt.hovedskjema
       : valgtSoknadsobjekt.hovedskjema;
     const { ettersendelse } = props.match.params;
-    const personalia = props.personaliaKontekst;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
     const pdfNavn = localeTekst(hovedskjema.navn, valgtLocale);
+    const personalia = {
+      fodselsnummer: props.fodselsnummer,
+      adresse: props.adresse,
+      touched: props.touched,
+      bedrift: props.bedrift
+    };
 
     const vedleggTilNedlasting = relevanteVedlegg
       .filter(v => !v.skalEttersendes)
@@ -196,7 +197,11 @@ export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
       Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
     >(
       medPersonalia<
-        Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps
+        Personalia &
+          Props &
+          ValgtSoknad &
+          InjectedIntlProps &
+          RouteComponentProps
       >(LastNed)
     )
   )
