@@ -12,6 +12,7 @@ export interface Adresse {
   postnummer?: string;
   sted: string;
   land?: string;
+  kontaktetEnhet?: EnhetOption;
   valgtEnhet?: EnhetOption;
 }
 
@@ -26,6 +27,7 @@ export interface IsTouched {
   adresse: boolean;
   sted: boolean;
   land: boolean;
+  kontaktetEnhet: boolean;
   valgtEnhet: boolean;
 }
 

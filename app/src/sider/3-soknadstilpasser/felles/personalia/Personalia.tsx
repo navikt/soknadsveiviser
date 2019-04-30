@@ -33,6 +33,7 @@ type MergedProps = ValgtSoknad &
 
 class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
+    console.log(e);
     const { history, match } = this.props;
     this.props.resetState();
     if (
@@ -46,7 +47,6 @@ class VisPersonalia extends Component<MergedProps> {
         fodselsnummer: e.fodselsnummer.fodselsnummer,
         valgtEnhet: e.fodselsnummer.valgtEnhet
       });
-      console.log("push");
       history.push(`${match.url}/avslutning`);
     } else if (
       e.adresse.navn &&
@@ -63,6 +63,7 @@ class VisPersonalia extends Component<MergedProps> {
         sted: e.adresse.sted,
         land: e.adresse.land,
         postnummer: e.adresse.postnummer,
+        kontaktetEnhet: e.adresse.kontaktetEnhet,
         valgtEnhet: e.adresse.valgtEnhet
       });
       history.push(`${match.url}/avslutning`);
@@ -79,6 +80,7 @@ class VisPersonalia extends Component<MergedProps> {
         adresse: true,
         land: true,
         sted: true,
+        kontaktetEnhet: true,
         valgtEnhet: true
       });
     }

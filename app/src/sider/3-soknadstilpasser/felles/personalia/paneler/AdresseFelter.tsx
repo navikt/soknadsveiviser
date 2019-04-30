@@ -8,7 +8,7 @@ import {
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import VisEnheter from "./felter/VisEnheter";
+import KontaktetEnhet from "./felter/KontaktetEnhet";
 import UndertekstBold from "nav-frontend-typografi/lib/undertekst-bold";
 import InputNavn from "./felter/Navn";
 import InputGateAdresse from "./felter/GateAdresse";
@@ -61,7 +61,7 @@ class AdresseFelter extends Component<MergedProps, State> {
             toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
           />
           {tidligereKontaktMedNAV && (
-            <VisEnheter
+            <KontaktetEnhet
               label={intl.formatMessage({
                 id: "personalia.label.velgnavkontor"
               })}
