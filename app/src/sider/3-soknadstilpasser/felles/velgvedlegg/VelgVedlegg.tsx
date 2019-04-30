@@ -62,12 +62,14 @@ const VelgVedlegg = (props: MergedProps) => {
 
         return (
           <PanelBase className="seksjon vedlegg__panel" key={vedleggsobj._key}>
-            <Nummer
-              key={spmNummer}
-              spmNummer={++spmNummer}
-              kategoriFarge={kategoriFarge}
-              antallSpm={vedleggForUtlisting.length}
-            />
+            {vedleggForUtlisting.length > 1 && (
+              <Nummer
+                key={spmNummer}
+                spmNummer={++spmNummer}
+                kategoriFarge={kategoriFarge}
+                antallSpm={vedleggForUtlisting.length}
+              />
+            )}
             <Sporsmal label={label} vedleggsobj={vedleggsobj} />
           </PanelBase>
         );

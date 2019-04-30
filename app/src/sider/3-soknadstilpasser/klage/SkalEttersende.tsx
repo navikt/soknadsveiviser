@@ -1,8 +1,9 @@
 import React from "react";
+import { Undertittel } from "nav-frontend-typografi";
 import { Store } from "../../../typer/store";
 import { Klage } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import PanelBase from "nav-frontend-paneler";
 import { RadioPanelGruppe } from "nav-frontend-skjema";
 import { connect } from "react-redux";
@@ -37,10 +38,13 @@ const SkalEttersende = (props: MergedProps) => {
 
   return (
     <PanelBase className="seksjon">
+      <Undertittel>
+        <FormattedMessage id="klage.ettersende" />
+      </Undertittel>
       <RadioPanelGruppe
         className="vedlegg__sjekkbokser"
         key={"skalEttersend"}
-        legend={intl.formatMessage({ id: "klage.ettersende" })}
+        legend={""}
         name="Skal ettersende"
         radios={[
           {
