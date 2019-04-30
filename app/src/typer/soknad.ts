@@ -3,6 +3,11 @@ import { Inngangsoknadsdialog } from "./underkategori";
 import { Skjema } from "../sider/4-avslutning/steg/SkjemaVisning";
 import { SprakBlockText, SprakString } from "./sprak";
 
+export interface DigitalInnsending {
+  dokumentinnsending?: boolean;
+  inngangtilsoknadsdialog?: Inngangsoknadsdialog;
+}
+
 export interface Soknadsobjekt {
   _id: string;
   navn: SprakString;
@@ -10,10 +15,7 @@ export interface Soknadsobjekt {
   gosysid: number;
   hovedskjema: Skjema;
   vedleggtilsoknad: Vedleggsobjekt[];
-  digitalinnsending?: {
-    dokumentinnsending?: boolean;
-    inngangtilsoknadsdialog?: Inngangsoknadsdialog;
-  };
+  digitalinnsending?: DigitalInnsending;
   lenker?: Lenkeobjekt[];
   tema: Tema;
   urlparam: string;

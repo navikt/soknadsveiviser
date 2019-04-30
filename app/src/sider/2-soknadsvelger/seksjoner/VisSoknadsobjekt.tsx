@@ -9,6 +9,10 @@ import KnappEttersendelse from "../knapper/Ettersendelse";
 import KnappKlage from "../knapper/Klage";
 import RelevantInformasjon from "./RelevantInformasjon";
 import { link } from "../../../utils/serializers";
+import {
+  finnesDokumentinnsending,
+  finnesInngangTilSoknadsdialog
+} from "../../../utils/soknadsobjekter";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "../../../utils/sprak";
@@ -19,10 +23,11 @@ interface Props {
 }
 
 const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
-  const { soknadsobjekt, key, intl } = props;
-  const { navn, beskrivelse, digitalinnsending, lenker } = soknadsobjekt;
-  const dokumentinnsending = (digitalinnsending || {}).dokumentinnsending;
-  const tilsoknadsdialog = (digitalinnsending || {}).inngangtilsoknadsdialog;
+  const { locale } = props.intl;
+  const { soknadsobjekt, key } = props;
+  const { navn, beskrivelse, lenker } = soknadsobjekt;
+  const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
+  const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
 
   return (
     <div key={key} className="soknadsobjekt">
@@ -34,14 +39,14 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           {beskrivelse && (
             <div className="typo-normal soknadsobjekt__beskrivelse">
               <BlockContent
-                blocks={localeBlockTekst(beskrivelse, intl.locale)}
+                blocks={localeBlockTekst(beskrivelse, locale)}
                 serializers={{ marks: { link } }}
               />
             </div>
           )}
         </div>
         {lenker && lenker.length > 0 && (
-          <RelevantInformasjon lenker={lenker} locale={intl.locale} />
+          <RelevantInformasjon lenker={lenker} locale={locale} />
         )}
       </div>
       <div className="knapper-wrapper litenavstand">
