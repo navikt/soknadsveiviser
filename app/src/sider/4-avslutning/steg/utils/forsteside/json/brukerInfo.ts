@@ -6,10 +6,11 @@ export const adresseOgBrukerInfo = (
   innsendingsmate: Innsendingsmate,
   personalia: Personalia
 ) => {
-  const { bedrift } = personalia;
+  const { fodselsnummer, adresse, bedrift } = personalia;
   const { flerePersonerEllerTiltaksbedrift } = bedrift;
-  const { fodselsnummer, adresse } = personalia;
-  const enhet = bedrift.valgtEnhet && bedrift.valgtEnhet.value;
+
+  const enhet =
+    fodselsnummer.valgtEnhet || adresse.valgtEnhet || bedrift.valgtEnhet;
 
   return flerePersonerEllerTiltaksbedrift
     ? // Bedrift
@@ -39,8 +40,8 @@ export const adresseOgBrukerInfo = (
                 `${adresse.land || ""}. ` +
                 (adresse.kontaktetEnhet
                   ? ` Har tidligere vært i kontakt med ${
-                      adresse.kontaktetEnhet.label
-                    } om saken`
+                      adresse.kontaktetEnhet.enhetsnavn
+                    } - ${adresse.kontaktetEnhet.enhetsnummer} om saken`
                   : "")
             }),
         ...mottakerAdresse(innsendingsmate, enhet)

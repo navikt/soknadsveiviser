@@ -1,9 +1,9 @@
 import React, { Component, ComponentType } from "react";
-import { EnhetOption } from "../../sider/3-soknadstilpasser/felles/personalia/paneler/felter/VisEnheter";
+import { Enhet } from "../../typer/enhet";
 
 export interface Fodselsnummer {
   fodselsnummer: string;
-  valgtEnhet?: EnhetOption;
+  valgtEnhet?: Enhet;
 }
 
 export interface Adresse {
@@ -12,12 +12,12 @@ export interface Adresse {
   postnummer?: string;
   sted: string;
   land?: string;
-  kontaktetEnhet?: EnhetOption;
-  valgtEnhet?: EnhetOption;
+  kontaktetEnhet?: Enhet;
+  valgtEnhet?: Enhet;
 }
 
 export interface ValgtEnhet {
-  valgtEnhet: EnhetOption;
+  valgtEnhet: Enhet;
   flerePersonerEllerTiltaksbedrift?: "flerepersoner" | "tiltaksbedrift";
 }
 
@@ -43,7 +43,7 @@ export interface Personalia extends State {
   settFodselsnummer(fodselsnummer: Fodselsnummer): void;
   settAdresse(adresse: Adresse): void;
   settValgtEnhet(
-    valgtEnhet: EnhetOption,
+    valgtEnhet: Enhet,
     flerePersonerEllerTiltaksbedrift:
       | "flerepersoner"
       | "tiltaksbedrift"
@@ -75,7 +75,7 @@ class MedPersonalia extends Component<{}, State> {
     this.setState({ ...this.state, touched });
 
   settValgtEnhet = (
-    valgtEnhet: EnhetOption,
+    valgtEnhet: Enhet,
     flerePersonerEllerTiltaksbedrift?: "flerepersoner" | "tiltaksbedrift"
   ) =>
     this.setState({
