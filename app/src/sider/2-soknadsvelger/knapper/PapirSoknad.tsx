@@ -21,7 +21,7 @@ const Soknad = (props: MergedProps) => {
 
   const lenkeEllerKnapp = digitalInnsending
     ? "lenke soknadsobjekt__lenke typo-normal"
-    : undefined;
+    : "knapp knapp--hoved soknadsobjekt__knapp";
 
   return (
     <SettValgtSoknadsobjekt
