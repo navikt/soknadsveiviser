@@ -35,11 +35,18 @@ class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
     const { history, match } = this.props;
     this.props.resetState();
-    if (erGyldigFodselsnummer(e.fodselsnummer)) {
+    if (
+      e.fodselsnummer.fodselsnummer &&
+      erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
+    ) {
       loggEvent("soknadsveiviser.harNorskFodselsnummer", {
         harNorskFodselsNummer: true
       });
-      this.props.settFodselsnummer(e.fodselsnummer);
+      this.props.settFodselsnummer({
+        fodselsnummer: e.fodselsnummer.fodselsnummer,
+        valgtEnhet: e.fodselsnummer.valgtEnhet
+      });
+      console.log("push");
       history.push(`${match.url}/avslutning`);
     } else if (
       e.adresse.navn &&
@@ -78,8 +85,6 @@ class VisPersonalia extends Component<MergedProps> {
   };
 
   render() {
-    console.log(this.props);
-    console.log("Rendering personalia");
     const { personEllerBedrift } = this.props.match.params;
 
     const initAdresse = this.props.adresse || {
@@ -91,9 +96,12 @@ class VisPersonalia extends Component<MergedProps> {
     };
 
     const initValues = {
-      fodselsnummer: this.props.fodselsnummer || "",
+      fodselsnummer: this.props.fodselsnummer || {
+        fodselsnummer: ""
+      },
       adresse: initAdresse,
       flerepersoner: {},
+      brukervelgerenhet: {},
       tiltaksbedrift: {}
     };
 
@@ -102,7 +110,6 @@ class VisPersonalia extends Component<MergedProps> {
         ? "personalia.bedrift.undertittel"
         : "personalia.undertittel";
 
-    console.log();
     return (
       <Formik
         initialValues={initValues}

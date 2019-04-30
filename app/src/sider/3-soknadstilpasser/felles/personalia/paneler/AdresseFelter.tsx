@@ -5,6 +5,7 @@ import {
   Personalia,
   medPersonalia
 } from "../../../../../states/providers/Personalia";
+import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import VisEnheter from "./felter/VisEnheter";
@@ -15,12 +16,23 @@ import InputPostnummer from "./felter/Postnummer";
 import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
+import {
+  medValgtSoknadsobjekt,
+  ValgtSoknad
+} from "../../../../../states/providers/ValgtSoknadsobjekt";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
 }
 
-type MergedProps = Personalia & FieldProps<Adresse> & InjectedIntlProps;
+interface Props {}
+
+type MergedProps = Props &
+  ValgtSoknad &
+  Personalia &
+  FieldProps<Adresse> &
+  InjectedIntlProps;
+
 class AdresseFelter extends Component<MergedProps, State> {
   state = { tidligereKontaktMedNAV: false };
   toggleTidligereKontaktMedNav = () =>
@@ -29,8 +41,10 @@ class AdresseFelter extends Component<MergedProps, State> {
     });
 
   render() {
-    const { intl, touched } = this.props;
+    const { intl, touched, valgtSoknadsobjekt } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
+    const { innsendingsmate } = valgtSoknadsobjekt;
+
     return touched ? (
       <>
         <UndertekstBold className="litenavstand">
@@ -57,6 +71,12 @@ class AdresseFelter extends Component<MergedProps, State> {
               {...this.props}
             />
           )}
+          {innsendingsmate && innsendingsmate.visenheter && (
+            <BrukerVelgerEnhet
+              beskrivelse={innsendingsmate.visenheter}
+              {...this.props}
+            />
+          )}
         </div>
       </>
     ) : (
@@ -65,4 +85,4 @@ class AdresseFelter extends Component<MergedProps, State> {
   }
 }
 
-export default medPersonalia(injectIntl(AdresseFelter));
+export default medValgtSoknadsobjekt(medPersonalia(injectIntl(AdresseFelter)));

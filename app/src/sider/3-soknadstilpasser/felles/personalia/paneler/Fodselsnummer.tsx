@@ -5,6 +5,7 @@ import { RouteComponentProps, withRouter } from "react-router-dom";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import {
+  Fodselsnummer,
   medPersonalia,
   Personalia
 } from "../../../../../states/providers/Personalia";
@@ -37,9 +38,7 @@ const FodselsnummerPanel = (props: MergedProps) => {
     <Field
       name="fodselsnummer"
       label="Fodselsnummer"
-      render={(
-        pr: FieldProps<{ fodselsnummer: string }> & InjectedIntlProps
-      ) => (
+      render={(pr: FieldProps<Fodselsnummer>) => (
         <Ekspanderbartpanel
           tittel={intl.formatMessage({
             id: personHarFodselsnummerTekst()
@@ -49,7 +48,10 @@ const FodselsnummerPanel = (props: MergedProps) => {
         >
           <FodselsnummerFelter {...pr} />
           {innsendingsmate && innsendingsmate.visenheter && (
-            <BrukerVelgerEnhet beskrivelse={innsendingsmate.visenheter} />
+            <BrukerVelgerEnhet
+              beskrivelse={innsendingsmate.visenheter}
+              {...pr}
+            />
           )}
         </Ekspanderbartpanel>
       )}

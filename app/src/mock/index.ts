@@ -20,7 +20,11 @@ const mockPdfMerger = false;
 
 export const setUpMock = () => {
   fetchMock.get("/soknadsveiviser/config", getDefault() as any);
-  fetchMock.get("/soknadsveiviser/api/enheter", navKontor);
+
+  fetchMock.get(
+    "/soknadsveiviser/api/enheter",
+    delay(2000, 3000).then(() => navKontor)
+  );
 
   mockKategorier &&
     fetchMock.get(

@@ -68,7 +68,8 @@ class Avslutning extends Component<MergedProps, State> {
     const { skjemaSprak } = this.state;
     const { bedrift, adresse, fodselsnummer } = props;
     const locale = props.intl.locale;
-    const harPersonalia = fodselsnummer || !erTom(adresse) || !erTom(bedrift);
+    const harPersonalia =
+      !erTom(fodselsnummer) || !erTom(adresse) || !erTom(bedrift);
 
     if (!harPersonalia) {
       return <Redirect to={url.replace("/avslutning", "")} />;

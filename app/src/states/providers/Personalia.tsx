@@ -1,6 +1,11 @@
 import React, { Component, ComponentType } from "react";
 import { EnhetOption } from "../../sider/3-soknadstilpasser/felles/personalia/paneler/felter/VisEnheter";
 
+export interface Fodselsnummer {
+  fodselsnummer: string;
+  valgtEnhet?: EnhetOption;
+}
+
 export interface Adresse {
   navn: string;
   adresse: string;
@@ -25,7 +30,7 @@ export interface IsTouched {
 }
 
 export interface State {
-  fodselsnummer: string;
+  fodselsnummer: Fodselsnummer;
   adresse: Adresse;
   touched: IsTouched;
   bedrift: ValgtEnhet;
@@ -33,7 +38,7 @@ export interface State {
 
 export interface Personalia extends State {
   resetState(): void;
-  settFodselsnummer(fodselsnummer: string): void;
+  settFodselsnummer(fodselsnummer: Fodselsnummer): void;
   settAdresse(adresse: Adresse): void;
   settValgtEnhet(
     valgtEnhet: EnhetOption,
@@ -46,8 +51,9 @@ export interface Personalia extends State {
 }
 
 const initState = {
-  fodselsnummer: "" as string,
+  fodselsnummer: {} as Fodselsnummer,
   adresse: {} as Adresse,
+  brukervelgerenhet: {} as Adresse,
   touched: {} as IsTouched,
   bedrift: {} as ValgtEnhet
 };
@@ -58,7 +64,7 @@ class MedPersonalia extends Component<{}, State> {
   state = initState;
   resetState = () => this.setState(initState);
 
-  settFodselsnummer = (fodselsnummer: string) =>
+  settFodselsnummer = (fodselsnummer: Fodselsnummer) =>
     this.setState({ fodselsnummer });
 
   settAdresse = (adresse: Adresse) => this.setState({ adresse });

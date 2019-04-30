@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Field, FieldProps } from "formik";
 import AdresseFelter from "./AdresseFelter";
-import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import {
@@ -9,25 +8,17 @@ import {
   medPersonalia,
   Personalia
 } from "../../../../../states/providers/Personalia";
-import {
-  medValgtSoknadsobjekt,
-  ValgtSoknad
-} from "../../../../../states/providers/ValgtSoknadsobjekt";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 
 interface Routes {
   personEllerBedrift: string;
 }
 
-type MergedProps = ValgtSoknad &
-  Personalia &
-  RouteComponentProps<Routes> &
-  InjectedIntlProps;
+type MergedProps = Personalia & RouteComponentProps<Routes> & InjectedIntlProps;
 
 const FodselsnummerPanel = (props: MergedProps) => {
-  const { intl, valgtSoknadsobjekt } = props;
+  const { intl } = props;
   const { personEllerBedrift } = props.match.params;
-  const { innsendingsmate } = valgtSoknadsobjekt;
 
   const personHarIkkeFodselsnummerTekst = () =>
     personEllerBedrift === "bedrift"
@@ -44,13 +35,8 @@ const FodselsnummerPanel = (props: MergedProps) => {
         label="Adresse"
         render={(pr: FieldProps<Adresse>) => <AdresseFelter {...pr} />}
       />
-      {innsendingsmate && innsendingsmate.visenheter && (
-        <BrukerVelgerEnhet beskrivelse={innsendingsmate.visenheter} />
-      )}
     </Ekspanderbartpanel>
   );
 };
 
-export default medValgtSoknadsobjekt(
-  injectIntl(withRouter(medPersonalia(FodselsnummerPanel)))
-);
+export default injectIntl(withRouter(medPersonalia(FodselsnummerPanel)));

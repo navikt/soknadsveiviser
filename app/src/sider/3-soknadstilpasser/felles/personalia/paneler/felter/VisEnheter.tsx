@@ -1,20 +1,25 @@
 import * as React from "react";
 import { Enhet } from "../../../../../../typer/enhet";
-import Select from "react-select";
+import { Select } from "nav-frontend-skjema";
 import { fetchEnheter } from "../../../../../../klienter/serverKlient";
 import { FieldProps } from "formik";
 import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
-import { ValueType } from "react-select/lib/types";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import NavFrontendSpinner from "nav-frontend-spinner";
+import {
+  Personalia,
+  medPersonalia
+} from "../../../../../../states/providers/Personalia";
 
 interface Props {
-  valgtEnhet?: EnhetOption;
+  valgtEnhet?: Enhet;
   label: string;
   placeholder?: string;
 }
 
 interface State {
   enheter: Enhet[];
-  valgtEnhet: EnhetOption;
+  valgtEnhet: Enhet;
 }
 
 export interface EnhetOption {
@@ -22,49 +27,71 @@ export interface EnhetOption {
   label: string;
 }
 
-type MergedProps = Props & FieldProps<any>;
+type MergedProps = Props & Personalia & FieldProps<any> & InjectedIntlProps;
 class VisEnheter extends React.Component<MergedProps, State> {
   state = {
     enheter: [] as Enhet[],
-    valgtEnhet: this.props.valgtEnhet || { label: "", value: {} as Enhet }
+    valgtEnhet: this.props.valgtEnhet || ({} as Enhet)
   };
 
-  componentDidMount = () => this.hentEnheter();
+  componentDidMount = () => {
+    this.props.field.value.valgtEnhet = "ikkeValgt";
+    this.hentEnheter();
+  };
 
   hentEnheter = () =>
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
-  handleChange = (
-    selectedOption: ValueType<{ value: Enhet; label: string }>
-  ) => {
-    this.props.field.value.valgtEnhet = selectedOption;
+  handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const valgtEnhet =
+      this.state.enheter
+        .filter(enhet => enhet.enhetsnummer === event.currentTarget.value)
+        .shift() || ({} as Enhet);
+
+    this.props.field.value.valgtEnhet = valgtEnhet;
     this.setState({
       ...this.state,
-      valgtEnhet: this.props.field.value.valgtEnhet
+      valgtEnhet: valgtEnhet
     });
   };
 
-  buildOptions = () =>
-    this.state.enheter.map(enhet => ({
-      value: enhet,
-      label: enhet.enhetsnavn + " - " + enhet.enhetsnummer
-    }));
+  sjekkFeil = (valgtEnhet: string) =>
+    this.props.touched.valgtEnhet && valgtEnhet === "ikkeValgt"
+      ? {
+          feilmelding: this.props.intl.formatMessage({
+            id: "personalia.error.enhet"
+          })
+        }
+      : undefined;
 
   render() {
-    const options = this.buildOptions();
-    const { label, field, placeholder } = this.props;
+    const { label, field, placeholder, intl } = this.props;
+    const { enheter } = this.state;
     return (
       <div className="visEnheter">
         <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
-        <Select
-          value={field.value.valgtEnhet}
-          onChange={this.handleChange}
-          options={options}
-          placeholder={placeholder}
-        />
+        {!enheter.length ? (
+          <NavFrontendSpinner />
+        ) : (
+          <Select
+            label={""}
+            onChange={this.handleChange}
+            placeholder={placeholder}
+            feil={this.sjekkFeil(field.value.valgtEnhet)}
+          >
+            <option key="velgEnhet" value="ikkeValgt" defaultChecked>
+              {intl.formatMessage({ id: "personalia.velgenhet" })}
+            </option>
+            {enheter.map(enhet => (
+              <option key={enhet.enhetsnummer} value={enhet.enhetsnummer}>
+                {enhet.enhetsnavn + " - " + enhet.enhetsnummer}
+              </option>
+            ))}
+          </Select>
+        )}
       </div>
     );
   }
 }
 
-export default VisEnheter;
+export default medPersonalia(injectIntl(VisEnheter));

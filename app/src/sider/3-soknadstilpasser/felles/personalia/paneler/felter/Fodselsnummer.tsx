@@ -26,12 +26,14 @@ const Fodselsnummer = (props: MergedProps) => {
       <Input
         className="litenavstand"
         bredde="S"
-        name="fodselsnummer"
+        name="fodselsnummer.fodselsnummer"
         label={intl.formatMessage({ id: "personalia.label.fodselsnummer" })}
-        value={field.value}
+        value={field.value.fodselsnummer || ""}
         onChange={field.onChange}
         feil={
-          !erGyldigFodselsnummer(field.value) && touched.fodselsnummer
+          touched.fodselsnummer &&
+          (!field.value.fodselsnummer ||
+            !erGyldigFodselsnummer(field.value.fodselsnummer))
             ? {
                 feilmelding: intl.formatMessage({
                   id: "personalia.error.fodselsnummer"
