@@ -35,7 +35,6 @@ class VisEnheter extends React.Component<MergedProps, State> {
   };
 
   componentDidMount = () => {
-    this.props.field.value.valgtEnhet = "ikkeValgt";
     this.hentEnheter();
   };
 
@@ -55,8 +54,9 @@ class VisEnheter extends React.Component<MergedProps, State> {
     });
   };
 
-  sjekkFeil = (valgtEnhet: string) =>
-    this.props.touched.valgtEnhet && valgtEnhet === "ikkeValgt"
+  sjekkFeil = (valgtEnhet?: string) =>
+    this.props.touched.valgtEnhet &&
+    (!valgtEnhet || (valgtEnhet && valgtEnhet === "ikkeValgt"))
       ? {
           feilmelding: this.props.intl.formatMessage({
             id: "personalia.error.enhet"

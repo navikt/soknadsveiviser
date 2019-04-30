@@ -36,7 +36,6 @@ class VisPersonalia extends Component<MergedProps> {
     const { history, match } = this.props;
     this.props.resetState();
     if (
-      e.fodselsnummer.valgtEnhet !== "ikkeValgt" &&
       e.fodselsnummer.fodselsnummer &&
       erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
     ) {
@@ -94,12 +93,15 @@ class VisPersonalia extends Component<MergedProps> {
       land: "",
       adresse: "",
       postnummer: "",
-      sted: ""
+      sted: "",
+      kontaktetEnhet: undefined,
+      valgtEnhet: undefined
     };
 
     const initValues = {
       fodselsnummer: this.props.fodselsnummer || {
-        fodselsnummer: ""
+        fodselsnummer: "",
+        valgtEnhet: undefined
       },
       adresse: initAdresse,
       flerepersoner: {},

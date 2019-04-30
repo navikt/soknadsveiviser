@@ -24,10 +24,10 @@ export const adresseOgBrukerInfo = (
         }
     : // Personbruker
       {
-        ...(fodselsnummer
+        ...(fodselsnummer.fodselsnummer
           ? {
               bruker: {
-                brukerId: fodselsnummer,
+                brukerId: fodselsnummer.fodselsnummer,
                 brukerType: "PERSON"
               }
             }
