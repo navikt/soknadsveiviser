@@ -57,9 +57,13 @@ export default {
     "personalia.ikkeFodselsnummerDnummer": `Jeg har ikke fødselsnummer`,
     "personalia.oppgiFodselsnummerDnummer": `Jeg har et fødselsnummer eller D-nummer`,
     "personalia.undertekstbold.adresse": `Hvis du har en adresse du bor på i Norge, bruk den adressen. Hvis du ikke har en adresse i Norge, vennligst fyll inn din vanlige adresse.`,
-    "personalia.undertekstbold.flerepersoner": `Forklarende tekst for flere personer. Forklarende tekst for flere personer. Du må velge NAV-kontor som arkene skal sendes til.`,
+    "personalia.undertekstbold.flerepersoner": `OBS: Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
+
+For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket kontor som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "personalia.undertekstbold.gdpr": `Denne informasjonen blir ikke lagret, og brukes kun for å generere en førsteside for innsending på papir.`,
-    "personalia.undertekstbold.tiltaksbedrift": `Forklarende tekst for tiltaksbedrifter. Forklarende tekst for tiltaksbedrifter. Du må velge NAV-kontor som du har hatt kontakt med.`,
+    "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak
+
+For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket kontor som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "klage.knapp": `Klage på vedtak`,
     "klage.tittel.underbanner": `Klage på vedtak`,
     "ettersendelser.knapp": `Ettersendelse`,
@@ -179,16 +183,20 @@ export default {
     "personalia.label.poststed": `City`,
     "personalia.label.tidligereKontaktMedNAV": `Check if you have been in contact with NAV about this matter earlier`,
     "personalia.label.velgnavkontor": `Choose NAV unit`,
-    "personalia.bedrift.flerepersoner": `Multiple people`,
+    "personalia.bedrift.flerepersoner": `More than one person`,
     "personalia.bedrift.ikkeFodselsnummerDnummer": `The person does not have a Norwegian national identification number`,
     "personalia.bedrift.oppgiFodselsnummerDnummer": `The person has a Norwegian national identification number`,
-    "personalia.bedrift.tiltaksbedrift": `Tiltaksbedrifter, kursarrangører og andre virksomheter`,
+    "personalia.bedrift.tiltaksbedrift": `Labor market training, course organizers and other businesses`,
     "personalia.ikkeFodselsnummerDnummer": `I do not have a Norwegian national identification number`,
     "personalia.oppgiFodselsnummerDnummer": `I have a Norwegian national identification number`,
     "personalia.undertekstbold.adresse": `If you have an address you stay at in Norway, use that address. Otherwise, please fill inn your the address you currently reside in.`,
-    "personalia.undertekstbold.flerepersoner": `Forklarende tekst for flere personer. Forklarende tekst for flere personer. Du må velge NAV-kontor som arkene skal sendes til.`,
+    "personalia.undertekstbold.flerepersoner": `NOTE: This choice should not be used for occupational injury reports, sick pay and work-related measures.
+
+In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
     "personalia.undertekstbold.gdpr": `This information is not stored, and is only used to generate a front page for your application.`,
-    "personalia.undertekstbold.tiltaksbedrift": `Forklarende tekst for tiltaksbedrifter. Forklarende tekst for tiltaksbedrifter. Du må velge NAV-kontor som du har hatt kontakt med.`,
+    "personalia.undertekstbold.tiltaksbedrift": `Example: Applications, invoice, list of participants, or other things that concern work-oriented measures
+
+In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
     "klage.knapp": `Appeal`,
     "klage.tittel.underbanner": `Appeal`,
     "ettersendelser.knapp": `Forward`,
