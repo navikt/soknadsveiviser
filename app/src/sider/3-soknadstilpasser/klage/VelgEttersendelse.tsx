@@ -8,7 +8,7 @@ import PanelBase from "nav-frontend-paneler";
 import { RadioPanelGruppe } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { settVedleggSkalSendesForSoknadsobjekt } from "../../../states/reducers/vedlegg";
+import { settAlleVedleggSkalSendesForSoknadsobjekt } from "../../../states/reducers/vedlegg";
 import { settEttersendTilKlage } from "../../../states/reducers/klage";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
@@ -19,19 +19,21 @@ interface Props {
 
 interface ReduxProps {
   klage: Klage;
-  settEttersendTilKlage: (skalEttersende: string) => void;
-  settVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) => void;
+  settEttersendTilKlage: (skalEttersende: boolean) => void;
+  settAlleVedleggSkalSendesForSoknadsobjekt: (
+    soknadsobjekt: Soknadsobjekt
+  ) => void;
 }
 
 type MergedProps = Props & ReduxProps & InjectedIntlProps;
-
-const SkalEttersende = (props: MergedProps) => {
+const VelgEttersendelse = (props: MergedProps) => {
   const { intl, klage, klageSoknadsobjekt } = props;
   const handleOnChange = ({}, value?: string) => {
-    if (value) {
-      props.settEttersendTilKlage(value);
-      if (value === "ja") {
-        props.settVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
+    const skalEttersende = value === "ja" ? true : false;
+    if (skalEttersende !== undefined) {
+      props.settEttersendTilKlage(skalEttersende);
+      if (skalEttersende) {
+        props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
       }
     }
   };
@@ -68,10 +70,10 @@ const mapStateToProps = (store: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  settEttersendTilKlage: (skalEttersende: string) =>
+  settEttersendTilKlage: (skalEttersende: boolean) =>
     dispatch(settEttersendTilKlage(skalEttersende)),
-  settVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
-    dispatch(settVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
+  settAlleVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
+    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
 });
 
 export default medValgtSoknadsobjekt<Props>(
@@ -79,6 +81,6 @@ export default medValgtSoknadsobjekt<Props>(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(SkalEttersende)
+    )(VelgEttersendelse)
   )
 );

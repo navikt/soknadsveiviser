@@ -1,29 +1,29 @@
 # Søknadsveiviser
+Dette er en Create React App med TypeScript, som fungerer som en veiviser inn til de forskjellige søknadene på nav.no
 
-Her bor koden som viser søknadsdialogene på nav.no (når dette bytter ut ENONIC-systemet), koden for admin-siden til søknader finner du på [/navikt/soknadsveiviseradmin](https://github.com/navikt/soknadsveiviseradmin)
+Appen kjører på NAIS i en dockercontainer.
 
-### Installasjon
-
-Prosjektet krever NPM, last ned prosjektet, CD inn i korrekt mappe, installer NPM-pakkene og start NPM.
-
-Last ned prosjekt
-
-```
-git clone https://github.com/navikt/soknadsveiviser.git
-```
+# Komme i gang
 
 Installer NPM pakker
 
 ```
-cd soknadsveiviser/app
+cd app
 npm install
 ```
 
-kjør prosjektet
+Kjør prosjektet
 
 ```
 npm start
 ```
+
+### Bygging og deploy
+
+Vi har et pipelinebygg på [Jenkins](https://ci.adeo.no/job/informasjon_og_veiledning/job/soknadsveiviser/) 
+som må trigges manuelt for deploy til dev (q0) og produksjon.
+
+Applikasjonen ligger i q0 namespace i dev-sbs og default namespace prod-sbs.
 
 ### Logging
 
@@ -37,6 +37,10 @@ application:frontendlogger AND x_appname:soknadsveiviser
 
 Ledetekster endres i src/sprak/tekster.jts på både norsk og engelsk.
 
-#### Forfattere
+# Henvendelser
 
-Dette prosjektet ble lagd som ett prosjekt gitt sommerstudenter fra BEKK.
+Spørsmål knyttet til koden eller prosjektet kan rettes mot https://github.com/orgs/navikt/teams/team-personbruker
+
+## For NAV-ansatte
+
+Interne henvendelser kan sendes via Slack i kanalen #team-personbruker.

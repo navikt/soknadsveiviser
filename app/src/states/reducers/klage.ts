@@ -7,11 +7,8 @@ interface SettKlageEtterendelse {
 }
 
 // Actions
-export const settEttersendTilKlage = (skalEttersende: string) => {
-  return {
-    type: "SETT_ETTERSEND_TIL_KLAGE",
-    skalEttersende: skalEttersende === "ja" ? true : false
-  };
+export const settEttersendTilKlage = (skalEttersende: boolean) => {
+  return { type: "SETT_ETTERSEND_TIL_KLAGE", skalEttersende };
 };
 
 // Reducers
