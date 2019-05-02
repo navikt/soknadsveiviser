@@ -39,6 +39,7 @@ class Soknadsveiviser extends Component<MergedProps> {
   }
 
   componentDidUpdate() {
+    //Oppdater tittel
     const { valgtKategori, intl } = this.props;
     const { locale } = intl;
     document.title = sideTittel(`${localeTekst(valgtKategori.tittel, locale)}`);
