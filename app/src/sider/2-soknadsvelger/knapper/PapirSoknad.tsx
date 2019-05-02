@@ -3,6 +3,7 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import SettValgtSoknadsobjekt from "./SettValgtSoknadsobjekt";
 import { withRouter, RouteComponentProps } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
+import { finnesDigitalInnsending } from "../../../utils/soknadsobjekter";
 
 interface Props {
   soknadsobjekt: Soknadsobjekt;
@@ -12,21 +13,13 @@ type MergedProps = Props & RouteComponentProps & InjectedIntlProps;
 const Soknad = (props: MergedProps) => {
   const { soknadsobjekt, match, intl } = props;
   const { skjemanummer } = soknadsobjekt.hovedskjema;
+  const digitalInnsending = finnesDigitalInnsending(soknadsobjekt, intl.locale);
 
-  const finnesDigitalInnsending =
-    soknadsobjekt.digitalinnsending &&
-    (soknadsobjekt.digitalinnsending.dokumentinnsending ||
-      (soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
-        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog
-          .soknadsdialogURL &&
-        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog
-          .soknadsdialogURL[intl.locale]));
-
-  const tittel = finnesDigitalInnsending
+  const tittel = digitalInnsending
     ? "vissoknadsobjekter.ikkeelektroniskID"
     : "vissoknadsobjekter.knapp.soknadpapapir";
 
-  const lenkeEllerKnapp = finnesDigitalInnsending
+  const lenkeEllerKnapp = digitalInnsending
     ? "lenke soknadsobjekt__lenke typo-normal"
     : undefined;
 
