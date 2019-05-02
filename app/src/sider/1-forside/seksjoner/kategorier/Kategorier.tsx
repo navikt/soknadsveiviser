@@ -7,6 +7,7 @@ import { injectIntl, InjectedIntlProps } from "react-intl";
 import { withRouter, RouteComponentProps } from "react-router";
 import { filtrerKategorier } from "../../../../utils/kategorier";
 import { medKategorier } from "../../../../states/providers/Kategorier";
+import { localeTekst, sideTittel } from "../../../../utils/sprak";
 import "./Kategorier.less";
 
 type State = {
@@ -31,11 +32,18 @@ class Kategorier extends Component<MergedProps, State> {
       windowSize: window.innerWidth
     });
 
-  componentDidMount = () =>
+  componentDidMount = () => {
+    this.setTittel();
     window.addEventListener("resize", this.handleWindowSize);
+  };
 
   componentWillUnmount = () =>
     window.removeEventListener("resize", this.handleWindowSize);
+
+  setTittel = () =>
+    (document.title = sideTittel(
+      `${localeTekst(this.props.valgtKategori.tittel, this.props.intl.locale)}`
+    ));
 
   render = () => {
     const { windowSize } = this.state;
