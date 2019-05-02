@@ -1,32 +1,22 @@
-import { PersonaliaKontekst } from "../../../../../../states/providers/Personalia";
+import { Personalia } from "../../../../../../states/providers/Personalia";
 import { Innsendingsmate } from "../../../../../../typer/soknad";
-import { mottakerAdresse } from "./mottakerAdresse";
+import { mottakerAdresse, enhetAdresse } from "./mottakerAdresse";
 
 export const adresseOgBrukerInfo = (
   innsendingsmate: Innsendingsmate,
-  personaliaKontekst: PersonaliaKontekst
+  personalia: Personalia
 ) => {
-  const { bedrift } = personaliaKontekst;
+  const { fodselsnummer, adresse, bedrift } = personalia;
   const { flerePersonerEllerTiltaksbedrift } = bedrift;
-  const { fodselsnummer, adresse } = personaliaKontekst;
-  const enhet = bedrift.valgtEnhet && bedrift.valgtEnhet.value;
+
+  const enhet =
+    fodselsnummer.valgtEnhet || adresse.valgtEnhet || bedrift.valgtEnhet;
 
   return flerePersonerEllerTiltaksbedrift
     ? // Bedrift
       flerePersonerEllerTiltaksbedrift === "flerepersoner"
       ? // Flere personer
-        {
-          adresse: {
-            adresselinje1: enhet.enhetsnavn,
-            adresselinje2: enhet.postboks
-              ? "Postboks " + enhet.postboks
-              : `${enhet.postGatenavn || ""} ` +
-                (enhet.postHusnummer || "") +
-                (enhet.postHusbokstav || ""),
-            postnummer: enhet.postnummer,
-            poststed: enhet.poststed
-          }
-        }
+        { ...enhetAdresse(enhet) }
       : // Tiltaksbedrift
         {
           enhetsnummer: enhet.enhetsnummer,
@@ -34,10 +24,10 @@ export const adresseOgBrukerInfo = (
         }
     : // Personbruker
       {
-        ...(fodselsnummer
+        ...(fodselsnummer.fodselsnummer
           ? {
               bruker: {
-                brukerId: fodselsnummer,
+                brukerId: fodselsnummer.fodselsnummer,
                 brukerType: "PERSON"
               }
             }
@@ -48,12 +38,12 @@ export const adresseOgBrukerInfo = (
                 `${adresse.postnummer || ""} ` +
                 `${adresse.sted || ""} ` +
                 `${adresse.land || ""}. ` +
-                (adresse.valgtEnhet
+                (adresse.kontaktetEnhet
                   ? ` Har tidligere vært i kontakt med ${
-                      adresse.valgtEnhet.label
-                    } om saken`
+                      adresse.kontaktetEnhet.enhetsnavn
+                    } - ${adresse.kontaktetEnhet.enhetsnummer} om saken`
                   : "")
             }),
-        ...mottakerAdresse(innsendingsmate)
+        ...mottakerAdresse(innsendingsmate, enhet)
       };
 };

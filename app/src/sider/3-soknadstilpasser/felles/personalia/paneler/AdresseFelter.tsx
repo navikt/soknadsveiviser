@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import { FieldProps } from "formik/dist/Field";
 import {
   Adresse,
-  PersonaliaKontekst
+  Personalia,
+  medPersonalia
 } from "../../../../../states/providers/Personalia";
+import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import VisEnheter from "./felter/VisEnheter";
+import KontaktetEnhet from "./felter/KontaktetEnhet";
 import UndertekstBold from "nav-frontend-typografi/lib/undertekst-bold";
 import InputNavn from "./felter/Navn";
 import InputGateAdresse from "./felter/GateAdresse";
@@ -14,16 +16,23 @@ import InputPostnummer from "./felter/Postnummer";
 import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
-
-interface Props {
-  context: PersonaliaKontekst;
-}
+import {
+  medValgtSoknadsobjekt,
+  ValgtSoknad
+} from "../../../../../states/providers/ValgtSoknadsobjekt";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
 }
 
-type MergedProps = Props & FieldProps<Adresse> & InjectedIntlProps;
+interface Props {}
+
+type MergedProps = Props &
+  ValgtSoknad &
+  Personalia &
+  FieldProps<Adresse> &
+  InjectedIntlProps;
+
 class AdresseFelter extends Component<MergedProps, State> {
   state = { tidligereKontaktMedNAV: false };
   toggleTidligereKontaktMedNav = () =>
@@ -32,9 +41,10 @@ class AdresseFelter extends Component<MergedProps, State> {
     });
 
   render() {
-    const { context, intl } = this.props;
+    const { intl, touched, valgtSoknadsobjekt } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
-    const { touched } = context;
+    const { innsendingsmate } = valgtSoknadsobjekt;
+
     return touched ? (
       <>
         <UndertekstBold className="litenavstand">
@@ -51,13 +61,19 @@ class AdresseFelter extends Component<MergedProps, State> {
             toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
           />
           {tidligereKontaktMedNAV && (
-            <VisEnheter
+            <KontaktetEnhet
               label={intl.formatMessage({
                 id: "personalia.label.velgnavkontor"
               })}
               placeholder={intl.formatMessage({
                 id: "personalia.label.navkontor"
               })}
+              {...this.props}
+            />
+          )}
+          {innsendingsmate && innsendingsmate.visenheter && (
+            <BrukerVelgerEnhet
+              beskrivelse={innsendingsmate.visenheter}
               {...this.props}
             />
           )}
@@ -69,4 +85,4 @@ class AdresseFelter extends Component<MergedProps, State> {
   }
 }
 
-export default injectIntl(AdresseFelter);
+export default medValgtSoknadsobjekt(medPersonalia(injectIntl(AdresseFelter)));

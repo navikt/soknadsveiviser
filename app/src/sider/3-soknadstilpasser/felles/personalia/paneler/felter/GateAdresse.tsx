@@ -2,21 +2,19 @@ import * as React from "react";
 import { Input } from "nav-frontend-skjema";
 import { injectIntl } from "react-intl";
 import { FieldProps } from "formik";
-import { PersonaliaKontekst } from "../../../../../../states/providers/Personalia";
+import {
+  Personalia,
+  medPersonalia
+} from "../../../../../../states/providers/Personalia";
 import { InjectedIntlProps } from "react-intl";
 
 interface Fields {
   adresse: string;
 }
 
-interface Props {
-  context: PersonaliaKontekst;
-}
-
-type MergedProps = FieldProps<Fields> & Props & InjectedIntlProps;
+type MergedProps = FieldProps<Fields> & Personalia & InjectedIntlProps;
 const GateAdresse = (props: MergedProps) => {
-  const { intl, field, context } = props;
-  const { touched, settTouched } = context;
+  const { intl, field, touched, settTouched } = props;
   return (
     <Input
       bredde="XXL"
@@ -41,4 +39,4 @@ const GateAdresse = (props: MergedProps) => {
   );
 };
 
-export default injectIntl(GateAdresse);
+export default medPersonalia(injectIntl(GateAdresse));

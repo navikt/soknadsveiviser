@@ -100,7 +100,7 @@ class VisKlage extends React.Component<MergedProps> {
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
-        <Personalia {...this.props} />
+        <Personalia />
       </>
     );
   }

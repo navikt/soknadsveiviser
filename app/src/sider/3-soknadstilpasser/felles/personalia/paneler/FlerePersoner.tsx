@@ -5,7 +5,7 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import {
   ValgtEnhet,
   medPersonalia,
-  PersonaliaKontekst
+  Personalia
 } from "../../../../../states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import VisEnheter from "./felter/VisEnheter";
@@ -15,13 +15,9 @@ interface Routes {
   personEllerBedrift: string;
 }
 
-interface Props {
-  personaliaKontekst: PersonaliaKontekst;
-}
-
-type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
+type MergedProps = Personalia & RouteComponentProps<Routes> & InjectedIntlProps;
 const FlerePersonerPanel = (props: MergedProps) => {
-  const { intl, personaliaKontekst } = props;
+  const { intl } = props;
 
   return (
     <Ekspanderbartpanel
@@ -47,8 +43,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
               })}
               {...pr}
             />
-            {personaliaKontekst.touched.valgtEnhet &&
-            !pr.field.value.valgtEnhet ? (
+            {props.touched.valgtEnhet && !pr.field.value.valgtEnhet ? (
               <Normaltekst className="skjemaelement__feilmelding">
                 <FormattedMessage id="personalia.error.velgkontor" />
               </Normaltekst>

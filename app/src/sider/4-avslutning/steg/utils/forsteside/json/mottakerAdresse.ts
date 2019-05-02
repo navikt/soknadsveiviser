@@ -1,9 +1,18 @@
 import { Innsendingsmate } from "../../../../../../typer/soknad";
-export const mottakerAdresse = (innsendingsmate: Innsendingsmate) =>
+import { Enhet } from "../../../../../../typer/enhet";
+
+export const mottakerAdresse = (
+  innsendingsmate: Innsendingsmate,
+  enhet?: Enhet
+) =>
   innsendingsmate &&
   (innsendingsmate.skanning
     ? {
         netsPostboks: "1400"
+      }
+    : innsendingsmate.visenheter && enhet
+    ? {
+        ...enhetAdresse(enhet)
       }
     : innsendingsmate.spesifisertadresse
     ? {
@@ -16,3 +25,16 @@ export const mottakerAdresse = (innsendingsmate: Innsendingsmate) =>
           poststed: "-"
         }
       });
+
+export const enhetAdresse = (enhet: Enhet) => ({
+  adresse: {
+    adresselinje1: enhet.enhetsnavn,
+    adresselinje2: enhet.postboks
+      ? "Postboks " + enhet.postboks
+      : `${enhet.postGatenavn || ""} ` +
+        (enhet.postHusnummer || "") +
+        (enhet.postHusbokstav || ""),
+    postnummer: enhet.postnummer,
+    poststed: enhet.poststed
+  }
+});

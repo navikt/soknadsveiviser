@@ -1,8 +1,5 @@
 import React, { Component } from "react";
-import {
-  medPersonalia,
-  PersonaliaKontekst
-} from "../../states/providers/Personalia";
+import { medPersonalia, Personalia } from "../../states/providers/Personalia";
 import { connect } from "react-redux";
 import { withRouter } from "react-router";
 import { Normaltekst } from "nav-frontend-typografi";
@@ -30,10 +27,6 @@ interface State {
 interface ValgtSoknad {
   valgtSoknadsobjekt: Soknadsobjekt;
   klageSoknadsobjekt: Soknadsobjekt;
-}
-
-interface Personalia {
-  personaliaKontekst: PersonaliaKontekst;
 }
 
 interface ReduxProps {
@@ -68,14 +61,15 @@ class Avslutning extends Component<MergedProps, State> {
 
   render() {
     const { props } = this;
-    const { personaliaKontekst, valgteVedlegg } = props;
+    const { valgteVedlegg } = props;
     const { valgtSoknadsobjekt } = props;
     const { url } = props.match;
     const { ettersendelse } = props.match.params;
     const { skjemaSprak } = this.state;
-    const { bedrift, adresse, fodselsnummer } = personaliaKontekst;
+    const { bedrift, adresse, fodselsnummer } = props;
     const locale = props.intl.locale;
-    const harPersonalia = fodselsnummer || !erTom(adresse) || !erTom(bedrift);
+    const harPersonalia =
+      !erTom(fodselsnummer) || !erTom(adresse) || !erTom(bedrift);
 
     if (!harPersonalia) {
       return <Redirect to={url.replace("/avslutning", "")} />;
@@ -133,9 +127,7 @@ class Avslutning extends Component<MergedProps, State> {
           <LastNed
             steg={++steg}
             relevanteVedlegg={relevanteVedlegg}
-            personaliaKontekst={personaliaKontekst}
             skjemaSprak={skjemaSprak}
-            {...this.props}
           />
           <div className="steg__rad">
             <StegOverskrift
@@ -170,7 +162,10 @@ export default medValgtSoknadsobjekt<ValgtSoknad>(
   injectIntl<ValgtSoknad & InjectedIntlProps>(
     withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>>(
       medPersonalia<
-        ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+        Personalia &
+          ValgtSoknad &
+          InjectedIntlProps &
+          RouteComponentProps<Routes>
       >(connect(mapStateToProps)(Avslutning))
     )
   )

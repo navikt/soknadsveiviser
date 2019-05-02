@@ -38,7 +38,7 @@ export interface Soknader {
 export interface Innsendingsmate {
   skanning?: boolean;
   spesifisertadresse?: Adresse;
-  brukerVelgerSelv?: SprakBlockText;
+  visenheter?: SprakBlockText;
 }
 
 export interface Adresse {

@@ -12,14 +12,14 @@ import {
 } from "../../../../../../states/providers/Personalia";
 
 interface Props {
-  valgtEnhet?: Enhet;
+  kontaktetEnhet?: Enhet;
   label: string;
   placeholder?: string;
 }
 
 interface State {
   enheter: Enhet[];
-  valgtEnhet: Enhet;
+  kontaktetEnhet: Enhet;
 }
 
 export interface EnhetOption {
@@ -31,10 +31,11 @@ type MergedProps = Props & Personalia & FieldProps<any> & InjectedIntlProps;
 class VisEnheter extends React.Component<MergedProps, State> {
   state = {
     enheter: [] as Enhet[],
-    valgtEnhet: this.props.valgtEnhet || ({} as Enhet)
+    kontaktetEnhet: this.props.kontaktetEnhet || ({} as Enhet)
   };
 
   componentDidMount = () => {
+    this.props.field.value.kontaktetEnhet = "ikkeValgt";
     this.hentEnheter();
   };
 
@@ -42,21 +43,20 @@ class VisEnheter extends React.Component<MergedProps, State> {
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
   handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const valgtEnhet =
+    const kontaktetEnhet =
       this.state.enheter
         .filter(enhet => enhet.enhetsnummer === event.currentTarget.value)
         .shift() || ({} as Enhet);
 
-    this.props.field.value.valgtEnhet = valgtEnhet;
+    this.props.field.value.kontaktetEnhet = kontaktetEnhet;
     this.setState({
       ...this.state,
-      valgtEnhet: valgtEnhet
+      kontaktetEnhet: kontaktetEnhet
     });
   };
 
-  sjekkFeil = (valgtEnhet?: string) =>
-    this.props.touched.valgtEnhet &&
-    (!valgtEnhet || (valgtEnhet && valgtEnhet === "ikkeValgt"))
+  sjekkFeil = (kontaktetEnhet: string) =>
+    this.props.touched.kontaktetEnhet && kontaktetEnhet === "ikkeValgt"
       ? {
           feilmelding: this.props.intl.formatMessage({
             id: "personalia.error.enhet"
@@ -67,7 +67,6 @@ class VisEnheter extends React.Component<MergedProps, State> {
   render() {
     const { label, field, placeholder, intl } = this.props;
     const { enheter } = this.state;
-    const { valgtEnhet } = field.value;
     return (
       <div className="visEnheter">
         <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
@@ -78,23 +77,13 @@ class VisEnheter extends React.Component<MergedProps, State> {
             label={""}
             onChange={this.handleChange}
             placeholder={placeholder}
-            feil={this.sjekkFeil(valgtEnhet)}
+            feil={this.sjekkFeil(field.value.kontaktetEnhet)}
           >
-            <option
-              key="velgEnhet"
-              value="ikkeValgt"
-              defaultChecked={!valgtEnhet}
-            >
+            <option key="velgEnhet" value="ikkeValgt" defaultChecked>
               {intl.formatMessage({ id: "personalia.velgenhet" })}
             </option>
             {enheter.map(enhet => (
-              <option
-                key={enhet.enhetsnummer}
-                value={enhet.enhetsnummer}
-                defaultChecked={
-                  valgtEnhet && valgtEnhet.enhetsnummer === enhet.enhetsnummer
-                }
-              >
+              <option key={enhet.enhetsnummer} value={enhet.enhetsnummer}>
                 {enhet.enhetsnavn + " - " + enhet.enhetsnummer}
               </option>
             ))}

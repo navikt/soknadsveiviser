@@ -1,9 +1,11 @@
-import * as React from "react";
+import React, { Component } from "react";
 import {
   medPersonalia,
-  PersonaliaKontekst
+  Personalia
 } from "../../../../states/providers/Personalia";
+import { medValgtSoknadsobjekt } from "../../../../states/providers/ValgtSoknadsobjekt";
 import { Form, Formik } from "formik";
+import { Soknadsobjekt } from "../../../../typer/soknad";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { erGyldigFodselsnummer } from "../../../../utils/validering/fodselsnummer";
 import { Undertittel } from "nav-frontend-typografi";
@@ -15,26 +17,40 @@ import FlerePersonerPanel from "./paneler/FlerePersoner";
 import TiltaksBedriftPanel from "./paneler/TiltaksBedrift";
 import NesteKnapp from "./knapper/Neste";
 
+interface ValgtSoknad {
+  valgtSoknadsobjekt: Soknadsobjekt;
+  klageSoknadsobjekt: Soknadsobjekt;
+}
+
 interface Routes {
   personEllerBedrift: string;
 }
 
-interface Props {
-  personaliaKontekst: PersonaliaKontekst;
-}
+type MergedProps = ValgtSoknad &
+  Personalia &
+  RouteComponentProps<Routes> &
+  InjectedIntlProps;
 
-type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
-class Personalia extends React.Component<MergedProps> {
+class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
-    const { history, personaliaKontekst, match } = this.props;
-    personaliaKontekst.resetState();
-    if (erGyldigFodselsnummer(e.fodselsnummer)) {
+    const { history, match, valgtSoknadsobjekt } = this.props;
+    const { visenheter } = valgtSoknadsobjekt.innsendingsmate;
+    this.props.resetState();
+    if (
+      (e.fodselsnummer.valgtEnhet || !visenheter) &&
+      e.fodselsnummer.fodselsnummer &&
+      erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
+    ) {
       loggEvent("soknadsveiviser.harNorskFodselsnummer", {
         harNorskFodselsNummer: true
       });
-      personaliaKontekst.settFodselsnummer(e.fodselsnummer);
+      this.props.settFodselsnummer({
+        fodselsnummer: e.fodselsnummer.fodselsnummer,
+        valgtEnhet: e.fodselsnummer.valgtEnhet
+      });
       history.push(`${match.url}/avslutning`);
     } else if (
+      (e.adresse.valgtEnhet || !visenheter) &&
       e.adresse.navn &&
       e.adresse.adresse &&
       e.adresse.sted &&
@@ -43,55 +59,56 @@ class Personalia extends React.Component<MergedProps> {
       loggEvent("soknadsveiviser.harNorskFodselsnummer", {
         harNorskFodselsNummer: false
       });
-      personaliaKontekst.settAdresse({
+      this.props.settAdresse({
         navn: e.adresse.navn,
         adresse: e.adresse.adresse,
         sted: e.adresse.sted,
         land: e.adresse.land,
         postnummer: e.adresse.postnummer,
+        kontaktetEnhet: e.adresse.kontaktetEnhet,
         valgtEnhet: e.adresse.valgtEnhet
       });
       history.push(`${match.url}/avslutning`);
     } else if (e.flerepersoner.valgtEnhet) {
-      personaliaKontekst.settValgtEnhet(
-        e.flerepersoner.valgtEnhet,
-        "flerepersoner"
-      );
+      this.props.settValgtEnhet(e.flerepersoner.valgtEnhet, "flerepersoner");
       history.push(`${match.url}/avslutning`);
     } else if (e.tiltaksbedrift.valgtEnhet) {
-      personaliaKontekst.settValgtEnhet(
-        e.tiltaksbedrift.valgtEnhet,
-        "tiltaksbedrift"
-      );
+      this.props.settValgtEnhet(e.tiltaksbedrift.valgtEnhet, "tiltaksbedrift");
       history.push(`${match.url}/avslutning`);
     } else {
-      personaliaKontekst.settTouched({
+      this.props.settTouched({
         fodselsnummer: true,
         navn: true,
         adresse: true,
         land: true,
         sted: true,
+        kontaktetEnhet: true,
         valgtEnhet: true
       });
     }
   };
 
   render() {
-    const { personaliaKontekst } = this.props;
     const { personEllerBedrift } = this.props.match.params;
 
-    const initAdresse = personaliaKontekst.adresse || {
+    const initAdresse = this.props.adresse || {
       navn: "",
       land: "",
       adresse: "",
       postnummer: "",
-      sted: ""
+      sted: "",
+      kontaktetEnhet: undefined,
+      valgtEnhet: undefined
     };
 
     const initValues = {
-      fodselsnummer: personaliaKontekst.fodselsnummer || "",
+      fodselsnummer: this.props.fodselsnummer || {
+        fodselsnummer: "",
+        valgtEnhet: undefined
+      },
       adresse: initAdresse,
       flerepersoner: {},
+      brukervelgerenhet: {},
       tiltaksbedrift: {}
     };
 
@@ -113,12 +130,12 @@ class Personalia extends React.Component<MergedProps> {
                 </Undertittel>
               </div>
               <Form autoComplete="off" className="adressepaneler">
-                <FodselsnummerPanel {...this.props} />
-                <AdressePanel {...this.props} />
+                <FodselsnummerPanel />
+                <AdressePanel />
                 {personEllerBedrift === "bedrift" && (
                   <>
-                    <FlerePersonerPanel {...this.props} />
-                    <TiltaksBedriftPanel {...this.props} />
+                    <FlerePersonerPanel />
+                    <TiltaksBedriftPanel />
                   </>
                 )}
                 <NesteKnapp />
@@ -131,4 +148,15 @@ class Personalia extends React.Component<MergedProps> {
   }
 }
 
-export default injectIntl(withRouter(medPersonalia(Personalia)));
+export default medPersonalia<Personalia>(
+  medValgtSoknadsobjekt<ValgtSoknad & Personalia>(
+    injectIntl<ValgtSoknad & Personalia & InjectedIntlProps>(
+      withRouter<
+        ValgtSoknad &
+          Personalia &
+          InjectedIntlProps &
+          RouteComponentProps<Routes>
+      >(VisPersonalia)
+    )
+  )
+);

@@ -2,7 +2,10 @@ import * as React from "react";
 import StegOverskrift from "./Overskrift";
 import Sprakvelger from "../../../komponenter/sprakvelger/sprakvelger";
 import { Soknadsobjekt } from "../../../typer/soknad";
-import { medPersonalia } from "../../../states/providers/Personalia";
+import {
+  medPersonalia,
+  Personalia
+} from "../../../states/providers/Personalia";
 import { Store } from "../../../typer/store";
 import { connect } from "react-redux";
 
@@ -34,4 +37,6 @@ const mapStateToProps = (store: Store) => ({
   valgteVedlegg: store.vedlegg.valgteVedlegg
 });
 
-export default connect(mapStateToProps)(medPersonalia(Sprak));
+export default medPersonalia<Props & Personalia>(
+  connect(mapStateToProps)(Sprak)
+);
