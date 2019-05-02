@@ -20,10 +20,10 @@ export const settVedlegg = (soknadsobjekt?: Soknadsobjekt) => ({
   soknadsobjekt
 });
 
-export const settVedleggSkalSendesForSoknadsobjekt = (
+export const settAlleVedleggSkalSendesForSoknadsobjekt = (
   soknadsobjekt: Soknadsobjekt
 ) => ({
-  type: "SETT_VEDLEGG_SKAL_SENDES",
+  type: "SETT_ALLE_VEDLEGG_SKAL_SENDES",
   soknadsobjekt
 });
 
@@ -86,7 +86,7 @@ export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
       };
     }
 
-    case "SETT_VEDLEGG_SKAL_SENDES": {
+    case "SETT_ALLE_VEDLEGG_SKAL_SENDES": {
       const { soknadsobjekt } = action;
       const { valgteVedlegg } = root.vedlegg;
 

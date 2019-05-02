@@ -11,11 +11,11 @@ import { Dispatch } from "redux";
 import DineVedlegg from "../felles/DineVedlegg";
 import {
   toggleValgtVedlegg,
-  settVedleggSkalSendesForSoknadsobjekt
+  settAlleVedleggSkalSendesForSoknadsobjekt
 } from "../../../states/reducers/vedlegg";
 import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
-import SkalEttersende from "./SkalEttersende";
+import VelgEttersendelse from "./VelgEttersendelse";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
 import { localeTekst } from "../../../utils/sprak";
@@ -31,8 +31,10 @@ interface ReduxProps {
   klage: Klage;
   valgteVedlegg: Vedleggsobjekt[];
   hentKlageSoknadsobjekt: (skalEttersende: boolean) => void;
-  settEttersendTilKlage: (skalEttersende: string) => void;
-  settVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) => void;
+  settEttersendTilKlage: (skalEttersende: boolean) => void;
+  settAlleVedleggSkalSendesForSoknadsobjekt: (
+    soknadsobjekt: Soknadsobjekt
+  ) => void;
   toggleValgtVedlegg?: (
     _key: string,
     soknadsobjektId: string,
@@ -56,12 +58,12 @@ class VisKlage extends React.Component<MergedProps> {
   componentDidMount = () => {
     const { klageSoknadsobjekt, match, klage } = this.props;
     if (match.params.ettersendelse && !klage.skalEttersende) {
-      this.props.settEttersendTilKlage("ja");
+      this.props.settEttersendTilKlage(true);
     }
     if (!klageSoknadsobjekt) {
       this.props.hentKlageSoknadsobjekt(klage.skalEttersende);
     } else {
-      this.props.settVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
+      this.props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
     }
   };
 
@@ -93,7 +95,7 @@ class VisKlage extends React.Component<MergedProps> {
           skjemanummer={klageskjema.skjemanummer}
         />
         <Steg tittel="klage.tittel.underbanner" />
-        {!match.params.ettersendelse && <SkalEttersende />}
+        {!match.params.ettersendelse && <VelgEttersendelse />}
         {!klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
@@ -112,12 +114,12 @@ const mapStateToProps = (store: Store) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   hentKlageSoknadsobjekt: (skalEttersende: boolean) =>
     apiHentSoknadsobjektForKlage(skalEttersende)(dispatch),
-  settEttersendTilKlage: (skalEttersende: string) =>
+  settEttersendTilKlage: (skalEttersende: boolean) =>
     dispatch(settEttersendTilKlage(skalEttersende)),
   toggleValgtVedlegg: (_key: string, soknadsobjektId: string, klage: boolean) =>
     dispatch(toggleValgtVedlegg(_key, soknadsobjektId, klage)),
-  settVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
-    dispatch(settVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
+  settAlleVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
+    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
 });
 
 export default medValgtSoknadsobjekt<Props>(
