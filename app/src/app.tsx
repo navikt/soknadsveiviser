@@ -55,7 +55,7 @@ class App extends Component<MergedProps> {
           <MedKategorier>
             <Route
               exact
-              path={`${path}/:personEllerBedrift(person|bedrift)/:inngang(ettersendelse|klage)?`}
+              path={`${path}/:personEllerBedrift(person|bedrift)/:inngang(ettersendelse|klage)?/:kategori?`}
               component={Forside}
             />
             <Route
