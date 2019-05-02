@@ -19,6 +19,10 @@ export type Vedlegg = {
   valgteVedlegg: Vedleggsobjekt[];
 };
 
+export type Klage = {
+  skalEttersende: boolean;
+};
+
 export type FetchKategorier = { valgtType: "Person" | "Bedrift" } & (
   | Loading
   | (Result & Kategorier)
@@ -42,4 +46,5 @@ export interface Store {
   soknader: FetchSoknader;
   valgtSoknad: FetchSoknad;
   vedlegg: Vedlegg;
+  klage: Klage;
 }
