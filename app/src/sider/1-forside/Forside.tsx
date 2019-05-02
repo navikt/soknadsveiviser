@@ -32,7 +32,7 @@ type MergedProps = RouteComponentProps<Routes> &
 
 class Soknadsveiviser extends Component<MergedProps> {
   componentDidMount() {
-    const { match, settValgtType, intl } = this.props;
+    const { match, settValgtType } = this.props;
     const { personEllerBedrift } = match.params;
     const type = typeTilNorsk(personEllerBedrift);
     settValgtType(type);
