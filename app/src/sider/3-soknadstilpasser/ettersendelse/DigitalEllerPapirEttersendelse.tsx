@@ -7,6 +7,7 @@ import DigitalEttersendelse from "./seksjoner/Digital";
 import PapirEttersendelse from "./seksjoner/Papir";
 import KlageEttersendelse from "./seksjoner/Klage";
 import { localeTekst } from "../../../utils/sprak";
+import { finnesDigitalInnsending } from "../../../utils/soknadsobjekter";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Props {
@@ -25,6 +26,8 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     const { valgtSoknadsobjekt } = this.props;
     const { intl } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
+    const erDigital = finnesDigitalInnsending(valgtSoknadsobjekt, intl.locale);
+
     return (
       <>
         <Underbanner
@@ -32,7 +35,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        <DigitalEttersendelse />
+        {erDigital && <DigitalEttersendelse />}
         <PapirEttersendelse />
         <KlageEttersendelse />
       </>
