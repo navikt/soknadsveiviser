@@ -20,6 +20,7 @@ import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
 import { localeTekst } from "../../../utils/sprak";
 import { apiHentSoknadsobjektForKlage } from "../../../klienter/sanityKlient";
+import { sideTittel } from "../../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Props {
@@ -66,6 +67,22 @@ class VisKlage extends React.Component<MergedProps> {
       this.props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
     }
   };
+
+  componentDidUpdate() {
+    const { klageSoknadsobjekt, valgtSoknadsobjekt, intl, klage } = this.props;
+
+    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
+    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
+    const tittelEttersendelse = klage.skalEttersende
+      ? `${intl.formatMessage({ id: "ettersendelser.knapp" })} - `
+      : "";
+
+    if (klageSoknadsobjekt) {
+      document.title = sideTittel(
+        `${tittelEttersendelse} ${tittelKlage} - ${tittelSoknad}`
+      );
+    }
+  }
 
   render() {
     if (!this.props.klageSoknadsobjekt) {

@@ -25,7 +25,7 @@ interface ReduxProps {
   hentKategorier: () => void;
 }
 
-type Context = Kategorier & { valgtType: "Person" | "Bedrift" };
+export type ValgtKategori = Kategorier & { valgtType: "Person" | "Bedrift" };
 
 type MergedProps = Props &
   ReduxProps &
@@ -71,11 +71,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   hentKategorier: async () => apiHentAlleKategorier()(dispatch)
 });
 
-export const medKategorier = <P extends Context>(
+export const medKategorier = <P extends ValgtKategori>(
   Component: ComponentType<P>
-) => (props: Pick<P, Exclude<keyof P, keyof Context>>) => (
+) => (props: Pick<P, Exclude<keyof P, keyof ValgtKategori>>) => (
   <Consumer>
-    {value => <Component {...value as Context} {...props as P} />}
+    {value => <Component {...value as ValgtKategori} {...props as P} />}
   </Consumer>
 );
 

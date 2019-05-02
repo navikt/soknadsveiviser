@@ -14,6 +14,7 @@ import { Dispatch } from "redux";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { localeTekst } from "../../../utils/sprak";
 import { nullstillVedlegg } from "../../../states/reducers/vedlegg";
+import { sideTittel } from "../../../utils/sprak";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -38,6 +39,16 @@ type MergedProps = Props &
 class Ettersendelse extends Component<MergedProps> {
   componentWillMount = () =>
     this.props.nullstillVedlegg(this.props.valgtSoknadsobjekt._id);
+
+  componentDidMount() {
+    const { valgtSoknadsobjekt, intl } = this.props;
+    document.title = sideTittel(
+      `${intl.formatMessage({ id: "ettersendelser.knapp" })} - ${localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale
+      )}`
+    );
+  }
 
   render() {
     const { intl } = this.props;

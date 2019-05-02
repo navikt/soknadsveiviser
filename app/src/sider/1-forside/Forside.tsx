@@ -8,6 +8,12 @@ import Kategoriinnhold from "./seksjoner/kategorier/Kategoriinnhold";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Header from "../../komponenter/header/Header";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import {
+  medKategorier,
+  ValgtKategori
+} from "../../states/providers/Kategorier";
+import { localeTekst, sideTittel } from "../../utils/sprak";
 
 interface Routes {
   inngang: string;
@@ -19,13 +25,23 @@ interface ReduxProps {
   settValgtType: (type: string) => void;
 }
 
-type MergedProps = RouteComponentProps<Routes> & ReduxProps;
+type MergedProps = RouteComponentProps<Routes> &
+  ReduxProps &
+  ValgtKategori &
+  InjectedIntlProps;
+
 class Soknadsveiviser extends Component<MergedProps> {
   componentDidMount() {
-    const { match, settValgtType } = this.props;
+    const { match, settValgtType, intl } = this.props;
     const { personEllerBedrift } = match.params;
     const type = typeTilNorsk(personEllerBedrift);
     settValgtType(type);
+  }
+
+  componentDidUpdate() {
+    const { valgtKategori, intl } = this.props;
+    const { locale } = intl;
+    document.title = sideTittel(`${localeTekst(valgtKategori.tittel, locale)}`);
   }
 
   render() {
@@ -47,7 +63,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   settValgtType: (type: string) => dispatch(settValgtType(type))
 });
 
-export default connect(
-  undefined,
-  mapDispatchToProps
-)(Soknadsveiviser);
+export default medKategorier<ValgtKategori>(
+  injectIntl<ValgtKategori & InjectedIntlProps>(
+    connect(
+      undefined,
+      mapDispatchToProps
+    )(Soknadsveiviser)
+  )
+);

@@ -4,14 +4,16 @@ const ingenTekst = "Feil, fant ikke tekst";
 const udefinertTekst = "Udefinert tekst på objektet";
 
 const ingenTekstForBlock = {
-  "_key": "00",
-  "_type": "block",
-  "children": [{
-    "_key": "0",
-    "_type": "span",
-    "marks": [],
-    "text": ""
-  }]
+  _key: "00",
+  _type: "block",
+  children: [
+    {
+      _key: "0",
+      _type: "span",
+      marks: [],
+      text: ""
+    }
+  ]
 };
 
 export const localeTekst = (object: SprakString, locale: string) =>
@@ -19,3 +21,8 @@ export const localeTekst = (object: SprakString, locale: string) =>
 
 export const localeBlockTekst = (object: SprakBlockText, locale: string) =>
   object[locale] || object.nb || ingenTekstForBlock;
+
+export const storForsteBokstav = (setning: string) =>
+  setning.charAt(0).toUpperCase() + setning.slice(1).toLowerCase();
+
+export const sideTittel = (tittel: string) => `${tittel} - www.nav.no`;

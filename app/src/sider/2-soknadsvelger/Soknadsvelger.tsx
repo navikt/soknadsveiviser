@@ -18,6 +18,7 @@ import Soknadsdialog from "./seksjoner/Soknadsdialog";
 import { loggEvent } from "../../utils/logger";
 import { medKategorier } from "../../states/providers/Kategorier";
 import hashLinkScroll from "../../utils/hashScroll";
+import { localeTekst, sideTittel } from "../../utils/sprak";
 
 interface Routes {
   kategori: string;
@@ -43,8 +44,15 @@ type MergedProps = Props &
 
 class Soknadsobjekter extends Component<MergedProps> {
   componentDidMount() {
-    const { hentSoknader } = this.props;
+    const { hentSoknader, valgtUnderkategori, intl } = this.props;
+    const { locale } = intl;
     const { kategori, underkategori } = this.props.match.params;
+
+    document.title = sideTittel(
+      `${localeTekst(valgtUnderkategori.navn, locale)} - ${intl.formatMessage({
+        id: "kategori.beskrivelse"
+      })}`
+    );
 
     hentSoknader(kategori, underkategori);
     loggEvent("soknadsveiviser.underkategori.navn", undefined, {

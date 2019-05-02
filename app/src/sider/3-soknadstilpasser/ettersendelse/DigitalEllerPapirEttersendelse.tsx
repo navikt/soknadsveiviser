@@ -9,6 +9,7 @@ import KlageEttersendelse from "./seksjoner/Klage";
 import { localeTekst } from "../../../utils/sprak";
 import { finnesDigitalInnsending } from "../../../utils/soknadsobjekter";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
+import { sideTittel } from "../../../utils/sprak";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -27,6 +28,12 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     const { intl } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
     const erDigital = finnesDigitalInnsending(valgtSoknadsobjekt, intl.locale);
+
+    document.title = sideTittel(
+      `${intl.formatMessage({
+        id: "ettersendelser.mellomledd.tittel"
+      })} - ${localeTekst(valgtSoknadsobjekt.navn, intl.locale)}`
+    );
 
     return (
       <>

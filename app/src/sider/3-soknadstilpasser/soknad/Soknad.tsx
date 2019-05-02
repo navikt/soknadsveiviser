@@ -12,6 +12,7 @@ import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
+import { sideTittel } from "../../../utils/sprak";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -42,6 +43,10 @@ class PapirSoknad extends Component<MergedProps> {
   render() {
     const { intl } = this.props;
     const { valgteVedlegg, valgtSoknadsobjekt } = this.props;
+
+    document.title = sideTittel(
+      `${localeTekst(valgtSoknadsobjekt.navn, intl.locale)}`
+    );
 
     const relevanteVedlegg = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
