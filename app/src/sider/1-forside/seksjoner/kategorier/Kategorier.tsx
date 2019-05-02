@@ -35,7 +35,12 @@ class Kategorier extends Component<MergedProps, State> {
   componentDidMount = () => {
     window.addEventListener("resize", this.handleWindowSize);
     document.title = sideTittel(
-      `${localeTekst(this.props.valgtKategori.tittel, this.props.intl.locale)}`
+      `${localeTekst(
+        this.props.valgtKategori.tittel,
+        this.props.intl.locale
+      )} - ${this.props.intl.formatMessage({
+        id: "tittel.soknader"
+      })}`
     );
   };
 

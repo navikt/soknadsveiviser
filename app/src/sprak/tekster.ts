@@ -1,6 +1,7 @@
 // tslint:disable:max-line-length
 export default {
   nb: {
+    "tittel.soknader": "Søknader",
     "avslutning.advarsel": `Ukomplette søknader tar ofte lengre tid å behandle, det er mulig å ettersende men vi anbefaler å sende komplett.`,
     "avslutning.sidetittel": `Last ned søknadspapirene`,
     "avslutning.vedlegg": `Vedlegg:`,
@@ -78,7 +79,7 @@ export default {
     "ettersendelser.mellomledd.klage.tittel": `Ettersende til klage / anke`,
     "ettersendelser.mellomledd.klage.beskrivelse": `Ettersend dokumentasjon til en tidligere innsendt klage eller anke. `,
     "ettersendelser.mellomledd.klage.knapp": `Ettersend til klage / anke`,
-    "kategori.beskrivelse": `Skjemaer og søknader`,
+    "kategori.beskrivelse": `Søknader og skjemaer`,
     "kategori.velg": `Meny`,
     "kategorier.knapp.bedrift": `Bedrift`,
     "kategorier.knapp.engelsk": `English`,
@@ -137,6 +138,7 @@ export default {
     "notFound.goto.soknadsveiviser": `Gå til skjemaer og søknader`
   },
   en: {
+    "tittel.soknader": "Applications",
     "avslutning.advarsel": `Incomplete applications will take longer time to process. It is possible to send documents in later, however, it is recommended to send the application complete with all documents from the start.`,
     "avslutning.sidetittel": `Download the application papers`,
     "avslutning.vedlegg": `Attachment:`,

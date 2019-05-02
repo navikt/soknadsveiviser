@@ -41,7 +41,11 @@ class Soknadsveiviser extends Component<MergedProps> {
   componentDidUpdate() {
     const { valgtKategori, intl } = this.props;
     const { locale } = intl;
-    document.title = sideTittel(`${localeTekst(valgtKategori.tittel, locale)}`);
+    document.title = sideTittel(
+      `${localeTekst(valgtKategori.tittel, locale)} - ${intl.formatMessage({
+        id: "tittel.soknader"
+      })}`
+    );
   }
 
   render() {
