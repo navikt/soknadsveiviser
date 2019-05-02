@@ -34,19 +34,22 @@ class Kategorier extends Component<MergedProps, State> {
 
   componentDidMount = () => {
     window.addEventListener("resize", this.handleWindowSize);
+    this.settTittel();
+  };
+
+  componentDidUpdate = () => this.settTittel();
+  componentWillUnmount = () =>
+    window.removeEventListener("resize", this.handleWindowSize);
+
+  settTittel = () => {
+    const { valgtKategori, intl } = this.props;
+    const { locale } = intl;
     document.title = sideTittel(
-      `${localeTekst(
-        this.props.valgtKategori.tittel,
-        this.props.intl.locale
-      )} - ${this.props.intl.formatMessage({
+      `${localeTekst(valgtKategori.tittel, locale)} - ${intl.formatMessage({
         id: "tittel.soknader"
       })}`
     );
   };
-
-  componentWillUnmount = () =>
-    window.removeEventListener("resize", this.handleWindowSize);
-
   render = () => {
     const { windowSize } = this.state;
     const { alleKategorier, valgtType } = this.props;

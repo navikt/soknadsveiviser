@@ -3,17 +3,11 @@ import Kategorier from "./seksjoner/kategorier/Kategorier";
 import { typeTilNorsk } from "../../utils/kategorier";
 import { settValgtType } from "../../states/reducers/kategorier";
 import { Kategori } from "../../typer/kategori";
-import { RouteComponentProps } from "react-router";
+import { withRouter, RouteComponentProps } from "react-router";
 import Kategoriinnhold from "./seksjoner/kategorier/Kategoriinnhold";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Header from "../../komponenter/header/Header";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import {
-  medKategorier,
-  ValgtKategori
-} from "../../states/providers/Kategorier";
-import { localeTekst, sideTittel } from "../../utils/sprak";
 
 interface Routes {
   inngang: string;
@@ -25,10 +19,7 @@ interface ReduxProps {
   settValgtType: (type: string) => void;
 }
 
-type MergedProps = RouteComponentProps<Routes> &
-  ReduxProps &
-  ValgtKategori &
-  InjectedIntlProps;
+type MergedProps = RouteComponentProps<Routes> & ReduxProps;
 
 class Soknadsveiviser extends Component<MergedProps> {
   componentDidMount() {
@@ -36,16 +27,6 @@ class Soknadsveiviser extends Component<MergedProps> {
     const { personEllerBedrift } = match.params;
     const type = typeTilNorsk(personEllerBedrift);
     settValgtType(type);
-  }
-
-  componentDidUpdate() {
-    const { valgtKategori, intl } = this.props;
-    const { locale } = intl;
-    document.title = sideTittel(
-      `${localeTekst(valgtKategori.tittel, locale)} - ${intl.formatMessage({
-        id: "tittel.soknader"
-      })}`
-    );
   }
 
   render() {
@@ -67,11 +48,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   settValgtType: (type: string) => dispatch(settValgtType(type))
 });
 
-export default medKategorier<ValgtKategori>(
-  injectIntl<ValgtKategori & InjectedIntlProps>(
-    connect(
-      undefined,
-      mapDispatchToProps
-    )(Soknadsveiviser)
-  )
+export default withRouter(
+  connect(
+    undefined,
+    mapDispatchToProps
+  )(Soknadsveiviser)
 );
