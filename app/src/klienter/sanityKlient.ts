@@ -8,7 +8,7 @@ import { HTTPError } from "../typer/errors";
 import { Dispatch } from "redux";
 import {
   settVedlegg,
-  settVedleggSkalSendesForSoknadsobjekt
+  settAlleVedleggSkalSendesForSoknadsobjekt
 } from "../states/reducers/vedlegg";
 import {
   settKategorierRequest,
@@ -88,7 +88,7 @@ export const apiHentSoknadsobjektForKlage = (skalEttersende: boolean) => (
       dispatch(settKlageSoknadsobjekt(klageSoknadsobjekt));
       dispatch(settVedlegg(klageSoknadsobjekt));
       if (skalEttersende) {
-        dispatch(settVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt));
+        dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt));
       }
     })
     .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)));
