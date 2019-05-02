@@ -3,6 +3,7 @@ import { kategorier } from "./reducers/kategorier";
 import { soknader } from "./reducers/soknader";
 import { valgtSoknad } from "./reducers/valgtSoknad";
 import { vedlegg } from "./reducers/vedlegg";
+import { klage } from "./reducers/klage";
 import initialState from "./initialState";
 
 export default (state: Store = initialState, action: any) => {
@@ -10,6 +11,7 @@ export default (state: Store = initialState, action: any) => {
     kategorier: kategorier(state.kategorier, action, state),
     soknader: soknader(state.soknader, action, state),
     valgtSoknad: valgtSoknad(state.valgtSoknad, action, state),
-    vedlegg: vedlegg(state.vedlegg, action, state)
+    vedlegg: vedlegg(state.vedlegg, action, state),
+    klage: klage(state.klage, action, state)
   };
 };

@@ -12,5 +12,8 @@ export default {
   },
   vedlegg: {
     valgteVedlegg: []
+  },
+  klage: {
+    skalEttersende: false
   }
 } as Store;

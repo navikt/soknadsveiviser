@@ -5,7 +5,7 @@ import MedPersonalia from "../../states/providers/Personalia";
 import Wrapper from "../../komponenter/wrapper/Wrapper";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import Soknad from "./soknad/Soknad";
-import Klage from "./soknad/Klage";
+import Klage from "./klage/Klage";
 import Ettersendelse from "./ettersendelse/Ettersendelse";
 import Dokumentinnsending from "./Dokumentinnsending";
 import MedValgtSoknadsobjekt from "../../states/providers/ValgtSoknadsobjekt";
@@ -46,10 +46,14 @@ class SkjemaVelgerRoutes extends Component<MergedProps> {
           <MedValgtSoknadsobjekt>
             <MedPersonalia>
               <Route exact path={`${path}/brev`} component={Soknad} />
-              <Route exact path={`${path}/brev/klage`} component={Klage} />
               <Route
                 exact
-                path={`${path}/brev/klage/avslutning`}
+                path={`${path}/brev/klage/:ettersendelse(ettersendelse)?`}
+                component={Klage}
+              />
+              <Route
+                exact
+                path={`${path}/brev/klage/:ettersendelse(ettersendelse)?/avslutning`}
                 render={props => <AvslutningKlage {...props} />}
               />
               <Route

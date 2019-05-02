@@ -6,7 +6,10 @@ import { getProxyUrl } from "../config";
 import { hentJson } from "./felles";
 import { HTTPError } from "../typer/errors";
 import { Dispatch } from "redux";
-import { settVedlegg } from "../states/reducers/vedlegg";
+import {
+  settVedlegg,
+  settAlleVedleggSkalSendesForSoknadsobjekt
+} from "../states/reducers/vedlegg";
 import {
   settKategorierRequest,
   settKategorierResult,
@@ -76,12 +79,17 @@ export const apiHentSoknadsobjekt = (
     .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)));
 };
 
-export const apiHentSoknadsobjektForKlage = () => (dispatch: Dispatch) => {
+export const apiHentSoknadsobjektForKlage = (skalEttersende: boolean) => (
+  dispatch: Dispatch
+) => {
   dispatch(settSoknadsobjektRequest());
   apiKallSoknadsobjektForKlage()
     .then((klageSoknadsobjekt: Soknadsobjekt) => {
       dispatch(settKlageSoknadsobjekt(klageSoknadsobjekt));
       dispatch(settVedlegg(klageSoknadsobjekt));
+      if (skalEttersende) {
+        dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt));
+      }
     })
     .catch((error: HTTPError) => dispatch(settSoknadsobjektHttpError(error)));
 };
