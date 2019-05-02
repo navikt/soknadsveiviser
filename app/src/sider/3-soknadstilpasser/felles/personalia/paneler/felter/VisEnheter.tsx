@@ -67,6 +67,7 @@ class VisEnheter extends React.Component<MergedProps, State> {
   render() {
     const { label, field, placeholder, intl } = this.props;
     const { enheter } = this.state;
+    const { valgtEnhet } = field.value;
     return (
       <div className="visEnheter">
         <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
@@ -77,13 +78,23 @@ class VisEnheter extends React.Component<MergedProps, State> {
             label={""}
             onChange={this.handleChange}
             placeholder={placeholder}
-            feil={this.sjekkFeil(field.value.valgtEnhet)}
+            feil={this.sjekkFeil(valgtEnhet)}
           >
-            <option key="velgEnhet" value="ikkeValgt" defaultChecked>
+            <option
+              key="velgEnhet"
+              value="ikkeValgt"
+              defaultChecked={!valgtEnhet}
+            >
               {intl.formatMessage({ id: "personalia.velgenhet" })}
             </option>
             {enheter.map(enhet => (
-              <option key={enhet.enhetsnummer} value={enhet.enhetsnummer}>
+              <option
+                key={enhet.enhetsnummer}
+                value={enhet.enhetsnummer}
+                defaultChecked={
+                  valgtEnhet && valgtEnhet.enhetsnummer === enhet.enhetsnummer
+                }
+              >
                 {enhet.enhetsnavn + " - " + enhet.enhetsnummer}
               </option>
             ))}

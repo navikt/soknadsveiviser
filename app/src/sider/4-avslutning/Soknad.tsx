@@ -61,7 +61,6 @@ class Avslutning extends Component<MergedProps, State> {
 
   render() {
     const { props } = this;
-    console.log(props);
     const { valgteVedlegg } = props;
     const { valgtSoknadsobjekt } = props;
     const { url } = props.match;
