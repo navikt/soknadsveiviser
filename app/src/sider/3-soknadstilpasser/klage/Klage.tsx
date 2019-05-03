@@ -58,13 +58,14 @@ type MergedProps = Props &
 class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
     const { klageSoknadsobjekt, match, klage } = this.props;
-    if (match.params.ettersendelse && !klage.skalEttersende) {
+    const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    if (urlSkalEttersende && !klage.skalEttersende) {
       this.props.settEttersendTilKlage(true);
     }
     if (klageSoknadsobjekt) {
       this.props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
     } else {
-      this.props.hentKlageSoknadsobjekt(true);
+      this.props.hentKlageSoknadsobjekt(urlSkalEttersende);
     }
   };
 
