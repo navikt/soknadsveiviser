@@ -74,12 +74,12 @@ class VisKlage extends Component<MergedProps> {
     const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
     const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
     const tittelEttersendelse = klage.skalEttersende
-      ? `${intl.formatMessage({ id: "ettersendelser.knapp" })} - `
+      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
       : "";
 
     if (klageSoknadsobjekt) {
       document.title = sideTittel(
-        `${tittelEttersendelse} ${tittelKlage} - ${tittelSoknad}`
+        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
       );
     }
   }

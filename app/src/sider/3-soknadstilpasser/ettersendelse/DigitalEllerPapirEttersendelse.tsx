@@ -30,9 +30,12 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     const erDigital = finnesDigitalInnsending(valgtSoknadsobjekt, intl.locale);
 
     document.title = sideTittel(
-      `${intl.formatMessage({
+      `${localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale
+      )} - ${intl.formatMessage({
         id: "ettersendelser.mellomledd.tittel"
-      })} - ${localeTekst(valgtSoknadsobjekt.navn, intl.locale)}`
+      })}`
     );
 
     return (
