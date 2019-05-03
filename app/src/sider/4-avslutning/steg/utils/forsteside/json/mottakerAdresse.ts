@@ -31,14 +31,15 @@ export const mottakerAdresse = (
         }
       );
     }
-    console.warn(`Fant ikke adresseinformasjon for søknadsobjektet ${soknadsobjektnavn.nb}`);
-    return(
-      {
-        netsPostboks: "1400"
-      }
-    );
   }
-}
+  
+  console.warn(`Fant ikke adresseinformasjon for søknadsobjektet ${soknadsobjektnavn.nb}`);
+  return(
+    {
+      netsPostboks: "1400"
+    }
+  );
+};
 
 export const enhetAdresse = (enhet: Enhet) => ({
   adresse: {
