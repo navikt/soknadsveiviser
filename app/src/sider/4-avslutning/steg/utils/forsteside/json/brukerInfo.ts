@@ -1,10 +1,12 @@
 import { Personalia } from "../../../../../../states/providers/Personalia";
 import { Innsendingsmate } from "../../../../../../typer/soknad";
 import { mottakerAdresse, enhetAdresse } from "./mottakerAdresse";
+import {SprakString} from "../../../../../../typer/sprak";
 
 export const adresseOgBrukerInfo = (
   innsendingsmate: Innsendingsmate,
-  personalia: Personalia
+  personalia: Personalia,
+  soknadsobjektnavn: SprakString,
 ) => {
   const { fodselsnummer, adresse, bedrift } = personalia;
   const { flerePersonerEllerTiltaksbedrift } = bedrift;
@@ -20,7 +22,7 @@ export const adresseOgBrukerInfo = (
       : // Tiltaksbedrift
         {
           enhetsnummer: enhet.enhetsnummer,
-          ...mottakerAdresse(innsendingsmate)
+          ...mottakerAdresse(innsendingsmate, soknadsobjektnavn)
         }
     : // Personbruker
       {
@@ -44,6 +46,6 @@ export const adresseOgBrukerInfo = (
                     } - ${adresse.kontaktetEnhet.enhetsnummer} om saken`
                   : "")
             }),
-        ...mottakerAdresse(innsendingsmate, enhet)
+        ...mottakerAdresse(innsendingsmate, soknadsobjektnavn, enhet)
       };
 };

@@ -45,7 +45,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
         params.valgtLocale,
         params.ettersendelse
       ),
-      ...adresseOgBrukerInfo(innsendingsmate, params.personalia)
+      ...adresseOgBrukerInfo(innsendingsmate, params.personalia, navn)
     };
 
     console.group("Innsending førsteside-generator");

@@ -1,30 +1,44 @@
 import { Innsendingsmate } from "../../../../../../typer/soknad";
 import { Enhet } from "../../../../../../typer/enhet";
+import {SprakString} from "../../../../../../typer/sprak";
 
 export const mottakerAdresse = (
   innsendingsmate: Innsendingsmate,
+  soknadsobjektnavn: SprakString,
   enhet?: Enhet
-) =>
-  innsendingsmate &&
-  (innsendingsmate.skanning
-    ? {
+) => {
+  if (innsendingsmate) {
+    if (innsendingsmate.skanning) {
+      return(
+        {
+          netsPostboks: "1400"
+        }
+      );
+    }
+
+    if (innsendingsmate.spesifisertadresse) {
+      return(
+        {
+          adresse: innsendingsmate.spesifisertadresse
+        }
+      );
+    }
+
+    if (innsendingsmate.visenheter && enhet) {
+      return(
+        {
+          ...enhetAdresse(enhet)
+        }
+      );
+    }
+    console.warn(`Fant ikke adresseinformasjon for søknadsobjektet ${soknadsobjektnavn.nb}`);
+    return(
+      {
         netsPostboks: "1400"
       }
-    : innsendingsmate.visenheter && enhet
-    ? {
-        ...enhetAdresse(enhet)
-      }
-    : innsendingsmate.spesifisertadresse
-    ? {
-        adresse: innsendingsmate.spesifisertadresse
-      }
-    : {
-        adresse: {
-          adresselinje1: `Det skjedde en feil med opprettelse av mottakeradresse`,
-          postnummer: "-",
-          poststed: "-"
-        }
-      });
+    );
+  }
+}
 
 export const enhetAdresse = (enhet: Enhet) => ({
   adresse: {
