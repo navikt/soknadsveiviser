@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Store } from "../../../typer/store";
@@ -55,31 +55,32 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class VisKlage extends React.Component<MergedProps> {
+class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
     const { klageSoknadsobjekt, match, klage } = this.props;
-    if (match.params.ettersendelse && !klage.skalEttersende) {
+    const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    if (urlSkalEttersende && !klage.skalEttersende) {
       this.props.settEttersendTilKlage(true);
     }
-    if (!klageSoknadsobjekt) {
-      this.props.hentKlageSoknadsobjekt(klage.skalEttersende);
-    } else {
+    if (klageSoknadsobjekt) {
       this.props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
+    } else {
+      this.props.hentKlageSoknadsobjekt(urlSkalEttersende);
     }
   };
 
-  componentDidUpdate() {
+  componentWillReceiveProps() {
     const { klageSoknadsobjekt, valgtSoknadsobjekt, intl, klage } = this.props;
 
     const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
     const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
     const tittelEttersendelse = klage.skalEttersende
-      ? `${intl.formatMessage({ id: "ettersendelser.knapp" })} - `
+      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
       : "";
 
     if (klageSoknadsobjekt) {
       document.title = sideTittel(
-        `${tittelEttersendelse} ${tittelKlage} - ${tittelSoknad}`
+        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
       );
     }
   }
