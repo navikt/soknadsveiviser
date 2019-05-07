@@ -165,7 +165,7 @@ export default {
     "avslutning.steg.lastned.knapp.cover": `Retrieving files`,
     "avslutning.steg.lastned.knapp.merge": `Merging files`,
     "avslutning.steg.lastned.knapp.download": `Downloading`,
-    "avslutning.steg.forsteside.tittel": `Download the cover sheet for your application"`,
+    "avslutning.steg.forsteside.tittel": `Download the cover sheet for your application`,
     "avslutning.steg.forsteside.beskrivelse": `The cover sheet contains important information about the <b>NAV unit</b> that will process your application. It also contains the address to which the application should be sent.`,
     "avslutning.steg.nedlasting.skjema.tittel": `Download the application form {skjemanummer}`,
     "avslutning.steg.nedlasting.skjema.beskrivelse": `The application must be completed and signed.`,
