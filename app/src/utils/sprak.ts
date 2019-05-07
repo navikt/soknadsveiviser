@@ -26,3 +26,21 @@ export const storForsteBokstav = (setning: string) =>
   setning.charAt(0).toUpperCase() + setning.slice(1).toLowerCase();
 
 export const sideTittel = (tittel: string) => `${tittel} - www.nav.no`;
+
+export const blockToPlainText = (
+  sprakBlock: SprakBlockText,
+  locale: string
+) => {
+  const blocks = sprakBlock[locale] || sprakBlock.nb;
+  return blocks
+    ? blocks
+        .map(block => {
+          if (block._type !== "block" || !block.children) {
+            return false;
+          }
+          return block.children.map((child: any) => child.text).join("");
+        })
+        // join the parapgraphs leaving split by two linebreaks
+        .join("\n\n")
+    : false;
+};

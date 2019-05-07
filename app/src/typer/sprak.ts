@@ -11,18 +11,26 @@ export interface SprakString {
 }
 
 export interface SprakBlockText {
-  [key: string]: Editorobjekt | undefined;
-  nb?: Editorobjekt;
-  en?: Editorobjekt;
-  nn?: Editorobjekt;
-  se?: Editorobjekt;
-  fr?: Editorobjekt;
-  es?: Editorobjekt;
-  de?: Editorobjekt;
-  pl?: Editorobjekt;
+  [key: string]: Editorobjekt[] | undefined;
+  nb?: Editorobjekt[];
+  en?: Editorobjekt[];
+  nn?: Editorobjekt[];
+  se?: Editorobjekt[];
+  fr?: Editorobjekt[];
+  es?: Editorobjekt[];
+  de?: Editorobjekt[];
+  pl?: Editorobjekt[];
+}
+
+export interface EditorobjektChildren {
+  _key: string;
+  _type: string;
+  marks: [];
+  text: string;
 }
 
 export interface Editorobjekt {
-  children: any;
-  markDefs: any;
+  _key: string;
+  _type: string;
+  children: EditorobjektChildren[];
 }
