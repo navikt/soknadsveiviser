@@ -43,10 +43,10 @@ class Ettersendelse extends Component<MergedProps> {
   componentDidMount() {
     const { valgtSoknadsobjekt, intl } = this.props;
     document.title = sideTittel(
-      `${intl.formatMessage({ id: "ettersendelser.knapp" })} - ${localeTekst(
+      `${localeTekst(
         valgtSoknadsobjekt.navn,
         intl.locale
-      )}`
+      )} - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
     );
   }
 

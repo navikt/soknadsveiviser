@@ -6,6 +6,8 @@ import { Dispatch } from "redux";
 import { connect } from "react-redux";
 import { settValgtKategori } from "../../../../../states/reducers/kategorier";
 import LocaleTekst from "../../../../../komponenter/localetekst/LocaleTekst";
+import { Link } from "react-router-dom";
+import { withRouter, RouteComponentProps } from "react-router";
 
 interface Props {
   kategori: Kategori;
@@ -13,21 +15,35 @@ interface Props {
   style: React.CSSProperties;
 }
 
+interface Routes {
+  sprak: string;
+  personEllerBedrift: string;
+  kategori: string;
+}
+
 interface ReduxProps {
   settValgtKategori: (kategori: Kategori) => void;
 }
 
-type MergedProps = Props & ReduxProps & InjectedIntlProps;
+type MergedProps = Props &
+  ReduxProps &
+  InjectedIntlProps &
+  RouteComponentProps<Routes>;
+
 const VelgKategori = (props: MergedProps) => {
+  const { personEllerBedrift, sprak } = props.match.params;
   return (
     <li key={props.kategori.urlparam}>
-      <button
+      <Link
+        to={`/soknadsveiviser/${sprak}/${personEllerBedrift}/${
+          props.kategori.urlparam
+        }`}
         onClick={() => props.settValgtKategori(props.kategori)}
         className={classNames("lenke ", { valgt: props.erValgt })}
         style={props.style}
       >
         <LocaleTekst tekst={props.kategori.tittel} />
-      </button>
+      </Link>
     </li>
   );
 };
@@ -38,8 +54,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default injectIntl<Props & InjectedIntlProps>(
-  connect(
-    undefined,
-    mapDispatchToProps
-  )(VelgKategori)
+  withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    connect(
+      undefined,
+      mapDispatchToProps
+    )(VelgKategori)
+  )
 );

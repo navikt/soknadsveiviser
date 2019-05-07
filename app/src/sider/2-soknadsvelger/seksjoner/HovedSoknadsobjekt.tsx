@@ -4,6 +4,7 @@ import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import BlockContent from "@sanity/block-content-to-react";
 import RelevantInformasjon from "./RelevantInformasjon";
+import { getTjenesteUrl } from "../../../config";
 import { link } from "../../../utils/serializers";
 import { Normaltekst } from "nav-frontend-typografi";
 import { HashLink } from "react-router-hash-link";
@@ -56,6 +57,12 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
             <FormattedMessage id="vissoknadsobjekter.ikkeelektroniskID" />
           </Normaltekst>
         </HashLink>
+        <a
+          href={`${getTjenesteUrl()}/saksoversikt`}
+          className="soknadsobjekt__knapp knapp knapp-hoved"
+        >
+          <FormattedMessage id="ettersendelser.mellomledd.digital.knapp" />
+        </a>
       </div>
     </div>
   );

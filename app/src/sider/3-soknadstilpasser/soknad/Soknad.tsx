@@ -45,7 +45,12 @@ class PapirSoknad extends Component<MergedProps> {
     const { valgteVedlegg, valgtSoknadsobjekt } = this.props;
 
     document.title = sideTittel(
-      `${localeTekst(valgtSoknadsobjekt.navn, intl.locale)}`
+      `${localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale
+      )}  - ${intl.formatMessage({
+        id: "tittel.soknader"
+      })}`
     );
 
     const relevanteVedlegg = valgteVedlegg

@@ -50,7 +50,7 @@ class Soknadsobjekter extends Component<MergedProps> {
 
     document.title = sideTittel(
       `${localeTekst(valgtUnderkategori.navn, locale)} - ${intl.formatMessage({
-        id: "kategori.beskrivelse"
+        id: "tittel.soknader"
       })}`
     );
 
