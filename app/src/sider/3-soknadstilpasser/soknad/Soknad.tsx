@@ -26,12 +26,6 @@ interface Routes {
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
-  soknad: FetchSoknad;
-  hentSoknadsobjekt: (
-    kategori: string,
-    underkategori: string,
-    skjemanummer: string
-  ) => void;
 }
 
 type MergedProps = Props &

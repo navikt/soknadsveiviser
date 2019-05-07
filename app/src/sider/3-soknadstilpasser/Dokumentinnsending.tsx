@@ -9,7 +9,7 @@ import { Soknadsobjekt } from "../../typer/soknad";
 import { connect } from "react-redux";
 import { getTjenesteUrl } from "../../config";
 import DineVedlegg from "./felles/DineVedlegg";
-import { localeTekst } from "../../utils/sprak";
+import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
 
 interface Props {
@@ -31,7 +31,7 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class VedleggssideDokumentinnsending extends Component<MergedProps> {
+class Dokumentinnsending extends Component<MergedProps> {
   genererDokumentinnsendingsUrl = (
     valgtSoknadsobjekt: Soknadsobjekt,
     vedlegg: Vedleggsobjekt[]
@@ -55,6 +55,15 @@ class VedleggssideDokumentinnsending extends Component<MergedProps> {
   render() {
     const { intl, valgteVedlegg, valgtSoknadsobjekt } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
+
+    document.title = sideTittel(
+      `${localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale
+      )}  - ${intl.formatMessage({
+        id: "tittel.soknader"
+      })}`
+    );
 
     const relevanteVedlegg = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
@@ -92,7 +101,7 @@ const mapStateToProps = (store: Store) => ({
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
     withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
-      connect(mapStateToProps)(VedleggssideDokumentinnsending)
+      connect(mapStateToProps)(Dokumentinnsending)
     )
   )
 );

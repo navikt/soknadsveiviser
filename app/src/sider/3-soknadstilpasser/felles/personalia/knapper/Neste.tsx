@@ -19,7 +19,7 @@ interface ValgtSoknad {
 type MergedProps = ReduxProps & ValgtSoknad;
 const NesteKnapp = (props: MergedProps) => {
   const relevanteVedlegg = props.valgteVedlegg
-    .filter(vedlegg => vedlegg.soknadsobjektId == props.valgtSoknadsobjekt._id)
+    .filter(vedlegg => vedlegg.soknadsobjektId === props.valgtSoknadsobjekt._id)
     .filter(vedlegg => !vedlegg.pakrevd);
 
   const vedleggSvart = relevanteVedlegg.filter(
