@@ -14,7 +14,9 @@ import StegBanner from "../../komponenter/bannere/Steg";
 import Underbanner from "../../komponenter/bannere/Underbanner";
 import Sprak from "./steg/Sprak";
 import VedleggListe from "./steg/VedleggListe";
-import LastNed from "./steg/LastNed";
+import VedleggNedlasting from "./steg/VedleggNedlasting";
+import ForstesideGenerator from "./steg/ForstesideGenerator";
+import SkjemaNedlasting from "./steg/SkjemaNedlasting";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
 import { localeTekst } from "../../utils/sprak";
 
@@ -70,6 +72,10 @@ class Avslutning extends Component<MergedProps, State> {
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
       .filter(v => (ettersendelse ? v.skalSendes : v.skalSendes || v.pakrevd));
 
+    const vedleggTilNedlasting = relevanteVedlegg
+      .filter(v => !v.skalEttersendes)
+      .filter(({ vedlegg }) => vedlegg.skjematilvedlegg);
+
     const vedleggTilEttersendelse = relevanteVedlegg.filter(
       v => v.skalEttersendes
     );
@@ -110,12 +116,25 @@ class Avslutning extends Component<MergedProps, State> {
             skjemaSprak={skjemaSprak}
             byttSprak={this.byttSprak}
           />
-          <LastNed
+          <ForstesideGenerator
             steg={++steg}
-            klage={true}
             relevanteVedlegg={relevanteVedlegg}
             skjemaSprak={skjemaSprak}
           />
+          {!ettersendelse && (
+            <SkjemaNedlasting
+              steg={++steg}
+              soknadsobjekt={klageSoknadsobjekt}
+              skjemaSprak={skjemaSprak}
+            />
+          )}
+          {vedleggTilNedlasting.length > 0 && (
+            <VedleggNedlasting
+              steg={++steg}
+              vedlegg={vedleggTilNedlasting}
+              skjemaSprak={skjemaSprak}
+            />
+          )}
           <div className="steg__rad">
             <StegOverskrift
               steg={++steg}

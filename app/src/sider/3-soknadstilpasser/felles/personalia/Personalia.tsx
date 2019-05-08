@@ -36,10 +36,10 @@ class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
     const { history, match, valgtSoknadsobjekt, intl } = this.props;
     const { innsendingsmate } = valgtSoknadsobjekt;
-    const visenheter = finnesVisEnheter(intl.locale, innsendingsmate);
+    const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
     this.props.resetState();
     if (
-      (e.fodselsnummer.valgtEnhet || !visenheter) &&
+      (e.fodselsnummer.valgtEnhet || !visEnheter) &&
       e.fodselsnummer.fodselsnummer &&
       erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
     ) {
@@ -52,7 +52,7 @@ class VisPersonalia extends Component<MergedProps> {
       });
       history.push(`${match.url}/avslutning`);
     } else if (
-      (e.adresse.valgtEnhet || !visenheter) &&
+      (e.adresse.valgtEnhet || !visEnheter) &&
       e.adresse.navn &&
       e.adresse.adresse &&
       e.adresse.sted &&

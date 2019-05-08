@@ -162,7 +162,6 @@ const LastNed = (props: MergedProps) => {
       <div className="lastned__innhold">
         <Hovedknapp
           onClick={genererPDF}
-          className="nedlastningsknapp knapp knapp--hoved innsendingsvalg__knapp"
           spinner={knappAktiv}
           autoDisableVedSpinner={true}
         >
