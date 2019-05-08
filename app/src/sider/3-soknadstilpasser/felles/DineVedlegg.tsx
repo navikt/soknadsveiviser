@@ -1,8 +1,13 @@
-import React, { ChangeEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { settValgtVedleggSkalEttersendes } from "../../../states/reducers/vedlegg";
+import { link } from "../../../utils/serializers";
+import Modal from "nav-frontend-modal";
+import { SprakBlockText } from "../../../typer/sprak";
+import BlockContent from "@sanity/block-content-to-react";
+import { localeBlockTekst } from "../../../utils/sprak";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
@@ -10,8 +15,6 @@ import {
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { RadioPanel } from "nav-frontend-skjema";
-
 import { Radio } from "nav-frontend-skjema";
 
 interface Props {
@@ -25,9 +28,17 @@ interface ReduxProps {
   ) => void;
 }
 
+interface ModalContent {
+  display: boolean;
+  content?: SprakBlockText;
+}
+
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps & ReduxProps;
 const DineVedlegg = (props: MergedProps) => {
   const { relevanteVedlegg, intl } = props;
+  const [showModal, setShowModal] = useState({
+    display: false
+  } as ModalContent);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) =>
     props.settValgtVedleggSkalEttersendes(
@@ -36,8 +47,9 @@ const DineVedlegg = (props: MergedProps) => {
     );
 
   let i = 0;
+
   return relevanteVedlegg.length > 0 ? (
-    <div className="steg__rad">
+    <div className="panel seksjon">
       <Undertittel>
         <FormattedMessage id="dinevedlegg.tittel" />
       </Undertittel>
@@ -53,15 +65,43 @@ const DineVedlegg = (props: MergedProps) => {
             <div className="dinevedlegg__checkbox">Jeg sender dette nå</div>
             <div className="dinevedlegg__checkbox">Jeg sender dette senere</div>
           </div>
-          {relevanteVedlegg.map(
-            ({ vedlegg, pakrevd, _key, skalEttersendes }) => (
+          <Modal
+            isOpen={showModal.display}
+            onRequestClose={() => setShowModal({ display: false })}
+            closeButton={true}
+            contentLabel="Min modalrute"
+          >
+            {showModal.content && (
+              <div className="dinevedlegg__modal">
+                <BlockContent
+                  blocks={localeBlockTekst(showModal.content, intl.locale)}
+                  serializers={{ marks: { link } }}
+                />
+              </div>
+            )}
+          </Modal>
+          {relevanteVedlegg
+            .sort(a => (a.pakrevd ? -1 : 1))
+            .map(({ vedlegg, pakrevd, _key, skalEttersendes, beskrivelse }) => (
               <div key={_key} className="dinevedlegg__vedlegg">
                 <div className="dinevedlegg__id">{++i}.</div>
                 <div className="dinevedlegg__tittel">
                   <Element>
-                    {pakrevd &&
-                      intl.formatMessage({ id: "dinevedlegg.pakrevd" })}
+                    {pakrevd && <FormattedMessage id="dinevedlegg.pakrevd" />}
                     <LocaleTekst tekst={vedlegg.navn} />
+                    {beskrivelse && (
+                      <span
+                        className="lenke dinevedlegg__lenke"
+                        onClick={() =>
+                          setShowModal({
+                            display: true,
+                            content: beskrivelse
+                          })
+                        }
+                      >
+                        <FormattedMessage id="velgvedlegg.lesmer.hvaerdette" />
+                      </span>
+                    )}
                   </Element>
                 </div>
                 <div className="dinevedlegg__checkbox">
@@ -83,8 +123,7 @@ const DineVedlegg = (props: MergedProps) => {
                   />
                 </div>
               </div>
-            )
-          )}
+            ))}
         </div>
       </form>
       <div className="dinevedlegg__beskrivelse">

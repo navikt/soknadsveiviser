@@ -126,7 +126,7 @@ class VisPersonalia extends Component<MergedProps> {
         render={() => {
           return (
             <>
-              <div className="sentrert personalia__tittel-wrapper">
+              <div className="personalia__tittel-wrapper">
                 <Undertittel>
                   <FormattedMessage id={overskrift()} />
                 </Undertittel>

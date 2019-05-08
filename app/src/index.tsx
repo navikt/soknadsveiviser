@@ -21,6 +21,8 @@ import styles from "./mock/decorator/decorator-styles";
 import * as serviceWorker from "./service-worker";
 import { fetchConfig } from "./klienter/serverKlient";
 import { setConfig } from "./config";
+import Modal from "nav-frontend-modal";
+Modal.setAppElement(".app");
 
 const init = async () => {
   if (process.env.NODE_ENV === "development") {
