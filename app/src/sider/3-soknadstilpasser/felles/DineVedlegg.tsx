@@ -10,6 +10,8 @@ import {
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { RadioPanel } from "nav-frontend-skjema";
+
 import { Radio } from "nav-frontend-skjema";
 
 interface Props {
@@ -65,7 +67,7 @@ const DineVedlegg = (props: MergedProps) => {
                 <div className="dinevedlegg__checkbox">
                   <Radio
                     value="on"
-                    label={_key}
+                    label={<span>&nbsp;</span>}
                     name={_key}
                     onChange={onChange}
                     checked={!skalEttersendes}
@@ -74,7 +76,7 @@ const DineVedlegg = (props: MergedProps) => {
                 <div className="dinevedlegg__checkbox">
                   <Radio
                     value="off"
-                    label={_key}
+                    label={<span>&nbsp;</span>}
                     name={_key}
                     onChange={onChange}
                     checked={skalEttersendes}
