@@ -1,8 +1,8 @@
-import * as React from "react";
+import React, { ChangeEvent } from "react";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
-import { toggleInnsendingVedlegg } from "../../../states/reducers/vedlegg";
+import { settValgtVedleggSkalEttersendes } from "../../../states/reducers/vedlegg";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
@@ -10,15 +10,30 @@ import {
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
+import { Radio } from "nav-frontend-skjema";
 
 interface Props {
   relevanteVedlegg: Vedleggsobjekt[];
 }
 
-type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
+interface ReduxProps {
+  settValgtVedleggSkalEttersendes: (
+    vedleggId: string,
+    skalEttersendes: boolean
+  ) => void;
+}
+
+type MergedProps = Props & ValgtSoknad & InjectedIntlProps & ReduxProps;
 const DineVedlegg = (props: MergedProps) => {
   const { relevanteVedlegg, intl } = props;
 
+  const onChange = (event: ChangeEvent<HTMLInputElement>) =>
+    props.settValgtVedleggSkalEttersendes(
+      event.target.name,
+      event.target.value === "off" ? true : false
+    );
+
+  let i = 0;
   return relevanteVedlegg.length > 0 ? (
     <div className="steg__rad">
       <Undertittel>
@@ -29,18 +44,47 @@ const DineVedlegg = (props: MergedProps) => {
           <FormattedMessage id="dinevedlegg.ingress" />
         </Normaltekst>
       </div>
-      <div className="dinevedlegg__vedlegg">
-        <ol>
-          {relevanteVedlegg.map(({ vedlegg, pakrevd, _key }) => (
-            <li key={_key}>
-              <Element>
-                {pakrevd && intl.formatMessage({ id: "dinevedlegg.pakrevd" })}
-                <LocaleTekst tekst={vedlegg.navn} />
-              </Element>
-            </li>
-          ))}
-        </ol>
-      </div>
+      <form>
+        <div className="dinevedlegg__wrapper">
+          <div className="dinevedlegg__header">
+            <div className="dinevedlegg__tittel" />
+            <div className="dinevedlegg__checkbox">Jeg sender dette nå</div>
+            <div className="dinevedlegg__checkbox">Jeg sender dette senere</div>
+          </div>
+          {relevanteVedlegg.map(
+            ({ vedlegg, pakrevd, _key, skalEttersendes }) => (
+              <div key={_key} className="dinevedlegg__vedlegg">
+                <div className="dinevedlegg__id">{++i}.</div>
+                <div className="dinevedlegg__tittel">
+                  <Element>
+                    {pakrevd &&
+                      intl.formatMessage({ id: "dinevedlegg.pakrevd" })}
+                    <LocaleTekst tekst={vedlegg.navn} />
+                  </Element>
+                </div>
+                <div className="dinevedlegg__checkbox">
+                  <Radio
+                    value="on"
+                    label={_key}
+                    name={_key}
+                    onChange={onChange}
+                    checked={!skalEttersendes}
+                  />
+                </div>
+                <div className="dinevedlegg__checkbox">
+                  <Radio
+                    value="off"
+                    label={_key}
+                    name={_key}
+                    onChange={onChange}
+                    checked={skalEttersendes}
+                  />
+                </div>
+              </div>
+            )
+          )}
+        </div>
+      </form>
       <div className="dinevedlegg__beskrivelse">
         <Normaltekst>
           <FormattedMessage id="dinevedlegg.beskrivelse" />
@@ -51,8 +95,10 @@ const DineVedlegg = (props: MergedProps) => {
 };
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggleInnsendingVedlegg: (vedleggId: string, soknadsobjektId: string) =>
-    dispatch(toggleInnsendingVedlegg(vedleggId, soknadsobjektId))
+  settValgtVedleggSkalEttersendes: (
+    vedleggId: string,
+    skalEttersendes: boolean
+  ) => dispatch(settValgtVedleggSkalEttersendes(vedleggId, skalEttersendes))
 });
 
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
