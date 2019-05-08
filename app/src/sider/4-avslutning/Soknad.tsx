@@ -98,7 +98,7 @@ class Avslutning extends Component<MergedProps, State> {
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, locale)}
-          undertittel={localeTekst(valgtSoknadsobjekt.navn, locale)}
+          undertittel={localeTekst(hovedskjema.navn, locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         <StegBanner tittel="avslutning.sidetittel" />
