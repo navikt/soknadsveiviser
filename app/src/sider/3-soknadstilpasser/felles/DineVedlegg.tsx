@@ -62,14 +62,18 @@ const DineVedlegg = (props: MergedProps) => {
         <div className="dinevedlegg__wrapper">
           <div className="dinevedlegg__header">
             <div className="dinevedlegg__tittel" />
-            <div className="dinevedlegg__checkbox">Jeg sender dette nå</div>
-            <div className="dinevedlegg__checkbox">Jeg sender dette senere</div>
+            <div className="dinevedlegg__checkbox">
+              <FormattedMessage id="dinevedlegg.sender.na" />
+            </div>
+            <div className="dinevedlegg__checkbox">
+              <FormattedMessage id="dinevedlegg.sender.senere" />
+            </div>
           </div>
           <Modal
             isOpen={showModal.display}
             onRequestClose={() => setShowModal({ display: false })}
             closeButton={true}
-            contentLabel="Min modalrute"
+            contentLabel="Modal"
           >
             {showModal.content && (
               <div className="dinevedlegg__modal">
