@@ -1,14 +1,22 @@
 import * as React from "react";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
+import { toggleInnsendingVedlegg } from "../../../states/reducers/vedlegg";
+import {
+  medValgtSoknadsobjekt,
+  ValgtSoknad
+} from "../../../states/providers/ValgtSoknadsobjekt";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
 
 interface Props {
   relevanteVedlegg: Vedleggsobjekt[];
 }
 
-const DineVedlegg = (props: Props & InjectedIntlProps) => {
+type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
+const DineVedlegg = (props: MergedProps) => {
   const { relevanteVedlegg, intl } = props;
 
   return relevanteVedlegg.length > 0 ? (
@@ -42,4 +50,16 @@ const DineVedlegg = (props: Props & InjectedIntlProps) => {
   ) : null;
 };
 
-export default injectIntl(DineVedlegg);
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  toggleInnsendingVedlegg: (vedleggId: string, soknadsobjektId: string) =>
+    dispatch(toggleInnsendingVedlegg(vedleggId, soknadsobjektId))
+});
+
+export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
+  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
+    connect(
+      undefined,
+      mapDispatchToProps
+    )(DineVedlegg)
+  )
+);

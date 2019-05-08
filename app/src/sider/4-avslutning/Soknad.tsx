@@ -11,7 +11,6 @@ import { Soknadsobjekt } from "../../typer/soknad";
 import StegOverskrift from "./steg/Overskrift";
 import StegBanner from "../../komponenter/bannere/Steg";
 import Underbanner from "../../komponenter/bannere/Underbanner";
-import VedleggSjekkbokser from "./steg/VedleggSjekkbokser";
 import Sprak from "./steg/Sprak";
 import VedleggListe from "./steg/VedleggListe";
 import LastNed from "./steg/LastNed";
@@ -98,12 +97,6 @@ class Avslutning extends Component<MergedProps, State> {
         />
         <StegBanner tittel="avslutning.sidetittel" />
         <div className="kvittering">
-          {!ettersendelse && relevanteVedlegg.length > 0 && (
-            <VedleggSjekkbokser
-              steg={++steg}
-              relevanteVedlegg={relevanteVedlegg}
-            />
-          )}
           {eksterneVedlegg.length > 0 && (
             <VedleggListe
               steg={++steg}
