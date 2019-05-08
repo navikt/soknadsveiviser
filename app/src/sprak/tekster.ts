@@ -60,9 +60,13 @@ export default {
     "personalia.ikkeFodselsnummerDnummer": `Jeg har ikke fødselsnummer`,
     "personalia.oppgiFodselsnummerDnummer": `Jeg har et fødselsnummer eller D-nummer`,
     "personalia.undertekstbold.adresse": `Hvis du har en adresse du bor på i Norge, bruk den adressen. Hvis du ikke har en adresse i Norge, vennligst fyll inn din vanlige adresse.`,
-    "personalia.undertekstbold.flerepersoner": `Forklarende tekst for flere personer. Forklarende tekst for flere personer. Du må velge NAV-kontor som arkene skal sendes til.`,
-    "personalia.undertekstbold.gdpr": `NAV trenger fødselsnummeret for å kunne rute søknaden din til rett enhet.`,
-    "personalia.undertekstbold.tiltaksbedrift": `Forklarende tekst for tiltaksbedrifter. Forklarende tekst for tiltaksbedrifter. Du må velge NAV-kontor som du har hatt kontakt med.`,
+    "personalia.undertekstbold.flerepersoner": `OBS: Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
+
+For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket kontor som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
+    "personalia.undertekstbold.gdpr": `Denne informasjonen blir ikke lagret, og brukes kun for å generere en førsteside for innsending på papir.`,
+    "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak
+
+For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket kontor som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "klage.knapp": `Klage på vedtak`,
     "klage.tittel.underbanner": `Klage på vedtak`,
     "klage.ettersende": `Skal du ettersende dokumentasjon til en tidligere innsendt klage?`,
@@ -153,7 +157,7 @@ export default {
     "avslutning.sprakvelger.pl": `Polish`,
     "avslutning.sprakvelger.se": `Northern sami`,
     "avslutning.steg.sjekkbokser.tittel": `Select the attachments you are able to send at this time`,
-    "avslutning.steg.sjekkbokser.beskrivelse": `If you do not have all the documents listed below you can post these later. Please note that this may result in your application not being processed until all documents are submitted.`,
+    "avslutning.steg.sjekkbokser.beskrivelse": `If you do not have all the documents listed below you can forward these later. Please note that this may result in your application not being processed until all documents are submitted.`,
     "avslutning.steg.sjekkbokser.markering": `Uncheck any attachments you are unable to send at this time:`,
     "avslutning.steg.lastned.tittel": `Download the application and attachments"`,
     "avslutning.steg.lastned.knapp.ready": `Download`,
@@ -190,21 +194,26 @@ export default {
     "personalia.label.poststed": `City`,
     "personalia.label.tidligereKontaktMedNAV": `Check if you have been in contact with NAV about this matter earlier`,
     "personalia.label.velgnavkontor": `Choose NAV unit`,
-    "personalia.bedrift.flerepersoner": `Multiple people`,
+    "personalia.bedrift.flerepersoner": `More than one person`,
     "personalia.bedrift.ikkeFodselsnummerDnummer": `The person does not have a Norwegian national identification number`,
     "personalia.bedrift.oppgiFodselsnummerDnummer": `The person has a Norwegian national identification number`,
-    "personalia.bedrift.tiltaksbedrift": `Tiltaksbedrifter, kursarrangører og andre virksomheter`,
+    "personalia.bedrift.tiltaksbedrift": `Labor market training, course organizers and other businesses`,
     "personalia.ikkeFodselsnummerDnummer": `I do not have a Norwegian national identification number`,
     "personalia.oppgiFodselsnummerDnummer": `I have a Norwegian national identification number`,
     "personalia.undertekstbold.adresse": `If you have an address you stay at in Norway, use that address. Otherwise, please fill inn your the address you currently reside in.`,
-    "personalia.undertekstbold.flerepersoner": `Forklarende tekst for flere personer. Forklarende tekst for flere personer. Du må velge NAV-kontor som arkene skal sendes til.`,
-    "personalia.undertekstbold.gdpr": `NAV needs the national identification numer to route your application to the right unit.`,
-    "personalia.undertekstbold.tiltaksbedrift": `Forklarende tekst for tiltaksbedrifter. Forklarende tekst for tiltaksbedrifter. Du må velge NAV-kontor som du har hatt kontakt med.`,
+    "personalia.undertekstbold.flerepersoner": `NOTE: This choice should not be used for occupational injury reports, sick pay and work-related measures.
+
+In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
+    "personalia.undertekstbold.gdpr": `This information is not stored, and is only used to generate a front page for your application.`,
+    "personalia.undertekstbold.tiltaksbedrift": `Example: Applications, invoice, list of participants, or other things that concern work-oriented measures
+
+In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
     "klage.knapp": `Appeal`,
     "klage.tittel.underbanner": `Appeal`,
+    "klage.ettersende": `Are you going to submit documentation to a previously filed complaint?`,
     "ettersendelser.knapp": `Forward`,
     "ettersendelser.tittel.underbanner": `Choose attachments to forward`,
-    "ettersendelser.mellomledd.tittel": `Select forwarding method`,
+    "ettersendelser.mellomledd.tittel": `Forward documentation`,
     "ettersendelser.mellomledd.digital.tittel": `Forward to electronic application`,
     "ettersendelser.mellomledd.digital.beskrivelse": `Here you can forward documentation to a previously submitted electronic application.`,
     "ettersendelser.mellomledd.digital.advarsel": `NB! The deadline for forwarding documentation to an electronic application expires after 14 days. If the deadline has expired, you will need to submit the documentation on paper (see below).`,
