@@ -12,7 +12,12 @@ import {
   medValgtSoknadsobjekt,
   ValgtSoknad
 } from "../../../states/providers/ValgtSoknadsobjekt";
-import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
+import {
+  InjectedIntlProps,
+  injectIntl,
+  FormattedMessage,
+  FormattedHTMLMessage
+} from "react-intl";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { Radio } from "nav-frontend-skjema";
@@ -91,7 +96,9 @@ const DineVedlegg = (props: MergedProps) => {
                 <div className="dinevedlegg__id">{++i}.</div>
                 <div className="dinevedlegg__tittel">
                   <Element>
-                    {pakrevd && <FormattedMessage id="dinevedlegg.pakrevd" />}
+                    {pakrevd && (
+                      <FormattedHTMLMessage id="dinevedlegg.pakrevd" />
+                    )}
                     <LocaleTekst tekst={vedlegg.navn} />
                     {beskrivelse && (
                       <span
