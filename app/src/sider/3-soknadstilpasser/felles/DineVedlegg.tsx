@@ -49,7 +49,7 @@ const DineVedlegg = (props: MergedProps) => {
   let i = 0;
 
   return relevanteVedlegg.length > 0 ? (
-    <div className="panel seksjon">
+    <div className="panel seksjon seksjon__avstand">
       <Undertittel>
         <FormattedMessage id="dinevedlegg.tittel" />
       </Undertittel>
