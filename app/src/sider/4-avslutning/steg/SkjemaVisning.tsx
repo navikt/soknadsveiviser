@@ -20,7 +20,7 @@ export interface Skjema {
   valgtSprak: string;
 }
 
-export interface Props {
+interface Props {
   skjema: Skjema;
   visEtikett?: boolean;
   skjemaSprak: string;
