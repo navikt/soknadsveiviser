@@ -71,12 +71,12 @@ class App extends Component<MergedProps> {
         </Route>
         <Route
           exact
-          path={`${path}/internal/skjemautlisting/oversikt`}
+          path={`${path}/skjemautlisting/oversikt`}
           component={SkjemautlistingOversikt}
         />
         <Route
           exact
-          path={`${path}/internal/skjemautlisting/detaljert`}
+          path={`${path}/skjemautlisting/detaljert`}
           component={SkjemautlistingDetaljert}
         />
         <Route component={NotFound} />
