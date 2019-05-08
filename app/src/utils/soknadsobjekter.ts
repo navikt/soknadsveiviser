@@ -1,4 +1,5 @@
-import { Soknadsobjekt, Soknader } from "../typer/soknad";
+import { Soknadsobjekt, Soknader, Innsendingsmate } from "../typer/soknad";
+import { blockToPlainText } from "./sprak";
 
 export const filtrerSoknadsojekt = (soknader: Soknader, skjemanummer: string) =>
   soknader.soknadsobjekter
@@ -29,3 +30,11 @@ export const finnesInngangTilSoknadsdialog = (
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[
     locale
   ];
+
+export const finnesVisEnheter = (
+  locale: string,
+  innsendingsmate?: Innsendingsmate
+) =>
+  innsendingsmate &&
+  innsendingsmate.visenheter &&
+  blockToPlainText(innsendingsmate.visenheter, locale);

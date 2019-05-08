@@ -16,6 +16,7 @@ import AdressePanel from "./paneler/AdressePanel";
 import FlerePersonerPanel from "./paneler/FlerePersoner";
 import TiltaksBedriftPanel from "./paneler/TiltaksBedrift";
 import NesteKnapp from "./knapper/Neste";
+import { finnesVisEnheter } from "../../../../utils/soknadsobjekter";
 
 interface ValgtSoknad {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -33,11 +34,12 @@ type MergedProps = ValgtSoknad &
 
 class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
-    const { history, match, valgtSoknadsobjekt } = this.props;
-    const { visenheter } = valgtSoknadsobjekt.innsendingsmate;
+    const { history, match, valgtSoknadsobjekt, intl } = this.props;
+    const { innsendingsmate } = valgtSoknadsobjekt;
+    const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
     this.props.resetState();
     if (
-      (e.fodselsnummer.valgtEnhet || !visenheter) &&
+      (e.fodselsnummer.valgtEnhet || !visEnheter) &&
       e.fodselsnummer.fodselsnummer &&
       erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
     ) {
@@ -50,7 +52,7 @@ class VisPersonalia extends Component<MergedProps> {
       });
       history.push(`${match.url}/avslutning`);
     } else if (
-      (e.adresse.valgtEnhet || !visenheter) &&
+      (e.adresse.valgtEnhet || !visEnheter) &&
       e.adresse.navn &&
       e.adresse.adresse &&
       e.adresse.sted &&

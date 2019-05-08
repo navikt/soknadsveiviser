@@ -1,6 +1,6 @@
-import * as React from "react";
+import React, { Component } from "react";
 import { Enhet } from "../../../../../../typer/enhet";
-import { Select } from "nav-frontend-skjema";
+import Select from "react-select";
 import { fetchEnheter } from "../../../../../../klienter/serverKlient";
 import { FieldProps } from "formik";
 import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
@@ -10,16 +10,17 @@ import {
   Personalia,
   medPersonalia
 } from "../../../../../../states/providers/Personalia";
+import { FormattedMessage } from "react-intl";
 
 interface Props {
   valgtEnhet?: Enhet;
   label: string;
   placeholder?: string;
+  field: any;
 }
 
 interface State {
   enheter: Enhet[];
-  valgtEnhet: Enhet;
 }
 
 export interface EnhetOption {
@@ -28,10 +29,9 @@ export interface EnhetOption {
 }
 
 type MergedProps = Props & Personalia & FieldProps<any> & InjectedIntlProps;
-class VisEnheter extends React.Component<MergedProps, State> {
+class VisEnheter extends Component<MergedProps, State> {
   state = {
-    enheter: [] as Enhet[],
-    valgtEnhet: this.props.valgtEnhet || ({} as Enhet)
+    enheter: [] as Enhet[]
   };
 
   componentDidMount = () => {
@@ -41,33 +41,40 @@ class VisEnheter extends React.Component<MergedProps, State> {
   hentEnheter = () =>
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
-  handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  handleChange = (selected: any) => {
     const valgtEnhet =
       this.state.enheter
-        .filter(enhet => enhet.enhetsnummer === event.currentTarget.value)
+        .filter(enhet => enhet.enhetsnummer === selected.value)
         .shift() || ({} as Enhet);
 
+    this.props.touched.valgtEnhet = false;
     this.props.field.value.valgtEnhet = valgtEnhet;
-    this.setState({
-      ...this.state,
-      valgtEnhet: valgtEnhet
-    });
   };
 
-  sjekkFeil = (valgtEnhet?: string) =>
-    this.props.touched.valgtEnhet &&
-    (!valgtEnhet || (valgtEnhet && valgtEnhet === "ikkeValgt"))
-      ? {
-          feilmelding: this.props.intl.formatMessage({
-            id: "personalia.error.enhet"
-          })
-        }
+  render() {
+    const { label, placeholder } = this.props;
+    const { enheter } = this.state;
+    const touched = this.props.touched.valgtEnhet;
+    const valgtEnhet = this.props.field.value.valgtEnhet;
+    const error = touched && !valgtEnhet;
+
+    const customStyles = {
+      control: (base: any, state: any) => ({
+        ...base,
+        background: error ? "#F3E3E3" : base.background,
+        borderColor: error ? "#BA3A26" : base.borderColor
+      })
+    };
+
+    const defaultValue = valgtEnhet
+      ? enheter
+          .filter(enhet => enhet.enhetsnummer === valgtEnhet.enhetsnummer)
+          .map(enhet => ({
+            value: enhet.enhetsnummer,
+            label: `${enhet.enhetsnavn} - ${enhet.enhetsnummer}`
+          }))[0]
       : undefined;
 
-  render() {
-    const { label, field, placeholder, intl } = this.props;
-    const { enheter } = this.state;
-    const { valgtEnhet } = field.value;
     return (
       <div className="visEnheter">
         <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
@@ -75,30 +82,20 @@ class VisEnheter extends React.Component<MergedProps, State> {
           <NavFrontendSpinner />
         ) : (
           <Select
-            label={""}
+            styles={customStyles}
             onChange={this.handleChange}
             placeholder={placeholder}
-            feil={this.sjekkFeil(valgtEnhet)}
-          >
-            <option
-              key="velgEnhet"
-              value="ikkeValgt"
-              defaultChecked={!valgtEnhet}
-            >
-              {intl.formatMessage({ id: "personalia.velgenhet" })}
-            </option>
-            {enheter.map(enhet => (
-              <option
-                key={enhet.enhetsnummer}
-                value={enhet.enhetsnummer}
-                defaultChecked={
-                  valgtEnhet && valgtEnhet.enhetsnummer === enhet.enhetsnummer
-                }
-              >
-                {enhet.enhetsnavn + " - " + enhet.enhetsnummer}
-              </option>
-            ))}
-          </Select>
+            defaultValue={defaultValue}
+            options={enheter.map(enhet => ({
+              value: enhet.enhetsnummer,
+              label: `${enhet.enhetsnavn} - ${enhet.enhetsnummer}`
+            }))}
+          />
+        )}
+        {error && (
+          <div className="skjemaelement__feilmelding">
+            <FormattedMessage id="personalia.error.enhet" />
+          </div>
         )}
       </div>
     );

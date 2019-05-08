@@ -16,6 +16,7 @@ import InputPostnummer from "./felter/Postnummer";
 import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
+import { finnesVisEnheter } from "../../../../../utils/soknadsobjekter";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
@@ -44,6 +45,11 @@ class AdresseFelter extends Component<MergedProps, State> {
     const { intl, touched, valgtSoknadsobjekt } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
     const { innsendingsmate } = valgtSoknadsobjekt;
+    const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
+    const skalTilSkanning = innsendingsmate.skanning;
+    const skalTilSpesifisertAdresse = innsendingsmate.spesifisertadresse;
+    const skalTilValgtEnhet =
+      !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 
     return touched ? (
       <>
@@ -71,9 +77,9 @@ class AdresseFelter extends Component<MergedProps, State> {
               {...this.props}
             />
           )}
-          {innsendingsmate && innsendingsmate.visenheter && (
+          {skalTilValgtEnhet && (
             <BrukerVelgerEnhet
-              beskrivelse={innsendingsmate.visenheter}
+              beskrivelse={innsendingsmate.visenheter!}
               {...this.props}
             />
           )}
