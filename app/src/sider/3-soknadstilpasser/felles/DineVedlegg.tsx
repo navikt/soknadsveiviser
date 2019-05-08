@@ -5,13 +5,13 @@ import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 
 interface Props {
-  relevanteVedlegg: Vedleggsobjekt[];
+  vedleggTilInnsending: Vedleggsobjekt[];
 }
 
 const DineVedlegg = (props: Props & InjectedIntlProps) => {
-  const { relevanteVedlegg, intl } = props;
+  const { vedleggTilInnsending, intl } = props;
 
-  return relevanteVedlegg.length > 0 ? (
+  return vedleggTilInnsending.length > 0 ? (
     <div className="steg__rad">
       <Undertittel>
         <FormattedMessage id="dinevedlegg.tittel" />
@@ -23,7 +23,7 @@ const DineVedlegg = (props: Props & InjectedIntlProps) => {
       </div>
       <div className="dinevedlegg__vedlegg">
         <ol>
-          {relevanteVedlegg.map(({ vedlegg, pakrevd, _key }) => (
+          {vedleggTilInnsending.map(({ vedlegg, pakrevd, _key }) => (
             <li key={_key}>
               <Element>
                 {pakrevd && intl.formatMessage({ id: "dinevedlegg.pakrevd" })}

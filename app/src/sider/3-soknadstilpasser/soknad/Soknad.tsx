@@ -66,7 +66,7 @@ class PapirSoknad extends Component<MergedProps> {
           beskrivelse="velgvedlegg.informasjonspanel.beskrivelse"
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+        <DineVedlegg vedleggTilInnsending={relevanteVedlegg} />
         <Personalia />
       </>
     );

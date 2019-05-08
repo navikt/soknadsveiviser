@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import VelgVedlegg from "./felles/velgvedlegg/VelgVedlegg";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
 import { Vedleggsobjekt } from "../../typer/vedlegg";
@@ -11,6 +11,7 @@ import { getTjenesteUrl } from "../../config";
 import DineVedlegg from "./felles/DineVedlegg";
 import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
+import Neste from "./felles/personalia/knapper/Neste";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -65,7 +66,7 @@ class Dokumentinnsending extends Component<MergedProps> {
       })}`
     );
 
-    const relevanteVedlegg = valgteVedlegg
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
       .filter(v => v.skalSendes || v.pakrevd);
 
@@ -77,18 +78,13 @@ class Dokumentinnsending extends Component<MergedProps> {
           skjemanummer={hovedskjema.skjemanummer}
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
-        <div className="knapp__neste">
-          <a
-            className="knapp knapp--hoved"
-            href={this.genererDokumentinnsendingsUrl(
-              valgtSoknadsobjekt,
-              valgteVedlegg
-            )}
-          >
-            <FormattedMessage id="personalia.knapp" />
-          </a>
-        </div>
+        <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
+        <Neste
+          lenke={this.genererDokumentinnsendingsUrl(
+            valgtSoknadsobjekt,
+            valgteVedlegg
+          )}
+        />
       </>
     );
   }
