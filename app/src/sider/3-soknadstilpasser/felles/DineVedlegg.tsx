@@ -5,6 +5,7 @@ import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { settValgtVedleggSkalEttersendes } from "../../../states/reducers/vedlegg";
 import { link } from "../../../utils/serializers";
 import Modal from "nav-frontend-modal";
+import AlertStripe from "nav-frontend-alertstriper";
 import { SprakBlockText } from "../../../typer/sprak";
 import BlockContent from "@sanity/block-content-to-react";
 import { localeBlockTekst } from "../../../utils/sprak";
@@ -44,6 +45,10 @@ const DineVedlegg = (props: MergedProps) => {
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
+
+  const vedleggTilEttersending = relevanteVedlegg.filter(
+    vedlegg => vedlegg.skalEttersendes === true
+  );
 
   const onChange = (event: ChangeEvent<HTMLInputElement>) =>
     props.settValgtVedleggSkalEttersendes(
@@ -137,6 +142,11 @@ const DineVedlegg = (props: MergedProps) => {
             ))}
         </div>
       </form>
+      {vedleggTilEttersending.length > 0 && (
+        <AlertStripe type="advarsel">
+          <FormattedMessage id="avslutning.advarsel" />
+        </AlertStripe>
+      )}
       <div className="dinevedlegg__beskrivelse">
         <Normaltekst>
           <FormattedMessage id="dinevedlegg.beskrivelse" />
