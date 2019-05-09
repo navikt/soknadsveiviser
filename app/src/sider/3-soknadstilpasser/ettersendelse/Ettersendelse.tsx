@@ -10,10 +10,8 @@ import VelgVedleggEttersendelse from "./VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
-import { Dispatch } from "redux";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { localeTekst } from "../../../utils/sprak";
-import { nullstillVedlegg } from "../../../states/reducers/vedlegg";
 import { sideTittel } from "../../../utils/sprak";
 
 interface Props {
@@ -22,7 +20,6 @@ interface Props {
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
-  nullstillVedlegg: (soknadsobjektId: string) => void;
 }
 
 interface Routes {
@@ -37,9 +34,6 @@ type MergedProps = Props &
   ReduxProps;
 
 class Ettersendelse extends Component<MergedProps> {
-  componentWillMount = () =>
-    this.props.nullstillVedlegg(this.props.valgtSoknadsobjekt._id);
-
   componentDidMount() {
     const { valgtSoknadsobjekt, intl } = this.props;
     document.title = sideTittel(
@@ -79,18 +73,10 @@ const mapStateToProps = (store: Store) => ({
   valgteVedlegg: store.vedlegg.valgteVedlegg
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  nullstillVedlegg: (soknadsobjektId: string) =>
-    dispatch(nullstillVedlegg(soknadsobjektId))
-});
-
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
     withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(Ettersendelse)
+      connect(mapStateToProps)(Ettersendelse)
     )
   )
 );
