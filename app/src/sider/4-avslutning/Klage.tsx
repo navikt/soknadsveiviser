@@ -124,6 +124,7 @@ class Avslutning extends Component<MergedProps, State> {
             skjemaSprak={skjemaSprak}
             byttSprak={this.byttSprak}
           />
+          // Last ned og merge
           <LastNed
             steg={++steg}
             klage={true}
