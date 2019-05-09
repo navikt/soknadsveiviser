@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import VelgVedlegg from "./felles/velgvedlegg/VelgVedlegg";
+import VelgVedleggEttersendelse from "./ettersendelse/VelgVedlegg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
@@ -12,6 +13,7 @@ import DineVedlegg from "./felles/dinevedlegg/DineVedlegg";
 import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
 import Neste from "./felles/personalia/knapper/Neste";
+import Steg from "../../komponenter/bannere/Steg";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -21,6 +23,7 @@ interface Routes {
   skjemanummer: string;
   kategori: string;
   underkategori: string;
+  ettersendelse: string;
 }
 
 interface ReduxProps {
@@ -35,7 +38,8 @@ type MergedProps = Props &
 class Dokumentinnsending extends Component<MergedProps> {
   genererDokumentinnsendingsUrl = (
     valgtSoknadsobjekt: Soknadsobjekt,
-    vedlegg: Vedleggsobjekt[]
+    vedlegg: Vedleggsobjekt[],
+    ettersendelse: string
   ) => {
     const { hovedskjema } = valgtSoknadsobjekt;
     const vedleggTilInnsending = vedlegg
@@ -48,12 +52,13 @@ class Dokumentinnsending extends Component<MergedProps> {
       getTjenesteUrl() +
       "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
       hovedskjema.skjemanummer +
-      "&erEttersendelse=false" +
+      "&erEttersendelse=" + (ettersendelse ? "true" : "false") +
       (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
     );
   };
 
   render() {
+    const { ettersendelse } = this.props.match.params;
     const { intl, valgteVedlegg, valgtSoknadsobjekt } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
 
@@ -62,13 +67,15 @@ class Dokumentinnsending extends Component<MergedProps> {
         valgtSoknadsobjekt.navn,
         intl.locale
       )}  - ${intl.formatMessage({
-        id: "tittel.soknader"
+        id: ettersendelse
+          ? "ettersendelser.mellomledd.digital.knapp"
+          : "vissoknadsobjekter.knapp.soknadsdialog"
       })}`
     );
 
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
-      .filter(v => v.skalSendes || v.pakrevd);
+      .filter(v => (ettersendelse ? v.skalSendes : v.skalSendes || v.pakrevd));
 
     return (
       <>
@@ -77,12 +84,20 @@ class Dokumentinnsending extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
+        {ettersendelse ? (
+          <>
+            <Steg tittel="ettersendelser.tittel.underbanner" />
+            <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
+          </>
+        ) : (
+          <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
+        )}
         <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
         <Neste
           lenke={this.genererDokumentinnsendingsUrl(
             valgtSoknadsobjekt,
-            valgteVedlegg
+            vedleggTilInnsending,
+            ettersendelse
           )}
         />
       </>
