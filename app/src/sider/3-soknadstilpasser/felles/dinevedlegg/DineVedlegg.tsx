@@ -1,14 +1,12 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import { Vedleggsobjekt } from "../../../../typer/vedlegg";
 import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
-import { settValgtVedleggSkalEttersendes } from "../../../../states/reducers/vedlegg";
-import { link } from "../../../../utils/serializers";
-import Modal from "nav-frontend-modal";
 import AlertStripe from "nav-frontend-alertstriper";
 import { SprakBlockText } from "../../../../typer/sprak";
-import BlockContent from "@sanity/block-content-to-react";
-import { localeBlockTekst } from "../../../../utils/sprak";
+import RadioButtons from "./RadioButtons";
+import TableHeader from "./TableHeader";
+import VedleggModal from "./VedleggModal";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
@@ -19,20 +17,10 @@ import {
   FormattedMessage,
   FormattedHTMLMessage
 } from "react-intl";
-import { connect } from "react-redux";
-import { Dispatch } from "redux";
-import { Radio } from "nav-frontend-skjema";
 
 interface Props {
   ettersendelse?: boolean;
   relevanteVedlegg: Vedleggsobjekt[];
-}
-
-interface ReduxProps {
-  settValgtVedleggSkalEttersendes: (
-    vedleggId: string,
-    skalEttersendes: boolean
-  ) => void;
 }
 
 interface ModalContent {
@@ -40,10 +28,9 @@ interface ModalContent {
   content?: SprakBlockText;
 }
 
-type MergedProps = Props & ValgtSoknad & InjectedIntlProps & ReduxProps;
-
+type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
-  const { relevanteVedlegg, intl, ettersendelse } = props;
+  const { relevanteVedlegg, ettersendelse } = props;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
@@ -52,14 +39,7 @@ const DineVedlegg = (props: MergedProps) => {
     vedlegg => vedlegg.skalEttersendes === true
   );
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) =>
-    props.settValgtVedleggSkalEttersendes(
-      event.target.name,
-      event.target.value === "off" ? true : false
-    );
-
   let i = 0;
-
   return relevanteVedlegg.length > 0 ? (
     <div className="panel seksjon seksjon__avstand">
       <Undertittel>
@@ -72,32 +52,12 @@ const DineVedlegg = (props: MergedProps) => {
       </div>
       <form>
         <div className="dinevedlegg__wrapper">
-          {!ettersendelse && (
-            <div className="dinevedlegg__header">
-              <div className="dinevedlegg__tittel" />
-              <div className="dinevedlegg__checkbox">
-                <FormattedMessage id="dinevedlegg.sender.na" />
-              </div>
-              <div className="dinevedlegg__checkbox">
-                <FormattedMessage id="dinevedlegg.sender.senere" />
-              </div>
-            </div>
-          )}
-          <Modal
-            isOpen={showModal.display}
+          {!ettersendelse && <TableHeader />}
+          <VedleggModal
+            display={showModal.display}
+            content={showModal.content}
             onRequestClose={() => setShowModal({ display: false })}
-            closeButton={true}
-            contentLabel="Modal"
-          >
-            {showModal.content && (
-              <div className="dinevedlegg__modal">
-                <BlockContent
-                  blocks={localeBlockTekst(showModal.content, intl.locale)}
-                  serializers={{ marks: { link } }}
-                />
-              </div>
-            )}
-          </Modal>
+          />
           {relevanteVedlegg
             .sort(a => (a.pakrevd ? -1 : 1))
             .map(({ vedlegg, pakrevd, _key, skalEttersendes, beskrivelse }) => (
@@ -125,40 +85,7 @@ const DineVedlegg = (props: MergedProps) => {
                   </Element>
                 </div>
                 {!ettersendelse && (
-                  <>
-                    <div className="dinevedlegg__checkbox">
-                      <Radio
-                        value="on"
-                        label={
-                          <span>
-                            &nbsp;
-                            <span className="mobile">
-                              <FormattedMessage id="dinevedlegg.sender.na" />
-                            </span>
-                          </span>
-                        }
-                        name={_key}
-                        onChange={onChange}
-                        checked={!skalEttersendes}
-                      />
-                    </div>
-                    <div className="dinevedlegg__checkbox">
-                      <Radio
-                        value="off"
-                        label={
-                          <span>
-                            &nbsp;
-                            <span className="mobile">
-                              <FormattedMessage id="dinevedlegg.sender.senere" />
-                            </span>
-                          </span>
-                        }
-                        name={_key}
-                        onChange={onChange}
-                        checked={skalEttersendes}
-                      />
-                    </div>
-                  </>
+                  <RadioButtons _key={_key} skalEttersendes={skalEttersendes} />
                 )}
               </div>
             ))}
@@ -177,19 +104,6 @@ const DineVedlegg = (props: MergedProps) => {
     </div>
   ) : null;
 };
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  settValgtVedleggSkalEttersendes: (
-    vedleggId: string,
-    skalEttersendes: boolean
-  ) => dispatch(settValgtVedleggSkalEttersendes(vedleggId, skalEttersendes))
-});
-
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
-  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
-    connect(
-      undefined,
-      mapDispatchToProps
-    )(DineVedlegg)
-  )
+  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(DineVedlegg)
 );
