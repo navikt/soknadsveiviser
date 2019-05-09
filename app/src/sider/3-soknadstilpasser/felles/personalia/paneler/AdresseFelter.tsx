@@ -16,7 +16,11 @@ import InputPostnummer from "./felter/Postnummer";
 import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
-import { finnesVisEnheter } from "../../../../../utils/soknadsobjekter";
+import {
+  finnesVisEnheter,
+  finnesTilSkanning,
+  finnesSpesifisertAdresse
+} from "../../../../../utils/soknadsobjekter";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
@@ -46,8 +50,8 @@ class AdresseFelter extends Component<MergedProps, State> {
     const { tidligereKontaktMedNAV } = this.state;
     const { innsendingsmate } = valgtSoknadsobjekt;
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
-    const skalTilSkanning = innsendingsmate.skanning;
-    const skalTilSpesifisertAdresse = innsendingsmate.spesifisertadresse;
+    const skalTilSkanning = finnesTilSkanning(innsendingsmate);
+    const skalTilSpesifisertAdresse = finnesSpesifisertAdresse(innsendingsmate);
     const skalTilValgtEnhet =
       !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 

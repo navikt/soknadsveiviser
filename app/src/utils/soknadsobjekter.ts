@@ -31,6 +31,12 @@ export const finnesInngangTilSoknadsdialog = (
     locale
   ];
 
+export const finnesTilSkanning = (innsendingsmate?: Innsendingsmate) =>
+  innsendingsmate && innsendingsmate.skanning;
+
+export const finnesSpesifisertAdresse = (innsendingsmate?: Innsendingsmate) =>
+  innsendingsmate && innsendingsmate.spesifisertadresse;
+
 export const finnesVisEnheter = (
   locale: string,
   innsendingsmate?: Innsendingsmate
