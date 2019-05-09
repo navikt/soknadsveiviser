@@ -8,7 +8,7 @@ import { Store } from "../../typer/store";
 import { Soknadsobjekt } from "../../typer/soknad";
 import { connect } from "react-redux";
 import { getTjenesteUrl } from "../../config";
-import DineVedlegg from "./felles/DineVedlegg";
+import DineVedlegg from "./felles/dinevedlegg/DineVedlegg";
 import { localeTekst } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
 

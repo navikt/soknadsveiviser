@@ -1,19 +1,18 @@
 import React, { ChangeEvent, useState } from "react";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../../typer/vedlegg";
 import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
-import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
-import { settValgtVedleggSkalEttersendes } from "../../../states/reducers/vedlegg";
-import { link } from "../../../utils/serializers";
-import { RouteComponentProps, withRouter } from "react-router";
+import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
+import { settValgtVedleggSkalEttersendes } from "../../../../states/reducers/vedlegg";
+import { link } from "../../../../utils/serializers";
 import Modal from "nav-frontend-modal";
 import AlertStripe from "nav-frontend-alertstriper";
-import { SprakBlockText } from "../../../typer/sprak";
+import { SprakBlockText } from "../../../../typer/sprak";
 import BlockContent from "@sanity/block-content-to-react";
-import { localeBlockTekst } from "../../../utils/sprak";
+import { localeBlockTekst } from "../../../../utils/sprak";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
-} from "../../../states/providers/ValgtSoknadsobjekt";
+} from "../../../../states/providers/ValgtSoknadsobjekt";
 import {
   InjectedIntlProps,
   injectIntl,
@@ -25,6 +24,7 @@ import { Dispatch } from "redux";
 import { Radio } from "nav-frontend-skjema";
 
 interface Props {
+  ettersendelse?: boolean;
   relevanteVedlegg: Vedleggsobjekt[];
 }
 
@@ -40,19 +40,10 @@ interface ModalContent {
   content?: SprakBlockText;
 }
 
-interface Routes {
-  ettersendelse: string;
-}
-
-type MergedProps = Props &
-  ValgtSoknad &
-  InjectedIntlProps &
-  ReduxProps &
-  RouteComponentProps<Routes>;
+type MergedProps = Props & ValgtSoknad & InjectedIntlProps & ReduxProps;
 
 const DineVedlegg = (props: MergedProps) => {
-  const { relevanteVedlegg, intl, match } = props;
-  const { ettersendelse } = match.params;
+  const { relevanteVedlegg, intl, ettersendelse } = props;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
@@ -195,14 +186,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
-  withRouter<Props & ValgtSoknad & RouteComponentProps<Routes>>(
-    injectIntl<
-      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
-    >(
-      connect(
-        undefined,
-        mapDispatchToProps
-      )(DineVedlegg)
-    )
+  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
+    connect(
+      undefined,
+      mapDispatchToProps
+    )(DineVedlegg)
   )
 );

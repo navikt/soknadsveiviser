@@ -8,7 +8,7 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import { settEttersendTilKlage } from "../../../states/reducers/klage";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import DineVedlegg from "../felles/DineVedlegg";
+import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
 import {
   toggleValgtVedlegg,
   settAlleVedleggSkalSendesForSoknadsobjekt
@@ -99,6 +99,7 @@ class VisKlage extends Component<MergedProps> {
       match
     } = this.props;
 
+    const urlSkalEttersende = match.params.ettersendelse ? true : false;
     const relevanteVedlegg = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
       .filter(v => v.skalSendes);
@@ -113,11 +114,14 @@ class VisKlage extends Component<MergedProps> {
           skjemanummer={klageskjema.skjemanummer}
         />
         <Steg tittel="klage.tittel.underbanner" />
-        {!match.params.ettersendelse && <VelgEttersendelse />}
+        {!urlSkalEttersende && <VelgEttersendelse />}
         {!klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+        <DineVedlegg
+          ettersendelse={urlSkalEttersende}
+          relevanteVedlegg={relevanteVedlegg}
+        />
         <Personalia />
       </>
     );
