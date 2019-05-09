@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Vedleggsobjekt } from "../../../../typer/vedlegg";
 import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
+import { localeTekst } from "../../../../utils/sprak";
 import AlertStripe from "nav-frontend-alertstriper";
 import { SprakBlockText } from "../../../../typer/sprak";
 import RadioButtons from "./RadioButtons";
@@ -31,6 +32,7 @@ interface ModalContent {
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
   const { vedleggTilInnsending, visRadioButtons } = props;
+  const { locale } = props;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
@@ -59,7 +61,13 @@ const DineVedlegg = (props: MergedProps) => {
             onRequestClose={() => setShowModal({ display: false })}
           />
           {vedleggTilInnsending
-            .sort(a => (a.pakrevd ? -1 : 1))
+            .sort(
+              (a, b) =>
+                (a.pakrevd ? -1 : 0) ||
+                localeTekst(a.vedlegg.navn, locale).localeCompare(
+                  localeTekst(b.vedlegg.navn, locale)
+                )
+            )
             .map(({ vedlegg, pakrevd, _key, skalEttersendes, beskrivelse }) => (
               <div key={_key} className="dinevedlegg__vedlegg">
                 <div className="dinevedlegg__id">{++i}.</div>
