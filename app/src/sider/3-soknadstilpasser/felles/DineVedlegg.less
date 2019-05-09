@@ -3,7 +3,9 @@
     padding: 0.5rem 0;
   }
   &__beskrivelse {
-    padding: 2rem 0 0 0;
+    @media @desktop {
+      padding: 2rem 0 0 0;
+    }
   }
   &__wrapper {
     margin: 0.5rem 0;
@@ -31,6 +33,19 @@
     .skjemaelement--horisontal {
       margin-bottom: 0;
     }
+
+    @media @mobile {
+      width: 100%;
+      min-height: 2rem;
+      margin: 1rem 0 0 1.2rem;
+      justify-content: flex-start;
+    }
+
+    @media @desktop {
+      .mobile {
+        display: none;
+      }
+    }
   }
   &__vedlegg {
     border-top: solid 1px #979797;
@@ -38,11 +53,20 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+
+    @media @mobile {
+      align-items: normal;
+    }
   }
   &__header {
     padding: 0.75rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
+
+    @media @mobile {
+      display: none;
+    }
   }
 }

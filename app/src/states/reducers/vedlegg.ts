@@ -146,7 +146,6 @@ export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
       };
 
     case "SETT_VALGT_VEDLEGG_SKAL_ETTERSENDES":
-      console.log(action);
       return {
         ...state,
         valgteVedlegg: valgteVedlegg.map(vedleggsobjekt =>

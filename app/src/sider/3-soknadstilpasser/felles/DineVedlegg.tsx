@@ -4,6 +4,7 @@ import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { settValgtVedleggSkalEttersendes } from "../../../states/reducers/vedlegg";
 import { link } from "../../../utils/serializers";
+import { RouteComponentProps, withRouter } from "react-router";
 import Modal from "nav-frontend-modal";
 import AlertStripe from "nav-frontend-alertstriper";
 import { SprakBlockText } from "../../../typer/sprak";
@@ -39,9 +40,19 @@ interface ModalContent {
   content?: SprakBlockText;
 }
 
-type MergedProps = Props & ValgtSoknad & InjectedIntlProps & ReduxProps;
+interface Routes {
+  ettersendelse: string;
+}
+
+type MergedProps = Props &
+  ValgtSoknad &
+  InjectedIntlProps &
+  ReduxProps &
+  RouteComponentProps<Routes>;
+
 const DineVedlegg = (props: MergedProps) => {
-  const { relevanteVedlegg, intl } = props;
+  const { relevanteVedlegg, intl, match } = props;
+  const { ettersendelse } = match.params;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
@@ -70,15 +81,17 @@ const DineVedlegg = (props: MergedProps) => {
       </div>
       <form>
         <div className="dinevedlegg__wrapper">
-          <div className="dinevedlegg__header">
-            <div className="dinevedlegg__tittel" />
-            <div className="dinevedlegg__checkbox">
-              <FormattedMessage id="dinevedlegg.sender.na" />
+          {!ettersendelse && (
+            <div className="dinevedlegg__header">
+              <div className="dinevedlegg__tittel" />
+              <div className="dinevedlegg__checkbox">
+                <FormattedMessage id="dinevedlegg.sender.na" />
+              </div>
+              <div className="dinevedlegg__checkbox">
+                <FormattedMessage id="dinevedlegg.sender.senere" />
+              </div>
             </div>
-            <div className="dinevedlegg__checkbox">
-              <FormattedMessage id="dinevedlegg.sender.senere" />
-            </div>
-          </div>
+          )}
           <Modal
             isOpen={showModal.display}
             onRequestClose={() => setShowModal({ display: false })}
@@ -120,24 +133,42 @@ const DineVedlegg = (props: MergedProps) => {
                     )}
                   </Element>
                 </div>
-                <div className="dinevedlegg__checkbox">
-                  <Radio
-                    value="on"
-                    label={<span>&nbsp;</span>}
-                    name={_key}
-                    onChange={onChange}
-                    checked={!skalEttersendes}
-                  />
-                </div>
-                <div className="dinevedlegg__checkbox">
-                  <Radio
-                    value="off"
-                    label={<span>&nbsp;</span>}
-                    name={_key}
-                    onChange={onChange}
-                    checked={skalEttersendes}
-                  />
-                </div>
+                {!ettersendelse && (
+                  <>
+                    <div className="dinevedlegg__checkbox">
+                      <Radio
+                        value="on"
+                        label={
+                          <span>
+                            &nbsp;
+                            <span className="mobile">
+                              <FormattedMessage id="dinevedlegg.sender.na" />
+                            </span>
+                          </span>
+                        }
+                        name={_key}
+                        onChange={onChange}
+                        checked={!skalEttersendes}
+                      />
+                    </div>
+                    <div className="dinevedlegg__checkbox">
+                      <Radio
+                        value="off"
+                        label={
+                          <span>
+                            &nbsp;
+                            <span className="mobile">
+                              <FormattedMessage id="dinevedlegg.sender.senere" />
+                            </span>
+                          </span>
+                        }
+                        name={_key}
+                        onChange={onChange}
+                        checked={skalEttersendes}
+                      />
+                    </div>
+                  </>
+                )}
               </div>
             ))}
         </div>
@@ -164,10 +195,14 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
-  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
-    connect(
-      undefined,
-      mapDispatchToProps
-    )(DineVedlegg)
+  withRouter<Props & ValgtSoknad & RouteComponentProps<Routes>>(
+    injectIntl<
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+    >(
+      connect(
+        undefined,
+        mapDispatchToProps
+      )(DineVedlegg)
+    )
   )
 );
