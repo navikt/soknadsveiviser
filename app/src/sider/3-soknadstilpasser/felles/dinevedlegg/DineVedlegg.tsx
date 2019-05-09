@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { Vedleggsobjekt } from "../../../../typer/vedlegg";
-import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
-import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
+import { Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { localeTekst } from "../../../../utils/sprak";
 import AlertStripe from "nav-frontend-alertstriper";
 import { SprakBlockText } from "../../../../typer/sprak";
-import RadioButtons from "./RadioButtons";
 import TableHeader from "./TableHeader";
 import VedleggModal from "./VedleggModal";
 import VedleggRad from "./VedleggRad";
@@ -13,12 +11,7 @@ import {
   medValgtSoknadsobjekt,
   ValgtSoknad
 } from "../../../../states/providers/ValgtSoknadsobjekt";
-import {
-  InjectedIntlProps,
-  injectIntl,
-  FormattedMessage,
-  FormattedHTMLMessage
-} from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 
 interface Props {
   visRadioButtons?: boolean;

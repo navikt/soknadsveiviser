@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
 import { Vedleggsobjekt } from "../../../../typer/vedlegg";
-import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
+import { Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
 import { SprakBlockText } from "../../../../typer/sprak";
 import RadioButtons from "./RadioButtons";
@@ -22,7 +22,9 @@ const VedleggRad = (props: Props) => {
       <div className="dinevedlegg__id">{i}.</div>
       <div className="dinevedlegg__tittel">
         <Element>
-          {pakrevd && <FormattedHTMLMessage id="dinevedlegg.pakrevd" />}
+          {pakrevd && visRadioButtons && (
+            <FormattedHTMLMessage id="dinevedlegg.pakrevd" />
+          )}
           <LocaleTekst tekst={vedlegg.navn} />
           {pakrevd && beskrivelse && (
             <span
