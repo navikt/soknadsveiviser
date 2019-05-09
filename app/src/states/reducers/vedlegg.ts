@@ -14,6 +14,12 @@ interface ToggleVedlegg {
   klage?: boolean;
 }
 
+interface SettVedleggSkalEttersendes {
+  type: string;
+  _key: string;
+  skalEttersendes: boolean;
+}
+
 // Actions
 export const settVedlegg = (soknadsobjekt?: Soknadsobjekt) => ({
   type: "SETT_VEDLEGG",
@@ -42,6 +48,15 @@ export const toggleValgtVedleggForEttersendelse = (
   soknadsobjektId
 });
 
+export const settValgtVedleggSkalEttersendes = (
+  _key: string,
+  skalEttersendes: boolean
+) => ({
+  type: "SETT_VALGT_VEDLEGG_SKAL_ETTERSENDES",
+  _key,
+  skalEttersendes
+});
+
 export const toggleInnsendingVedlegg = (
   _key: string,
   soknadsobjektId: string
@@ -53,7 +68,7 @@ export const nullstillVedlegg = (soknadsobjektId: string) => ({
 });
 
 // Reducers
-type Action = AppendVedlegg & ToggleVedlegg;
+type Action = AppendVedlegg & ToggleVedlegg & SettVedleggSkalEttersendes;
 export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
   const { valgteVedlegg } = state;
   switch (action.type) {
@@ -125,6 +140,19 @@ export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
             ? {
                 ...vedleggsobjekt,
                 skalSendes: !vedleggsobjekt.skalSendes || false
+              }
+            : vedleggsobjekt
+        )
+      };
+
+    case "SETT_VALGT_VEDLEGG_SKAL_ETTERSENDES":
+      return {
+        ...state,
+        valgteVedlegg: valgteVedlegg.map(vedleggsobjekt =>
+          vedleggsobjekt._key === action._key
+            ? {
+                ...vedleggsobjekt,
+                skalEttersendes: action.skalEttersendes
               }
             : vedleggsobjekt
         )

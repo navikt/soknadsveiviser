@@ -1,0 +1,72 @@
+.dinevedlegg {
+  &__ingress {
+    padding: 0.5rem 0;
+  }
+  &__beskrivelse {
+    @media @desktop {
+      padding: 2rem 0 0 0;
+    }
+  }
+  &__wrapper {
+    margin: 0.5rem 0;
+  }
+  &__id {
+    padding: 0 0.5rem;
+  }
+  &__tittel {
+    flex: 1;
+  }
+  &__lenke {
+    margin: 0 1rem;
+  }
+  &__modal {
+    padding: 2rem 2.5rem;
+  }
+  &__checkbox {
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 12rem;
+
+    .skjemaelement,
+    .skjemaelement--horisontal {
+      margin-bottom: 0;
+    }
+
+    @media @mobile {
+      width: 100%;
+      min-height: 2rem;
+      margin: 0.75rem 0 0 1.2rem;
+      justify-content: flex-start;
+    }
+
+    @media @desktop {
+      .mobile {
+        display: none;
+      }
+    }
+  }
+  &__vedlegg {
+    border-top: solid 1px #979797;
+    padding: 0.75rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    @media @mobile {
+      align-items: normal;
+    }
+  }
+  &__header {
+    padding: 0.75rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media @mobile {
+      display: none;
+    }
+  }
+}

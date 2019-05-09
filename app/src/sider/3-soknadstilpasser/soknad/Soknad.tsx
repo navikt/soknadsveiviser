@@ -2,11 +2,11 @@ import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import { localeTekst } from "../../../utils/sprak";
-import { Store, FetchSoknad } from "../../../typer/store";
+import { Store } from "../../../typer/store";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { connect } from "react-redux";
 import { Soknadsobjekt } from "../../../typer/soknad";
-import DineVedlegg from "../felles/DineVedlegg";
+import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
 import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";
@@ -66,7 +66,7 @@ class PapirSoknad extends Component<MergedProps> {
           beskrivelse="velgvedlegg.informasjonspanel.beskrivelse"
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg vedleggTilInnsending={relevanteVedlegg} />
+        <DineVedlegg visRadioButtons vedleggTilInnsending={relevanteVedlegg} />
         <Personalia />
       </>
     );

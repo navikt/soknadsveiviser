@@ -11,13 +11,15 @@
 @import "~nav-frontend-hjelpetekst-style";
 @import "~nav-frontend-veilederpanel-style";
 @import "~nav-frontend-veileder-style";
+@import "~nav-frontend-lukknapp-style";
 @import "~nav-frontend-lesmerpanel-style";
+@import "~nav-frontend-modal-style";
 
 @import "./sider/1-forside/Forside.less";
 @import "./sider/1-forside/seksjoner/kategorier/Kategorier.less";
 @import "./sider/2-soknadsvelger/Soknadsvelger.less";
 @import "./sider/3-soknadstilpasser/felles/personalia/Personalia.less";
-@import "./sider/3-soknadstilpasser/felles/DineVedlegg.less";
+@import "./sider/3-soknadstilpasser/felles/dinevedlegg/DineVedlegg.less";
 @import "./sider/3-soknadstilpasser/felles/velgvedlegg/VelgVedlegg.less";
 @import "./sider/3-soknadstilpasser/ettersendelse/DigitalEllerPapirEttersendelse.less";
 @import "./sider/4-avslutning/Avslutning.less";
@@ -72,6 +74,9 @@ body {
 
     .seksjon {
       margin: 0 0 0.2rem 0;
+      &__avstand {
+        margin-top: 2rem;
+      }
     }
   }
 }

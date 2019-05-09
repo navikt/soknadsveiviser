@@ -5,7 +5,7 @@ import { Store } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { connect } from "react-redux";
-import DineVedlegg from "../felles/DineVedlegg";
+import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
 import VelgVedleggEttersendelse from "./VelgVedlegg";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";

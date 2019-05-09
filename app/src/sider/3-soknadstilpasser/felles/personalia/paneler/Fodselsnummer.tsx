@@ -46,11 +46,10 @@ const FodselsnummerPanel = (props: MergedProps) => {
       label="Fodselsnummer"
       render={(pr: FieldProps<Fodselsnummer>) => (
         <Ekspanderbartpanel
-          tittel={intl.formatMessage({
-            id: personHarFodselsnummerTekst()
-          })}
+          border
           tittelProps="normaltekst"
           apen={personEllerBedrift !== "bedrift"}
+          tittel={intl.formatMessage({ id: personHarFodselsnummerTekst() })}
         >
           <FodselsnummerFelter {...pr} />
           {skalTilValgtEnhet && (

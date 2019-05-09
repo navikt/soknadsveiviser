@@ -126,12 +126,12 @@ class VisPersonalia extends Component<MergedProps> {
         render={() => {
           return (
             <>
-              <div className="sentrert personalia__tittel-wrapper">
+              <div className="personalia__tittel seksjon__avstand">
                 <Undertittel>
                   <FormattedMessage id={overskrift()} />
                 </Undertittel>
               </div>
-              <Form autoComplete="off" className="adressepaneler">
+              <Form className="personalia__paneler" autoComplete="off">
                 <FodselsnummerPanel />
                 <AdressePanel />
                 {personEllerBedrift === "bedrift" && (
