@@ -78,7 +78,7 @@ const DineVedlegg = (props: MergedProps) => {
                 setShowModal={setShowModal}
               />
             ))}
-          {vedleggTilInnsendingSortert
+          {vedleggTilEttersending
             .filter(vedlegg => !vedlegg.pakrevd)
             .map(vedleggsobjekt => (
               <VedleggRad
