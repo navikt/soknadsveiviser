@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import { localeTekst } from "../../../utils/sprak";
-import { Store, FetchSoknad } from "../../../typer/store";
+import { Store } from "../../../typer/store";
 import { Vedleggsobjekt } from "../../../typer/vedlegg";
 import { connect } from "react-redux";
 import { Soknadsobjekt } from "../../../typer/soknad";
@@ -26,12 +26,6 @@ interface Routes {
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
-  soknad: FetchSoknad;
-  hentSoknadsobjekt: (
-    kategori: string,
-    underkategori: string,
-    skjemanummer: string
-  ) => void;
 }
 
 type MergedProps = Props &
@@ -72,7 +66,7 @@ class PapirSoknad extends Component<MergedProps> {
           beskrivelse="velgvedlegg.informasjonspanel.beskrivelse"
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+        <DineVedlegg vedleggTilInnsending={relevanteVedlegg} />
         <Personalia />
       </>
     );

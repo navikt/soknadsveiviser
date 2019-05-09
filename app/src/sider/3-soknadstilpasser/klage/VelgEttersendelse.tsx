@@ -1,4 +1,4 @@
-import React from "react";
+import React, { SyntheticEvent } from "react";
 import { Undertittel } from "nav-frontend-typografi";
 import { Store } from "../../../typer/store";
 import { Klage } from "../../../typer/store";
@@ -28,7 +28,10 @@ interface ReduxProps {
 type MergedProps = Props & ReduxProps & InjectedIntlProps;
 const VelgEttersendelse = (props: MergedProps) => {
   const { intl, klage, klageSoknadsobjekt } = props;
-  const handleOnChange = ({}, value?: string) => {
+  const handleOnChange = (
+    event: SyntheticEvent<EventTarget, Event>,
+    value?: string
+  ) => {
     const skalEttersende = value === "ja" ? true : false;
     if (skalEttersende !== undefined) {
       props.settEttersendTilKlage(skalEttersende);

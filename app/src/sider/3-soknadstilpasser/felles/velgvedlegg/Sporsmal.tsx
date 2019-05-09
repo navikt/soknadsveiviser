@@ -1,5 +1,5 @@
+import React, { SyntheticEvent } from "react";
 import { Element, Undertittel } from "nav-frontend-typografi";
-import * as React from "react";
 import { RadioPanelGruppe } from "nav-frontend-skjema";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import BlockContent from "@sanity/block-content-to-react";
@@ -50,8 +50,10 @@ const Sporsmal = (props: MergedProps) => {
   } = props;
   const { klage } = props.match.params;
 
-  const handleOnChange = ({}, value?: string) =>
-    value && toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage);
+  const handleOnChange = (
+    event: SyntheticEvent<EventTarget, Event>,
+    value?: string
+  ) => value && toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage);
 
   return (
     <div className="maks-bredde vedlegg__sporsmal">

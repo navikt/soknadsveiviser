@@ -20,7 +20,7 @@ import {
 
 interface Props {
   ettersendelse?: boolean;
-  relevanteVedlegg: Vedleggsobjekt[];
+  vedleggTilInnsending: Vedleggsobjekt[];
 }
 
 interface ModalContent {
@@ -30,17 +30,17 @@ interface ModalContent {
 
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
-  const { relevanteVedlegg, ettersendelse } = props;
+  const { vedleggTilInnsending, ettersendelse } = props;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
 
-  const vedleggTilEttersending = relevanteVedlegg.filter(
+  const vedleggTilEttersending = vedleggTilInnsending.filter(
     vedlegg => vedlegg.skalEttersendes === true
   );
 
   let i = 0;
-  return relevanteVedlegg.length > 0 ? (
+  return vedleggTilInnsending.length > 0 ? (
     <div className="panel seksjon seksjon__avstand">
       <Undertittel>
         <FormattedMessage id="dinevedlegg.tittel" />
@@ -58,7 +58,7 @@ const DineVedlegg = (props: MergedProps) => {
             content={showModal.content}
             onRequestClose={() => setShowModal({ display: false })}
           />
-          {relevanteVedlegg
+          {vedleggTilInnsending
             .sort(a => (a.pakrevd ? -1 : 1))
             .map(({ vedlegg, pakrevd, _key, skalEttersendes, beskrivelse }) => (
               <div key={_key} className="dinevedlegg__vedlegg">

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import VelgVedlegg from "./felles/velgvedlegg/VelgVedlegg";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
 import { Vedleggsobjekt } from "../../typer/vedlegg";
@@ -9,8 +9,9 @@ import { Soknadsobjekt } from "../../typer/soknad";
 import { connect } from "react-redux";
 import { getTjenesteUrl } from "../../config";
 import DineVedlegg from "./felles/dinevedlegg/DineVedlegg";
-import { localeTekst } from "../../utils/sprak";
+import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
+import Neste from "./felles/personalia/knapper/Neste";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -31,7 +32,7 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class VedleggssideDokumentinnsending extends Component<MergedProps> {
+class Dokumentinnsending extends Component<MergedProps> {
   genererDokumentinnsendingsUrl = (
     valgtSoknadsobjekt: Soknadsobjekt,
     vedlegg: Vedleggsobjekt[]
@@ -56,7 +57,16 @@ class VedleggssideDokumentinnsending extends Component<MergedProps> {
     const { intl, valgteVedlegg, valgtSoknadsobjekt } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
 
-    const relevanteVedlegg = valgteVedlegg
+    document.title = sideTittel(
+      `${localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale
+      )}  - ${intl.formatMessage({
+        id: "tittel.soknader"
+      })}`
+    );
+
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
       .filter(v => v.skalSendes || v.pakrevd);
 
@@ -68,18 +78,13 @@ class VedleggssideDokumentinnsending extends Component<MergedProps> {
           skjemanummer={hovedskjema.skjemanummer}
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
-        <div className="knapp__neste">
-          <a
-            className="knapp knapp--hoved"
-            href={this.genererDokumentinnsendingsUrl(
-              valgtSoknadsobjekt,
-              valgteVedlegg
-            )}
-          >
-            <FormattedMessage id="personalia.knapp" />
-          </a>
-        </div>
+        <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
+        <Neste
+          lenke={this.genererDokumentinnsendingsUrl(
+            valgtSoknadsobjekt,
+            valgteVedlegg
+          )}
+        />
       </>
     );
   }
@@ -92,7 +97,7 @@ const mapStateToProps = (store: Store) => ({
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
     withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
-      connect(mapStateToProps)(VedleggssideDokumentinnsending)
+      connect(mapStateToProps)(Dokumentinnsending)
     )
   )
 );

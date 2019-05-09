@@ -111,10 +111,10 @@ const mapStateToProps = (store: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  hentSoknader: async (kategori: string, underkategori: string) => (
-    apiHentSoknader(kategori, underkategori)(dispatch),
-    hashLinkScroll(window.location.hash)
-  )
+  hentSoknader: async (kategori: string, underkategori: string) => {
+    apiHentSoknader(kategori, underkategori)(dispatch);
+    hashLinkScroll(window.location.hash);
+  }
 });
 
 export default medKategorier<Props>(

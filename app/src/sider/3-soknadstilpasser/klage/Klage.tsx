@@ -120,7 +120,7 @@ class VisKlage extends Component<MergedProps> {
         )}
         <DineVedlegg
           ettersendelse={urlSkalEttersende}
-          relevanteVedlegg={relevanteVedlegg}
+          vedleggTilInnsending={relevanteVedlegg}
         />
         <Personalia />
       </>

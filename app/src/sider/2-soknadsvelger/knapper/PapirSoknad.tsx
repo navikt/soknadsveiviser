@@ -28,7 +28,7 @@ const Soknad = (props: MergedProps) => {
       to={`${match.url}/${skjemanummer}/brev`}
       title={tittel}
       soknadsobjekt={soknadsobjekt}
-      style={lenkeEllerKnapp}
+      styling={lenkeEllerKnapp}
     />
   );
 };
