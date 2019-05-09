@@ -8,6 +8,7 @@ import { SprakBlockText } from "../../../../typer/sprak";
 import RadioButtons from "./RadioButtons";
 import TableHeader from "./TableHeader";
 import VedleggModal from "./VedleggModal";
+import VedleggRad from "./VedleggRad";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
@@ -41,6 +42,12 @@ const DineVedlegg = (props: MergedProps) => {
     vedlegg => vedlegg.skalEttersendes === true
   );
 
+  const vedleggTilInnsendingSortert = vedleggTilInnsending.sort((a, b) =>
+    localeTekst(a.vedlegg.navn, locale).localeCompare(
+      localeTekst(b.vedlegg.navn, locale)
+    )
+  );
+
   let i = 0;
   return vedleggTilInnsending.length > 0 ? (
     <div className="panel seksjon seksjon__avstand">
@@ -60,42 +67,27 @@ const DineVedlegg = (props: MergedProps) => {
             content={showModal.content}
             onRequestClose={() => setShowModal({ display: false })}
           />
-          {vedleggTilInnsending
-            .sort(
-              (a, b) =>
-                (a.pakrevd ? -1 : 0) ||
-                localeTekst(a.vedlegg.navn, locale).localeCompare(
-                  localeTekst(b.vedlegg.navn, locale)
-                )
-            )
-            .map(({ vedlegg, pakrevd, _key, skalEttersendes, beskrivelse }) => (
-              <div key={_key} className="dinevedlegg__vedlegg">
-                <div className="dinevedlegg__id">{++i}.</div>
-                <div className="dinevedlegg__tittel">
-                  <Element>
-                    {pakrevd && (
-                      <FormattedHTMLMessage id="dinevedlegg.pakrevd" />
-                    )}
-                    <LocaleTekst tekst={vedlegg.navn} />
-                    {pakrevd && beskrivelse && (
-                      <span
-                        className="lenke dinevedlegg__lenke"
-                        onClick={() =>
-                          setShowModal({
-                            display: true,
-                            content: beskrivelse
-                          })
-                        }
-                      >
-                        <FormattedMessage id="velgvedlegg.lesmer.hvaerdette" />
-                      </span>
-                    )}
-                  </Element>
-                </div>
-                {visRadioButtons && (
-                  <RadioButtons _key={_key} skalEttersendes={skalEttersendes} />
-                )}
-              </div>
+          {vedleggTilInnsendingSortert
+            .filter(vedlegg => vedlegg.pakrevd)
+            .map(vedleggsobjekt => (
+              <VedleggRad
+                i={++i}
+                key={vedleggsobjekt._key}
+                visRadioButtons={visRadioButtons}
+                vedleggsobjekt={vedleggsobjekt}
+                setShowModal={setShowModal}
+              />
+            ))}
+          {vedleggTilInnsendingSortert
+            .filter(vedlegg => !vedlegg.pakrevd)
+            .map(vedleggsobjekt => (
+              <VedleggRad
+                i={++i}
+                key={vedleggsobjekt._key}
+                visRadioButtons={visRadioButtons}
+                vedleggsobjekt={vedleggsobjekt}
+                setShowModal={setShowModal}
+              />
             ))}
         </div>
       </form>
