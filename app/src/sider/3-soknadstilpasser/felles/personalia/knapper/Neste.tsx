@@ -35,9 +35,6 @@ const Neste = (props: MergedProps) => {
 
   let erDisabled = relevanteVedlegg.length !== vedleggSvart.length;
 
-  console.log(lenke);
-  console.log(erDisabled);
-
   return (
     <>
       {lenke
