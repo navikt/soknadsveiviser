@@ -31,8 +31,8 @@ interface ModalContent {
 
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
-  const { vedleggTilInnsending, visRadioButtons } = props;
-  const { locale } = props;
+  const { vedleggTilInnsending, visRadioButtons, intl } = props;
+  const { locale } = intl;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
