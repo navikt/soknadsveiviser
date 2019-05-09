@@ -119,7 +119,7 @@ class VisKlage extends Component<MergedProps> {
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg
-          visRadioButtons={!urlSkalEttersende}
+          visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
           vedleggTilInnsending={relevanteVedlegg}
         />
         <Personalia />

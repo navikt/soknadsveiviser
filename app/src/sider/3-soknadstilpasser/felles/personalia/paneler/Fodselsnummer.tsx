@@ -14,7 +14,11 @@ import {
   ValgtSoknad
 } from "../../../../../states/providers/ValgtSoknadsobjekt";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
-import { finnesVisEnheter } from "../../../../../utils/soknadsobjekter";
+import {
+  finnesVisEnheter,
+  finnesTilSkanning,
+  finnesSpesifisertAdresse
+} from "../../../../../utils/soknadsobjekter";
 
 interface Routes {
   personEllerBedrift: string;
@@ -30,8 +34,8 @@ const FodselsnummerPanel = (props: MergedProps) => {
   const { personEllerBedrift } = props.match.params;
   const { innsendingsmate } = valgtSoknadsobjekt;
   const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
-  const skalTilSkanning = innsendingsmate.skanning;
-  const skalTilSpesifisertAdresse = innsendingsmate.spesifisertadresse;
+  const skalTilSkanning = finnesTilSkanning(innsendingsmate);
+  const skalTilSpesifisertAdresse = finnesSpesifisertAdresse(innsendingsmate);
   const skalTilValgtEnhet =
     !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 
