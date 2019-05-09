@@ -69,7 +69,7 @@ const DineVedlegg = (props: MergedProps) => {
                       <FormattedHTMLMessage id="dinevedlegg.pakrevd" />
                     )}
                     <LocaleTekst tekst={vedlegg.navn} />
-                    {beskrivelse && (
+                    {pakrevd && beskrivelse && (
                       <span
                         className="lenke dinevedlegg__lenke"
                         onClick={() =>
