@@ -117,7 +117,7 @@ class VisKlage extends Component<MergedProps> {
         {!klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+        <DineVedlegg vedleggTilInnsending={relevanteVedlegg} />
         <Personalia />
       </>
     );

@@ -13,7 +13,7 @@ interface Props {
   to: string;
   title: string;
   soknadsobjekt: Soknadsobjekt;
-  style?: string;
+  styling?: string;
 }
 
 interface ReduxProps {
@@ -21,14 +21,14 @@ interface ReduxProps {
 }
 
 type MergedProps = Props & InjectedIntlProps & RouteComponentProps & ReduxProps;
-const Postinnsending = (props: MergedProps) => {
-  const { soknadsobjekt, intl, to, title, style } = props;
+const SettValgtSoknadsobjekt = (props: MergedProps) => {
+  const { soknadsobjekt, intl, to, title, styling } = props;
 
   return (
     <Link
       id={soknadsobjekt.navn[intl.locale]}
       to={to}
-      className={style ? style : "knapp knapp--standard soknadsobjekt__knapp"}
+      className={styling ? styling : "knapp knapp--standard soknadsobjekt__knapp"}
       onClick={() => props.settValgtSoknadsobjekt(soknadsobjekt)}
     >
       <FormattedMessage id={title} />
@@ -48,6 +48,6 @@ export default withRouter<Props & RouteComponentProps>(
     connect(
       undefined,
       mapDispatchToProps
-    )(Postinnsending)
+    )(SettValgtSoknadsobjekt)
   )
 );

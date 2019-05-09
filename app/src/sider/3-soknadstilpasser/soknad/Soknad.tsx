@@ -26,12 +26,6 @@ interface Routes {
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
-  soknad: FetchSoknad;
-  hentSoknadsobjekt: (
-    kategori: string,
-    underkategori: string,
-    skjemanummer: string
-  ) => void;
 }
 
 type MergedProps = Props &
@@ -72,7 +66,7 @@ class PapirSoknad extends Component<MergedProps> {
           beskrivelse="velgvedlegg.informasjonspanel.beskrivelse"
         />
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg relevanteVedlegg={relevanteVedlegg} />
+        <DineVedlegg vedleggTilInnsending={relevanteVedlegg} />
         <Personalia />
       </>
     );

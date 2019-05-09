@@ -16,22 +16,55 @@ interface ValgtSoknad {
   klageSoknadsobjekt?: Soknadsobjekt;
 }
 
-type MergedProps = ReduxProps & ValgtSoknad;
-const NesteKnapp = (props: MergedProps) => {
+interface Props {
+  lenke?: string;
+}
+
+type MergedProps = Props & ReduxProps & ValgtSoknad;
+
+const Neste = (props: MergedProps) => {
+  const { lenke } = props;
+
   const relevanteVedlegg = props.valgteVedlegg
-    .filter(vedlegg => vedlegg.soknadsobjektId == props.valgtSoknadsobjekt._id)
+    .filter(vedlegg => vedlegg.soknadsobjektId === props.valgtSoknadsobjekt._id)
     .filter(vedlegg => !vedlegg.pakrevd);
 
   const vedleggSvart = relevanteVedlegg.filter(
     vedlegg => vedlegg.skalSendes !== undefined
   );
 
+  let erDisabled = relevanteVedlegg.length !== vedleggSvart.length;
+
+  return (
+    <>
+      {lenke
+        ? NesteLenke(lenke, erDisabled)
+        : NesteKnapp(erDisabled)}
+    </>
+  );
+};
+
+const NesteKnapp = (erDisabled: boolean) => {
   return (
     <div className="knapp__neste">
       <Knapp
         className="knapp knapp--hoved sentrert__knapp row"
         htmlType="submit"
-        disabled={relevanteVedlegg.length !== vedleggSvart.length}
+        disabled={erDisabled}
+      >
+        <FormattedMessage id="personalia.knapp" />
+      </Knapp>
+    </div>
+  );
+};
+
+const NesteLenke = (lenke: string, erDisabled: boolean) => {
+  return (
+    <div className="knapp__neste">
+      <Knapp
+        className="knapp knapp--hoved sentrert__knapp row"
+        disabled={erDisabled}
+        onClick={() => window.location.href = lenke}
       >
         <FormattedMessage id="personalia.knapp" />
       </Knapp>
@@ -43,6 +76,6 @@ const mapStateToProps = (store: Store) => ({
   valgteVedlegg: store.vedlegg.valgteVedlegg
 });
 
-export default medValgtSoknadsobjekt<ValgtSoknad>(
-  connect(mapStateToProps)(NesteKnapp)
+export default medValgtSoknadsobjekt<ValgtSoknad & Props>(
+  connect(mapStateToProps)(Neste)
 );
