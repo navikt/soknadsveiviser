@@ -19,7 +19,7 @@ import {
 } from "react-intl";
 
 interface Props {
-  ettersendelse?: boolean;
+  visRadioButtons?: boolean;
   vedleggTilInnsending: Vedleggsobjekt[];
 }
 
@@ -30,7 +30,7 @@ interface ModalContent {
 
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
-  const { vedleggTilInnsending, ettersendelse } = props;
+  const { vedleggTilInnsending, visRadioButtons } = props;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
@@ -52,7 +52,7 @@ const DineVedlegg = (props: MergedProps) => {
       </div>
       <form>
         <div className="dinevedlegg__wrapper">
-          {!ettersendelse && <TableHeader />}
+          {visRadioButtons && <TableHeader />}
           <VedleggModal
             display={showModal.display}
             content={showModal.content}
@@ -84,7 +84,7 @@ const DineVedlegg = (props: MergedProps) => {
                     )}
                   </Element>
                 </div>
-                {!ettersendelse && (
+                {visRadioButtons && (
                   <RadioButtons _key={_key} skalEttersendes={skalEttersendes} />
                 )}
               </div>
