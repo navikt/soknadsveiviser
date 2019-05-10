@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import Forside from "./sider/1-forside/Forside";
 import SkjemautlistingOversikt from "./sider/interne/skjemautlisting/Oversikt";
 import SkjemautlistingDetaljert from "./sider/interne/skjemautlisting/Detaljert";
@@ -48,14 +48,18 @@ class App extends Component<MergedProps> {
   }
 
   render() {
-    const { path } = this.props.match;
+    const { path, params } = this.props.match;
+    const { sprak } = params;
     return (
       <Switch>
-        <Route path={`${path}/:personEllerBedrift(person|bedrift)`}>
+        <Redirect exact from={`/soknadsveiviser/${sprak}`} to={`/soknadsveiviser/${sprak}/person`} />
+        <Redirect exact from={`${path}/:inngang(ettersendelse|klage)`} to={`${path}/:inngang(ettersendelse|klage)/person`} />
+
+        <Route path={`${path}/:inngang(ettersendelse|klage)?/:personEllerBedrift(person|bedrift)`}>
           <MedKategorier>
             <Route
               exact
-              path={`${path}/:personEllerBedrift(person|bedrift)/:inngang(ettersendelse|klage)?/:kategori?`}
+              path={`${path}/:inngang(ettersendelse|klage)?/:personEllerBedrift(person|bedrift)/:kategori?`}
               component={Forside}
             />
             <Route
