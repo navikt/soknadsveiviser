@@ -52,7 +52,8 @@ class Dokumentinnsending extends Component<MergedProps> {
       getTjenesteUrl() +
       "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
       hovedskjema.skjemanummer +
-      "&erEttersendelse=" + (ettersendelse ? "true" : "false") +
+      "&erEttersendelse=" +
+      (ettersendelse ? "true" : "false") +
       (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
     );
   };
