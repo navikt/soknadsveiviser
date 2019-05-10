@@ -48,7 +48,7 @@ class Ettersendelse extends Component<MergedProps> {
     const { intl } = this.props;
     const { valgtSoknadsobjekt, valgteVedlegg } = this.props;
 
-    const relevanteVedlegg = valgteVedlegg
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt!._id)
       .filter(v => v.skalSendes);
 
@@ -62,7 +62,7 @@ class Ettersendelse extends Component<MergedProps> {
         />
         <Steg tittel="ettersendelser.tittel.underbanner" />
         <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
-        <DineVedlegg vedleggTilInnsending={relevanteVedlegg} />
+        <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
         <Personalia {...this.props} />
       </>
     );

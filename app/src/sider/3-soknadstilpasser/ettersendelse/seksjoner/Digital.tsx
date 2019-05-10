@@ -1,9 +1,8 @@
 import * as React from "react";
-import { getTjenesteUrl } from "../../../../config";
 import { Undertittel, Normaltekst } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 
-const DigitalEttersendelse = () => (
+const DigitalEttersendelse = (props: {url: string}) => (
   <div className="ettersendelse__container">
     <div className="ettersendelse__innhold">
       <Undertittel>
@@ -24,7 +23,7 @@ const DigitalEttersendelse = () => (
     </div>
     <div className="ettersendelse__knapper">
       <a
-        href={`${getTjenesteUrl()}/saksoversikt`}
+        href={props.url}
         className="knapp knapp-hoved"
       >
         <FormattedMessage id="ettersendelser.mellomledd.digital.knapp" />

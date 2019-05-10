@@ -73,7 +73,7 @@ class SkjemaVelgerRoutes extends Component<MergedProps> {
               />
               <Route
                 exact
-                path={`${path}/dokumentinnsending`}
+                path={`${path}/:ettersendelse(ettersendelse)?/dokumentinnsending`}
                 component={Dokumentinnsending}
               />
             </MedPersonalia>

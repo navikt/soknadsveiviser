@@ -7,9 +7,13 @@ import DigitalEttersendelse from "./seksjoner/Digital";
 import PapirEttersendelse from "./seksjoner/Papir";
 import KlageEttersendelse from "./seksjoner/Klage";
 import { localeTekst } from "../../../utils/sprak";
-import { finnesDigitalInnsending } from "../../../utils/soknadsobjekter";
+import {
+  finnesDigitalInnsending,
+  finnesDokumentinnsending
+} from "../../../utils/soknadsobjekter";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "../../../utils/sprak";
+import { getTjenesteUrl } from "../../../config";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -45,7 +49,14 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        {erDigital && <DigitalEttersendelse />}
+        {erDigital && (
+          <DigitalEttersendelse
+            url={urlTilDokumentinnsendingEllerSoknadsdialog(
+              this.props.match.url,
+              valgtSoknadsobjekt
+            )}
+          />
+        )}
         <PapirEttersendelse />
         <KlageEttersendelse />
       </>
@@ -60,3 +71,11 @@ export default medValgtSoknadsobjekt(
     )
   )
 );
+
+const urlTilDokumentinnsendingEllerSoknadsdialog = (
+  path: string,
+  valgtSoknadsobjekt: Soknadsobjekt
+) =>
+  finnesDokumentinnsending(valgtSoknadsobjekt)
+    ? `${path}/dokumentinnsending`
+    : `${getTjenesteUrl()}/saksoversikt`;
