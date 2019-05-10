@@ -34,7 +34,7 @@ const Skjemavisning = (props: MergedProps) => {
     const url = hentPDFurl(skjema.pdf, skjemaSprak, intl.locale);
     const tittel = localeTekst(skjema.navn, skjemaSprak);
     const filtype = url.split(".").pop() || "pdf";
-    lastNedFil(url, tittel, filtype);
+    lastNedFil(url, `NAV - ${tittel}`, filtype);
   };
 
   return (

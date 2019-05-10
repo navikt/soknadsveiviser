@@ -9,11 +9,10 @@ import {
   medPersonalia,
   Personalia
 } from "../../../states/providers/Personalia";
-import { localeTekst } from "../../../utils/sprak";
 import { FormattedMessage } from "react-intl";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { hentForsteside, Params } from "./utils/forsteside/forsteside";
-import { lastNedPDF } from "./utils/pdf";
+import { lastNedFilBase64 } from "./utils/pdf";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { Hovedknapp } from "nav-frontend-knapper";
 
@@ -56,13 +55,9 @@ const ForstesideGenerator = (props: MergedProps) => {
 
     const { klage } = props;
     const { valgtSoknadsobjekt, klageSoknadsobjekt, relevanteVedlegg } = props;
-    const hovedskjema = klage
-      ? klageSoknadsobjekt.hovedskjema
-      : valgtSoknadsobjekt.hovedskjema;
     const { ettersendelse } = props.match.params;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
-    const pdfNavn = localeTekst(hovedskjema.navn, valgtLocale);
     const personalia = {
       fodselsnummer: props.fodselsnummer,
       adresse: props.adresse,
@@ -88,7 +83,8 @@ const ForstesideGenerator = (props: MergedProps) => {
     hentForsteside(foerstesideParams)
       .then(samletPdf => {
         setState({ status: "DOWNLOAD" });
-        lastNedPDF(samletPdf, pdfNavn);
+        const navn = props.intl.formatMessage({id: "avslutning.steg.forsteside.pdf.tittel"})
+        lastNedFilBase64(samletPdf, `NAV - ${navn}`, "pdf");
       })
       .then(() => {
         setState({ status: "READY" });

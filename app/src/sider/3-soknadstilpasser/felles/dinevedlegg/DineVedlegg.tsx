@@ -1,22 +1,17 @@
 import React, { useState } from "react";
 import { Vedleggsobjekt } from "../../../../typer/vedlegg";
-import { Normaltekst, Undertittel, Element } from "nav-frontend-typografi";
-import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
+import { Normaltekst, Undertittel } from "nav-frontend-typografi";
+import { localeTekst } from "../../../../utils/sprak";
 import AlertStripe from "nav-frontend-alertstriper";
 import { SprakBlockText } from "../../../../typer/sprak";
-import RadioButtons from "./RadioButtons";
 import TableHeader from "./TableHeader";
 import VedleggModal from "./VedleggModal";
+import VedleggRad from "./VedleggRad";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
 } from "../../../../states/providers/ValgtSoknadsobjekt";
-import {
-  InjectedIntlProps,
-  injectIntl,
-  FormattedMessage,
-  FormattedHTMLMessage
-} from "react-intl";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 
 interface Props {
   visRadioButtons?: boolean;
@@ -30,13 +25,20 @@ interface ModalContent {
 
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
-  const { vedleggTilInnsending, visRadioButtons } = props;
+  const { vedleggTilInnsending, visRadioButtons, intl } = props;
+  const { locale } = intl;
   const [showModal, setShowModal] = useState({
     display: false
   } as ModalContent);
 
   const vedleggTilEttersending = vedleggTilInnsending.filter(
     vedlegg => vedlegg.skalEttersendes === true
+  );
+
+  const vedleggTilInnsendingSortert = vedleggTilInnsending.sort((a, b) =>
+    localeTekst(a.vedlegg.navn, locale).localeCompare(
+      localeTekst(b.vedlegg.navn, locale)
+    )
   );
 
   let i = 0;
@@ -58,41 +60,32 @@ const DineVedlegg = (props: MergedProps) => {
             content={showModal.content}
             onRequestClose={() => setShowModal({ display: false })}
           />
+          {vedleggTilInnsendingSortert
+            .filter(vedlegg => vedlegg.pakrevd)
+            .map(vedleggsobjekt => (
+              <VedleggRad
+                i={++i}
+                key={vedleggsobjekt._key}
+                visRadioButtons={visRadioButtons}
+                vedleggsobjekt={vedleggsobjekt}
+                setShowModal={setShowModal}
+              />
+            ))}
           {vedleggTilInnsending
-            .sort(a => (a.pakrevd ? -1 : 1))
-            .map(({ vedlegg, pakrevd, _key, skalEttersendes, beskrivelse }) => (
-              <div key={_key} className="dinevedlegg__vedlegg">
-                <div className="dinevedlegg__id">{++i}.</div>
-                <div className="dinevedlegg__tittel">
-                  <Element>
-                    {pakrevd && (
-                      <FormattedHTMLMessage id="dinevedlegg.pakrevd" />
-                    )}
-                    <LocaleTekst tekst={vedlegg.navn} />
-                    {beskrivelse && (
-                      <span
-                        className="lenke dinevedlegg__lenke"
-                        onClick={() =>
-                          setShowModal({
-                            display: true,
-                            content: beskrivelse
-                          })
-                        }
-                      >
-                        <FormattedMessage id="velgvedlegg.lesmer.hvaerdette" />
-                      </span>
-                    )}
-                  </Element>
-                </div>
-                {visRadioButtons && (
-                  <RadioButtons _key={_key} skalEttersendes={skalEttersendes} />
-                )}
-              </div>
+            .filter(vedlegg => !vedlegg.pakrevd)
+            .map(vedleggsobjekt => (
+              <VedleggRad
+                i={++i}
+                key={vedleggsobjekt._key}
+                visRadioButtons={visRadioButtons}
+                vedleggsobjekt={vedleggsobjekt}
+                setShowModal={setShowModal}
+              />
             ))}
         </div>
       </form>
       {vedleggTilEttersending.length > 0 && (
-        <AlertStripe type="advarsel">
+        <AlertStripe type="advarsel" className="dinevedlegg__alert">
           <FormattedMessage id="avslutning.advarsel" />
         </AlertStripe>
       )}

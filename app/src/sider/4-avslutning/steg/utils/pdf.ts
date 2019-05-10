@@ -34,11 +34,12 @@ export const hentPDFobjekt = (
   }
 };
 
-export const lastNedPDF = (pdf: string, title: string) => {
-  console.log("Laster ned sammenslått pdf");
-  FileSaver.saveAs(b64toBlob(pdf), `${title}.pdf`);
+export const lastNedFil = (url: string, tittel: string, filtype: string) => {
+  console.log(`Laster ned ${tittel}`);
+  FileSaver.saveAs(url, `${tittel}.${filtype}`);
 };
 
-export const lastNedFil = (url: string, tittel: string, filtype: string) => {
-  FileSaver.saveAs(url, `${tittel}.${filtype}`);
+export const lastNedFilBase64 = (base64: string, tittel: string, filtype: string) => {
+  console.log(`Laster ned ${tittel}`);
+  FileSaver.saveAs(b64toBlob(base64), `${tittel}.${filtype}`);
 };
