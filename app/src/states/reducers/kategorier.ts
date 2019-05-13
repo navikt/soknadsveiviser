@@ -75,9 +75,12 @@ export const kategorier = (
     case "SETT_KATEGORIER_RESULT":
       const { pathname } = window.location;
       const urlSplices = pathname.split("/");
-      const urlType = urlSplices[3] || "person";
-      const urlKategori = urlSplices[4];
-      const urlUnderkategori = urlSplices[5];
+      let index =
+        urlSplices[3] === "klage" || urlSplices[3] === "ettersendelse" ? 4 : 3;
+
+      const urlType = urlSplices[index] || "person";
+      const urlKategori = urlSplices[index + 1];
+      const urlUnderkategori = urlSplices[index + 2];
       const valgtType = typeTilNorsk(urlType);
 
       const sorterteKategorier = action.kategorier.sort(

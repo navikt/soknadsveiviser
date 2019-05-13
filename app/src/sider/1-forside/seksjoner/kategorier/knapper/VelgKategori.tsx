@@ -16,6 +16,7 @@ interface Props {
 }
 
 interface Routes {
+  inngang: string;
   sprak: string;
   personEllerBedrift: string;
   kategori: string;
@@ -31,11 +32,12 @@ type MergedProps = Props &
   RouteComponentProps<Routes>;
 
 const VelgKategori = (props: MergedProps) => {
-  const { personEllerBedrift, sprak } = props.match.params;
+  const { personEllerBedrift, sprak, inngang } = props.match.params;
+  const klageEllerEttersendelse = inngang ? `${inngang}/` : "";
   return (
     <li key={props.kategori.urlparam}>
       <Link
-        to={`/soknadsveiviser/${sprak}/${personEllerBedrift}/${
+        to={`/soknadsveiviser/${sprak}/${klageEllerEttersendelse}${personEllerBedrift}/${
           props.kategori.urlparam
         }`}
         onClick={() => props.settValgtKategori(props.kategori)}
