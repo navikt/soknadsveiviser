@@ -18,12 +18,13 @@ interface ValgtSoknad {
 
 interface Props {
   lenke?: string;
+  ettersendelse?: string;
 }
 
 type MergedProps = Props & ReduxProps & ValgtSoknad;
 
 const Neste = (props: MergedProps) => {
-  const { lenke } = props;
+  const { lenke, ettersendelse } = props;
 
   const relevanteVedlegg = props.valgteVedlegg
     .filter(vedlegg => vedlegg.soknadsobjektId === props.valgtSoknadsobjekt._id)
@@ -38,7 +39,7 @@ const Neste = (props: MergedProps) => {
   return (
     <>
       {lenke
-        ? NesteLenke(lenke, erDisabled)
+        ? NesteLenke(lenke, ettersendelse ? false : erDisabled)
         : NesteKnapp(erDisabled)}
     </>
   );
@@ -58,7 +59,7 @@ const NesteKnapp = (erDisabled: boolean) => {
   );
 };
 
-const NesteLenke = (lenke: string, erDisabled: boolean) => {
+export const NesteLenke = (lenke: string, erDisabled: boolean) => {
   return (
     <div className="knapp__neste">
       <Knapp
