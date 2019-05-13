@@ -1,15 +1,15 @@
 import { Lenkeobjekt, Soknadsobjekt } from "./soknad";
-import { SprakBlockText, SprakString } from "./sprak";
+import { LocaleBlockText, LocaleString } from "./sprak";
 
 export interface Inngangsoknadsdialog {
-  soknadsdialogURL?: SprakString;
-  beskrivelse?: SprakBlockText;
+  soknadsdialogURL?: LocaleString;
+  beskrivelse?: LocaleBlockText;
   lenker?: Lenkeobjekt[];
 }
 
 export interface Underkategori {
   soknadsobjekter: Soknadsobjekt[];
-  navn: SprakString;
+  navn: LocaleString;
   urlparam: string;
   lenketilhorlighet: string;
   inngangtilsoknadsdialog: Inngangsoknadsdialog;

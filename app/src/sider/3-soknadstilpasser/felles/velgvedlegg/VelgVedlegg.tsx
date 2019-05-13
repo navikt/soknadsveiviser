@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Vedleggsobjekt } from "../../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
 import { Store } from "../../../../typer/store";
 import { Soknadsobjekt } from "../../../../typer/soknad";
 import { withRouter, RouteComponentProps } from "react-router";

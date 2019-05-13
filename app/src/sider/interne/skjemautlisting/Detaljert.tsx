@@ -4,7 +4,7 @@ import Innholdstittel from "nav-frontend-typografi/lib/innholdstittel";
 import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import { Kategori } from "../../../typer/kategori";
 import { RouteComponentProps } from "react-router-dom";
-import VisSoknadsobjekt from "./seksjoner/Soknadsobjekt";
+import VisSoknadsobjekt from "./seksjoner/VisSoknadsobjekt";
 import Wrapper from "../../../komponenter/wrapper/Wrapper";
 import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
 import { injectIntl, InjectedIntlProps } from "react-intl";

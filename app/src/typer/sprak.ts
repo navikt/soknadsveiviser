@@ -1,4 +1,6 @@
-export interface SprakString {
+import { PDFObjekt } from "./pdf";
+
+export interface LocaleString {
   [key: string]: string | undefined;
   nb?: string;
   en?: string;
@@ -10,7 +12,7 @@ export interface SprakString {
   pl?: string;
 }
 
-export interface SprakBlockText {
+export interface LocaleBlockText {
   [key: string]: Editorobjekt[] | undefined;
   nb?: Editorobjekt[];
   en?: Editorobjekt[];
@@ -20,6 +22,18 @@ export interface SprakBlockText {
   es?: Editorobjekt[];
   de?: Editorobjekt[];
   pl?: Editorobjekt[];
+}
+
+export interface LocalePDFObjekt {
+  [key: string]: PDFObjekt | undefined;
+  nb?: PDFObjekt;
+  en?: PDFObjekt;
+  nn?: PDFObjekt;
+  se?: PDFObjekt;
+  fr?: PDFObjekt;
+  es?: PDFObjekt;
+  de?: PDFObjekt;
+  pl?: PDFObjekt;
 }
 
 export interface EditorobjektChildren {

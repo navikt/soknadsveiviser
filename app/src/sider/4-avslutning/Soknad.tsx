@@ -5,7 +5,7 @@ import { withRouter } from "react-router";
 import { Normaltekst } from "nav-frontend-typografi";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { RouteComponentProps, Redirect } from "react-router-dom";
-import { Vedleggsobjekt } from "../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
 import { Store } from "../../typer/store";
 import { Soknadsobjekt } from "../../typer/soknad";
 import StegOverskrift from "./steg/Overskrift";

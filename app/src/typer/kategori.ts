@@ -1,10 +1,10 @@
 import { Underkategori } from "./underkategori";
-import { SprakString } from "./sprak";
+import { LocaleString } from "./sprak";
 
 export interface Kategori {
   _id: string;
   underkategorier: Underkategori[];
-  tittel: SprakString;
+  tittel: LocaleString;
   domenefarge: string;
   kantfarge: string;
   urlparam: string;

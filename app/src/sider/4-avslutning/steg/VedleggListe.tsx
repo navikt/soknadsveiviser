@@ -1,6 +1,6 @@
 import * as React from "react";
 import StegOverskrift from "./Overskrift";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Normaltekst } from "nav-frontend-typografi";
 import { localeTekst } from "../../../utils/sprak";

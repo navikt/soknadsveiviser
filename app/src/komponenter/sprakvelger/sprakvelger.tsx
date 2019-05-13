@@ -1,18 +1,18 @@
 import { Select } from "nav-frontend-skjema";
 import * as React from "react";
-import { SprakString } from "../../typer/sprak";
+import {LocalePDFObjekt, LocaleString} from "../../typer/sprak";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 interface Props {
   byttSprak: (sprak: string) => void;
-  sprakvalg: SprakString;
+  sprakvalg: LocalePDFObjekt;
   label: string;
   valgtSprak: string;
 }
 
 class Sprakvelger extends React.PureComponent<Props & InjectedIntlProps> {
   skjemasprak = Object.entries(this.props.sprakvalg).filter(
-    ([locale, verdi]) => locale !== "_type" && verdi !== ""
+    ([locale, verdi]) => locale !== "_type" && verdi !== undefined
   );
 
   handleNameChange = (e: any) => {
@@ -22,7 +22,7 @@ class Sprakvelger extends React.PureComponent<Props & InjectedIntlProps> {
   };
 
   render() {
-    const muligesprak: SprakString = {
+    const muligesprak: LocaleString = {
       nb: this.props.intl.formatMessage({ id: "avslutning.sprakvelger.nb" }),
       nn: this.props.intl.formatMessage({ id: "avslutning.sprakvelger.nn" }),
       en: this.props.intl.formatMessage({ id: "avslutning.sprakvelger.en" }),

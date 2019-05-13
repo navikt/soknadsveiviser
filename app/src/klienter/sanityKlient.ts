@@ -1,6 +1,5 @@
 import { Kategori } from "../typer/kategori";
 import { Soknadsobjekt, Soknader } from "../typer/soknad";
-import { Skjema } from "../sider/4-avslutning/steg/SkjemaVisning";
 import { filtrerSoknadsojekt } from "../utils/soknadsobjekter";
 import { getProxyUrl } from "../config";
 import { hentJson } from "./felles";
@@ -26,6 +25,7 @@ import {
   settKlageSoknadsobjekt,
   settSoknadsobjektHttpError
 } from "../states/reducers/valgtSoknad";
+import { Skjema } from "../typer/skjemaogvedlegg";
 
 // API kall
 export const apiKallSamlet = (): Promise<Skjema[]> =>

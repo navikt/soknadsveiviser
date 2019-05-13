@@ -1,9 +1,9 @@
 import * as React from "react";
 import { apiKallAlleSkjemaer } from "../../../klienter/sanityKlient";
 import Skjematabell from "./Tabell";
-import { Skjema } from "../../4-avslutning/steg/SkjemaVisning";
 import Wrapper from "../../../komponenter/wrapper/Wrapper";
 import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
+import { Skjema } from "../../../typer/skjemaogvedlegg";
 
 interface State {
   skjemaer: Skjema[];

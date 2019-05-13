@@ -1,7 +1,6 @@
-import { Vedleggsobjekt } from "./vedlegg";
+import { Skjema, Vedleggsobjekt } from "./skjemaogvedlegg";
 import { Inngangsoknadsdialog } from "./underkategori";
-import { Skjema } from "../sider/4-avslutning/steg/SkjemaVisning";
-import { SprakBlockText, SprakString } from "./sprak";
+import { LocaleBlockText, LocaleString } from "./sprak";
 
 export interface DigitalInnsending {
   dokumentinnsending?: boolean;
@@ -10,8 +9,8 @@ export interface DigitalInnsending {
 
 export interface Soknadsobjekt {
   _id: string;
-  navn: SprakString;
-  beskrivelse?: SprakBlockText;
+  navn: LocaleString;
+  beskrivelse?: LocaleBlockText;
   gosysid: number;
   hovedskjema: Skjema;
   vedleggtilsoknad: Vedleggsobjekt[];
@@ -24,9 +23,9 @@ export interface Soknadsobjekt {
 
 export interface Soknadslenke {
   _id: string;
-  navn: SprakString;
+  navn: LocaleString;
   lenke: Lenkeobjekt;
-  beskrivelse?: SprakBlockText;
+  beskrivelse?: LocaleBlockText;
   infoLenker?: Lenkeobjekt[];
 }
 
@@ -38,7 +37,7 @@ export interface Soknader {
 export interface Innsendingsmate {
   skanning?: boolean;
   spesifisertadresse?: Adresse;
-  visenheter?: SprakBlockText;
+  visenheter?: LocaleBlockText;
 }
 
 export interface Adresse {
@@ -55,6 +54,6 @@ export interface Tema {
 }
 
 export interface Lenkeobjekt {
-  tekst: SprakString;
-  lenke: SprakString; // burde hete url
+  tekst: LocaleString;
+  lenke: LocaleString; // burde hete url
 }

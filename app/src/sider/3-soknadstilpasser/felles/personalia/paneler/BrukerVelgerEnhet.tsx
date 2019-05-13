@@ -4,7 +4,7 @@ import BlockContent from "@sanity/block-content-to-react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { localeBlockTekst } from "../../../../../utils/sprak";
 import { link } from "../../../../../utils/serializers";
-import { SprakBlockText } from "../../../../../typer/sprak";
+import { LocaleBlockText } from "../../../../../typer/sprak";
 import VisEnheter from "./felter/VisEnheter";
 import {
   Fodselsnummer,
@@ -12,7 +12,7 @@ import {
 } from "../../../../../states/providers/Personalia";
 
 interface Props {
-  beskrivelse: SprakBlockText;
+  beskrivelse: LocaleBlockText;
 }
 
 type MergedProps = Props &

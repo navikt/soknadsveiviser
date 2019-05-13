@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import StegOverskrift from "./Overskrift";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { RouteComponentProps } from "react-router-dom";
 import { HTTPError } from "../../../typer/errors";

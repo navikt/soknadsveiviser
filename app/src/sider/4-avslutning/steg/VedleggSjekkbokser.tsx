@@ -1,7 +1,7 @@
 import * as React from "react";
 import StegOverskrift from "./Overskrift";
 import CheckboksPanelGruppe from "nav-frontend-skjema/lib/checkboks-panel-gruppe";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import AlertStripe from "nav-frontend-alertstriper";
 import { toggleInnsendingVedlegg } from "../../../states/reducers/vedlegg";

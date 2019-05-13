@@ -1,7 +1,7 @@
 import { Kategori } from "./kategori";
 import { Underkategori } from "./underkategori";
 import { Soknader, Soknadsobjekt } from "./soknad";
-import { Vedleggsobjekt } from "./vedlegg";
+import { Vedleggsobjekt } from "./skjemaogvedlegg";
 import { Loading, Result, HttpError, DataError } from "./api";
 
 export interface Kategorier {

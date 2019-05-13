@@ -1,8 +1,8 @@
 import React from "react";
-import { Vedleggsobjekt } from "../../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
 import { Element } from "nav-frontend-typografi";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
-import { SprakBlockText } from "../../../../typer/sprak";
+import { LocaleBlockText } from "../../../../typer/sprak";
 import RadioButtons from "./RadioButtons";
 import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
 
@@ -10,7 +10,7 @@ interface Props {
   i: number;
   visRadioButtons?: boolean;
   vedleggsobjekt: Vedleggsobjekt;
-  setShowModal: (data: { display: boolean; content: SprakBlockText }) => void;
+  setShowModal: (data: { display: boolean; content: LocaleBlockText }) => void;
 }
 
 const VedleggRad = (props: Props) => {

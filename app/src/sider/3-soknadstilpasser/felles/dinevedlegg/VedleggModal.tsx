@@ -1,6 +1,6 @@
 import React from "react";
 import { link } from "../../../../utils/serializers";
-import { SprakBlockText } from "../../../../typer/sprak";
+import { LocaleBlockText } from "../../../../typer/sprak";
 import Modal from "nav-frontend-modal";
 import BlockContent from "@sanity/block-content-to-react";
 import { localeBlockTekst } from "../../../../utils/sprak";
@@ -8,7 +8,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 
 interface Props {
   display: boolean;
-  content?: SprakBlockText;
+  content?: LocaleBlockText;
   onRequestClose: () => void;
 }
 

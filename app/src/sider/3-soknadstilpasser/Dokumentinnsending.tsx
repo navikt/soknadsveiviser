@@ -4,7 +4,7 @@ import VelgVedleggEttersendelse from "./ettersendelse/VelgVedlegg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
-import { Vedleggsobjekt } from "../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
 import { Store } from "../../typer/store";
 import { Soknadsobjekt } from "../../typer/soknad";
 import { connect } from "react-redux";
