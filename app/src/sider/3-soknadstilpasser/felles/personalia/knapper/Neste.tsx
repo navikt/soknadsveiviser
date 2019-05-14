@@ -2,7 +2,7 @@ import * as React from "react";
 import { Knapp } from "nav-frontend-knapper";
 import { FormattedMessage } from "react-intl";
 import { Store } from "../../../../../typer/store";
-import { Vedleggsobjekt } from "../../../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../../../typer/skjemaogvedlegg";
 import { Soknadsobjekt } from "../../../../../typer/soknad";
 import { medValgtSoknadsobjekt } from "../../../../../states/providers/ValgtSoknadsobjekt";
 import { connect } from "react-redux";

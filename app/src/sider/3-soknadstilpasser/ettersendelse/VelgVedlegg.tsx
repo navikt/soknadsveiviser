@@ -1,6 +1,6 @@
 import React, { SyntheticEvent } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { Dispatch } from "redux";
 import { toggleValgtVedleggForEttersendelse } from "../../../states/reducers/vedlegg";
 import { Store } from "../../../typer/store";

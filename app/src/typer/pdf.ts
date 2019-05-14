@@ -15,15 +15,3 @@ export interface PDFObjekt {
     _updatedAt: string;
   };
 }
-
-export interface LocalePDFObjekt {
-  [key: string]: PDFObjekt | undefined;
-  nb?: PDFObjekt;
-  en?: PDFObjekt;
-  nn?: PDFObjekt;
-  se?: PDFObjekt;
-  fr?: PDFObjekt;
-  es?: PDFObjekt;
-  de?: PDFObjekt;
-  pl?: PDFObjekt;
-}

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Vedleggsobjekt } from "../../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
 import { Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { localeTekst } from "../../../../utils/sprak";
 import AlertStripe from "nav-frontend-alertstriper";
-import { SprakBlockText } from "../../../../typer/sprak";
+import { LocaleBlockText } from "../../../../typer/sprak";
 import TableHeader from "./TableHeader";
 import VedleggModal from "./VedleggModal";
 import VedleggRad from "./VedleggRad";
@@ -20,7 +20,7 @@ interface Props {
 
 interface ModalContent {
   display: boolean;
-  content?: SprakBlockText;
+  content?: LocaleBlockText;
 }
 
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;

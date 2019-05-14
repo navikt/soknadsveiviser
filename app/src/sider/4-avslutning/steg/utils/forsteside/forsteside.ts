@@ -1,6 +1,6 @@
 import { Personalia } from "../../../../../states/providers/Personalia";
 import { hentVedleggslisteForJoark, hentDokumentliste } from "./lister";
-import { Vedleggsobjekt } from "../../../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../../../typer/skjemaogvedlegg";
 import { adresseOgBrukerInfo } from "./json/brukerInfo";
 import { Soknadsobjekt } from "../../../../../typer/soknad";
 import { velgGyldigLocale } from "./locale";

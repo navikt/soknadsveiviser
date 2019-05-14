@@ -1,9 +1,9 @@
 import React from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { SprakString } from "../../typer/sprak";
+import { LocaleString } from "../../typer/sprak";
 
 interface Props {
-  tekst: SprakString;
+  tekst: LocaleString;
 }
 
 const SprakTekst = (props: Props & InjectedIntlProps) => (

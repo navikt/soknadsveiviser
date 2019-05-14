@@ -3,7 +3,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Store } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { connect } from "react-redux";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
 import VelgVedleggEttersendelse from "./VelgVedlegg";

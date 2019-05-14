@@ -1,6 +1,6 @@
 import { b64toBlob } from "./blob";
 import FileSaver from "file-saver";
-import { LocalePDFObjekt } from "../../../../typer/pdf";
+import { LocalePDFObjekt } from "../../../../typer/sprak";
 
 export const hentPDFurl = (
   pdfObjekt: LocalePDFObjekt,

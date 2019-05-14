@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import { Store } from "../../../typer/store";
-import { Vedleggsobjekt } from "../../../typer/vedlegg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { Klage } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { settEttersendTilKlage } from "../../../states/reducers/klage";

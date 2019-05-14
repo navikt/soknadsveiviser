@@ -1,4 +1,4 @@
-import { SprakString, SprakBlockText } from "../typer/sprak";
+import { LocaleString, LocaleBlockText } from "../typer/sprak";
 
 const ingenTekst = "Feil, fant ikke tekst";
 const udefinertTekst = "Udefinert tekst på objektet";
@@ -16,10 +16,10 @@ const ingenTekstForBlock = {
   ]
 };
 
-export const localeTekst = (object: SprakString, locale: string) =>
+export const localeTekst = (object: LocaleString, locale: string) =>
   object ? object[locale] || object.nb || ingenTekst : udefinertTekst;
 
-export const localeBlockTekst = (object: SprakBlockText, locale: string) =>
+export const localeBlockTekst = (object: LocaleBlockText, locale: string) =>
   object[locale] || object.nb || ingenTekstForBlock;
 
 export const storForsteBokstav = (setning: string) =>
@@ -28,7 +28,7 @@ export const storForsteBokstav = (setning: string) =>
 export const sideTittel = (tittel: string) => `${tittel} - www.nav.no`;
 
 export const blockToPlainText = (
-  sprakBlock: SprakBlockText,
+  sprakBlock: LocaleBlockText,
   locale: string
 ) => {
   const blocks = sprakBlock[locale] || sprakBlock.nb;

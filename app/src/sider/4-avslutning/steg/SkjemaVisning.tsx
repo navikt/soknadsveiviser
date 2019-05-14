@@ -2,23 +2,12 @@ import * as React from "react";
 import Element from "nav-frontend-typografi/lib/element";
 import EtikettLiten from "nav-frontend-typografi/lib/etikett-liten";
 import { FormattedMessage } from "react-intl";
-import { SprakString } from "../../../typer/sprak";
 import { localeTekst } from "../../../utils/sprak";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { hentPDFurl, lastNedFil } from "./utils/pdf";
 import { Hovedknapp } from "nav-frontend-knapper";
-
-export interface Skjema {
-  navn: SprakString;
-  gyldigtil: SprakString;
-  gyldigfra: SprakString;
-  pdf: any;
-  skjemanummer: string;
-  emneord: { emneord: string }[];
-  visEtikett?: boolean;
-  valgtSprak: string;
-}
+import { Skjema } from "../../../typer/skjemaogvedlegg";
 
 interface Props {
   skjema: Skjema;

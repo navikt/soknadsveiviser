@@ -10,8 +10,8 @@ import { toggleValgtVedlegg } from "../../../../states/reducers/vedlegg";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import { Vedleggsobjekt } from "../../../../typer/vedlegg";
-import { SprakString } from "../../../../typer/sprak";
+import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
+import { LocaleString } from "../../../../typer/sprak";
 import { localeBlockTekst } from "../../../../utils/sprak";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
 import { medValgtSoknadsobjekt } from "../../../../states/providers/ValgtSoknadsobjekt";
@@ -21,7 +21,7 @@ interface Routes {
 }
 
 interface Props {
-  label: SprakString;
+  label: LocaleString;
   vedleggsobj: Vedleggsobjekt;
   valgtSoknadsobjekt: Soknadsobjekt;
   klageSoknadsobjekt: Soknadsobjekt;

@@ -1,9 +1,8 @@
-import { Vedlegg } from "../../../../../typer/vedlegg";
-import { Skjema } from "../../SkjemaVisning";
+import { Skjema, Skjemaogvedlegg} from "../../../../../typer/skjemaogvedlegg";
 import { localeTekst } from "../../../../../utils/sprak";
 
 export const hentVedleggslisteForJoark = (
-  vedleggsliste: Vedlegg[],
+  vedleggsliste: Skjemaogvedlegg[],
   locale: string
 ) =>
   vedleggsliste.map(vedlegg =>
@@ -14,7 +13,7 @@ export const hentVedleggslisteForJoark = (
   );
 
 export const hentDokumentliste = (
-  vedleggsliste: Vedlegg[],
+  vedleggsliste: Skjemaogvedlegg[],
   hovedskjema: Skjema,
   locale: string,
   ettersendelse?: string
