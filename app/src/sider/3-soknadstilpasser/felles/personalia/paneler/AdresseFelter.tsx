@@ -66,20 +66,24 @@ class AdresseFelter extends Component<MergedProps, State> {
           <InputPostnummer {...this.props} />
           <InputPoststed {...this.props} />
           <InputLand {...this.props} />
-          <CheckboxTidligereKontaktMedNAV
-            tidligereKontaktMedNAV={tidligereKontaktMedNAV}
-            toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
-          />
-          {tidligereKontaktMedNAV && (
-            <KontaktetEnhet
-              label={intl.formatMessage({
-                id: "personalia.label.velgnavkontor"
-              })}
-              placeholder={intl.formatMessage({
-                id: "personalia.label.navkontor"
-              })}
-              {...this.props}
-            />
+          {!skalTilValgtEnhet && (
+            <>
+              <CheckboxTidligereKontaktMedNAV
+                tidligereKontaktMedNAV={tidligereKontaktMedNAV}
+                toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
+              />
+              {tidligereKontaktMedNAV && (
+                <KontaktetEnhet
+                  label={intl.formatMessage({
+                    id: "personalia.label.velgnavkontor"
+                  })}
+                  placeholder={intl.formatMessage({
+                    id: "personalia.label.navkontor"
+                  })}
+                  {...this.props}
+                />
+              )}
+            </>
           )}
           {skalTilValgtEnhet && (
             <BrukerVelgerEnhet
