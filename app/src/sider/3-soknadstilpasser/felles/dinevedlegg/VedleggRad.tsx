@@ -28,7 +28,7 @@ const VedleggRad = (props: Props & InjectedIntlProps) => {
   return (
     <div key={_key} className="dinevedlegg__vedlegg">
       <div className="dinevedlegg__id">{i}.</div>
-      <div className="dinevedlegg__test">
+      <div className="dinevedlegg__wrap">
         <div className="dinevedlegg__tittel">
           {pakrevd && visErVedleggPakrevd && (
             <Element>
