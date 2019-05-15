@@ -1,2 +1,2 @@
-https://${DomainName}/soknadsveiviser
-https://${DomainName}/soknadsveiviser/*
+https://${DomainName}/soknader
+https://${DomainName}/soknader/*
