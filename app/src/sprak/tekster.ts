@@ -115,7 +115,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "velgvedlegg.lesmer.lukk": `Lukk`,
     "velgvedlegg.ja": "Ja",
     "velgvedlegg.nei": "Nei",
-    "velgvedlegg.vedlegg": "Skjemaogvedlegg: ",
+    "velgvedlegg.vedlegg": "Vedlegg: ",
     "dinevedlegg.tittel": `Dette må du legge ved søknaden`,
     "dinevedlegg.pakrevd": `Påkrevd vedlegg: </br>`,
     "dinevedlegg.sender.na": `Jeg sender dette nå`,

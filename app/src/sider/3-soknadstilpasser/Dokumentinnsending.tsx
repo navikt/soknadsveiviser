@@ -99,8 +99,11 @@ class Dokumentinnsending extends Component<MergedProps> {
         ) : (
           <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
         )}
-        <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
-        <Neste lenke={URLvidere} ettersendelse={ettersendelse}/>
+        <DineVedlegg
+          visErVedleggPakrevd
+          vedleggTilInnsending={vedleggTilInnsending}
+        />
+        <Neste lenke={URLvidere} ettersendelse={ettersendelse} />
       </>
     );
   }

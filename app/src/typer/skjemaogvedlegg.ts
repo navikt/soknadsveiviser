@@ -5,19 +5,18 @@ export interface Vedleggsobjekt {
   pakrevd?: boolean;
   situasjon?: LocaleString;
   beskrivelse?: LocaleBlockText;
-  vedlegg: Skjemaogvedlegg;
+  vedlegg: Vedlegg;
   skalSendes?: boolean;
   skalEttersendes?: boolean;
   soknadsobjektId?: string;
 }
 
-export interface Skjemaogvedlegg {
+export interface Vedlegg {
   gosysid: string;
   kanskannes?: boolean;
   skjematilvedlegg?: Skjema;
   vedleggsid: string;
   navn: LocaleString;
-  beskrivelse?: LocaleBlockText;
 }
 
 export interface Skjema {
