@@ -16,24 +16,33 @@ import {
 import { Soknadsobjekt } from "../../../typer/soknad";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "../../../utils/sprak";
+import { RouteComponentProps, withRouter } from "react-router";
 
 interface Props {
   key: number;
   soknadsobjekt: Soknadsobjekt;
 }
 
-const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
+const VisSoknadsobjekt = (props: Props & InjectedIntlProps & RouteComponentProps<{}>) => {
   const { locale } = props.intl;
   const { soknadsobjekt, key } = props;
-  const { navn, beskrivelse, lenker } = soknadsobjekt;
+  const { navn, beskrivelse, lenker, hovedskjema } = soknadsobjekt;
+  const valgtSkjemanummer = props.location.hash.split("#")[1];
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
 
+  const markert = valgtSkjemanummer === hovedskjema.skjemanummer ? "marker" : "";
+  console.log(props.location.hash);
+
   return (
-    <div key={key} className="soknadsobjekt">
+    <div
+      id={hovedskjema.skjemanummer}
+      key={key}
+      className={"soknadsobjekt"}
+    >
       <div className="soknadsobjekt__innhold">
         <div>
-          <Undertittel>
+          <Undertittel className={markert}>
             <LocaleTekst tekst={navn} />
           </Undertittel>
           {beskrivelse && (
@@ -64,4 +73,4 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   );
 };
 
-export default injectIntl(VisSoknadsobjekt);
+export default withRouter(injectIntl(VisSoknadsobjekt));

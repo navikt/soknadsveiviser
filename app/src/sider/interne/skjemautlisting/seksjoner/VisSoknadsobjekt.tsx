@@ -1,14 +1,15 @@
 import React from "react";
 import Element from "nav-frontend-typografi/lib/element";
 import { Kategori } from "../../../../typer/kategori";
-import { Link } from "react-router-dom";
 import { Underkategori } from "../../../../typer/underkategori";
 import { Soknadsobjekt } from "../../../../typer/soknad";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
+import { HashLink } from "react-router-hash-link";
 
 interface Props {
   key: string;
+  valgtSkjemanummer: string;
   soknadsobjekt: Soknadsobjekt;
   kategori: Kategori;
   underkategori: Underkategori;
@@ -17,30 +18,39 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   const { kategori, underkategori, soknadsobjekt } = props;
 
   const { hovedskjema } = soknadsobjekt;
-  const soknadsdialog = underkategori.inngangtilsoknadsdialog !== undefined;
-
-  const valgtSoknadsobjektHash = window.location.hash
-    .replace("%20", " ")
-    .split("#")[1];
+  const soknadsdialog =
+    underkategori.inngangtilsoknadsdialog !== undefined &&
+    underkategori.inngangtilsoknadsdialog.soknadsdialogURL;
 
   const lenkeTilSkjema =
-    `/person` +
+    `/soknadsveiviser` +
+    `/nb` +
+    `/${kategori.domene.toLocaleLowerCase()}` +
     `/${kategori.urlparam}` +
-    `/${underkategori.urlparam}` +
-    !soknadsdialog
-      ? `/brev/${hovedskjema.skjemanummer}`
-      : "";
-
-  const className = `litenavstand ${
-    valgtSoknadsobjektHash === hovedskjema.skjemanummer ? "marker" : " "
-  }`;
+    `/${underkategori.urlparam}`;
 
   return (
-    <div id={hovedskjema.skjemanummer} key={props.key} className={className}>
-      <Element>{hovedskjema.skjemanummer}</Element>
-      <Link className="lenke" to={lenkeTilSkjema}>
+    <div
+      id={hovedskjema.skjemanummer}
+      key={props.key}
+      className={
+        `litenavstand ` +
+        (props.valgtSkjemanummer === hovedskjema.skjemanummer
+          ? "marker"
+          : " ")
+      }
+    >
+      <Element>{hovedskjema.skjemanummer + " – " + hovedskjema.navn.nb}</Element>
+      <HashLink
+        smooth={true}
+        className="lenke"
+        to={
+          lenkeTilSkjema +
+          (soknadsdialog ? "" : "/#" + hovedskjema.skjemanummer)
+        }
+      >
         <LocaleTekst tekst={props.soknadsobjekt.navn} />
-      </Link>
+      </HashLink>
     </div>
   );
 };
