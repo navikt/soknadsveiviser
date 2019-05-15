@@ -31,31 +31,31 @@ const startServer = html => {
   server.use(express.static("build"));
 
   server.use(
-    "/soknadsveiviser/static/js",
+    "/soknader/static/js",
     express.static(path.resolve(__dirname, "build/static/js"))
   );
 
   server.use(
-    "/soknadsveiviser/static/media",
+    "/soknader/static/media",
     express.static(path.resolve(__dirname, "build/static/media"))
   );
 
   server.use(
-    "/soknadsveiviser/index.css",
+    "/soknader/index.css",
     express.static(path.resolve(__dirname, "build/index.css"))
   );
 
-  server.get("/soknadsveiviser/api/enheter", (req, res) => {
+  server.get("/soknader/api/enheter", (req, res) => {
     req.headers["x-nav-apiKey"] =
       process.env.SOKNADSVEIVISER_ENHETERRS_APIKEY_PASSWORD;
     req.pipe(request(process.env.ENHETERRS_URL)).pipe(res);
   });
 
-  server.get("/soknadsveiviser/internal/alive|ready", (req, res) =>
+  server.get("/soknader/internal/alive|ready", (req, res) =>
     res.sendStatus(200)
   );
 
-  server.get("/soknadsveiviser/config", (req, res) =>
+  server.get("/soknader/config", (req, res) =>
     res.send({
       proxyUrl: process.env.SOKNADSVEIVISERPROXY_URL,
       tjenesteUrl: process.env.TJENESTER_URL,
@@ -63,7 +63,7 @@ const startServer = html => {
     })
   );
 
-  server.post("/soknadsveiviser/api/forsteside", (req, res) => {
+  server.post("/soknader/api/forsteside", (req, res) => {
     request(
       process.env.SECURITY_TOKEN_SERVICE_TOKEN_URL +
         "?grant_type=client_credentials&scope=openid",

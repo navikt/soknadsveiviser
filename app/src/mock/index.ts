@@ -19,10 +19,10 @@ const mockPdfFoersteside = true;
 const mockPdfMerger = false;
 
 export const setUpMock = () => {
-  fetchMock.get("/soknadsveiviser/config", getDefault() as any);
+  fetchMock.get("/soknader/config", getDefault() as any);
 
   fetchMock.get(
-    "/soknadsveiviser/api/enheter",
+    "/soknader/api/enheter",
     delay(2000, 3000).then(() => navKontor)
   );
 
@@ -40,7 +40,7 @@ export const setUpMock = () => {
 
   mockPdfFoersteside &&
     fetchMock.post(
-      "/soknadsveiviser/api/forsteside",
+      "/soknader/api/forsteside",
       delay(500, 1000).then(() => forside)
     );
 

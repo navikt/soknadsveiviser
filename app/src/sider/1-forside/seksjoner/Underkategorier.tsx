@@ -47,7 +47,7 @@ const Underkategorier = (props: MergedProps) => {
               <Link
                 onClick={() => props.settValgtUnderkategori(underkategori)}
                 to={
-                  `/soknadsveiviser` +
+                  `/soknader` +
                   `/${match.params.sprak}` +
                   `/${match.params.personEllerBedrift}` +
                   `/${valgtKategori.urlparam}` +

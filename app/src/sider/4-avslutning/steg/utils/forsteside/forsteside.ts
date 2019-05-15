@@ -21,7 +21,7 @@ export interface Params {
 
 export const hentForsteside = (params: Params): Promise<string> =>
   new Promise(async (resolve, reject) => {
-    const url = "/soknadsveiviser/api/forsteside";
+    const url = "/soknader/api/forsteside";
     const { klage, klageSoknadsobjekt, valgtSoknadsobjekt } = params;
     const soknadsobjekt = klage ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;

@@ -3,11 +3,11 @@ import { Config } from "../config";
 import { parseJson } from "./parser";
 
 export const fetchConfig = (): Promise<Config> =>
-  fetch("/soknadsveiviser/config")
+  fetch("/soknader/config")
     .then(parseJson)
     .catch(console.error);
 
 export const fetchEnheter: () => Promise<Enhet[]> = () =>
-  fetch("/soknadsveiviser/api/enheter")
+  fetch("/soknader/api/enheter")
     .then(parseJson)
     .catch(console.error);

@@ -37,7 +37,7 @@ const VelgKategori = (props: MergedProps) => {
   return (
     <li key={props.kategori.urlparam}>
       <Link
-        to={`/soknadsveiviser/${sprak}/${klageEllerEttersendelse}${personEllerBedrift}/${
+        to={`/soknader/${sprak}/${klageEllerEttersendelse}${personEllerBedrift}/${
           props.kategori.urlparam
         }`}
         onClick={() => props.settValgtKategori(props.kategori)}

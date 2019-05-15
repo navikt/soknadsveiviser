@@ -41,7 +41,7 @@ const PapirEttersendelse = (props: MergedProps) => {
       <div className="ettersendelse__knapper">
         <Link
           to={
-            `/soknadsveiviser` +
+            `/soknader` +
             `/${sprak}` +
             `/${personEllerBedrift}` +
             `/${kategori}` +

@@ -55,7 +55,7 @@ const init = async () => {
   const config = await fetchConfig();
   setConfig(config);
 
-  const baseUrl = "/soknadsveiviser";
+  const baseUrl = "/soknader";
   const redirectFrom = `(${baseUrl}|/)`;
   const redirectTo = `${baseUrl}/nb/person`;
   ReactDOM.render(

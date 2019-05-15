@@ -41,7 +41,7 @@ const NotFound = (props: Props & InjectedIntlProps) => {
         </a>
       </Normaltekst>
       <Normaltekst>
-        <Link to="/soknadsveiviser">
+        <Link to="/soknader">
           <FormattedMessage id="notFound.goto.soknadsveiviser" />
         </Link>
       </Normaltekst>
