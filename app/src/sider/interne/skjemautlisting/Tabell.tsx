@@ -1,23 +1,14 @@
 import * as React from "react";
 import ReactTable, { Column } from "react-table";
 import { HashLink } from "react-router-hash-link";
-import HoverImg from "../../../utils/hoverImg";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
-
-const linjeDownloadIkon = require("../../../img/line-version-download-1.svg");
-const fyltDownloadIkon = require("../../../img/filled-version-download-1.svg");
+import "react-table/react-table.css";
 
 const innerColumns = [
-  { Header: "ID", accessor: "skjemanummer", maxWidth: 125 },
+  { Header: "ID", accessor: "skjemanummer" },
   { Header: "Navn på skjema", accessor: "skjemanavn" },
-  { Header: "Målgruppe", accessor: "malgruppe", maxWidth: 150 },
-  { Header: "Språk/målform", accessor: "sprak", maxWidth: 400 },
-  {
-    Header: "Forhåndsvis",
-    accessor: "forhandsvisning",
-    maxWidth: 150,
-    minWidth: 50
-  }
+  { Header: "Målgruppe", accessor: "malgruppe" },
+  { Header: "PDF", accessor: "pdf" }
 ];
 
 interface Props {
@@ -36,7 +27,7 @@ const Skjematabell = (props: Props) => {
       props.data[emneord].map(skjema => data.push(innslagITabell(skjema)));
       tabeller.push(
         <ReactTable
-          className="typo-normal"
+          className="-striped -highlight typo-normal skjemautlisting__litenmargin-overunder"
           key={emneord}
           data={data}
           columns={kolonneHeadersGittTema}
@@ -46,7 +37,7 @@ const Skjematabell = (props: Props) => {
       );
     }
   });
-  return <>{tabeller}</>;
+  return <div className="flex">{tabeller}</div>;
 };
 
 const innslagITabell = (skjema: Skjema) => {
@@ -54,7 +45,7 @@ const innslagITabell = (skjema: Skjema) => {
     skjemanummer:
       skjema._type === "skjema" ? (
         <HashLink
-          smooth
+          smooth={true}
           to={`detaljert/#${skjema.skjemanummer}`}
           className="lenke lenke--frittstaende"
         >
@@ -65,18 +56,7 @@ const innslagITabell = (skjema: Skjema) => {
       ),
     skjemanavn: skjema.navn,
     malgruppe: bestemMalgruppe(skjema._type),
-    sprak: utlistingAvPDFerBasertPaSprak(skjema),
-    forhandsvisning: (
-      <div key={skjema.skjemanummer}>
-        {skjema.pdf ? (
-          <a download={true} href={hentPdf(skjema)} className="sentrert">
-            <HoverImg src={linjeDownloadIkon} onHover={fyltDownloadIkon} />
-          </a>
-        ) : (
-          ""
-        )}
-      </div>
-    )
+    pdf: utlistingAvPDFerBasertPaSprak(skjema),
   };
 };
 
@@ -120,7 +100,5 @@ const bestemMalgruppe = (type?: string) => {
       return "Udefinert";
   }
 };
-
-const hentPdf = (skjema: Skjema) => skjema.pdf!.nb!.asset!.url;
 
 export default Skjematabell;

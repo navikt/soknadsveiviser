@@ -1,9 +1,9 @@
 import * as React from "react";
 import { apiKallAlleSkjemaer } from "../../../klienter/sanityKlient";
 import Skjematabell from "./Tabell";
-import Wrapper from "../../../komponenter/wrapper/Wrapper";
 import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
+import PanelBase from "nav-frontend-paneler";
 
 interface State {
   skjemaer: Skjema[];
@@ -36,12 +36,14 @@ class SkjemautlistingOversikt extends React.Component<{}, State> {
 
   render = () =>
     this.state ? (
-      <Wrapper>
-        <Hovedbanner tittel="Skjemautlisting" undertittel="Oversikt" />
-        <div className="innhold">
-          {this.grupperEmneordOgSkjemaer(this.state.skjemaer)}
+      <div className="side__wrapper">
+        <div className="skjemautlisting__container">
+          <Hovedbanner tittel="Skjemautlisting" undertittel="Oversikt" />
+          <PanelBase>
+            {this.grupperEmneordOgSkjemaer(this.state.skjemaer)}
+          </PanelBase>
         </div>
-      </Wrapper>
+      </div>
     ) : null;
 }
 
