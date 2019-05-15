@@ -11,6 +11,7 @@ import { localeTekst } from "../../../utils/sprak";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import PanelBase from "nav-frontend-paneler";
 import Systemtittel from "nav-frontend-typografi/lib/systemtittel";
+import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
 
 interface State {
   data: Kategori[];
@@ -33,7 +34,7 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
 
     const { intl } = this.props;
     const { data } = this.state;
-    const valgtSkjemanummer = this.props.location.hash.split("#")[1];
+    const valgtSkjemanummer = hentSkjemanummerHash(this.props.location.hash);
 
     return (
       <div className="side__wrapper">

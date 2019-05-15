@@ -6,6 +6,9 @@ import { Soknadsobjekt } from "../../../../typer/soknad";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
 import { HashLink } from "react-router-hash-link";
+import { connect } from "react-redux";
+import { Dispatch } from "redux";
+import { settValgtUnderkategori } from "../../../../states/reducers/kategorier";
 
 interface Props {
   key: string;
@@ -14,7 +17,11 @@ interface Props {
   kategori: Kategori;
   underkategori: Underkategori;
 }
-const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
+
+interface ReduxProps {
+  settValgtUnderkategori: (underkategori: Underkategori) => void;
+}
+const VisSoknadsobjekt = (props: Props & InjectedIntlProps & ReduxProps) => {
   const { kategori, underkategori, soknadsobjekt } = props;
 
   const { hovedskjema } = soknadsobjekt;
@@ -48,6 +55,7 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           lenkeTilSkjema +
           (soknadsdialog ? "" : "/#" + hovedskjema.skjemanummer)
         }
+        onClick={() => props.settValgtUnderkategori(underkategori)}
       >
         <LocaleTekst tekst={props.soknadsobjekt.navn} />
       </HashLink>
@@ -55,4 +63,11 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   );
 };
 
-export default injectIntl(VisSoknadsobjekt);
+const mapDispatchToProps = (dispatch: Dispatch) => {
+  return {
+    settValgtUnderkategori: (underkategori: Underkategori) =>
+      dispatch(settValgtUnderkategori(underkategori))
+  };
+};
+
+export default injectIntl<Props & InjectedIntlProps>(connect(mapDispatchToProps)(VisSoknadsobjekt));

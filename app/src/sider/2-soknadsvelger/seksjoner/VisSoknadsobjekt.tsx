@@ -17,29 +17,29 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "../../../utils/sprak";
 import { RouteComponentProps, withRouter } from "react-router";
+import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
 
 interface Props {
   key: number;
   soknadsobjekt: Soknadsobjekt;
 }
 
-const VisSoknadsobjekt = (props: Props & InjectedIntlProps & RouteComponentProps<{}>) => {
+const VisSoknadsobjekt = (
+  props: Props & InjectedIntlProps & RouteComponentProps<{}>
+) => {
   const { locale } = props.intl;
   const { soknadsobjekt, key } = props;
   const { navn, beskrivelse, lenker, hovedskjema } = soknadsobjekt;
-  const valgtSkjemanummer = props.location.hash.split("#")[1];
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
 
-  const markert = valgtSkjemanummer === hovedskjema.skjemanummer ? "marker" : "";
-  console.log(props.location.hash);
+  const markert =
+    hentSkjemanummerHash(props.location.hash) === hovedskjema.skjemanummer
+      ? "marker"
+      : "";
 
   return (
-    <div
-      id={hovedskjema.skjemanummer}
-      key={key}
-      className={"soknadsobjekt"}
-    >
+    <div id={hovedskjema.skjemanummer} key={key} className={"soknadsobjekt"}>
       <div className="soknadsobjekt__innhold">
         <div>
           <Undertittel className={markert}>
