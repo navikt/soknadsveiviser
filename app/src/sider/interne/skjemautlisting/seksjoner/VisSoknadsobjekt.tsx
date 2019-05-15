@@ -38,10 +38,10 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps & ReduxProps) => {
     `/${kategori.urlparam}` +
     `/${underkategori.urlparam}`;
 
-  const vedleggsskjemaliste = hentListeOverVedleggsskjemaer(
+  const vedleggsskjemaliste = soknadsobjekt.vedleggtilsoknad ? hentListeOverVedleggsskjemaer(
     soknadsobjekt,
     props.valgtSkjemanummer
-  );
+  ) : [];
   return (
     <div
       id={hovedskjema.skjemanummer}
