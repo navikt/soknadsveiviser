@@ -14,7 +14,9 @@
   &__beskrivelse {
     flex: 1;
     margin: 0 1rem 0.5rem 0;
-    min-width: 20rem;
+    @media all and (max-width: 500px) {
+      min-width: 100%;
+    }
   }
   &__hvaerdette {
     width: 6rem;
