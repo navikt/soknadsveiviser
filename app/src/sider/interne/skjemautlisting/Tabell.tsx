@@ -27,7 +27,7 @@ const Skjematabell = (props: Props) => {
       props.data[emneord].map(skjema => data.push(innslagITabell(skjema)));
       tabeller.push(
         <ReactTable
-          className="-striped -highlight typo-normal"
+          className="-striped -highlight typo-normal skjemautlisting__litenmargin-overunder"
           key={emneord}
           data={data}
           columns={kolonneHeadersGittTema}
