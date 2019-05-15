@@ -44,6 +44,7 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
               <div key={kategori._id} className="skjemautlisting__storavstand">
                 <Innholdstittel>
                   <LocaleTekst tekst={kategori.tittel} />
+                  <span>{" – " + kategori.domene}</span>
                 </Innholdstittel>
                 <hr />
                 {kategori.underkategorier.map(underkategori => (
