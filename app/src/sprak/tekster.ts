@@ -49,7 +49,7 @@ export default {
     "personalia.error.postnummer": `Postnummer er påkrevd`,
     "personalia.error.sted": `Du må fylle ut stedsnavn.`,
     "personalia.error.land": `Du må fylle ut land.`,
-    "personalia.error.velgkontor": `Fyll inn hvilken enhet dokumentene skal sendes til`,
+    "personalia.error.velgkontor": `Velg hvilken enhet dokumentene skal sendes til`,
     "personalia.error.enhet": `Velg en gyldig enhet`,
     "personalia.label.fodselsnummer": `Fødselsnummer`,
     "personalia.label.navn": `Navn`,
