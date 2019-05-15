@@ -14,6 +14,7 @@ import {
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 
 interface Props {
+  visErVedleggPakrevd?: boolean;
   visRadioButtons?: boolean;
   vedleggTilInnsending: Vedleggsobjekt[];
 }
@@ -25,7 +26,8 @@ interface ModalContent {
 
 type MergedProps = Props & ValgtSoknad & InjectedIntlProps;
 const DineVedlegg = (props: MergedProps) => {
-  const { vedleggTilInnsending, visRadioButtons, intl } = props;
+  const { vedleggTilInnsending, intl } = props;
+  const { visRadioButtons, visErVedleggPakrevd } = props;
   const { locale } = intl;
   const [showModal, setShowModal] = useState({
     display: false
@@ -66,6 +68,7 @@ const DineVedlegg = (props: MergedProps) => {
               <VedleggRad
                 i={++i}
                 key={vedleggsobjekt._key}
+                visErVedleggPakrevd={visErVedleggPakrevd}
                 visRadioButtons={visRadioButtons}
                 vedleggsobjekt={vedleggsobjekt}
                 setShowModal={setShowModal}
@@ -89,7 +92,7 @@ const DineVedlegg = (props: MergedProps) => {
           <FormattedMessage id="avslutning.advarsel" />
         </AlertStripe>
       )}
-      <div className="dinevedlegg__beskrivelse">
+      <div className="dinevedlegg__footer">
         <Normaltekst>
           <FormattedMessage id="dinevedlegg.beskrivelse" />
         </Normaltekst>

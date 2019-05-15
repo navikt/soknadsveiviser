@@ -49,17 +49,17 @@ export default {
     "personalia.error.postnummer": `Postnummer er påkrevd`,
     "personalia.error.sted": `Du må fylle ut stedsnavn.`,
     "personalia.error.land": `Du må fylle ut land.`,
-    "personalia.error.velgkontor": `Fyll inn hvilken enhet dokumentene skal sendes til`,
+    "personalia.error.velgkontor": `Velg hvilken enhet dokumentene skal sendes til`,
     "personalia.error.enhet": `Velg en gyldig enhet`,
     "personalia.label.fodselsnummer": `Fødselsnummer`,
     "personalia.label.navn": `Navn`,
     "personalia.label.adresse": `Adresse`,
     "personalia.label.land": `Land`,
-    "personalia.label.navkontor": `NAV-kontor`,
+    "personalia.label.navkontor": `NAV-enhet`,
     "personalia.label.postnummer": `Postnummer`,
     "personalia.label.poststed": `Poststed`,
     "personalia.label.tidligereKontaktMedNAV": `Huk av her dersom du har vært i kontakt med NAV om denne saken tidligere`,
-    "personalia.label.velgnavkontor": `Velg NAV-kontor`,
+    "personalia.label.velgnavkontor": `Velg NAV-enhet`,
     "personalia.bedrift.flerepersoner": `Flere personer samtidig`,
     "personalia.bedrift.ikkeFodselsnummerDnummer": `Personen har ikke et fødselsnummer eller D-nummer`,
     "personalia.bedrift.oppgiFodselsnummerDnummer": `Personen har et fødselsnummer eller D-nummer`,
@@ -69,11 +69,11 @@ export default {
     "personalia.undertekstbold.adresse": `Hvis du har en adresse du bor på i Norge, bruk den adressen. Hvis du ikke har en adresse i Norge, vennligst fyll inn din vanlige adresse.`,
     "personalia.undertekstbold.flerepersoner": `OBS: Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
 
-For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket kontor som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
+For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "personalia.undertekstbold.gdpr": `Denne informasjonen blir ikke lagret, og brukes kun for å generere en førsteside for innsending på papir.`,
     "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak
 
-For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket kontor som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
+For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "klage.knapp": `Klage på vedtak`,
     "klage.tittel.underbanner": `Klage på vedtak`,
     "klage.ettersende": `Skal du ettersende dokumentasjon til en tidligere innsendt klage?`,
@@ -110,12 +110,12 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "velgvedlegg.innholdstittel": `Valg av vedlegg`,
     "velgvedlegg.knapp": `Neste`,
     "velgvedlegg.sidetittel": `Velg dokumentasjon`,
-    "velgvedlegg.lesmer.hvaerdette": `Hva er dette?`,
+    "velgvedlegg.lesmer.hvaerdette": `Les mer`,
     "velgvedlegg.lesmer.apne": `Les mer`,
     "velgvedlegg.lesmer.lukk": `Lukk`,
     "velgvedlegg.ja": "Ja",
     "velgvedlegg.nei": "Nei",
-    "velgvedlegg.vedlegg": "Skjemaogvedlegg: ",
+    "velgvedlegg.vedlegg": "Vedlegg: ",
     "dinevedlegg.tittel": `Dette må du legge ved søknaden`,
     "dinevedlegg.pakrevd": `Påkrevd vedlegg: </br>`,
     "dinevedlegg.sender.na": `Jeg sender dette nå`,
@@ -149,7 +149,9 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "notFound.tittel": "OOPS, NOE GIKK GALT",
     "notFound.beskrivelse": `Koblingen du klikket kan være ødelagt, eller siden kan ha blitt fjernet.`,
     "notFound.goto.nav": `Gå til nav.no`,
-    "notFound.goto.soknadsveiviser": `Gå til skjemaer og søknader`
+    "notFound.goto.soknadsveiviser": `Gå til skjemaer og søknader`,
+    "skjemautlisting.vedleggsskjema": `Vedleggsskjema:`,
+    "skjemautlisting.tilveiviser": `Til veiviseren:`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -299,6 +301,8 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "notFound.tittel": "Ops, something went wrong",
     "notFound.beskrivelse": `The link you clicked may be broken or the page may have been removed.`,
     "notFound.goto.nav": `Go to nav.no`,
-    "notFound.goto.soknadsveiviser": `Go to forms and applications`
+    "notFound.goto.soknadsveiviser": `Go to forms and applications`,
+    "skjemautlisting.vedleggsskjema": `Vedleggsskjema:`,
+    "skjemautlisting.tilveiviser": `Til veiviseren:`
   }
 };
