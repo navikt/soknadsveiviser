@@ -12,7 +12,7 @@ import { getTjenesteUrl } from "../../config";
 import DineVedlegg from "./felles/dinevedlegg/DineVedlegg";
 import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
-import Neste, { NesteLenke } from "./felles/personalia/knapper/Neste";
+import Neste from "./felles/personalia/knapper/Neste";
 import Steg from "../../komponenter/bannere/Steg";
 
 interface Props {
@@ -100,7 +100,7 @@ class Dokumentinnsending extends Component<MergedProps> {
           <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
         )}
         <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
-        <Neste lenke={URLvidere} ettersendelse={ettersendelse}/>
+        <Neste lenke={URLvidere} ettersendelse={ettersendelse} />
       </>
     );
   }

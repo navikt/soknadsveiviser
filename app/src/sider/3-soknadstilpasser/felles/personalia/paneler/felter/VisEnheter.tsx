@@ -14,7 +14,7 @@ import { FormattedMessage } from "react-intl";
 
 interface Props {
   valgtEnhet?: Enhet;
-  label: string;
+  label?: string;
   placeholder?: string;
   field: any;
 }
@@ -42,13 +42,16 @@ class VisEnheter extends Component<MergedProps, State> {
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
   handleChange = (selected: any) => {
-    const valgtEnhet =
-      this.state.enheter
-        .filter(enhet => enhet.enhetsnummer === selected.value)
-        .shift() || ({} as Enhet);
-
     this.props.touched.valgtEnhet = false;
-    this.props.field.value.valgtEnhet = valgtEnhet;
+    if (selected) {
+      const valgtEnhet =
+        this.state.enheter
+          .filter(enhet => enhet.enhetsnummer === selected.value)
+          .shift() || ({} as Enhet);
+      this.props.field.value.valgtEnhet = valgtEnhet;
+    } else {
+      this.props.field.value.valgtEnhet = undefined;
+    }
   };
 
   render() {
@@ -77,11 +80,14 @@ class VisEnheter extends Component<MergedProps, State> {
 
     return (
       <div className="visEnheter">
-        <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
+        {label && (
+          <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
+        )}
         {!enheter.length ? (
           <NavFrontendSpinner />
         ) : (
           <Select
+            isClearable={true}
             styles={customStyles}
             onChange={this.handleChange}
             placeholder={placeholder}
@@ -94,7 +100,7 @@ class VisEnheter extends Component<MergedProps, State> {
         )}
         {error && (
           <div className="skjemaelement__feilmelding">
-            <FormattedMessage id="personalia.error.enhet" />
+            <FormattedMessage id="personalia.error.velgkontor" />
           </div>
         )}
       </div>
