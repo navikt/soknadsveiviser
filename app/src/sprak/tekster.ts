@@ -110,7 +110,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "velgvedlegg.innholdstittel": `Valg av vedlegg`,
     "velgvedlegg.knapp": `Neste`,
     "velgvedlegg.sidetittel": `Velg dokumentasjon`,
-    "velgvedlegg.lesmer.hvaerdette": `Hva er dette?`,
+    "velgvedlegg.lesmer.hvaerdette": `Les mer`,
     "velgvedlegg.lesmer.apne": `Les mer`,
     "velgvedlegg.lesmer.lukk": `Lukk`,
     "velgvedlegg.ja": "Ja",
