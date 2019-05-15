@@ -65,7 +65,7 @@ export const NesteLenke = (lenke: string, erDisabled: boolean) => {
       <Knapp
         className="knapp knapp--hoved sentrert__knapp row"
         disabled={erDisabled}
-        onClick={() => window.location.href = lenke}
+        onClick={() => (window.location.href = lenke)}
       >
         <FormattedMessage id="personalia.knapp" />
       </Knapp>
