@@ -51,7 +51,6 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
                 {kategori.underkategorier.map(underkategori => (
                   <div
                     key={localeTekst(underkategori.navn, intl.locale)}
-                    className="skjemautlisting__litenmargin"
                   >
                     <Systemtittel>
                       <LocaleTekst tekst={underkategori.navn} />

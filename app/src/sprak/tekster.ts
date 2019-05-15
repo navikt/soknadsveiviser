@@ -149,7 +149,9 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "notFound.tittel": "OOPS, NOE GIKK GALT",
     "notFound.beskrivelse": `Koblingen du klikket kan være ødelagt, eller siden kan ha blitt fjernet.`,
     "notFound.goto.nav": `Gå til nav.no`,
-    "notFound.goto.soknadsveiviser": `Gå til skjemaer og søknader`
+    "notFound.goto.soknadsveiviser": `Gå til skjemaer og søknader`,
+    "skjemautlisting.vedleggsskjema": `Vedleggsskjema:`,
+    "skjemautlisting.tilveiviser": `Til veiviseren:`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -299,6 +301,8 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "notFound.tittel": "Ops, something went wrong",
     "notFound.beskrivelse": `The link you clicked may be broken or the page may have been removed.`,
     "notFound.goto.nav": `Go to nav.no`,
-    "notFound.goto.soknadsveiviser": `Go to forms and applications`
+    "notFound.goto.soknadsveiviser": `Go to forms and applications`,
+    "skjemautlisting.vedleggsskjema": `Vedleggsskjema:`,
+    "skjemautlisting.tilveiviser": `Til veiviseren:`
   }
 };
