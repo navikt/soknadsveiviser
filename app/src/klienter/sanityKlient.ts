@@ -34,6 +34,9 @@ export const apiKallSamlet = (): Promise<Skjema[]> =>
 export const apiKallAlleSkjemaer = (): Promise<Skjema[]> =>
   hentJson(`${getProxyUrl()}/alleskjemaer`) as Promise<Skjema[]>;
 
+export const apiKallAlleEESSISkjemaer = (): Promise<Skjema[]> =>
+  hentJson(`${getProxyUrl()}/eessiskjemaer`) as Promise<Skjema[]>;
+
 export const apiKallAlleKategorier = () =>
   hentJson(`${getProxyUrl()}/allekategorier`) as Promise<Kategori[]>;
 
