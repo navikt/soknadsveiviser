@@ -2,10 +2,6 @@ function getSecrets() {
   const fs = require("file-system");
   const secretsFilePath = "/var/run/secrets/nais.io/vault";
 
-  const soknadsveiviserproxyUrlPath =
-    secretsFilePath + "/soknadsveiviserproxy.url";
-  const tjenesterUrlPath = secretsFilePath + "/tjenester.url";
-
   const apiKey = fs.readFileSync(secretsFilePath + "/apiKey.user", "utf8");
   const enheterRSURL = fs.readFileSync(
     secretsFilePath + "/enheterRS.url",
@@ -45,10 +41,13 @@ function getSecrets() {
   );
 
   const soknadsveiviserproxyUrl = fs.readFileSync(
-    soknadsveiviserproxyUrlPath,
+    secretsFilePath + "/soknadsveiviserproxy.url",
     "utf8"
   );
-  const tjenesterUrl = fs.readFileSync(tjenesterUrlPath, "utf8");
+  const tjenesterUrl = fs.readFileSync(
+    secretsFilePath + "/tjenester.url",
+    "utf8"
+  );
 
   return [
     apiKey,
