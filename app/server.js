@@ -5,7 +5,8 @@ const path = require("path");
 const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
 const getDecorator = require("./dekorator");
-const getSecrets = require("./getSecrets");
+const { getSecrets, getMockSecrets } = require("./getSecrets");
+
 const server = express();
 
 server.set("views", `${__dirname}/build`);
@@ -21,19 +22,19 @@ server.use((req, res, next) => {
 });
 
 const [
-    apiKey,
-    enheterRSURL,
-    enheterRSApiKey,
-    sanityDataset,
-    securityTokenServiceTokenUrl,
-    securityTokenServiceTokenApiKey,
-    soknadsveiviserUser,
-    soknadsveiviserPass,
-    foerstesidegeneratorServiceUrl,
-    foerstesidegeneratorServiceApiKey,
-    soknadsveiviserproxyUrl,
-    tjenesterUrl
-] = getSecrets();
+  apiKey,
+  enheterRSURL,
+  enheterRSApiKey,
+  sanityDataset,
+  securityTokenServiceTokenUrl,
+  securityTokenServiceTokenApiKey,
+  soknadsveiviserUser,
+  soknadsveiviserPass,
+  foerstesidegeneratorServiceUrl,
+  foerstesidegeneratorServiceApiKey,
+  soknadsveiviserproxyUrl,
+  tjenesterUrl
+] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
 const renderApp = decoratorFragments =>
   new Promise((resolve, reject) =>
