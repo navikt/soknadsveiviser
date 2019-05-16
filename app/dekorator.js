@@ -6,9 +6,10 @@ const { JSDOM } = jsdom;
 
 const requestDecorator = callback =>
   request(
-    `${
-      process.env.APPRES_CMS_URL
-    }/common-html/v4/navno?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true&skiplinks=true&megamenu-resources=true`,
+    `${fs.readFileSync(
+      "/var/run/secrets/nais.io/vault/appres.cms.url",
+      "utf8"
+    )}/common-html/v4/navno?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true&skiplinks=true&megamenu-resources=true`,
     callback
   );
 

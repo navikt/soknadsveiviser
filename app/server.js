@@ -5,6 +5,7 @@ const path = require("path");
 const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
 const getDecorator = require("./dekorator");
+const getSecrets = require("./getSecrets");
 const server = express();
 
 server.set("views", `${__dirname}/build`);
@@ -18,6 +19,21 @@ server.use((req, res, next) => {
   res.removeHeader("X-Powered-By");
   next();
 });
+
+const [
+    apiKey,
+    enheterRSURL,
+    enheterRSApiKey,
+    sanityDataset,
+    securityTokenServiceTokenUrl,
+    securityTokenServiceTokenApiKey,
+    soknadsveiviserUser,
+    soknadsveiviserPass,
+    foerstesidegeneratorServiceUrl,
+    foerstesidegeneratorServiceApiKey,
+    soknadsveiviserproxyUrl,
+    tjenesterUrl
+] = getSecrets();
 
 const renderApp = decoratorFragments =>
   new Promise((resolve, reject) =>
@@ -46,9 +62,8 @@ const startServer = html => {
   );
 
   server.get("/soknader/api/enheter", (req, res) => {
-    req.headers["x-nav-apiKey"] =
-      process.env.SOKNADSVEIVISER_ENHETERRS_APIKEY_PASSWORD;
-    req.pipe(request(process.env.ENHETERRS_URL)).pipe(res);
+    req.headers[apiKey] = enheterRSApiKey;
+    req.pipe(request(enheterRSURL)).pipe(res);
   });
 
   server.get("/soknader/internal/alive|ready", (req, res) =>
@@ -57,52 +72,50 @@ const startServer = html => {
 
   server.get("/soknader/config", (req, res) =>
     res.send({
-      proxyUrl: process.env.SOKNADSVEIVISERPROXY_URL,
-      tjenesteUrl: process.env.TJENESTER_URL,
-      sanityDataset: process.env.SANITY_DATASET
+      proxyUrl: soknadsveiviserproxyUrl,
+      tjenesteUrl: tjenesterUrl,
+      sanityDataset: sanityDataset
     })
   );
 
   server.post("/soknader/api/forsteside", (req, res) => {
     request(
-      process.env.SECURITY_TOKEN_SERVICE_TOKEN_URL +
+      securityTokenServiceTokenUrl +
         "?grant_type=client_credentials&scope=openid",
       {
         auth: {
-          user: process.env.SRVSOKNADSVEIVISER_USERNAME,
-          pass: process.env.SRVSOKNADSVEIVISER_PASSWORD
+          user: soknadsveiviserUser,
+          pass: soknadsveiviserPass
         },
         method: "GET",
         json: true,
         headers: {
-          "x-nav-apiKey":
-            process.env
-              .SOKNADSVEIVISER_SECURITY_TOKEN_SERVICE_TOKEN_APIKEY_PASSWORD
+          apiKey: securityTokenServiceTokenApiKey
         }
       },
-      (error) => {
+      error => {
         if (error) next(error);
       }
-    ).then(result => request(
-      process.env.FOERSTESIDEGENERATOR_SERVICE_URL,
-      {
-        method: "POST",
-        json: true,
-        body: req.body,
-        auth: {
-          bearer: result.access_token
+    ).then(result =>
+      request(
+        foerstesidegeneratorServiceUrl,
+        {
+          method: "POST",
+          json: true,
+          body: req.body,
+          auth: {
+            bearer: result.access_token
+          },
+          headers: {
+            apiKey: foerstesidegeneratorServiceApiKey
+          }
         },
-        headers: {
-          "x-nav-apiKey":
-          process.env
-            .SOKNADSVEIVISER_FOERSTESIDEGENERATOR_SERVICE_APIKEY_PASSWORD
+        (error, result, body) => {
+          if (error) next(error);
+          res.send(body);
         }
-      },
-      (error, result, body) => {
-        if (error) next(error);
-        res.send(body);
-      }
-    ));
+      )
+    );
   });
 
   server.get(/^\/(?!.*static).*$/, (req, res) => {
