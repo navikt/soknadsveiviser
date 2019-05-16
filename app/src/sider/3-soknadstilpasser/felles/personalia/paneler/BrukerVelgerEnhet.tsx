@@ -26,7 +26,6 @@ const BrukerVelgerEnhet = (props: MergedProps) => (
       serializers={{ marks: { link } }}
     />
     <VisEnheter
-      label={""}
       placeholder={props.intl.formatMessage({
         id: "personalia.label.navkontor"
       })}

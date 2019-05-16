@@ -9,7 +9,7 @@ import {
 } from "../../../../../states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import VisEnheter from "./felter/VisEnheter";
-import { Normaltekst, UndertekstBold } from "nav-frontend-typografi";
+import { UndertekstBold } from "nav-frontend-typografi";
 
 interface Routes {
   personEllerBedrift: string;
@@ -44,13 +44,6 @@ const FlerePersonerPanel = (props: MergedProps) => {
               })}
               {...pr}
             />
-            {props.touched.valgtEnhet && !pr.field.value.valgtEnhet ? (
-              <Normaltekst className="skjemaelement__feilmelding">
-                <FormattedMessage id="personalia.error.velgkontor" />
-              </Normaltekst>
-            ) : (
-              undefined
-            )}
           </>
         )}
       />
