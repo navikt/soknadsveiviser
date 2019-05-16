@@ -94,7 +94,7 @@ const bestemMalgruppe = (type?: string) => {
       return "På nav.no";
     case "interneskjema":
       return "Internt";
-    case "eessiskjema":
+    case "sedskjema":
       return "Internasjonalt";
     default:
       return "Udefinert";

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {
-  apiKallAlleEESSISkjemaer,
+  apiKallAlleSEDSkjemaer,
   apiKallAlleSkjemaer
 } from "../../../klienter/sanityKlient";
 import Skjematabell from "./Tabell";
@@ -38,7 +38,7 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
         this.setState({ skjemaer: sanityData });
       });
     } else {
-      apiKallAlleEESSISkjemaer().then((sanityData: Skjema[]) => {
+      apiKallAlleSEDSkjemaer().then((sanityData: Skjema[]) => {
         this.setState({ skjemaer: sanityData });
       });
     }
