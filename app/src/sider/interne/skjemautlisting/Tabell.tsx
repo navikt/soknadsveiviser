@@ -5,10 +5,10 @@ import { Skjema } from "../../../typer/skjemaogvedlegg";
 import "react-table/react-table.css";
 
 const innerColumns = [
-  { Header: "ID", accessor: "skjemanummer" },
+  { Header: "ID", accessor: "skjemanummer", maxWidth: 125 },
   { Header: "Navn på skjema", accessor: "skjemanavn" },
-  { Header: "Målgruppe", accessor: "malgruppe" },
-  { Header: "PDF", accessor: "pdf" }
+  { Header: "Målgruppe", accessor: "malgruppe", maxWidth: 125 },
+  { Header: "PDF", accessor: "pdf", maxWidth: 200 }
 ];
 
 interface Props {
@@ -32,7 +32,7 @@ const Skjematabell = (props: Props) => {
           data={data}
           columns={kolonneHeadersGittTema}
           showPagination={false}
-          minRows={0}
+          minRows={1}
         />
       );
     }
