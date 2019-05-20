@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Underkategori } from "../../../typer/underkategori";
-import HovedSoknadsobjekt from "./../seksjoner/HovedSoknadsobjekt";
-import InformasjonPapirsoknad from "./../seksjoner/InformasjonPapirsoknad";
+import HovedSoknadsobjekt from "./HovedSoknadsobjekt";
+import InformasjonPapirsoknad from "./InformasjonPapirsoknad";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 
 interface Props {

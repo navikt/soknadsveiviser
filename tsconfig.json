@@ -15,10 +15,12 @@
     "noEmit": true,
     "jsx": "preserve"
   },
-  "include": ["src"],
+  "include": [
+    "./src"
+  ],
   "exclude": [
-    "src/setupTests.ts",
-    "src/mock/**",
-    "src/mock/kontor.ts"
+    "../src/setupTests.ts",
+    "../src/mock/**",
+    "../src/mock/kontor.ts"
   ]
 }

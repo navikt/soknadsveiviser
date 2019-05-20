@@ -1,5 +1,5 @@
 import React, { RefObject, createRef, useEffect } from "react";
-import Hovedbanner from "../../komponenter/bannere/Hovedbanner";
+import Hovedbanner from "../bannere/Hovedbanner";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";

@@ -1,5 +1,6 @@
 {
-  "extends": ["tslint", "tslint-react"],
+  "extends": [
+    "tslint", "tslint-react"],
   "rules": {
     "align": [true, "parameters", "arguments", "statements"],
     "ban": false,
