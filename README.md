@@ -1,4 +1,5 @@
 # Søknadsveiviser
+[![CircleCI](https://circleci.com/gh/navikt/soknadsveiviser.svg?style=svg)](https://circleci.com/gh/navikt/soknadsveiviser)
 Dette er en Create React App med TypeScript, som fungerer som en veiviser inn til de forskjellige søknadene på nav.no
 
 Appen kjører på NAIS i en dockercontainer.
