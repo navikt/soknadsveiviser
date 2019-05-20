@@ -1,12 +1,10 @@
 FROM node:11.7.0
 
-COPY server /app
-COPY src /app
-COPY public /app
-COPY package.json /app
-COPY package-lock.json /app
-COPY less-watch-compiler.config.json /app
-WORKDIR /app
+WORKDIR usr/src/app
+COPY server server/
+COPY src src/
+COPY public public/
+COPY *.json ./
 
 RUN npm install && npm run build
 ENV NODE_ENV production
