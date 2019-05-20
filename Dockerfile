@@ -5,6 +5,7 @@ COPY src /app
 COPY public /app
 COPY package.json /app
 COPY package-lock.json /app
+COPY less-watch-compiler.config.json /app
 WORKDIR /app
 
 RUN npm install && npm run build
