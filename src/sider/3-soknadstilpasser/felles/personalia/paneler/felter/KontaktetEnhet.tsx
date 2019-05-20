@@ -42,13 +42,16 @@ class VisEnheter extends Component<MergedProps, State> {
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
   handleChange = (selected: any) => {
-    const kontaktetEnhet =
-      this.state.enheter
-        .filter(enhet => enhet.enhetsnummer === selected.value)
-        .shift() || ({} as Enhet);
-
     this.props.touched.kontaktetEnhet = false;
-    this.props.field.value.kontaktetEnhet = kontaktetEnhet;
+    if (selected) {
+      const kontaktetEnhet =
+        this.state.enheter
+          .filter(enhet => enhet.enhetsnummer === selected.value)
+          .shift() || ({} as Enhet);
+      this.props.field.value.kontaktetEnhet = kontaktetEnhet;
+    } else {
+      this.props.field.value.kontaktetEnhet = undefined;
+    }
   };
 
   render() {
@@ -82,6 +85,7 @@ class VisEnheter extends Component<MergedProps, State> {
           <NavFrontendSpinner />
         ) : (
           <Select
+            isClearable={true}
             styles={customStyles}
             onChange={this.handleChange}
             placeholder={placeholder}
