@@ -119,7 +119,7 @@ const startServer = html => {
     );
   });
 
-  server.get(/^\/(?!.*static).*$/, (req, res) => {
+  server.use("/soknader", (req, res) => {
     res.send(html);
   });
 

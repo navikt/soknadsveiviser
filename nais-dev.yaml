@@ -6,17 +6,17 @@ metadata:
   labels:
     team: personbruker
 spec:
-  image: navikt/soknadsveiviser:4
+  image: navikt/soknadsveiviser:12
   team: personbruker
   port: 8080
   ingresses:
-    - https://soknader.nais.oera-q.local
+    - https://soknader.nais.oera-q.local/soknader
     - https://www-q0.nav.no/soknader
   liveness:
-    path: /soknader/isAlive
+    path: /soknader/internal/alive
     initialDelay: 20
   readiness:
-    path: /soknader/isReady
+    path: /soknader/internal/ready
     initialDelay: 20
   secrets: true
   replicas:
