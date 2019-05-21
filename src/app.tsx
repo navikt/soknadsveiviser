@@ -75,7 +75,7 @@ class App extends Component<MergedProps> {
         </Route>
         <Route
           exact
-          path={`${path}/skjemautlisting/oversikt`}
+          path={`${path}/skjemautlisting/:skjematype(skjema|sed)`}
           component={SkjemautlistingOversikt}
         />
         <Route

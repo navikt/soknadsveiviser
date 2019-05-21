@@ -151,7 +151,12 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "notFound.goto.nav": `Gå til nav.no`,
     "notFound.goto.soknadsveiviser": `Gå til skjemaer og søknader`,
     "skjemautlisting.vedleggsskjema": `Vedleggsskjema:`,
-    "skjemautlisting.tilveiviser": `Til veiviseren:`
+    "skjemautlisting.tilveiviser": `Til veiviseren:`,
+    "skjemautlisting.lenketil.sed": `SED-skjemaer`,
+    "skjemautlisting.lenketil.skjema": `Alle skjemaer`,
+    "skjemautlisting.lenketil.detaljert": `Søknader og skjemaer listet ut etter visning`,
+    "skjemautlisting.detaljert.forklaring": `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+    "skjemautlisting": `Skjemautlisting`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -303,6 +308,12 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "notFound.goto.nav": `Go to nav.no`,
     "notFound.goto.soknadsveiviser": `Go to forms and applications`,
     "skjemautlisting.vedleggsskjema": `Vedleggsskjema:`,
-    "skjemautlisting.tilveiviser": `Til veiviseren:`
+    "skjemautlisting.tilveiviser": `Til veiviseren:`,
+    "skjemautlisting.lenketil.sed": `SED-skjemaer`,
+    "skjemautlisting.lenketil.skjema": `Alle skjemaer`,
+    "skjemautlisting.lenketil.detaljert": `Søknader og skjemaer listet ut etter visning`,
+    "skjemautlisting.detaljert.forklaring": `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
+    "skjemautlisting": `Skjemautlisting`
+
   }
 };

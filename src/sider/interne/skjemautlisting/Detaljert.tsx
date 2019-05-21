@@ -5,13 +5,15 @@ import { Kategori } from "../../../typer/kategori";
 import { RouteComponentProps } from "react-router-dom";
 import VisSoknadsobjekt from "./seksjoner/VisSoknadsobjekt";
 import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Spinner from "../../../komponenter/spinner/Spinner";
 import { localeTekst } from "../../../utils/sprak";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import PanelBase from "nav-frontend-paneler";
 import Systemtittel from "nav-frontend-typografi/lib/systemtittel";
 import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
+import Lenkepanel from "nav-frontend-lenkepanel/lib";
+import Ingress from "nav-frontend-typografi/lib/ingress";
 
 interface State {
   data: Kategori[];
@@ -39,8 +41,31 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
     return (
       <div className="side__wrapper">
         <div className="innhold__container">
-          <Hovedbanner tittel="Skjemautlisting" undertittel="Detaljert" />
+          <Hovedbanner
+            tittel={intl.formatMessage({
+              id: "skjemautlisting.lenketil.detaljert"
+            })}
+            undertittel={intl.formatMessage({
+              id: "skjemautlisting"
+            })}
+          />
           <PanelBase>
+            <div className="skjemautlisting__lenkepaneler">
+              <Lenkepanel tittelProps="element" href="skjema" border={true}>
+                <FormattedMessage id="skjemautlisting.lenketil.skjema" />
+              </Lenkepanel>
+              <Lenkepanel
+                className="skjemautlisting__lenkepanel"
+                tittelProps="element"
+                href="sed"
+                border={true}
+              >
+                <FormattedMessage id="skjemautlisting.lenketil.sed" />
+              </Lenkepanel>
+            </div>
+            <Ingress className="skjemautlisting__litenmargin-overunder">
+              <FormattedMessage id="skjemautlisting.detaljert.forklaring" />
+            </Ingress>
             {data.map((kategori: Kategori) => (
               <div key={kategori._id} className="skjemautlisting__storavstand">
                 <Innholdstittel>
@@ -49,9 +74,7 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
                 </Innholdstittel>
                 <hr />
                 {kategori.underkategorier.map(underkategori => (
-                  <div
-                    key={localeTekst(underkategori.navn, intl.locale)}
-                  >
+                  <div key={localeTekst(underkategori.navn, intl.locale)}>
                     <Systemtittel>
                       <LocaleTekst tekst={underkategori.navn} />
                     </Systemtittel>

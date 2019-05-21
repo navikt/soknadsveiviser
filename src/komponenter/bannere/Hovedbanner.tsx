@@ -13,8 +13,8 @@ const Banner = (props: Props) => {
   const { backgroundColor, borderColor } = props;
 
   const style = {
-    backgroundColor: backgroundColor || "#CCC9C5",
-    borderColor: borderColor || "#9F9C99"
+    backgroundColor: backgroundColor || "#e3b0a8",
+    borderColor: borderColor || "#c86151"
   };
 
   return (
