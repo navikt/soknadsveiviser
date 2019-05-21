@@ -32,7 +32,6 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
   }
 
   hentSkjemaer = () => {
-    console.log("HENTER SKJEMAER!");
     if (this.props.match.params.skjematype === "skjema") {
       apiKallAlleSkjemaer().then((sanityData: Skjema[]) => {
         this.setState({ skjemaer: sanityData });
