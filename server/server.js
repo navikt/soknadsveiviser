@@ -9,7 +9,7 @@ const { getSecrets, getMockSecrets } = require("./getSecrets");
 
 const server = express();
 
-server.set("views", `${__dirname}/build`);
+server.set("views", `${__dirname}/../build`);
 server.set("view engine", "mustache");
 server.engine("html", mustacheExpress());
 
@@ -49,17 +49,17 @@ const startServer = html => {
 
   server.use(
     "/soknader/static/js",
-    express.static(path.resolve(__dirname, "build/static/js"))
+    express.static(path.resolve(`${__dirname}/..`, "build/static/js"))
   );
 
   server.use(
     "/soknader/static/media",
-    express.static(path.resolve(__dirname, "build/static/media"))
+    express.static(path.resolve(`${__dirname}/..`, "build/static/media"))
   );
 
   server.use(
     "/soknader/index.css",
-    express.static(path.resolve(__dirname, "build/index.css"))
+    express.static(path.resolve(`${__dirname}/..`, "build/index.css"))
   );
 
   server.get("/soknader/api/enheter", (req, res) => {
