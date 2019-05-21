@@ -1,11 +1,14 @@
-FROM docker.adeo.no:5000/pus/node
+FROM node:11.7.0
 
-COPY app /app
-WORKDIR /app
+WORKDIR usr/src/app
+COPY server server/
+COPY src src/
+COPY public public/
+COPY *.json ./
 
 RUN npm install && npm run build
 ENV NODE_ENV production
 
 EXPOSE 8080
 
-CMD ["node", "server.js"]
+CMD ["node", "./server/server.js"]

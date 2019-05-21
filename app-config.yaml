@@ -7,9 +7,9 @@ replicas:
 port: 8080
 healthcheck:
   liveness:
-    path: soknadsveiviser/internal/alive
+    path: soknader/internal/alive
   readiness:
-    path: soknadsveiviser/internal/ready
+    path: soknader/internal/ready
 fasitResources:
   used:
   - alias: "soknadsveiviser.properties"

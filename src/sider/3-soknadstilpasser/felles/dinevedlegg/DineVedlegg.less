@@ -1,0 +1,92 @@
+.dinevedlegg {
+  &__ingress {
+    padding: 0.5rem 0;
+  }
+  &__footer {
+    @media @desktop {
+      padding: 2rem 0 0 0;
+    }
+  }
+  &__beskrivelse-container {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  &__beskrivelse {
+    flex: 1;
+    margin: 0 1rem 0.5rem 0;
+    @media all and (max-width: 500px) {
+      min-width: 100%;
+    }
+  }
+  &__hvaerdette {
+    width: 4rem;
+  }
+  &__wrapper {
+    margin: 0.5rem 0;
+  }
+  &__id {
+    padding: 0 0.5rem;
+  }
+  &__tittel {
+    flex: 1;
+  }
+  &__lenke {
+  }
+  &__alert {
+    margin-top: 2rem;
+  }
+  &__modal {
+    padding: 2rem 2.5rem;
+  }
+  &__checkbox {
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 12rem;
+
+    .skjemaelement,
+    .skjemaelement--horisontal {
+      margin-bottom: 0;
+    }
+
+    @media @mobile {
+      width: 100%;
+      min-height: 2rem;
+      margin: 0.75rem 0 0 0;
+      justify-content: flex-start;
+    }
+
+    @media @desktop {
+      .mobile {
+        display: none;
+      }
+    }
+  }
+  &__vedlegg {
+    border-bottom: solid 1px #979797;
+    padding: 0.75rem 0;
+    display: flex;
+    @media @mobile {
+      align-items: normal;
+    }
+  }
+  &__wrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  &__header {
+    border-bottom: solid 1px #979797;
+    padding: 0.75rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media @mobile {
+      display: none;
+    }
+  }
+}

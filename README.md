@@ -1,7 +1,8 @@
 # Søknadsveiviser
+[![CircleCI](https://circleci.com/gh/navikt/soknadsveiviser.svg?style=svg)](https://circleci.com/gh/navikt/soknadsveiviser)
 Dette er en Create React App med TypeScript, som fungerer som en veiviser inn til de forskjellige søknadene på nav.no
 
-Appen kjører på NAIS i en dockercontainer.
+Appen kjører på NAIS (kubernetes).
 
 # Komme i gang
 
@@ -20,10 +21,13 @@ npm start
 
 ### Bygging og deploy
 
-Vi har et pipelinebygg på [Jenkins](https://ci.adeo.no/job/informasjon_og_veiledning/job/soknadsveiviser/) 
-som må trigges manuelt for deploy til dev (q0) og produksjon.
+Soknadsveiviser har et pipelinebygg på [CircleCI](https://circleci.com/gh/navikt/soknadsveiviser)
 
-Applikasjonen ligger i q0 namespace i dev-sbs og default namespace prod-sbs.
+Ved merge til master kjører bygget på CircleCI automatisk, 
+som laster opp et image til dockerhub og deployer til preprod. Videre må man manuelt godkjenne at den skal dytte videre til produksjon.
+
+### Nais-cluster
+Applikasjonen ligger i default namespace i dev-sbs.
 
 ### Logging
 

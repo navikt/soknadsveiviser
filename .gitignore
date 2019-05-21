@@ -2,4 +2,4 @@
 .idea/
 build/
 node_modules/
-app/public/index.css
+public/index.css
