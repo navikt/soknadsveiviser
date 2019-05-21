@@ -17,10 +17,5 @@
   },
   "include": [
     "./src"
-  ],
-  "exclude": [
-    "../src/setupTests.ts",
-    "../src/mock/**",
-    "../src/mock/kontor.ts"
   ]
 }
