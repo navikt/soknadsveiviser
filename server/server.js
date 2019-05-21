@@ -22,7 +22,6 @@ server.use((req, res, next) => {
 });
 
 const [
-  apiKey,
   enheterRSURL,
   enheterRSApiKey,
   sanityDataset,
@@ -63,7 +62,7 @@ const startServer = html => {
   );
 
   server.get("/soknader/api/enheter", (req, res) => {
-    req.headers[apiKey] = enheterRSApiKey;
+    req.headers["x-nav-apiKey"] = enheterRSApiKey;
     req.pipe(request(enheterRSURL)).pipe(res);
   });
 
@@ -91,7 +90,7 @@ const startServer = html => {
         method: "GET",
         json: true,
         headers: {
-          apiKey: securityTokenServiceTokenApiKey
+          "x-nav-apiKey": securityTokenServiceTokenApiKey
         }
       },
       error => {
@@ -108,7 +107,7 @@ const startServer = html => {
             bearer: result.access_token
           },
           headers: {
-            apiKey: foerstesidegeneratorServiceApiKey
+            "x-nav-apiKey": foerstesidegeneratorServiceApiKey
           }
         },
         (error, result, body) => {

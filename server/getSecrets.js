@@ -2,7 +2,6 @@ function getSecrets() {
   const fs = require("file-system");
   const secretsFilePath = "/var/run/secrets/nais.io/vault";
 
-  const apiKey = fs.readFileSync(secretsFilePath + "/apiKey.user", "utf8");
   const enheterRSURL = fs.readFileSync(
     secretsFilePath + "/enheterRS.url",
     "utf8"
@@ -50,7 +49,6 @@ function getSecrets() {
   );
 
   return [
-    apiKey,
     enheterRSURL,
     enheterRSApiKey,
     sanityDataset,
@@ -66,7 +64,7 @@ function getSecrets() {
 }
 
 function getMockSecrets() {
-  return ["", "", "", "", "", "", "", "", "", "", "", ""];
+  return ["", "", "", "", "", "", "", "", "", "", ""];
 }
 
 module.exports = { getSecrets, getMockSecrets };

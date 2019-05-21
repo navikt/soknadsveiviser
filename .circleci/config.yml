@@ -122,7 +122,7 @@ workflows:
           filters:
             branches:
               only:
-                - ny-url
+                - master
       - godkjenn-til-prod:
           type: approval
           requires:
