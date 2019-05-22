@@ -20,23 +20,30 @@ const Skjematabell = (props: Props) => {
   let data: any[];
   let tabeller: JSX.Element[] = [];
 
-  Object.keys(props.data).forEach(emneord => {
-    if (props.data.hasOwnProperty(emneord)) {
-      kolonneHeadersGittTema = [{ Header: emneord, columns: innerColumns }];
-      data = [];
-      props.data[emneord].map(skjema => data.push(innslagITabell(skjema)));
-      tabeller.push(
-        <ReactTable
-          className="-striped -highlight typo-normal skjemautlisting__litenmargin-overunder"
-          key={emneord}
-          data={data}
-          columns={kolonneHeadersGittTema}
-          showPagination={false}
-          minRows={1}
-        />
-      );
-    }
-  });
+  Object.keys(props.data)
+    .sort()
+    .forEach(emneord => {
+      if (props.data.hasOwnProperty(emneord)) {
+        kolonneHeadersGittTema = [{ Header: emneord, columns: innerColumns }];
+        data = [];
+        props.data[emneord]
+          .sort((skjemaa, skjemab) =>
+            skjemaa.skjemanummer > skjemab.skjemanummer ? 1 : -1
+          )
+          .map(skjema => data.push(innslagITabell(skjema)));
+        tabeller.push(
+          <ReactTable
+            className="-striped -highlight typo-normal skjemautlisting__litenmargin-overunder"
+            key={emneord}
+            data={data}
+            columns={kolonneHeadersGittTema}
+            showPagination={false}
+            minRows={1}
+            defaultPageSize={10000} // skal være "uendelig"
+          />
+        );
+      }
+    });
   return <div className="flex">{tabeller}</div>;
 };
 
@@ -56,7 +63,7 @@ const innslagITabell = (skjema: Skjema) => {
       ),
     skjemanavn: skjema.navn,
     malgruppe: bestemMalgruppe(skjema._type),
-    pdf: utlistingAvPDFerBasertPaSprak(skjema),
+    pdf: utlistingAvPDFerBasertPaSprak(skjema)
   };
 };
 
