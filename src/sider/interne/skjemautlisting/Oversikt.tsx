@@ -44,11 +44,16 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
   };
 
   grupperEmneordOgSkjemaer = (skjemaer: Skjema[]) => {
-    let emneordMedSkjemaer: { [emneord: string]: Skjema[] } = {};
+    const emneordMedSkjemaer: { [emneord: string]: Skjema[] } = {};
     const skjemaUtenEmneord = "Skjemaer uten emneord";
+    const skjemaliste: { skjemanummer: string; skjemanavn: string }[] = [];
 
-    skjemaer.map(skjema =>
-      skjema.emneord
+    skjemaer.map(skjema => {
+      skjemaliste.push({
+        skjemanummer: skjema.skjemanummer,
+        skjemanavn: skjema.navn ? skjema.navn.nb || "" : ""
+      });
+      return skjema.emneord
         ? skjema.emneord.map(emneord =>
             !emneordMedSkjemaer.hasOwnProperty(emneord.emneord)
               ? (emneordMedSkjemaer[emneord.emneord] = [skjema])
@@ -56,10 +61,10 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
           )
         : !emneordMedSkjemaer.hasOwnProperty(skjemaUtenEmneord)
         ? (emneordMedSkjemaer[skjemaUtenEmneord] = [skjema])
-        : emneordMedSkjemaer[skjemaUtenEmneord].push(skjema)
-    );
+        : emneordMedSkjemaer[skjemaUtenEmneord].push(skjema);
+    });
 
-    return <Skjematabell data={emneordMedSkjemaer} />;
+    return <Skjematabell data={emneordMedSkjemaer} skjemaliste={skjemaliste} />;
   };
 
   render = () => {
@@ -78,7 +83,7 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
             })}
           />
           <PanelBase>
-            <div className="skjemautlisting__lenkepaneler">
+            <div className="skjemautlisting__paneler">
               <Lenkepanel tittelProps="element" href={lenketil} border={true}>
                 <FormattedMessage id={"skjemautlisting.lenketil." + lenketil} />
               </Lenkepanel>

@@ -50,7 +50,7 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
             })}
           />
           <PanelBase>
-            <div className="skjemautlisting__lenkepaneler">
+            <div className="skjemautlisting__paneler">
               <Lenkepanel tittelProps="element" href="skjema" border={true}>
                 <FormattedMessage id="skjemautlisting.lenketil.skjema" />
               </Lenkepanel>

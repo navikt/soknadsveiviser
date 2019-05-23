@@ -4,7 +4,9 @@ import { HashLink } from "react-router-hash-link";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
 import "react-table/react-table.css";
 import { useState } from "react";
-import { Select } from "nav-frontend-skjema";
+import { Select as NAVSelect } from "nav-frontend-skjema";
+import Select from "react-select";
+import { Normaltekst } from "nav-frontend-typografi";
 
 const innerColumns = [
   { Header: "ID", accessor: "skjemanummer", maxWidth: 125 },
@@ -15,12 +17,16 @@ const innerColumns = [
 
 interface Props {
   data: { [emneord: string]: Skjema[] };
+  skjemaliste: { skjemanavn: string; skjemanummer: string }[];
 }
 
 interface Tabell {
-  tabell: JSX.Element;
+  data: any[];
+  kolonneHeadersGittTema: Column[];
   emneord: string;
 }
+
+interface InnslagITabell {}
 
 const Skjematabell = (props: Props) => {
   let kolonneHeadersGittTema: Column[];
@@ -39,49 +45,104 @@ const Skjematabell = (props: Props) => {
           )
           .map(skjema => data.push(innslagITabell(skjema)));
         tabeller.push({
-          tabell: (
-            <ReactTable
-              className="-striped -highlight typo-normal skjemautlisting__litenmargin-overunder"
-              key={emneord}
-              data={data}
-              columns={kolonneHeadersGittTema}
-              showPagination={false}
-              minRows={1}
-              defaultPageSize={10000} // skal være "uendelig"
-            />
-          ),
+          data: data,
+          kolonneHeadersGittTema: kolonneHeadersGittTema,
           emneord: emneord
         });
       }
     });
-  return <VisTabell tabeller={tabeller} />;
+
+  props.skjemaliste.unshift({
+    skjemanummer: "Alle skjemaer",
+    skjemanavn: ""
+  });
+  return <VisTabell tabeller={tabeller} skjemaliste={props.skjemaliste} />;
 };
 
-const VisTabell = (props: { tabeller: Tabell[] }) => {
-  const [valgtEmneord, settValgtEmneord] = useState("Alle");
+const VisTabell = (props: {
+  tabeller: Tabell[];
+  skjemaliste: { skjemanummer: string; skjemanavn: string }[];
+}) => {
+  const alleSkjema = { skjemanummer: "Alle skjemaer", skjemanavn: "" };
+  const alleEmneord = "Alle";
+
+  const [valgtEmneord, settValgtEmneord] = useState(alleEmneord);
+  const [valgtSkjema, settValgtSkjema] = useState(alleSkjema);
+
   const { tabeller } = props;
+
+  const endeligTabell =
+    valgtEmneord === alleEmneord
+      ? valgtSkjema === alleSkjema
+        ? tabeller
+        : tabeller
+            .map(tabell => {
+              return {
+                ...tabell,
+                data: tabell.data.filter(
+                  data => data.skjemanavn === valgtSkjema.skjemanavn
+                )
+              };
+            })
+            .filter(tabell => tabell.data.length > 0)
+      : tabeller.filter(tabell => tabell.emneord === valgtEmneord);
+
+  const settSkjema = (selected: any) => {
+    settValgtEmneord("Alle");
+    settValgtSkjema(selected["value"]);
+  };
+
+  const settEmneord = (selected: any) => {
+    settValgtEmneord(selected.currentTarget.value);
+    settValgtSkjema(alleSkjema);
+  };
+
   return (
     <>
-      <Select
-        label="Velg skjemaer for:"
-        bredde={"xxl"}
-        value={valgtEmneord}
-        onChange={event => settValgtEmneord(event.currentTarget.value)}
-      >
-        <option key="alle" value="Alle">
-          Alle
-        </option>
-        {tabeller.map(tabell => (
-          <option key={tabell.emneord} value={tabell.emneord}>
-            {tabell.emneord}
+      <div className="skjemautlisting__paneler">
+        <NAVSelect
+          label="Velg skjemaer for:"
+          bredde={"xxl"}
+          value={valgtEmneord}
+          onChange={settEmneord}
+        >
+          <option key="alle" value="Alle">
+            Alle områder
           </option>
-        ))}
-      </Select>
+          {tabeller.map(tabell => (
+            <option key={tabell.emneord} value={tabell.emneord}>
+              {tabell.emneord}
+            </option>
+          ))}
+        </NAVSelect>
+        <Select
+          onChange={settSkjema}
+          value={{
+            value: valgtSkjema,
+            label: `${valgtSkjema.skjemanummer} ${valgtSkjema.skjemanavn}`
+          }}
+          options={props.skjemaliste.map(skjema => ({
+            value: skjema,
+            label: `${skjema.skjemanummer} ${skjema.skjemanavn}`
+          }))}
+        />
+      </div>
       <div className="flex">
-        {valgtEmneord === "Alle"
-          ? tabeller.map(tabell => tabell.tabell)
-          : tabeller.filter(tabell => tabell.emneord === valgtEmneord)[0]
-              .tabell}
+        {endeligTabell ? (
+          endeligTabell.map(tabell => (
+            <ReactTable
+              className="-striped -highlight typo-normal skjemautlisting__litenmargin-overunder"
+              key={tabell.emneord}
+              data={tabell.data}
+              columns={tabell.kolonneHeadersGittTema}
+              showPagination={false}
+              minRows={1}
+              defaultPageSize={10000} // skal være "uendelig"
+            />
+          ))
+        ) : (
+          <Normaltekst>Fant ingen skjemaer</Normaltekst>
+        )}
       </div>
     </>
   );
@@ -101,7 +162,7 @@ const innslagITabell = (skjema: Skjema) => {
       ) : (
         skjema.skjemanummer
       ),
-    skjemanavn: skjema.navn,
+    skjemanavn: skjema.navn.nb || skjema.navn.en,
     malgruppe: bestemMalgruppe(skjema._type),
     pdf: utlistingAvPDFerBasertPaSprak(skjema)
   };
