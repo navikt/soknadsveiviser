@@ -26,8 +26,6 @@ interface Tabell {
   emneord: string;
 }
 
-interface InnslagITabell {}
-
 const Skjematabell = (props: Props) => {
   let kolonneHeadersGittTema: Column[];
   let data: any[];
@@ -73,7 +71,7 @@ const VisTabell = (props: {
 
   const endeligTabell =
     valgtEmneord === alleEmneord
-      ? valgtSkjema === alleSkjema
+      ? valgtSkjema.skjemanummer === alleSkjema.skjemanummer
         ? tabeller
         : tabeller
             .map(tabell => {
@@ -86,6 +84,7 @@ const VisTabell = (props: {
             })
             .filter(tabell => tabell.data.length > 0)
       : tabeller.filter(tabell => tabell.emneord === valgtEmneord);
+
 
   const settSkjema = (selected: any) => {
     settValgtEmneord("Alle");
@@ -101,6 +100,7 @@ const VisTabell = (props: {
     <>
       <div className="skjemautlisting__paneler">
         <NAVSelect
+          className="skjemautlisting__select--padding"
           label="Velg skjemaer for:"
           bredde={"xxl"}
           value={valgtEmneord}
@@ -115,17 +115,22 @@ const VisTabell = (props: {
             </option>
           ))}
         </NAVSelect>
-        <Select
-          onChange={settSkjema}
-          value={{
-            value: valgtSkjema,
-            label: `${valgtSkjema.skjemanummer} ${valgtSkjema.skjemanavn}`
-          }}
-          options={props.skjemaliste.map(skjema => ({
-            value: skjema,
-            label: `${skjema.skjemanummer} ${skjema.skjemanavn}`
-          }))}
-        />
+        <div style={{"width": "50%"}}>
+          <Normaltekst className="skjemautlisting__selectlabel--padding">
+            Søk etter skjema:
+          </Normaltekst>
+          <Select
+            onChange={settSkjema}
+            value={{
+              value: valgtSkjema,
+              label: `${valgtSkjema.skjemanummer} ${valgtSkjema.skjemanavn}`
+            }}
+            options={props.skjemaliste.map(skjema => ({
+              value: skjema,
+              label: `${skjema.skjemanummer} ${skjema.skjemanavn}`
+            }))}
+          />
+        </div>
       </div>
       <div className="flex">
         {endeligTabell ? (
