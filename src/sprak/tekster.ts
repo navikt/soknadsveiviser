@@ -156,7 +156,17 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.lenketil.skjema": `Alle skjemaer`,
     "skjemautlisting.lenketil.detaljert": `Søknader og skjemaer listet ut etter visning`,
     "skjemautlisting.detaljert.forklaring": `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    "skjemautlisting": `Skjemautlisting`
+    "skjemautlisting": `Skjemautlisting`,
+    "skjemautlisting.tabell.alleskjemaer": `Alle skjemaer`,
+    "skjemautlisting.tabell.alle": `Alle`,
+    "skjemautlisting.tabell.velgskjemaerfor": `Velg skjemaer for:`,
+    "skjemautlisting.tabell.alleomrader": `Alle områder`,
+    "skjemautlisting.tabell.soketterskjema": `Søk etter skjema:`,
+    "skjemautlisting.tabell.skjemautenemneord": `Skjemaer uten emneord`,
+    "skjemautlisting.tabell.skjemanummer": `ID`,
+    "skjemautlisting.tabell.skjemanavn": `Skjemanavn`,
+    "skjemautlisting.tabell.malgruppe": `Målgruppe`,
+    "skjemautlisting.tabell.pdf": `PDF`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -313,7 +323,17 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.lenketil.skjema": `Alle skjemaer`,
     "skjemautlisting.lenketil.detaljert": `Søknader og skjemaer listet ut etter visning`,
     "skjemautlisting.detaljert.forklaring": `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.`,
-    "skjemautlisting": `Skjemautlisting`
+    "skjemautlisting": `Skjemautlisting`,
+    "skjemautlisting.tabell.alleskjemaer": `Alle skjemaer`,
+    "skjemautlisting.tabell.alle": `Alle`,
+    "skjemautlisting.tabell.velgskjemaerfor": `Velg skjemaer for:`,
+    "skjemautlisting.tabell.alleomrader": `Alle områder`,
+    "skjemautlisting.tabell.soketterskjema": `Søk etter skjema:`,
+    "skjemautlisting.tabell.skjemautenemneord": `Skjemaer uten emneord`,
+    "skjemautlisting.tabell.skjemanummer": `ID`,
+    "skjemautlisting.tabell.skjemanavn": `Skjemanavn`,
+    "skjemautlisting.tabell.malgruppe": `Målgruppe`,
+    "skjemautlisting.tabell.pdf": `PDF`
 
   }
 };

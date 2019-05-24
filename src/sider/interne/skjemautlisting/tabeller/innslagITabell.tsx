@@ -4,6 +4,7 @@ import * as React from "react";
 
 export const innslagITabell = (skjema: Skjema) => {
   return {
+    key: skjema.skjemanummer,
     skjemanummer:
       skjema._type === "skjema" ? (
         <HashLink
@@ -31,16 +32,15 @@ const utlistingAvPDFerBasertPaSprak = (skjema: Skjema) => {
           .filter(([key, val]) => key && val && val.asset && val.asset.url)
           .map(([key, v]) => {
             return key && v && v.asset.url ? (
-              <>
+              <span key={skjema.skjemanummer + key}>
                 <a
                   className="lenke"
-                  key={skjema.skjemanummer + key}
                   href={v.asset.url}
                 >
                   {key.toLocaleUpperCase()}
                 </a>
                 <span>{`  |  `}</span>
-              </>
+              </span>
             ) : (
               ""
             );

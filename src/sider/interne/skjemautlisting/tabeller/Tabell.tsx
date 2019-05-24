@@ -6,26 +6,44 @@ import { Select as NAVSelect } from "nav-frontend-skjema";
 import Select from "react-select";
 import { Normaltekst } from "nav-frontend-typografi";
 import { Tabell } from "./Oversiktstabell";
+import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 
-export const VisTabell = (props: {
+interface TabellProps {
   tabeller: Tabell[];
   skjemaliste: { skjemanummer: string; skjemanavn: string }[];
-}) => {
-  const { tabeller } = props;
-  const alleSkjema = { skjemanummer: "Alle skjemaer", skjemanavn: "" };
-  const alleEmneord = "Alle";
+}
 
-  const [valgtEmneord, settValgtEmneord] = useState(alleEmneord);
-  const [valgtSkjema, settValgtSkjema] = useState(alleSkjema);
+type Props = TabellProps & InjectedIntlProps;
+
+const VisTabell = (props: Props) => {
+  const { tabeller, intl, skjemaliste } = props;
+
+  const defaultValueEmneord = {
+    value: "alle",
+    label: intl.formatMessage({ id: "skjemautlisting.tabell.alleomrader" })
+  };
+
+  const defaultValueSkjema = {
+    value: {
+      skjemanummer: "alle",
+      skjemanavn: ""
+    },
+    label: intl.formatMessage({
+      id: "skjemautlisting.tabell.alleskjemaer"
+    })
+  };
+
+  const [valgtEmneord, settValgtEmneord] = useState(defaultValueEmneord);
+  const [valgtSkjema, settValgtSkjema] = useState(defaultValueSkjema);
 
   const settSkjema = (selected: any) => {
-    settValgtEmneord(alleEmneord);
-    settValgtSkjema(selected["value"]);
+    settValgtEmneord(defaultValueEmneord);
+    settValgtSkjema(selected);
   };
 
   const settEmneord = (selected: any) => {
-    settValgtEmneord(selected.currentTarget.value);
-    settValgtSkjema(alleSkjema);
+    settValgtEmneord(selected.currentTarget);
+    settValgtSkjema(defaultValueSkjema);
   };
 
   return (
@@ -33,13 +51,15 @@ export const VisTabell = (props: {
       <div className="skjemautlisting__paneler">
         <NAVSelect
           className="skjemautlisting__select--padding"
-          label="Velg skjemaer for:"
+          label={intl.formatMessage({
+            id: "skjemautlisting.tabell.velgskjemaerfor"
+          })}
           bredde={"xxl"}
-          value={valgtEmneord}
           onChange={settEmneord}
+          value={valgtEmneord.value}
         >
-          <option key="alle" value="Alle">
-            Alle områder
+          <option key={defaultValueEmneord.value} value={defaultValueEmneord.value}>
+            {defaultValueEmneord.label}
           </option>
           {tabeller.map(tabell => (
             <option key={tabell.emneord} value={tabell.emneord}>
@@ -49,18 +69,18 @@ export const VisTabell = (props: {
         </NAVSelect>
         <div style={{ width: "50%" }}>
           <Normaltekst className="skjemautlisting__selectlabel--padding">
-            Søk etter skjema:
+            <FormattedMessage id="skjemautlisting.tabell.soketterskjema" />
           </Normaltekst>
           <Select
             onChange={settSkjema}
-            value={{
-              value: valgtSkjema,
-              label: `${valgtSkjema.skjemanummer} ${valgtSkjema.skjemanavn}`
-            }}
-            options={props.skjemaliste.map(skjema => ({
-              value: skjema,
-              label: `${skjema.skjemanummer} ${skjema.skjemanavn}`
-            }))}
+            value={valgtSkjema}
+            options={[defaultValueSkjema].concat(
+              skjemaliste.map(skjema => ({
+                key: skjema.skjemanummer,
+                value: skjema,
+                label: `${skjema.skjemanummer} ${skjema.skjemanavn}`
+              }))
+            )}
           />
         </div>
       </div>
@@ -82,22 +102,27 @@ export const VisTabell = (props: {
 };
 
 const filtrerTabell = (
-  valgtEmneord: string,
-  valgtSkjema: { skjemanummer: string; skjemanavn: string },
+  valgtEmneord: { value: string; label: string },
+  valgtSkjema: {
+    value: { skjemanummer: string; skjemanavn: string };
+    label: string;
+  },
   tabeller: Tabell[]
 ) => {
-  return valgtEmneord === "Alle"
-    ? valgtSkjema.skjemanummer === "Alle skjemaer"
+  return valgtEmneord.value === "alle"
+    ? valgtSkjema.value.skjemanummer === "alle"
       ? tabeller
       : tabeller
           .map(tabell => {
             return {
               ...tabell,
               data: tabell.data.filter(
-                data => data.skjemanavn === valgtSkjema.skjemanavn
+                data => data.skjemanavn === valgtSkjema.value.skjemanavn
               )
             };
           })
           .filter(tabell => tabell.data.length > 0)
-    : tabeller.filter(tabell => tabell.emneord === valgtEmneord);
+    : tabeller.filter(tabell => tabell.emneord === valgtEmneord.value);
 };
+
+export default injectIntl(VisTabell);

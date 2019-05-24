@@ -1,8 +1,9 @@
 import { Skjema } from "../../../../typer/skjemaogvedlegg";
 import * as React from "react";
 import { Column } from "react-table";
-import { VisTabell } from "./Tabell";
+import VisTabell from "./Tabell";
 import { innslagITabell } from "./innslagITabell";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 
 export interface Tabell {
   data: any[];
@@ -10,38 +11,63 @@ export interface Tabell {
   emneord: string;
 }
 
-const Oversiktstabell = (props: {skjemaer: Skjema[]}) => {
-  const { skjemaer } = props;
+const Oversiktstabell = (props: { skjemaer: Skjema[] } & InjectedIntlProps) => {
+  const { skjemaer, intl } = props;
+  const skjemautenEmneordHeader = intl.formatMessage({id: "skjemautlisting.tabell.skjemautenemneord"});
+  const skjemanummerHeader = intl.formatMessage({id: "skjemautlisting.tabell.skjemanummer"});
+  const skjemanavnHeader = intl.formatMessage({id: "skjemautlisting.tabell.skjemanavn"});
+  const malgruppeHeader = intl.formatMessage({id: "skjemautlisting.tabell.malgruppe"});
+  const PDFHeader = intl.formatMessage({id: "skjemautlisting.tabell.pdf"});
 
-  const emneordMedSkjemaer = grupperSkjemaerOgEmneord(skjemaer);
-  const generertTabelldata = genererTabelldata(emneordMedSkjemaer);
+  const innerColumns = [
+    { Header: skjemanummerHeader, accessor: "skjemanummer", maxWidth: 125 },
+    { Header: skjemanavnHeader, accessor: "skjemanavn" },
+    { Header: malgruppeHeader, accessor: "malgruppe", maxWidth: 125 },
+    { Header: PDFHeader, accessor: "pdf", maxWidth: 200 }
+  ];
+
+  const emneordMedSkjemaer = grupperSkjemaerOgEmneord(
+    skjemaer,
+    skjemautenEmneordHeader
+  );
+  const generertTabelldata = genererTabelldata(
+    emneordMedSkjemaer,
+    innerColumns
+  );
   const skjemaliste = genererSkjemaliste(skjemaer);
 
   return <VisTabell tabeller={generertTabelldata} skjemaliste={skjemaliste} />;
 };
 
-export default Oversiktstabell;
+export default injectIntl(Oversiktstabell);
 
-const grupperSkjemaerOgEmneord = (skjemaer: Skjema[]) => {
+const grupperSkjemaerOgEmneord = (
+  skjemaer: Skjema[],
+  skjemaUtenEmneord: string
+) => {
   const emneordMedSkjemaer: { [emneord: string]: Skjema[] } = {};
-  const skjemaUtenEmneord = "Skjemaer uten emneord";
 
   skjemaer.map(skjema =>
     skjema.emneord
       ? skjema.emneord.map(emneord =>
-        !emneordMedSkjemaer.hasOwnProperty(emneord.emneord)
-          ? (emneordMedSkjemaer[emneord.emneord] = [skjema])
-          : emneordMedSkjemaer[emneord.emneord].push(skjema)
-      )
+          !emneordMedSkjemaer.hasOwnProperty(emneord.emneord)
+            ? (emneordMedSkjemaer[emneord.emneord] = [skjema])
+            : emneordMedSkjemaer[emneord.emneord].push(skjema)
+        )
       : !emneordMedSkjemaer.hasOwnProperty(skjemaUtenEmneord)
-        ? (emneordMedSkjemaer[skjemaUtenEmneord] = [skjema])
-        : emneordMedSkjemaer[skjemaUtenEmneord].push(skjema)
+      ? (emneordMedSkjemaer[skjemaUtenEmneord] = [skjema])
+      : emneordMedSkjemaer[skjemaUtenEmneord].push(skjema)
   );
 
   return emneordMedSkjemaer;
 };
 
-const genererTabelldata = (emneordMedSkjemaer: { [emneord: string]: Skjema[] }) => {
+const genererTabelldata = (
+  emneordMedSkjemaer: {
+    [emneord: string]: Skjema[];
+  },
+  innerColumns: Column[]
+) => {
   let kolonneHeadersGittTema: Column[];
   let data: any[];
   let tabeller: Tabell[] = [];
@@ -68,25 +94,10 @@ const genererTabelldata = (emneordMedSkjemaer: { [emneord: string]: Skjema[] }) 
   return tabeller;
 };
 
-const genererSkjemaliste = (skjemaer: Skjema[]) => {
-  const skjemaliste = skjemaer.map(skjema => {
+const genererSkjemaliste = (skjemaer: Skjema[]) =>
+  skjemaer.map(skjema => {
     return {
       skjemanummer: skjema.skjemanummer,
       skjemanavn: skjema.navn ? skjema.navn.nb || "" : ""
     };
   });
-
-  skjemaliste.unshift({
-    skjemanummer: "Alle skjemaer",
-    skjemanavn: ""
-  });
-
-  return skjemaliste;
-};
-
-const innerColumns = [
-  { Header: "ID", accessor: "skjemanummer", maxWidth: 125 },
-  { Header: "Navn på skjema", accessor: "skjemanavn" },
-  { Header: "Målgruppe", accessor: "malgruppe", maxWidth: 125 },
-  { Header: "PDF", accessor: "pdf", maxWidth: 200 }
-];
