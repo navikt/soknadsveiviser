@@ -32,7 +32,7 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps & ReduxProps) => {
     underkategori.inngangtilsoknadsdialog.soknadsdialogURL;
 
   const lenkeTilSkjema =
-    `/soknadsveiviser` +
+    `/soknader` +
     `/nb` +
     `/${kategori.domene.toLocaleLowerCase()}` +
     `/${kategori.urlparam}` +

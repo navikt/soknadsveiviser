@@ -3,13 +3,13 @@ import {
   apiKallAlleSEDSkjemaer,
   apiKallAlleSkjemaer
 } from "../../../klienter/sanityKlient";
-import Skjematabell from "./Tabell";
 import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
 import PanelBase from "nav-frontend-paneler";
 import { RouteComponentProps } from "react-router";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
+import Oversiktstabell from "./tabeller/Oversiktstabell";
 
 interface State {
   skjemaer: Skjema[];
@@ -23,7 +23,6 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: RouteComponentProps<{ skjematype?: string }>) {
-    // Typical usage (don't forget to compare props):
     if (
       this.props.match.params.skjematype !== prevProps.match.params.skjematype
     ) {
@@ -43,25 +42,6 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
     }
   };
 
-  grupperEmneordOgSkjemaer = (skjemaer: Skjema[]) => {
-    let emneordMedSkjemaer: { [emneord: string]: Skjema[] } = {};
-    const skjemaUtenEmneord = "Skjemaer uten emneord";
-
-    skjemaer.map(skjema =>
-      skjema.emneord
-        ? skjema.emneord.map(emneord =>
-            !emneordMedSkjemaer.hasOwnProperty(emneord.emneord)
-              ? (emneordMedSkjemaer[emneord.emneord] = [skjema])
-              : emneordMedSkjemaer[emneord.emneord].push(skjema)
-          )
-        : !emneordMedSkjemaer.hasOwnProperty(skjemaUtenEmneord)
-        ? (emneordMedSkjemaer[skjemaUtenEmneord] = [skjema])
-        : emneordMedSkjemaer[skjemaUtenEmneord].push(skjema)
-    );
-
-    return <Skjematabell data={emneordMedSkjemaer} />;
-  };
-
   render = () => {
     const { intl, match } = this.props;
     const { skjematype } = match.params;
@@ -78,7 +58,7 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
             })}
           />
           <PanelBase>
-            <div className="skjemautlisting__lenkepaneler">
+            <div className="skjemautlisting__paneler">
               <Lenkepanel tittelProps="element" href={lenketil} border={true}>
                 <FormattedMessage id={"skjemautlisting.lenketil." + lenketil} />
               </Lenkepanel>
@@ -92,7 +72,7 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
               </Lenkepanel>
             </div>
             {this.state
-              ? this.grupperEmneordOgSkjemaer(this.state.skjemaer)
+              ? <Oversiktstabell skjemaer={this.state.skjemaer}/>
               : null}
           </PanelBase>
         </div>
