@@ -93,7 +93,6 @@ class VisPersonalia extends Component<MergedProps> {
   render() {
     const { personEllerBedrift } = this.props.match.params;
     const { ettersendelse } = this.props;
-    console.log(ettersendelse);
 
     const initAdresse = this.props.adresse || {
       navn: "",
