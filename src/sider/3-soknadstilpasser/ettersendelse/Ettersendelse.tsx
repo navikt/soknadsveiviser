@@ -63,7 +63,7 @@ class Ettersendelse extends Component<MergedProps> {
         <Steg tittel="ettersendelser.tittel.underbanner" />
         <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
         <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
-        <Personalia {...this.props} />
+        <Personalia ettersendelse="ettersendelse" {...this.props} />
       </>
     );
   }

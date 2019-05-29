@@ -30,7 +30,7 @@ interface Routes {
 type MergedProps = ValgtSoknad &
   Personalia &
   RouteComponentProps<Routes> &
-  InjectedIntlProps;
+  InjectedIntlProps & {ettersendelse?: string};
 
 class VisPersonalia extends Component<MergedProps> {
   handleSubmit = (e: any) => {
@@ -92,6 +92,7 @@ class VisPersonalia extends Component<MergedProps> {
 
   render() {
     const { personEllerBedrift } = this.props.match.params;
+    const { ettersendelse } = this.props;
 
     const initAdresse = this.props.adresse || {
       navn: "",
@@ -140,7 +141,7 @@ class VisPersonalia extends Component<MergedProps> {
                     <TiltaksBedriftPanel />
                   </>
                 )}
-                <NesteKnapp />
+                <NesteKnapp ettersendelse={ettersendelse} />
               </Form>
             </>
           );
@@ -150,7 +151,7 @@ class VisPersonalia extends Component<MergedProps> {
   }
 }
 
-export default medPersonalia<Personalia>(
+export default medPersonalia<Personalia & {ettersendelse?: string}>(
   medValgtSoknadsobjekt<ValgtSoknad & Personalia>(
     injectIntl<ValgtSoknad & Personalia & InjectedIntlProps>(
       withRouter<

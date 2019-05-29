@@ -40,7 +40,7 @@ const Neste = (props: MergedProps) => {
     <>
       {lenke
         ? NesteLenke(lenke, ettersendelse ? false : erDisabled)
-        : NesteKnapp(erDisabled)}
+        : NesteKnapp(ettersendelse ? false : erDisabled)}
     </>
   );
 };
