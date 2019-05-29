@@ -28,8 +28,6 @@ jobs:
           name: Tester
           command: |
             npm run test
-      - setup_remote_docker
-      - sett-miljovariabler
 
   deploy-til-dev:
     docker:
