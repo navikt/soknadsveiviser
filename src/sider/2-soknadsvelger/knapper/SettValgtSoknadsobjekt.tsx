@@ -26,7 +26,7 @@ const SettValgtSoknadsobjekt = (props: MergedProps) => {
 
   return (
     <Link
-      id={soknadsobjekt.navn[intl.locale]}
+      id={soknadsobjekt.navn[intl.locale] + title}
       to={to}
       className={styling ? styling : "knapp knapp--standard soknadsobjekt__knapp"}
       onClick={() => props.settValgtSoknadsobjekt(soknadsobjekt)}

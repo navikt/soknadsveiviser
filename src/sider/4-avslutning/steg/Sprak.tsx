@@ -22,9 +22,8 @@ const Sprak = (props: Props) => {
 
   return (
     <div className="steg__rad">
-      <StegOverskrift steg={steg} tittel="avslutning.sprakvelger.label" />
       <Sprakvelger
-        label={""}
+        label={<StegOverskrift steg={steg} tittel="avslutning.sprakvelger.label" />}
         sprakvalg={hovedskjema.pdf}
         byttSprak={byttSprak}
         valgtSprak={skjemaSprak}

@@ -23,24 +23,26 @@ const TabletEllerMobil = (props: MergedProps) => {
     <div className="innhold__container">
       <div className="tabs mobil">
         <Ekspanderbartpanel
-          apen={erTablet ? true : false}
+          apen={erTablet}
           tittel={intl.messages["kategori.velg"]}
         >
-          <ul>
-            {aktiveKategorier.map((kategori, id) => {
-              const { kantfarge } = valgtKategori;
-              const erValgt = erKategoriValgt(kategori, valgtKategori);
-              const style = erValgt ? { borderLeftColor: kantfarge } : {};
-              return (
-                <VelgKategoriKnapp
-                  key={id}
-                  kategori={kategori}
-                  erValgt={erValgt}
-                  style={style}
-                />
-              );
-            })}
-          </ul>
+          <nav>
+            <ul>
+              {aktiveKategorier.map((kategori, id) => {
+                const { kantfarge } = valgtKategori;
+                const erValgt = erKategoriValgt(kategori, valgtKategori);
+                const style = erValgt ? { borderLeftColor: kantfarge } : {};
+                return (
+                  <VelgKategoriKnapp
+                    key={id}
+                    kategori={kategori}
+                    erValgt={erValgt}
+                    style={style}
+                  />
+                );
+              })}
+            </ul>
+          </nav>
         </Ekspanderbartpanel>
       </div>
     </div>
