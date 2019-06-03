@@ -35,6 +35,7 @@ jobs:
 
     steps:
       - checkout
+      - setup_remote_docker
       - sett-miljovariabler
       - run:
           name: Bygger Docker image
