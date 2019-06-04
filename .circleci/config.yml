@@ -118,7 +118,7 @@ workflows:
           filters:
             branches:
               only:
-                - server-endring
+                - master
       - godkjenn-til-prod:
           type: approval
           requires:
