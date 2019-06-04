@@ -38,11 +38,12 @@ const VelgTypeKnapp = (props: MergedProps) => {
 
   return (
     <button
+      role="tab"
       onClick={settValgtTypeOgURL}
       className={classNames("typeElement", {
         valgt: valgtType === type
       })}
-      aria-pressed={valgtType === type}
+      aria-selected={valgtType === type}
     >
       <Undertittel>
         <FormattedMessage id={`kategorier.knapp.${props.type.toLowerCase()}`} />
