@@ -45,8 +45,28 @@ const renderApp = decoratorFragments =>
 
 const startServer = html => {
   server.use(
-    "/soknader",
-    express.static(path.resolve(`${__dirname}/..`, "build"))
+    "/soknader/static/js",
+    express.static(path.resolve(`${__dirname}/..`, "build/static/js"))
+  );
+
+  server.use(
+    "/soknader/static/media",
+    express.static(path.resolve(`${__dirname}/..`, "build/static/media"))
+  );
+
+  server.use(
+    "/soknader/index.css",
+    express.static(path.resolve(`${__dirname}/..`, "build/index.css"))
+  );
+
+  server.use(
+    "/soknader/manifest.json",
+    express.static(path.resolve(`${__dirname}/..`, "build/manifest.json"))
+  );
+
+  server.use(
+    "/soknader/favicon.ico",
+    express.static(path.resolve(`${__dirname}/..`, "build/favicon.ico"))
   );
 
   server.get("/soknader/api/enheter", (req, res) => {
