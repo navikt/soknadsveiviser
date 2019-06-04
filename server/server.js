@@ -44,21 +44,9 @@ const renderApp = decoratorFragments =>
   );
 
 const startServer = html => {
-  server.use(express.static("build"));
-
   server.use(
-    "/soknader/static/js",
-    express.static(path.resolve(`${__dirname}/..`, "build/static/js"))
-  );
-
-  server.use(
-    "/soknader/static/media",
-    express.static(path.resolve(`${__dirname}/..`, "build/static/media"))
-  );
-
-  server.use(
-    "/soknader/index.css",
-    express.static(path.resolve(`${__dirname}/..`, "build/index.css"))
+    "/soknader",
+    express.static(path.resolve(`${__dirname}/..`, "build"))
   );
 
   server.get("/soknader/api/enheter", (req, res) => {
