@@ -8,6 +8,7 @@ import {
 } from "../../../states/providers/Personalia";
 import { Store } from "../../../typer/store";
 import { connect } from "react-redux";
+import { InjectedIntlProps, injectIntl} from "react-intl";
 
 interface Props {
   steg: number;
@@ -16,7 +17,7 @@ interface Props {
   byttSprak: (sprak: string) => void;
 }
 
-const Sprak = (props: Props) => {
+const Sprak = (props: Props & InjectedIntlProps) => {
   const { steg, valgtSoknadsobjekt, byttSprak, skjemaSprak } = props;
   const { hovedskjema } = valgtSoknadsobjekt!;
 
@@ -37,5 +38,6 @@ const mapStateToProps = (store: Store) => ({
 });
 
 export default medPersonalia<Props & Personalia>(
-  connect(mapStateToProps)(Sprak)
+  injectIntl<Props & Personalia & InjectedIntlProps>(
+  connect(mapStateToProps)(Sprak))
 );
