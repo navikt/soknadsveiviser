@@ -10,6 +10,7 @@ import { RouteComponentProps } from "react-router";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
 import Oversiktstabell from "./tabeller/Oversiktstabell";
+import Spinner from "../../../komponenter/spinner/Spinner";
 
 interface State {
   skjemaer: Skjema[];
@@ -73,7 +74,7 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
             </div>
             {this.state
               ? <Oversiktstabell skjemaer={this.state.skjemaer}/>
-              : null}
+              : <Spinner />}
           </PanelBase>
         </div>
       </div>
