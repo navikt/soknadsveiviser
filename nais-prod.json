@@ -24,7 +24,9 @@
       "path": "/soknader/internal/ready",
       "initialDelay": 10
     },
-    "secrets": true,
+    "vault": {
+      "enabled": true
+    },
     "replicas": {
       "min": 2,
       "max": 4
