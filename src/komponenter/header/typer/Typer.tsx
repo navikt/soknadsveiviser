@@ -20,7 +20,7 @@ const Typer = (props: MergedProps) => {
   const bedriftKategorier = filtrerKategorier(alleKategorier, "bedrift");
 
   return (
-    <div className="typeoversikt">
+    <div role="tablist" className="typeoversikt">
       {personKategorier.length > 0 && <VelgTypeKnapp type="person" />}
       {bedriftKategorier.length > 0 && <VelgTypeKnapp type="bedrift" />}
     </div>

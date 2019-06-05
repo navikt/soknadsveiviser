@@ -1,12 +1,13 @@
 import { Select } from "nav-frontend-skjema";
 import * as React from "react";
-import {LocalePDFObjekt, LocaleString} from "../../typer/sprak";
+import { LocalePDFObjekt, LocaleString} from "../../typer/sprak";
 import { injectIntl, InjectedIntlProps } from "react-intl";
+import { ReactNode } from "react";
 
 interface Props {
   byttSprak: (sprak: string) => void;
   sprakvalg: LocalePDFObjekt;
-  label: string;
+  label: ReactNode;
   valgtSprak: string;
 }
 

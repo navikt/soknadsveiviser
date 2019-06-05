@@ -18,7 +18,7 @@ const Desktop = (props: Props) => {
   }
 
   return (
-    <div className="tabs desktop">
+    <nav className="tabs desktop">
       <ul>
         <li className="element">
           <EtikettLiten>
@@ -39,7 +39,7 @@ const Desktop = (props: Props) => {
           );
         })}
       </ul>
-    </div>
+    </nav>
   );
 };
 
