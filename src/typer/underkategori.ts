@@ -9,6 +9,7 @@ export interface Inngangsoknadsdialog {
 
 export interface Underkategori {
   soknadsobjekter: Soknadsobjekt[];
+  soknadslenker?: {navn: LocaleString, lenke: Lenkeobjekt, _id: string}[];
   navn: LocaleString;
   urlparam: string;
   lenketilhorlighet: string;

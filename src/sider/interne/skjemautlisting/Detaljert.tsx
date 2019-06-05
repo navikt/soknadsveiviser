@@ -14,6 +14,7 @@ import Systemtittel from "nav-frontend-typografi/lib/systemtittel";
 import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
 import Ingress from "nav-frontend-typografi/lib/ingress";
+import { VisSoknadslenke } from "./seksjoner/VisSoknadslenke";
 
 interface State {
   data: Kategori[];
@@ -88,6 +89,10 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
                           valgtSkjemanummer={valgtSkjemanummer}
                         />
                       ))}
+                    {underkategori.soknadslenker &&
+                    underkategori.soknadslenker.map(soknadslenke => (
+                      <VisSoknadslenke key={soknadslenke._id} soknadslenke={soknadslenke}/>
+                    ))}
                   </div>
                 ))}
               </div>
