@@ -30,9 +30,9 @@ interface Routes {
 type MergedProps = ValgtSoknad &
   Personalia &
   RouteComponentProps<Routes> &
-  InjectedIntlProps & {ettersendelse?: string};
+  InjectedIntlProps & { ettersendelse?: string };
 
-class VisPersonalia extends Component<MergedProps> {
+class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
   handleSubmit = (e: any) => {
     const { history, match, valgtSoknadsobjekt, intl } = this.props;
     const { innsendingsmate } = valgtSoknadsobjekt;
@@ -87,6 +87,7 @@ class VisPersonalia extends Component<MergedProps> {
         kontaktetEnhet: true,
         valgtEnhet: true
       });
+      this.setState({ visError: true });
     }
   };
 
@@ -131,6 +132,11 @@ class VisPersonalia extends Component<MergedProps> {
                 <Undertittel>
                   <FormattedMessage id={overskrift()} />
                 </Undertittel>
+                {this.state && this.state.visError && (
+                  <div className="skjemaelement__feilmelding">
+                    <FormattedMessage id="personalia.error.velgsituasjon" />
+                  </div>
+                )}
               </div>
               <Form className="personalia__paneler" autoComplete="off">
                 <FodselsnummerPanel />
@@ -151,7 +157,7 @@ class VisPersonalia extends Component<MergedProps> {
   }
 }
 
-export default medPersonalia<Personalia & {ettersendelse?: string}>(
+export default medPersonalia<Personalia & { ettersendelse?: string }>(
   medValgtSoknadsobjekt<ValgtSoknad & Personalia>(
     injectIntl<ValgtSoknad & Personalia & InjectedIntlProps>(
       withRouter<
