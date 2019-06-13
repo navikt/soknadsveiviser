@@ -7,10 +7,11 @@ import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
 import PanelBase from "nav-frontend-paneler";
 import { RouteComponentProps } from "react-router";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage, FormattedHTMLMessage } from "react-intl";
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
 import Oversiktstabell from "./tabeller/Oversiktstabell";
 import Spinner from "../../../komponenter/spinner/Spinner";
+import Ingress from "nav-frontend-typografi/lib/ingress";
 
 interface State {
   skjemaer: Skjema[];
@@ -72,6 +73,11 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
                 <FormattedMessage id="skjemautlisting.lenketil.detaljert" />
               </Lenkepanel>
             </div>
+            {skjematype === "sed" &&
+              <Ingress className="skjemautlisting__litenmargin-overunder">
+                <FormattedHTMLMessage id="skjemautlisting.sed.forklaring" />
+              </Ingress>
+            }
             {this.state
               ? <Oversiktstabell skjemaer={this.state.skjemaer}/>
               : <Spinner />}

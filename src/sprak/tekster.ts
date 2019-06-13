@@ -157,6 +157,11 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.lenketil.skjema": `Alle skjemaer`,
     "skjemautlisting.lenketil.detaljert": `Søknader og skjemaer listet ut etter visning`,
     "skjemautlisting.detaljert.forklaring": `Bruk denne lista hvis du raskt vil finne ut hvor et skjema er publisert. Søknader som ikke har skjemaer vises bare i denne lista.`,
+    "skjemautlisting.sed.forklaring": `<p>Denne siden inneholder en oversikt over de SED (Strukturerte Elektroniske Dokumenter) som skal benyttes i utveksling av trygdeopplysninger med EU/EØS-land i henhold til forordning 883/2004 og 987/2009. SED kan kun sendes til kompetente institusjoner i det enkelte EU/EØS-land. De kompetente institusjonene finnes i EUs <a class="lenke" href="https://ec.europa.eu/employment_social/social-security-directory/welcome?langId=no">institusjonskatalog</a>.</p>
+
+<p>For hver SED finnes det også forklaringer i et eget dokument med samme nummer som skjemaet etterfulgt av - (bindestrek).</p>
+
+<p>Innledningsvis under hvert fagområde er det en oversikt over alle flyter (og SED) som kan benyttes og en korrelasjonstabell som viser sammenhengen mellom tidligere E-skjemaer og de nye SED.</p>`,
     "skjemautlisting": `Skjemautlisting`,
     "skjemautlisting.tabell.alleskjemaer": `Alle skjemaer`,
     "skjemautlisting.tabell.alle": `Alle`,
@@ -325,6 +330,11 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.lenketil.skjema": `Alle skjemaer`,
     "skjemautlisting.lenketil.detaljert": `Søknader og skjemaer listet ut etter visning`,
     "skjemautlisting.detaljert.forklaring": `Bruk denne lista hvis du raskt vil finne ut hvor et skjema er publisert. Søknader som ikke har skjemaer vises bare i denne lista.`,
+    "skjemautlisting.sed.forklaring": `<p>Denne siden inneholder en oversikt over de SED (Strukturerte Elektroniske Dokumenter) som skal benyttes i utveksling av trygdeopplysninger med EU/EØS-land i henhold til forordning 883/2004 og 987/2009. SED kan kun sendes til kompetente institusjoner i det enkelte EU/EØS-land. De kompetente institusjonene finnes i EUs <a class="lenke" href="https://ec.europa.eu/employment_social/social-security-directory/welcome?langId=no">institusjonskatalog</a>.</p>
+
+<p>For hver SED finnes det også forklaringer i et eget dokument med samme nummer som skjemaet etterfulgt av - (bindestrek).</p>
+
+<p>Innledningsvis under hvert fagområde er det en oversikt over alle flyter (og SED) som kan benyttes og en korrelasjonstabell som viser sammenhengen mellom tidligere E-skjemaer og de nye SED.</p>`,
     "skjemautlisting": `Skjemautlisting`,
     "skjemautlisting.tabell.alleskjemaer": `Alle skjemaer`,
     "skjemautlisting.tabell.alle": `Alle`,
