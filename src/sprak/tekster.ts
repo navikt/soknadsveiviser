@@ -167,7 +167,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.tabell.skjemanummer": `ID`,
     "skjemautlisting.tabell.skjemanavn": `Skjemanavn`,
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
-    "skjemautlisting.tabell.pdf": `PDF`
+    "skjemautlisting.tabell.pdf": `Filer`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -335,7 +335,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.tabell.skjemanummer": `ID`,
     "skjemautlisting.tabell.skjemanavn": `Skjemanavn`,
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
-    "skjemautlisting.tabell.pdf": `PDF`
+    "skjemautlisting.tabell.pdf": `Filer`
 
   }
 };
