@@ -4,6 +4,7 @@ import SettValgtSoknadsobjekt from "./SettValgtSoknadsobjekt";
 import { withRouter, RouteComponentProps } from "react-router";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { finnesDigitalInnsending } from "../../../utils/soknadsobjekter";
+import { hentUrl } from "../../../utils/hentUrl";
 
 interface Props {
   soknadsobjekt: Soknadsobjekt;
@@ -25,7 +26,7 @@ const Soknad = (props: MergedProps) => {
 
   return (
     <SettValgtSoknadsobjekt
-      to={`${match.url}/${skjemanummer}/brev`}
+      to={`${hentUrl(match.url)}/${skjemanummer}/brev`}
       title={tittel}
       soknadsobjekt={soknadsobjekt}
       styling={lenkeEllerKnapp}

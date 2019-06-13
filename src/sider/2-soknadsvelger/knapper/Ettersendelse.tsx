@@ -2,6 +2,7 @@ import * as React from "react";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import SettValgtSoknadsobjekt from "./SettValgtSoknadsobjekt";
 import { withRouter, RouteComponentProps } from "react-router";
+import { hentUrl } from "../../../utils/hentUrl";
 
 interface Props {
   soknadsobjekt: Soknadsobjekt;
@@ -14,7 +15,7 @@ const Ettersendelse = (props: MergedProps) => {
 
   return (
     <SettValgtSoknadsobjekt
-      to={`${match.url}/${skjemanummer}/ettersendelse`}
+      to={`${hentUrl(match.url)}/${skjemanummer}/ettersendelse`}
       title="ettersendelser.knapp"
       soknadsobjekt={soknadsobjekt}
     />
