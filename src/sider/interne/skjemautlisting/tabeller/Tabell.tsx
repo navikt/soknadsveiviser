@@ -117,7 +117,7 @@ const filtrerTabell = (
             return {
               ...tabell,
               data: tabell.data.filter(
-                data => data.skjemanavn === valgtSkjema.value.skjemanavn
+                data => (data.skjemanavn === valgtSkjema.value.skjemanavn && data.key === valgtSkjema.value.skjemanummer)
               )
             };
           })
