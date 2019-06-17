@@ -2,6 +2,7 @@ import * as React from "react";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import SettValgtSoknadsobjekt from "./SettValgtSoknadsobjekt";
 import { withRouter, RouteComponentProps } from "react-router";
+import { hentUrl } from "../../../utils/hentUrl";
 
 interface Props {
   soknadsobjekt: Soknadsobjekt;
@@ -14,7 +15,7 @@ const Soknad = (props: MergedProps) => {
 
   return (
     <SettValgtSoknadsobjekt
-      to={`${match.url}/${skjemanummer}/brev/klage`}
+      to={`${hentUrl(match.url)}/${skjemanummer}/brev/klage`}
       title="klage.knapp"
       soknadsobjekt={soknadsobjekt}
     />
