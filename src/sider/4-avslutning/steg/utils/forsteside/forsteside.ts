@@ -7,7 +7,7 @@ import { velgGyldigLocale } from "./locale";
 import { parseJson } from "../../../../../klienter/parser";
 import { sjekkForFeil } from "../../../../../klienter/felles";
 import { localeTekst } from "../../../../../utils/sprak";
-import {LocaleString} from "../../../../../typer/sprak";
+import { LocaleString } from "../../../../../typer/sprak";
 
 export interface Params {
   personalia: Personalia;
