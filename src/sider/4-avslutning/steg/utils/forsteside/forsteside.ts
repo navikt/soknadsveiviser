@@ -7,6 +7,7 @@ import { velgGyldigLocale } from "./locale";
 import { parseJson } from "../../../../../klienter/parser";
 import { sjekkForFeil } from "../../../../../klienter/felles";
 import { localeTekst } from "../../../../../utils/sprak";
+import { LocaleString } from "../../../../../typer/sprak";
 
 export interface Params {
   personalia: Personalia;
@@ -22,7 +23,12 @@ export interface Params {
 export const hentForsteside = (params: Params): Promise<string> =>
   new Promise(async (resolve, reject) => {
     const url = "/soknader/api/forsteside";
-    const { klage, klageSoknadsobjekt, valgtSoknadsobjekt } = params;
+    const {
+      klage,
+      klageSoknadsobjekt,
+      valgtSoknadsobjekt,
+      ettersendelse
+    } = params;
     const soknadsobjekt = klage ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
@@ -37,6 +43,9 @@ export const hentForsteside = (params: Params): Promise<string> =>
       overskriftstittel: `${localeTekst(navn, locale)} ${
         hovedskjema.skjemanummer
       }`,
+      arkivtittel: hovedskjema.navn
+        ? hentArkivtittel(hovedskjema.navn, ettersendelse)
+        : "Finner ikke navn",
       tema: params.valgtSoknadsobjekt.tema.temakode,
       vedleggsliste: hentVedleggslisteForJoark(vedleggSomSkalSendes, locale),
       dokumentlisteFoersteside: hentDokumentliste(
@@ -63,3 +72,9 @@ export const hentForsteside = (params: Params): Promise<string> =>
       .then(resolve)
       .catch(reject);
   });
+
+const hentArkivtittel = (navn: LocaleString, ettersendelse?: String) => {
+  return ettersendelse
+    ? "Ettersendelse til " + localeTekst(navn, "nb").toLocaleLowerCase()
+    : localeTekst(navn, "nb");
+};
