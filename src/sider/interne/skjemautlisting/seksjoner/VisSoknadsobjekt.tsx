@@ -29,7 +29,8 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps & ReduxProps) => {
   const { hovedskjema } = soknadsobjekt;
   const soknadsdialog =
     underkategori.inngangtilsoknadsdialog !== undefined &&
-    underkategori.inngangtilsoknadsdialog.soknadsdialogURL;
+    underkategori.inngangtilsoknadsdialog.soknadsdialogURL &&
+    underkategori.inngangtilsoknadsdialog.soknadsdialogURL.nb;
 
   const lenkeTilSkjema =
     `/soknader` +
