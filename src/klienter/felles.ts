@@ -1,11 +1,11 @@
-import { loggApiError } from "../utils/logger";
+import { loggApiError, loggResponseAndApiError} from "../utils/logger";
 import { parseJson } from "./parser";
 
 export const hentJson = (url: string) =>
   fetch(url)
     .then(response => sjekkForFeil(url, response))
     .then(parseJson)
-    .catch(response => loggApiError(url, response));
+    .catch(error => loggApiError(url, error));
 
 export const sjekkForFeil = (
   url: string,
@@ -13,4 +13,4 @@ export const sjekkForFeil = (
 ) =>
   response.ok
     ? response
-    : loggApiError(url, response);
+    : loggResponseAndApiError(url, response);
