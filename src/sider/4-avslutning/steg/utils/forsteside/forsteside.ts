@@ -8,7 +8,7 @@ import { parseJson } from "../../../../../klienter/parser";
 import { sjekkForFeil } from "../../../../../klienter/felles";
 import { localeTekst } from "../../../../../utils/sprak";
 import { LocaleString } from "../../../../../typer/sprak";
-import {loggApiError} from "../../../../../utils/logger";
+import { loggApiError } from "../../../../../utils/logger";
 
 export interface Params {
   personalia: Personalia;
@@ -38,12 +38,10 @@ export const hentForsteside = (params: Params): Promise<string> =>
       .map(vedlegg => vedlegg.vedlegg);
 
     const json = {
-      foerstesidetype: params.ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
+      foerstesidetype: ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
       navSkjemaId: hovedskjema.skjemanummer,
       spraakkode: locale.toUpperCase(),
-      overskriftstittel: `${localeTekst(navn, locale)} ${
-        hovedskjema.skjemanummer
-      }`,
+      overskriftstittel: hentOverskriftstittel(navn, locale, hovedskjema.skjemanummer, ettersendelse),
       arkivtittel: hovedskjema.navn
         ? hentArkivtittel(hovedskjema.navn, ettersendelse)
         : "Finner ikke navn",
@@ -76,8 +74,28 @@ export const hentForsteside = (params: Params): Promise<string> =>
       .catch(err => reject && loggApiError(url, err));
   });
 
-const hentArkivtittel = (navn: LocaleString, ettersendelse?: String) => {
+const hentArkivtittel = (navn: LocaleString, ettersendelse?: string) => {
   return ettersendelse
     ? "Ettersendelse til " + localeTekst(navn, "nb").toLocaleLowerCase()
     : localeTekst(navn, "nb");
+};
+
+const hentOverskriftstittel = (
+  navn: LocaleString,
+  locale: string,
+  skjemanummer: string,
+  ettersendelse?: string,
+) => {
+  if (ettersendelse) {
+    const ettersendelseTil = {
+      nb: "Ettersendelse til",
+      nn: "Ettersending til",
+      en: "Forward to"
+    };
+    return `${localeTekst(ettersendelseTil, locale)} ${localeTekst(
+      navn,
+      locale
+    ).toLocaleLowerCase()} ${skjemanummer}`;
+  }
+  return `${localeTekst(navn, locale)} ${skjemanummer}`;
 };
