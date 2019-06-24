@@ -58,7 +58,9 @@ export const hentForsteside = (params: Params): Promise<string> =>
     };
 
     console.group("Innsending førsteside-generator");
-    console.log(json);
+    if (window.location.hostname.includes("-q0") || window.location.hostname.includes("localhost")) {
+      console.log(json);
+    }
     console.groupEnd();
 
     fetch(url, {
