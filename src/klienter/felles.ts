@@ -1,24 +1,16 @@
-import { loggApiError } from "../utils/logger";
+import { loggApiError, loggResponseAndApiError} from "../utils/logger";
 import { parseJson } from "./parser";
 
 export const hentJson = (url: string) =>
-  new Promise((resolve, reject) =>
-    fetch(url)
-      .then(response => sjekkForFeil(url, response, reject))
-      .then(parseJson)
-      .then(resolve)
-      .catch(reject)
-  );
+  fetch(url)
+    .then(response => sjekkForFeil(url, response))
+    .then(parseJson)
+    .catch(error => loggApiError(url, error));
 
 export const sjekkForFeil = (
   url: string,
   response: Response,
-  reject: (reason?: any) => void
 ) =>
   response.ok
     ? response
-    : (loggApiError(url, response),
-      reject({
-        code: response.status,
-        text: response.statusText
-      }));
+    : loggResponseAndApiError(url, response);
