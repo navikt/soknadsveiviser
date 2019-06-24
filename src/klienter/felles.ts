@@ -1,4 +1,4 @@
-import { loggApiError, loggResponseAndApiError} from "../utils/logger";
+import { loggApiError, loggResponseAndApiError } from "../utils/logger";
 import { parseJson } from "./parser";
 
 export const hentJson = (url: string) =>
