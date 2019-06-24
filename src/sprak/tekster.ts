@@ -27,7 +27,7 @@ export default {
     "avslutning.steg.forsteside.tittel": `Last ned "Førsteside til saken din"`,
     "avslutning.steg.forsteside.pdf.tittel": `Førsteside`,
     "avslutning.steg.forsteside.beskrivelse": `Dette forsidearket inneholder viktig informasjon om hvilken <b>enhet</b> i NAV som skal behandle søknaden din. Den inneholder også adressen du skal sende søknaden til.`,
-    "avslutning.steg.nedlasting.skjema.tittel": `Last ned søknadsskjema {skjemanummer}`,
+    "avslutning.steg.nedlasting.skjema.tittel": `Last ned skjema {skjemanummer}`,
     "avslutning.steg.nedlasting.skjema.beskrivelse": `Søknaden må fylles ut og undertegnes.`,
     "avslutning.steg.nedlasting.vedlegg.tittel": `Last ned vedleggsskjema`,
     "avslutning.steg.nedlasting.vedlegg.beskrivelse": `Vedleggsskjema(ene) må fylles ut og undertegnes.`,
