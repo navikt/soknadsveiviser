@@ -8,6 +8,7 @@ import { parseJson } from "../../../../../klienter/parser";
 import { sjekkForFeil } from "../../../../../klienter/felles";
 import { localeTekst } from "../../../../../utils/sprak";
 import { LocaleString } from "../../../../../typer/sprak";
+import {loggApiError} from "../../../../../utils/logger";
 
 export interface Params {
   personalia: Personalia;
@@ -66,11 +67,11 @@ export const hentForsteside = (params: Params): Promise<string> =>
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(json)
     })
-      .then(response => sjekkForFeil(url, response, reject))
+      .then(response => sjekkForFeil(url, response))
       .then(parseJson)
       .then(response => response.foersteside)
       .then(resolve)
-      .catch(reject);
+      .catch(err => reject && loggApiError(url, err));
   });
 
 const hentArkivtittel = (navn: LocaleString, ettersendelse?: String) => {
