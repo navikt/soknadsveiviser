@@ -8,7 +8,6 @@ import { withRouter, RouteComponentProps } from "react-router";
 import { filtrerKategorier } from "../../../../utils/kategorier";
 import { medKategorier } from "../../../../states/providers/Kategorier";
 import { localeTekst, sideTittel } from "../../../../utils/sprak";
-import "./Kategorier.less";
 
 type State = {
   windowSize: number;
