@@ -1,6 +1,5 @@
 import * as React from "react";
 import ReactTable from "react-table";
-import "react-table/react-table.css";
 import { useState } from "react";
 import { Select as NAVSelect } from "nav-frontend-skjema";
 import Select from "react-select";
