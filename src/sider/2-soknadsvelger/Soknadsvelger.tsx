@@ -19,6 +19,7 @@ import { loggEvent } from "../../utils/logger";
 import { medKategorier } from "../../states/providers/Kategorier";
 import hashLinkScroll from "../../utils/hashScroll";
 import { localeTekst, sideTittel } from "../../utils/sprak";
+import EkspanderbartSoknadsPanel from "./seksjoner/EkspanderbartSoknadsPanel";
 
 interface Routes {
   kategori: string;
@@ -62,6 +63,7 @@ class Soknadsobjekter extends Component<MergedProps> {
 
   render() {
     const { soknader, valgtUnderkategori } = this.props;
+    console.log("soknader type: ", soknader);
     return (
       <Wrapper>
         {(() => {
@@ -77,11 +79,26 @@ class Soknadsobjekter extends Component<MergedProps> {
                   )}
 
                   {soknader.soknadsobjekter.map((soknadsobjekt, id) => (
-                    <VisSoknadsobjekt key={id} soknadsobjekt={soknadsobjekt} />
+                    <EkspanderbartSoknadsPanel
+                      tittel={soknadsobjekt.navn}
+                      undertekst={soknadsobjekt.hovedskjema.skjemanummer}
+                      ekspandertInnhold={
+                        <VisSoknadsobjekt
+                          key={id}
+                          soknadsobjekt={soknadsobjekt}
+                        />
+                      }
+                    />
                   ))}
 
                   {soknader.soknadslenker.map((soknadslenke, id) => (
-                    <VisSoknadslenke key={id} soknadslenke={soknadslenke} />
+                    <EkspanderbartSoknadsPanel
+                      tittel={soknadslenke.navn}
+                      undertekst={" "}
+                      ekspandertInnhold={
+                        <VisSoknadslenke key={id} soknadslenke={soknadslenke} />
+                      }
+                    />
                   ))}
                 </>
               );

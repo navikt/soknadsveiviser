@@ -33,10 +33,10 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
     `/${kategori.urlparam}` +
     `/${underkategori.urlparam}`;
 
-  const vedleggsskjemaliste = soknadsobjekt.vedleggtilsoknad ? hentListeOverVedleggsskjemaer(
-    soknadsobjekt,
-    props.valgtSkjemanummer
-  ) : [];
+  const vedleggsskjemaliste = soknadsobjekt.vedleggtilsoknad
+    ? hentListeOverVedleggsskjemaer(soknadsobjekt, props.valgtSkjemanummer)
+    : [];
+  console.log(hovedskjema.skjemanummer + " – " + hovedskjema.navn.nb);
   return (
     <div
       id={hovedskjema.skjemanummer}
@@ -52,7 +52,9 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           {hovedskjema.skjemanummer + " – " + hovedskjema.navn.nb}
         </Element>
         <div className="skjemautlisting__vedlegg">
-          <Normaltekst><FormattedMessage id="skjemautlisting.tilveiviser"/></Normaltekst>
+          <Normaltekst>
+            <FormattedMessage id="skjemautlisting.tilveiviser" />
+          </Normaltekst>
           <HashLink
             smooth={true}
             className="lenke skjemautlisting__litenmargin-sidene"
@@ -67,11 +69,13 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
       </div>
       {vedleggsskjemaliste.length > 1 && (
         <div className="skjemautlisting__vedlegg">
-          <Normaltekst><FormattedMessage id="skjemautlisting.vedleggsskjema"/></Normaltekst>
+          <Normaltekst>
+            <FormattedMessage id="skjemautlisting.vedleggsskjema" />
+          </Normaltekst>
           <ul
             style={{
               listStyle: "none",
-              padding: 0,
+              padding: 0
             }}
             className="skjemautlisting__litenmargin-sidene"
           >
