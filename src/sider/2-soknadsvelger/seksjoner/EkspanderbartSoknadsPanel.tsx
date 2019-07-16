@@ -16,18 +16,20 @@ const EkspanderbartSoknadsPanel = (props: Props & InjectedIntlProps) => {
   const { tittel, undertekst, ekspandertInnhold } = props;
 
   return (
-    <EkspanderbartpanelBase
-      heading={
-        <div className={"ekspanderbartPanel__headingInnhold"}>
-          <Undertittel>
-            <LocaleTekst tekst={tittel} />
-          </Undertittel>
-          <Undertekst>{undertekst}</Undertekst>
-        </div>
-      }
-    >
-      {ekspandertInnhold}
-    </EkspanderbartpanelBase>
+    <div className={"ekspandertSoknadsPanel"}>
+      <EkspanderbartpanelBase
+        heading={
+          <div className={"ekspanderbartPanel__headingInnhold"}>
+            <Undertittel>
+              <LocaleTekst tekst={tittel} />
+            </Undertittel>
+            <Undertekst>{undertekst}</Undertekst>
+          </div>
+        }
+      >
+        {ekspandertInnhold}
+      </EkspanderbartpanelBase>
+    </div>
   );
 };
 
