@@ -8,7 +8,7 @@ import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 
 interface Props {
   tittel: LocaleString;
-  undertekst: string;
+  undertekst?: string;
   ekspandertInnhold: JSX.Element;
 }
 
@@ -23,7 +23,7 @@ const EkspanderbartSoknadsPanel = (props: Props & InjectedIntlProps) => {
             <Undertittel>
               <LocaleTekst tekst={tittel} />
             </Undertittel>
-            <Undertekst>{undertekst}</Undertekst>
+            {undertekst ? <Undertekst>{undertekst}</Undertekst> : null}
           </div>
         }
       >

@@ -94,7 +94,6 @@ class Soknadsobjekter extends Component<MergedProps> {
                   {soknader.soknadslenker.map((soknadslenke, id) => (
                     <EkspanderbartSoknadsPanel
                       tittel={soknadslenke.navn}
-                      undertekst={" "}
                       ekspandertInnhold={
                         <VisSoknadslenke key={id} soknadslenke={soknadslenke} />
                       }
