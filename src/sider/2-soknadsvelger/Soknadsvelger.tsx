@@ -63,7 +63,6 @@ class Soknadsobjekter extends Component<MergedProps> {
 
   render() {
     const { soknader, valgtUnderkategori } = this.props;
-    console.log("soknader type: ", soknader);
     return (
       <Wrapper>
         {(() => {
