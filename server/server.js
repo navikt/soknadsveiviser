@@ -136,11 +136,9 @@ const startServer = html => {
 
 const logError = (errorMessage, details) => console.log(errorMessage, details); // eslint-disable-line
 
-if (process.env.NODE_ENV === "production") {
-  getDecorator()
-    .then(renderApp, error => logError("Failed to get decorator", error))
-    .then(startServer, error => logError("Failed to render app", error));
-}
+getDecorator()
+  .then(renderApp, error => logError("Failed to get decorator", error))
+  .then(startServer, error => logError("Failed to render app", error));
 
 process.on("SIGTERM", () =>
   setTimeout(() => console.log("Har sovet i 30 sekunder"), 30000)
