@@ -17,6 +17,7 @@ export interface Vedlegg {
   skjematilvedlegg?: Skjema;
   vedleggsid: string;
   navn: LocaleString;
+  visningstittel: LocaleString;
 }
 
 export interface Skjema {
