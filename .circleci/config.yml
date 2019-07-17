@@ -1,33 +1,28 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
 version: 2.1
 jobs:
-  build:
+  build-react-app:
     docker:
       - image: circleci/node:10
 
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            # when lock file changes, use increasingly general patterns to restore cache
-            - node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
-            - node-v1-{{ .Branch }}-
-            - node-v1-
       - run:
-          name: Bygg React app
+          name: Innstallerer avhengigheter
           command: |
-            npm ci && npm run build
-      - save_cache:
-          paths:
-            - ~/usr/local/lib/node_modules  # location depends on npm version
-          key: node-v1-{{ .Branch }}-{{ checksum "package-lock.json" }}
+            npm ci
+      - run:
+          name: Bygger React app
+          command: |
+            npm run build
       - run:
           name: Tester
           command: |
             npm run test
+      - persist_to_workspace:
+          root: .
+          paths:
+            - build/*
+
 
   deploy-til-dev:
     docker:
@@ -35,8 +30,10 @@ jobs:
 
     steps:
       - checkout
-      - setup_remote_docker
       - sett-miljovariabler
+      - setup_remote_docker
+      - attach_workspace:
+           at: .
       - run:
           name: Bygger Docker image
           command: docker build -t "$DOCKER_IMAGE_VERSIONED" .
@@ -111,25 +108,36 @@ commands:
 workflows:
   bygg_og_deploy:
     jobs:
-      - build
-      - deploy-til-dev:
-          requires:
-            - build
-          filters:
-            branches:
-              only:
-                - master
-      - godkjenn-til-prod:
+      - build-react-app
+      - bekreft-deploy-til-dev:
           type: approval
           requires:
-            - build
+            - build-react-app
+          filters:
+            branches:
+              ignore: master
+      - deploy-til-dev:
+          name: manuell-deploy-til-dev
+          requires:
+            - bekreft-deploy-til-dev
+      - deploy-til-dev:
+          name: automatisk-deploy-til-dev
+          requires:
+            - build-react-app
+          filters:
+            branches:
+              only: master
+      - bekreft-deploy-til-prod:
+          type: approval
+          requires:
+            - automatisk-deploy-til-dev
           filters:
             branches:
               only:
                 - master
       - deploy-til-prod:
           requires:
-            - godkjenn-til-prod
+            - bekreft-deploy-til-prod
           filters:
             branches:
               only:
