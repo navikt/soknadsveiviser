@@ -36,7 +36,6 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   const vedleggsskjemaliste = soknadsobjekt.vedleggtilsoknad
     ? hentListeOverVedleggsskjemaer(soknadsobjekt, props.valgtSkjemanummer)
     : [];
-  console.log(hovedskjema.skjemanummer + " – " + hovedskjema.navn.nb);
   return (
     <div
       id={hovedskjema.skjemanummer}
