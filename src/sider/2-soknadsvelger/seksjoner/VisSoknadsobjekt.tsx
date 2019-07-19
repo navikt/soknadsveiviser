@@ -18,9 +18,12 @@ import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "../../../utils/sprak";
 import { RouteComponentProps, withRouter } from "react-router";
 import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
+import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
+import Undertekst from "nav-frontend-typografi/lib/undertekst";
 
 interface Props {
   key: number;
+
   soknadsobjekt: Soknadsobjekt;
 }
 
@@ -39,36 +42,52 @@ const VisSoknadsobjekt = (
       : "";
 
   return (
-    <div id={hovedskjema.skjemanummer} key={key} className={"soknadsobjekt"}>
-      <div className="soknadsobjekt__innhold">
-        <div>
-          <Undertittel className={markert}>
-            <LocaleTekst tekst={navn} />
-          </Undertittel>
-          {beskrivelse && (
-            <div className="typo-normal soknadsobjekt__beskrivelse">
-              <BlockContent
-                blocks={localeBlockTekst(beskrivelse, locale)}
-                serializers={{ marks: { link } }}
-              />
+    <div className={"ekspandertSoknadsPanel"}>
+      <EkspanderbartpanelBase
+        heading={
+          <div className={"ekspanderbartPanel__headingInnhold"}>
+            <Undertittel className={markert}>
+              <LocaleTekst tekst={navn} />
+            </Undertittel>
+            {hovedskjema.skjemanummer ? (
+              <Undertekst>{hovedskjema.skjemanummer}</Undertekst>
+            ) : null}
+          </div>
+        }
+      >
+        <div
+          id={hovedskjema.skjemanummer}
+          key={key}
+          className={"soknadsobjekt"}
+        >
+          <div className="soknadsobjekt__innhold">
+            <div>
+              {beskrivelse && (
+                <div className="typo-normal soknadsobjekt__beskrivelse">
+                  <BlockContent
+                    blocks={localeBlockTekst(beskrivelse, locale)}
+                    serializers={{ marks: { link } }}
+                  />
+                </div>
+              )}
             </div>
-          )}
+            {lenker && lenker.length > 0 && (
+              <RelevantInformasjon lenker={lenker} locale={locale} />
+            )}
+          </div>
+          <div className="knapper-wrapper litenavstand">
+            {tilsoknadsdialog && (
+              <KnappSoknadsdialog soknadsobjekt={soknadsobjekt} />
+            )}
+            {dokumentinnsending && !tilsoknadsdialog && (
+              <KnappDokumentinnsending soknadsobjekt={soknadsobjekt} />
+            )}
+            <KnappPapirSoknad soknadsobjekt={soknadsobjekt} />
+            <KnappEttersendelse soknadsobjekt={soknadsobjekt} />
+            <KnappKlage soknadsobjekt={soknadsobjekt} />
+          </div>
         </div>
-        {lenker && lenker.length > 0 && (
-          <RelevantInformasjon lenker={lenker} locale={locale} />
-        )}
-      </div>
-      <div className="knapper-wrapper litenavstand">
-        {tilsoknadsdialog && (
-          <KnappSoknadsdialog soknadsobjekt={soknadsobjekt} />
-        )}
-        {dokumentinnsending && !tilsoknadsdialog && (
-          <KnappDokumentinnsending soknadsobjekt={soknadsobjekt} />
-        )}
-        <KnappPapirSoknad soknadsobjekt={soknadsobjekt} />
-        <KnappEttersendelse soknadsobjekt={soknadsobjekt} />
-        <KnappKlage soknadsobjekt={soknadsobjekt} />
-      </div>
+      </EkspanderbartpanelBase>
     </div>
   );
 };
