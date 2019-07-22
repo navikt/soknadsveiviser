@@ -21,16 +21,17 @@ const VedleggNedlasting = (props: MergedProps) => {
       <StegOverskrift steg={steg} tittel={tittel} beskrivelse={beskrivelse} />
       <div className="skjema">
         <ul>
-          {vedlegg
-            .map(({ vedlegg, _key }) => (
-              <li key={_key} className="steg__vedlegg-ettersendelse">
-                <Normaltekst>
-                  {vedlegg.skjematilvedlegg
-                    ? localeTekst(vedlegg.skjematilvedlegg.navn, intl.locale)
-                    : localeTekst(vedlegg.navn, intl.locale)}
-                </Normaltekst>
-              </li>
-            ))}
+          {vedlegg.map(({ vedlegg, _key }) => (
+            <li key={_key} className="steg__vedlegg-ettersendelse">
+              <Normaltekst>
+                {vedlegg.visningstittel
+                  ? localeTekst(vedlegg.visningstittel, intl.locale)
+                  : vedlegg.skjematilvedlegg
+                  ? localeTekst(vedlegg.skjematilvedlegg.navn, intl.locale)
+                  : localeTekst(vedlegg.navn, intl.locale)}
+              </Normaltekst>
+            </li>
+          ))}
         </ul>
       </div>
     </div>
