@@ -38,7 +38,13 @@ const VedleggRad = (props: Props & InjectedIntlProps) => {
           <div className="dinevedlegg__beskrivelse-container">
             <div className="dinevedlegg__beskrivelse">
               <Element>
-                <LocaleTekst tekst={vedlegg.navn} />
+                <LocaleTekst
+                  tekst={
+                    vedlegg.visningstittel
+                      ? vedlegg.visningstittel
+                      : vedlegg.navn
+                  }
+                />
               </Element>
             </div>
             <div className="dinevedlegg__hvaerdette">

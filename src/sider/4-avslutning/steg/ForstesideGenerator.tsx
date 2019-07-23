@@ -83,7 +83,9 @@ const ForstesideGenerator = (props: MergedProps) => {
     hentForsteside(foerstesideParams)
       .then(samletPdf => {
         setState({ status: "DOWNLOAD" });
-        const navn = props.intl.formatMessage({id: "avslutning.steg.forsteside.pdf.tittel"})
+        const navn = props.intl.formatMessage({
+          id: "avslutning.steg.forsteside.pdf.tittel"
+        });
         lastNedFilBase64(samletPdf, `NAV - ${navn}`, "pdf");
       })
       .then(() => {

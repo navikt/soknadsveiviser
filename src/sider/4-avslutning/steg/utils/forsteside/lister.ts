@@ -1,4 +1,4 @@
-import { Skjema, Vedlegg} from "../../../../../typer/skjemaogvedlegg";
+import { Skjema, Vedlegg } from "../../../../../typer/skjemaogvedlegg";
 import { localeTekst } from "../../../../../utils/sprak";
 
 export const hentVedleggslisteForJoark = (
@@ -19,7 +19,9 @@ export const hentDokumentliste = (
   ettersendelse?: string
 ) => {
   const dokumentlisteTilVisning = vedleggsliste.map(vedlegg =>
-    vedlegg.skjematilvedlegg
+    vedlegg.visningstittel
+      ? vedlegg.visningstittel
+      : vedlegg.skjematilvedlegg
       ? `${vedlegg.skjematilvedlegg.skjemanummer} ${localeTekst(
           vedlegg.skjematilvedlegg.navn,
           locale

@@ -59,7 +59,10 @@ const Sjekkbokser = (props: MergedProps) => {
       key: _key,
       label: `${intl.formatMessage({
         id: "avslutning.vedlegg"
-      })} ${localeTekst(vedlegg.navn, intl.locale)}`,
+      })} ${localeTekst(
+        vedlegg.visningstittel ? vedlegg.visningstittel : vedlegg.navn,
+        intl.locale
+      )}`,
       value: _key,
       checked: !skalEttersendes
     };

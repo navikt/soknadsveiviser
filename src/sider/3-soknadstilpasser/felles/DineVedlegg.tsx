@@ -27,7 +27,13 @@ const DineVedlegg = (props: Props & InjectedIntlProps) => {
             <li key={_key}>
               <Element>
                 {pakrevd && intl.formatMessage({ id: "dinevedlegg.pakrevd" })}
-                <LocaleTekst tekst={vedlegg.navn} />
+                <LocaleTekst
+                  tekst={
+                    vedlegg.visningstittel
+                      ? vedlegg.visningstittel
+                      : vedlegg.navn
+                  }
+                />
               </Element>
             </li>
           ))}

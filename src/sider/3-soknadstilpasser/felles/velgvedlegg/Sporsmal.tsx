@@ -105,7 +105,13 @@ const Sporsmal = (props: MergedProps) => {
         >
           <Element>
             <FormattedMessage id="velgvedlegg.vedlegg" />
-            <LocaleTekst tekst={vedleggsobj.vedlegg.navn} />
+            <LocaleTekst
+              tekst={
+                vedleggsobj.vedlegg.visningstittel
+                  ? vedleggsobj.vedlegg.visningstittel
+                  : vedleggsobj.vedlegg.navn
+              }
+            />
           </Element>
         </div>
       </div>

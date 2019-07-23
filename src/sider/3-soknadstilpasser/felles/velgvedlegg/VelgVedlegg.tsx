@@ -48,7 +48,9 @@ const VelgVedlegg = (props: MergedProps) => {
     <>
       {vedleggForUtlisting.map(vedleggsobj => {
         label = ettersendelse
-          ? vedleggsobj.vedlegg.navn
+          ? vedleggsobj.vedlegg.visningstittel
+            ? vedleggsobj.vedlegg.visningstittel
+            : vedleggsobj.vedlegg.navn
           : vedleggsobj.situasjon || vedleggsobj.vedlegg.navn;
 
         if (vedleggsobj.skalSendes === undefined) {

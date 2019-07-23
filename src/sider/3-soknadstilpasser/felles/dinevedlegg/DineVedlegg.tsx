@@ -38,8 +38,14 @@ const DineVedlegg = (props: MergedProps) => {
   );
 
   const vedleggTilInnsendingSortert = vedleggTilInnsending.sort((a, b) =>
-    localeTekst(a.vedlegg.navn, locale).localeCompare(
-      localeTekst(b.vedlegg.navn, locale)
+    localeTekst(
+      a.vedlegg.visningstittel ? a.vedlegg.visningstittel : a.vedlegg.navn,
+      locale
+    ).localeCompare(
+      localeTekst(
+        b.vedlegg.visningstittel ? b.vedlegg.visningstittel : b.vedlegg.navn,
+        locale
+      )
     )
   );
 
