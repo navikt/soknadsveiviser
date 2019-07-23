@@ -20,7 +20,7 @@ export const hentDokumentliste = (
 ) => {
   const dokumentlisteTilVisning = vedleggsliste.map(vedlegg =>
     vedlegg.visningstittel
-      ? vedlegg.visningstittel
+      ? localeTekst(vedlegg.visningstittel, locale)
       : vedlegg.skjematilvedlegg
       ? `${vedlegg.skjematilvedlegg.skjemanummer} ${localeTekst(
           vedlegg.skjematilvedlegg.navn,
