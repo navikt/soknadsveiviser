@@ -6,7 +6,6 @@
   "scripts": {
     "start": "npm-run-all -p start:*",
     "start:lint": "tslint src/**/*.ts*",
-    "start:server": "node server/server.js",
     "start:ts": "react-scripts start",
     "start:less": "less-watch-compiler",
     "build": "npm-run-all -p build:*",

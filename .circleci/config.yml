@@ -36,12 +36,12 @@ jobs:
            at: .
       - run:
           name: Bygger Docker image
-          command: docker build -t "$DOCKER_IMAGE_VERSIONED" .
+          command: docker build -t "$DOCKER_IMAGE_NAME" .
       - run:
           name: Pusher Docker image
           command: |
             echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push "$DOCKER_IMAGE_VERSIONED"
+            docker push "$DOCKER_IMAGE_NAME"
       - run:
           name: Deployer til dev
           command: |
@@ -56,7 +56,7 @@ jobs:
                        "version": [1, 0, 0],
                        "team": "personbruker",
                        "kubernetes": {
-                         "resources": ['"$(cat nais-dev.json | jq '.spec.image = "'$DOCKER_IMAGE_VERSIONED'"')"']
+                         "resources": ['"$(cat nais-dev.json | jq '.spec.image = "'$DOCKER_IMAGE_NAME'"')"']
                        }
                      }
                    }' \
@@ -85,7 +85,7 @@ jobs:
                        "version": [1, 0, 0],
                        "team": "personbruker",
                        "kubernetes": {
-                         "resources": ['"$(cat nais-prod.json | jq '.spec.image = "'$DOCKER_IMAGE_VERSIONED'"')"']
+                         "resources": ['"$(cat nais-prod.json | jq '.spec.image = "'$DOCKER_IMAGE_NAME'"')"']
                        }
                      }
                    }' \
@@ -97,13 +97,14 @@ commands:
   sett-miljovariabler:
     steps:
       - run:
-          name: Setter miljøvariable
+          name: Setter miljøvariabler
           command: |
-            echo 'export COMMIT_SHORT="$(git rev-parse --short HEAD)"' >> $BASH_ENV
-            echo 'export RELEASE_VERSION="$(git rev-list --count $CIRCLE_SHA1)"' >> $BASH_ENV
-            echo 'export BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"' >> $BASH_ENV
-            echo 'export BRANCH_PREFIX=`[ $BRANCH_NAME == "master" ] && echo "" || echo $BRANCH_NAME\_`' >> $BASH_ENV
-            echo 'export DOCKER_IMAGE_VERSIONED="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$BRANCH_PREFIX$RELEASE_VERSION"' >> $BASH_ENV
+            echo "export COMMIT_SHORT='$(git rev-parse --short HEAD)'" >> $BASH_ENV
+            echo "export DOCKER_IMAGE_VERSION='$CIRCLE_WORKFLOW_ID-${CIRCLE_BRANCH////-}$CIRCLE_TAG'" >> $BASH_ENV
+      - run:
+          name: Definerer navn på docker-image
+          command: |
+            echo "export DOCKER_IMAGE_NAME='$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$DOCKER_IMAGE_VERSION'" >> $BASH_ENV
 
 workflows:
   bygg_og_deploy:
