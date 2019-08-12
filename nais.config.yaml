@@ -17,7 +17,7 @@ spec:
     path: {{baseurl}}/internal/isAlive
     initialDelay: 10
   readiness:
-    path: {{baseurl}}/internal/isAlive
+    path: {{baseurl}}/internal/isReady
     initialDelay: 10
   vault:
     enabled: true
