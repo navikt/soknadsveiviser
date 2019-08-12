@@ -39,7 +39,7 @@ jobs:
             docker push $IMAGE_NAME
       - deploy:
           til: dev-sbs
-          ingress1: https://$REPO_NAME.nais.oera-q.local/$BASE_URL
+          ingress1: https://$REPO_NAME.nais.oera-q.local
           ingress2: https://www-q0.nav.no/$BASE_URL
 
   deploy-til-prod:
@@ -50,7 +50,7 @@ jobs:
       - sett-miljovariabler
       - deploy:
           til: prod-sbs
-          ingress1: https://$REPO_NAME.nais.oera.no/$BASE_URL
+          ingress1: https://$REPO_NAME.nais.oera.no
           ingress2: https://www.nav.no/$BASE_URL
 
 commands:
