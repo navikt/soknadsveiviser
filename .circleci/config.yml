@@ -97,11 +97,11 @@ commands:
 workflows:
   bygg_og_deploy:
     jobs:
-      - build-react-app
+      - build
       - bekreft-deploy-til-dev:
           type: approval
           requires:
-            - build-react-app
+            - build
           filters:
             branches:
               ignore: master
@@ -112,7 +112,7 @@ workflows:
       - deploy-til-dev:
           name: automatisk-deploy-til-dev
           requires:
-            - build-react-app
+            - build
           filters:
             branches:
               only: master
