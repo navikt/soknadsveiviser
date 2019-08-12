@@ -39,8 +39,8 @@ jobs:
             docker push $IMAGE_NAME
       - deploy:
           til: dev-sbs
-          ingress1: https://$REPO_NAME.nais.oera-q.local/person/$REPO_NAME
-          ingress2: https://www-q0.nav.no/person/$REPO_NAME
+          ingress1: https://$REPO_NAME.nais.oera-q.local/$REPO_NAME
+          ingress2: https://www-q0.nav.no/$REPO_NAME
 
   deploy-til-prod:
     docker:
@@ -50,8 +50,8 @@ jobs:
       - sett-miljovariabler
       - deploy:
           til: prod-sbs
-          ingress1: https://$REPO_NAME.nais.oera.no/person/$REPO_NAME
-          ingress2: https://www.nav.no/person/$REPO_NAME
+          ingress1: https://$REPO_NAME.nais.oera.no/$REPO_NAME
+          ingress2: https://www.nav.no/$REPO_NAME
 
 commands:
   deploy:
@@ -72,7 +72,7 @@ commands:
                 --resource=nais.config.yaml \
                 --cluster=<< parameters.til >> \
                 --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
-                --var baseurl=/person/$REPO_NAME \
+                --var baseurl=/$REPO_NAME \
                 --var ingress1=<< parameters.ingress1 >> \
                 --var ingress2=<< parameters.ingress2 >> \
                 --var reponame=$REPO_NAME \
