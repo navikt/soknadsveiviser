@@ -6,11 +6,11 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Installer npm pakker
+          name: Installerer npm pakker
           command: |
             npm ci
       - run:
-          name: Bygg React app
+          name: Bygger React app
           command: |
             npm run build
       - persist_to_workspace:
