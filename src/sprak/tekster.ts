@@ -306,7 +306,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "vissoknadsobjekter.knapp.soknadpapapir": `Apply on paper`,
     "vissoknadsobjekter.knapp.soknadsdialog": `Apply digitally`,
     "vissoknadsobjekter.knapp.dokumentinnsending": `Apply digitally`,
-    "vissoknadsobjekter.tittel": `I want to apply for`,
+    "vissoknadsobjekter.tittel": `Digital application for`,
     "vissoknadsobjekter.ikkeelektroniskID": `I do not have an electronic ID`,
     "feil.ingentekst": "Error, did not find text.",
     "veileder.ettersendelse.tittel": "Forward additional documentation",
