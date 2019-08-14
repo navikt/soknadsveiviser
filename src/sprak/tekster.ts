@@ -132,7 +132,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "vissoknadsobjekter.knapp.soknadpapapir": `Søk på papir`,
     "vissoknadsobjekter.knapp.soknadsdialog": `Søk digitalt`,
     "vissoknadsobjekter.knapp.dokumentinnsending": `Søk digitalt`,
-    "vissoknadsobjekter.tittel": `Jeg vil søke om`,
+    "vissoknadsobjekter.tittel": `Digital søknad om`,
     "vissoknadsobjekter.ikkeelektroniskID": `Jeg har ikke elektronisk ID`,
     "feil.tekst.ingen": "Feil, fant ikke tekst.",
     "feil.tekst.udefinert": "Udefinert tekst på objektet",
