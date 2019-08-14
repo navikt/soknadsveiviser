@@ -12,15 +12,17 @@ import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspande
 interface Props {
   key: number;
   soknadslenke: Soknadslenke;
+  apen: boolean;
 }
 
 const VisSoknadslenke = (props: Props & InjectedIntlProps) => {
-  const { soknadslenke, key, intl } = props;
+  const { soknadslenke, key, intl, apen } = props;
   const { beskrivelse, lenke, infoLenker } = soknadslenke;
 
   return (
     <div className={"ekspandertSoknadsPanel"}>
       <EkspanderbartpanelBase
+        apen={apen}
         heading={
           <div className={"ekspanderbartPanel__headingInnhold"}>
             <Undertittel>

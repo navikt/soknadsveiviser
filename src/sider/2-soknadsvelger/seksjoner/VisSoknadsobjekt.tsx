@@ -23,7 +23,7 @@ import Undertekst from "nav-frontend-typografi/lib/undertekst";
 
 interface Props {
   key: number;
-
+  apen: boolean;
   soknadsobjekt: Soknadsobjekt;
 }
 
@@ -31,7 +31,7 @@ const VisSoknadsobjekt = (
   props: Props & InjectedIntlProps & RouteComponentProps<{}>
 ) => {
   const { locale } = props.intl;
-  const { soknadsobjekt, key } = props;
+  const { soknadsobjekt, key, apen } = props;
   const { navn, beskrivelse, lenker, hovedskjema } = soknadsobjekt;
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
@@ -44,6 +44,7 @@ const VisSoknadsobjekt = (
   return (
     <div className={"ekspandertSoknadsPanel"}>
       <EkspanderbartpanelBase
+        apen={apen}
         heading={
           <div className={"ekspanderbartPanel__headingInnhold"}>
             <Undertittel className={markert}>
