@@ -17,13 +17,12 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "../../../utils/sprak";
 import { RouteComponentProps, withRouter } from "react-router";
-import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
+import { convertNAVSkjemanummerTilHash, hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
 import Undertekst from "nav-frontend-typografi/lib/undertekst";
 
 interface Props {
   key: number;
-
   soknadsobjekt: Soknadsobjekt;
 }
 
@@ -37,12 +36,12 @@ const VisSoknadsobjekt = (
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
 
   const markert =
-    hentSkjemanummerHash(props.location.hash) === hovedskjema.skjemanummer
+    hentSkjemanummerHash(props.location.hash) === convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer)
       ? "marker"
       : "";
 
   return (
-    <div className={"ekspandertSoknadsPanel"}>
+    <div id={convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer)} className={"ekspandertSoknadsPanel"}>
       <EkspanderbartpanelBase
         heading={
           <div className={"ekspanderbartPanel__headingInnhold"}>
@@ -52,11 +51,9 @@ const VisSoknadsobjekt = (
             {hovedskjema.skjemanummer ? (
               <Undertekst>{hovedskjema.skjemanummer}</Undertekst>
             ) : null}
-          </div>
-        }
+          </div>}
       >
         <div
-          id={hovedskjema.skjemanummer}
           key={key}
           className={"soknadsobjekt"}
         >

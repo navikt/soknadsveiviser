@@ -1,6 +1,7 @@
 import { Skjema } from "../../../../typer/skjemaogvedlegg";
 import { HashLink } from "react-router-hash-link";
 import * as React from "react";
+import { convertNAVSkjemanummerTilHash } from "../../../../utils/hentSkjemanummerHash";
 
 export const innslagITabell = (skjema: Skjema) => {
   return {
@@ -9,7 +10,7 @@ export const innslagITabell = (skjema: Skjema) => {
       skjema._type === "skjema" ? (
         <HashLink
           smooth={true}
-          to={`detaljert/#${skjema.skjemanummer}`}
+          to={`detaljert#${convertNAVSkjemanummerTilHash(skjema.skjemanummer)}`}
           className="lenke lenke--frittstaende"
         >
           {skjema.skjemanummer}
