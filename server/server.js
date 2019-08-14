@@ -74,7 +74,7 @@ const startServer = html => {
     req.pipe(request(enheterRSURL)).pipe(res);
   });
 
-  server.get("/soknader/internal/alive|ready", (req, res) =>
+  server.get("/soknader/internal/isAlive|isReady", (req, res) =>
     res.sendStatus(200)
   );
 
