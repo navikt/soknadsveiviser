@@ -1,119 +1,108 @@
 version: 2.1
 jobs:
-  build-react-app:
+  build:
     docker:
-      - image: circleci/node:10
-
+      - image: circleci/node:11.7.0
     steps:
       - checkout
       - run:
-          name: Innstallerer avhengigheter
+          name: Installerer npm pakker
           command: |
             npm ci
       - run:
           name: Bygger React app
           command: |
             npm run build
-      - run:
-          name: Tester
-          command: |
-            npm run test
       - persist_to_workspace:
           root: .
           paths:
             - build/*
 
-
   deploy-til-dev:
     docker:
-      - image: circleci/node:10
-
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
       - setup_remote_docker
       - attach_workspace:
-           at: .
+          at: .
       - run:
           name: Bygger Docker image
-          command: docker build -t "$DOCKER_IMAGE_NAME" .
+          command: |
+            echo $IMAGE_NAME
+            docker build -t $IMAGE_NAME .
       - run:
           name: Pusher Docker image
           command: |
-            echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push "$DOCKER_IMAGE_NAME"
-      - run:
-          name: Deployer til dev
-          command: |
-            curl -i \
-                -X POST \
-                -d '{
-                     "ref": "'"$COMMIT_SHORT"'",
-                     "description": "Automated deployment request for soknadsveiviser from team personbruker",
-                     "environment": "dev-sbs",
-                     "required_contexts": [],
-                     "payload": {
-                       "version": [1, 0, 0],
-                       "team": "personbruker",
-                       "kubernetes": {
-                         "resources": ['"$(cat nais-dev.json | jq '.spec.image = "'$DOCKER_IMAGE_NAME'"')"']
-                       }
-                     }
-                   }' \
-                -H "Accept: application/vnd.github.ant-man-preview+json" \
-                -u "$GH_USER":"$GH_TK" \
-                https://api.github.com/repos/navikt/soknadsveiviser/deployments
+            echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+            docker push $IMAGE_NAME
+      - deploy:
+          til: dev-sbs
+          ingress1: https://$REPO_NAME.nais.oera-q.local
+          ingress2: https://www-q0.nav.no/$BASE_URL
 
   deploy-til-prod:
     docker:
-      - image: circleci/node:10
-
+      - image: navikt/deployment-cli:latest
     steps:
       - checkout
       - sett-miljovariabler
-      - run:
-          name: Deployer til prod
-          command: |
-            curl -i \
-                -X POST \
-                -d '{
-                     "ref": "'"$COMMIT_SHORT"'",
-                     "description": "Automated deployment request for soknadsveiviser from team personbruker",
-                     "environment": "prod-sbs",
-                     "required_contexts": [],
-                     "payload": {
-                       "version": [1, 0, 0],
-                       "team": "personbruker",
-                       "kubernetes": {
-                         "resources": ['"$(cat nais-prod.json | jq '.spec.image = "'$DOCKER_IMAGE_NAME'"')"']
-                       }
-                     }
-                   }' \
-                -H "Accept: application/vnd.github.ant-man-preview+json" \
-                -u "$GH_USER":"$GH_TK" \
-                https://api.github.com/repos/navikt/soknadsveiviser/deployments
+      - deploy:
+          til: prod-sbs
+          ingress1: https://$REPO_NAME.nais.oera.no
+          ingress2: https://www.nav.no/$BASE_URL
 
 commands:
+  deploy:
+    parameters:
+      til:
+        type: string
+      ingress1:
+        type: string
+      ingress2:
+        type: string
+    steps:
+      - run:
+          name: Deployer til << parameters.til >>
+          command: |
+            echo $GH_DEPLOY_KEY | base64 -d | dos2unix > gh_deploy_key.pem
+            deployment-cli deploy create \
+                --team=personbruker \
+                --resource=nais.config.yaml \
+                --cluster=<< parameters.til >> \
+                --repository=$CIRCLE_PROJECT_USERNAME/$REPO_NAME \
+                --var ingress1=<< parameters.ingress1 >> \
+                --var ingress2=<< parameters.ingress2 >> \
+                --var reponame=$REPO_NAME \
+                --var baseurl=/$BASE_URL \
+                --var version=$IMAGE_VERSION \
+                --key=gh_deploy_key.pem \
+                --ref=$COMMIT_SHORT \
+                --appid=34043
+
   sett-miljovariabler:
     steps:
       - run:
-          name: Setter miljøvariabler
+          name:  Definerer git-referanse, versjonsnummer og repo-navn
           command: |
             echo "export COMMIT_SHORT='$(git rev-parse --short HEAD)'" >> $BASH_ENV
-            echo "export DOCKER_IMAGE_VERSION='$CIRCLE_WORKFLOW_ID-${CIRCLE_BRANCH////-}$CIRCLE_TAG'" >> $BASH_ENV
+            echo "export IMAGE_VERSION='$CIRCLE_WORKFLOW_ID-${CIRCLE_BRANCH////-}$CIRCLE_TAG'" >> $BASH_ENV
+            echo "export REPO_NAME='$CIRCLE_PROJECT_REPONAME'" >> $BASH_ENV
+            echo "export BASE_URL='soknader'" >> $BASH_ENV
       - run:
           name: Definerer navn på docker-image
           command: |
-            echo "export DOCKER_IMAGE_NAME='$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME:$DOCKER_IMAGE_VERSION'" >> $BASH_ENV
+            echo "export IMAGE_NAME='$CIRCLE_PROJECT_USERNAME/$REPO_NAME:$IMAGE_VERSION'" >> $BASH_ENV
 
 workflows:
   bygg_og_deploy:
     jobs:
-      - build-react-app
+      - build
       - bekreft-deploy-til-dev:
           type: approval
           requires:
-            - build-react-app
+            - build
           filters:
             branches:
               ignore: master
@@ -124,7 +113,7 @@ workflows:
       - deploy-til-dev:
           name: automatisk-deploy-til-dev
           requires:
-            - build-react-app
+            - build
           filters:
             branches:
               only: master
