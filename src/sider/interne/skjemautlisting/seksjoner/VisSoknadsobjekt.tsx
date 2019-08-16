@@ -8,6 +8,7 @@ import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
 import { HashLink } from "react-router-hash-link";
 import Undertekst from "nav-frontend-typografi/lib/undertekst";
 import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
+import { convertNAVSkjemanummerTilHash } from "../../../../utils/hentSkjemanummerHash";
 
 interface Props {
   key: string;
@@ -38,13 +39,13 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
     : [];
   return (
     <div
-      id={hovedskjema.skjemanummer}
+      id={convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer)}
       key={props.key}
       className="skjemautlisting__litenmargin-overunder"
     >
       <div
         className={
-          props.valgtSkjemanummer === hovedskjema.skjemanummer ? "marker" : " "
+          props.valgtSkjemanummer === convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer) ? "marker" : " "
         }
       >
         <Element>
@@ -59,7 +60,7 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
             className="lenke skjemautlisting__litenmargin-sidene"
             to={
               lenkeTilSkjema +
-              (soknadsdialog ? "" : "/#" + hovedskjema.skjemanummer)
+              (soknadsdialog ? "" : "#" + convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer))
             }
           >
             <LocaleTekst tekst={props.soknadsobjekt.navn} />
@@ -100,9 +101,9 @@ const hentListeOverVedleggsskjemaer = (
         skjema && (
           <li
             className={
-              valgtSkjemanummer === skjema.skjemanummer ? "marker" : " "
+              valgtSkjemanummer === convertNAVSkjemanummerTilHash(skjema.skjemanummer) ? "marker" : " "
             }
-            id={skjema.skjemanummer}
+            id={convertNAVSkjemanummerTilHash(skjema.skjemanummer)}
             key={`vedlegg${soknadsobjekt.navn}${skjema.skjemanummer}`}
           >
             <Undertekst>{skjema.skjemanummer}</Undertekst>
