@@ -20,7 +20,8 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   const {
     beskrivelse,
     soknadsdialogURL,
-    lenker
+    lenker,
+    ettersendelselsURL
   } = underkategori.inngangtilsoknadsdialog;
 
   return (
@@ -58,7 +59,8 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           </Normaltekst>
         </HashLink>
         <a
-          href={`${getTjenesteUrl()}/saksoversikt`}
+          href={ettersendelselsURL && ettersendelselsURL.nb ?
+              localeTekst(ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt`}
           className="soknadsobjekt__knapp knapp knapp-hoved"
         >
           <FormattedMessage id="ettersendelser.mellomledd.digital.knapp" />
