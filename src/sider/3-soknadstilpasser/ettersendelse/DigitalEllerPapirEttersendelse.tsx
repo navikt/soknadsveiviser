@@ -53,7 +53,8 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
           <DigitalEttersendelse
             url={urlTilDokumentinnsendingEllerSoknadsdialog(
               this.props.match.url,
-              valgtSoknadsobjekt
+              valgtSoknadsobjekt,
+              intl.locale
             )}
           />
         )}
@@ -74,8 +75,17 @@ export default medValgtSoknadsobjekt(
 
 const urlTilDokumentinnsendingEllerSoknadsdialog = (
   path: string,
-  valgtSoknadsobjekt: Soknadsobjekt
+  valgtSoknadsobjekt: Soknadsobjekt,
+  locale: string
 ) =>
   finnesDokumentinnsending(valgtSoknadsobjekt)
     ? `${path}/dokumentinnsending`
-    : `${getTjenesteUrl()}/saksoversikt`;
+    : hentDigitalEttersendelsesURL(valgtSoknadsobjekt, locale);
+
+const hentDigitalEttersendelsesURL = (soknadsobjekt: Soknadsobjekt, locale: string) => {
+  return (soknadsobjekt.digitalinnsending &&
+      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
+      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL &&
+      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL.nb) ?
+      localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt`;
+};

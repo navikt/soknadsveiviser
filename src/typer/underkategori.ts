@@ -5,6 +5,7 @@ export interface Inngangsoknadsdialog {
   soknadsdialogURL?: LocaleString;
   beskrivelse?: LocaleBlockText;
   lenker?: Lenkeobjekt[];
+  ettersendelselsURL?: LocaleString;
 }
 
 export interface Underkategori {
