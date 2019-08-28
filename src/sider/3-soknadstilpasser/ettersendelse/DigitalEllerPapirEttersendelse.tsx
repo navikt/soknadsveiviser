@@ -87,5 +87,5 @@ const hentDigitalEttersendelsesURL = (soknadsobjekt: Soknadsobjekt, locale: stri
       soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
       soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL &&
       soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL.nb) ?
-      localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt`;
+      localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt/ettersending`;
 };
