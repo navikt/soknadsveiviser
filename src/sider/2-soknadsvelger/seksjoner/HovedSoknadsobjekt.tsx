@@ -60,7 +60,7 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
         </HashLink>
         <a
           href={ettersendelselsURL && ettersendelselsURL.nb ?
-              localeTekst(ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt`}
+              localeTekst(ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt/ettersending`}
           className="soknadsobjekt__knapp knapp knapp-hoved"
         >
           <FormattedMessage id="ettersendelser.mellomledd.digital.knapp" />
