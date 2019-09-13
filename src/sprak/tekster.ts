@@ -102,7 +102,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "stegindikator.steg3": `Velg ettersendelser`,
     "stegindikator.steg4": `Din boligsituasjon`,
     "stegindikator.steg5": `Last ned og send`,
-    "velgvedlegg.informasjonspanel.ingress": `Det viktig at du svarer på alle spørsmålene nedenfor. `,
+    "velgvedlegg.informasjonspanel.ingress": `Det er viktig at du svarer på alle spørsmålene nedenfor. `,
     "velgvedlegg.informasjonspanel.beskrivelse": `Svarene dine vil avgjøre hvilke vedlegg du må legge ved søknaden. `,
     "velgvedlegg.informasjonspanel.lenke": ``,
     "velgvedlegg.informasjonspanel.tittel": `Hva skal du sende med søknaden?`,
