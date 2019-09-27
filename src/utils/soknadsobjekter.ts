@@ -43,4 +43,6 @@ export const finnesVisEnheter = (
 ) =>
   innsendingsmate &&
   innsendingsmate.visenheter &&
-  blockToPlainText(innsendingsmate.visenheter, locale);
+    !innsendingsmate.skanning &&
+    !innsendingsmate.spesifisertadresse &&
+    blockToPlainText(innsendingsmate.visenheter, locale);
