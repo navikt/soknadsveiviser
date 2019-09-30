@@ -124,9 +124,9 @@ const startServer = html =>
 
 const logError = (errorMessage, details) => console.log(errorMessage, details); // eslint-disable-line
 
-// getDecorator()
-//  .then(renderApp, error => logError("Failed to get decorator", error))
-//  .then(startServer, error => logError("Failed to render app", error));
+getDecorator()
+    .then(renderApp, error => logError("Failed to get decorator", error))
+    .then(startServer, error => logError("Failed to render app", error));
 
 const port = process.env.PORT || 8080;
 server.listen(port, () => console.log(`App listening on port: ${port}`)); // eslint-disable-line
