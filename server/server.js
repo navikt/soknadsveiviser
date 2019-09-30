@@ -118,7 +118,6 @@ const renderApp = decoratorFragments =>
 
 const startServer = html =>
     server.use("/soknader", (req, res) => {
-        header;
         res.send(html);
 });
 
