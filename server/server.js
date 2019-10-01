@@ -117,7 +117,7 @@ const startServer = html => {
         res.sendStatus(200)
     );
     server.use("/soknader", (req, res) => {
-        res.render(html);
+        res.send(html);
     });
 };
 
