@@ -56,10 +56,6 @@ server.get("/soknader/api/enheter", (req, res) => {
     req.pipe(request(enheterRSURL)).pipe(res);
 });
 
-server.get("/soknader/internal/isAlive|isReady", (req, res) =>
-    res.sendStatus(200)
-);
-
 server.get("/soknader/config", (req, res) =>
     res.send({
         proxyUrl: soknadsveiviserproxyUrl,
@@ -116,10 +112,14 @@ const renderApp = decoratorFragments =>
     })
 );
 
-const startServer = html =>
+const startServer = html => {
+    server.get("/soknader/internal/isAlive|isReady", (req, res) =>
+        res.sendStatus(200)
+    );
     server.use("/soknader", (req, res) => {
         res.send(html);
-});
+    });
+};
 
 const logError = (errorMessage, details) => console.log(errorMessage, details); // eslint-disable-line
 
