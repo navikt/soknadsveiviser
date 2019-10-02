@@ -33,7 +33,7 @@ const [
 
 server.use(
     "/soknader/static",
-    express.static(path.resolve(`${__dirname}/..`, "build/static"))
+    express.static(path.resolve(`${__dirname}/..`, "build/static"), {index: false})
 );
 
 server.use(
