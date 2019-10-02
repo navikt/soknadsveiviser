@@ -9,9 +9,9 @@ const { getSecrets, getMockSecrets } = require("./getSecrets");
 
 const server = express();
 
-server.set("views", `${__dirname}/../build`);
-server.set("view engine", "mustache");
 server.engine("html", mustacheExpress());
+server.set("view engine", "mustache");
+server.set("views", `${__dirname}/../build`);
 
 // parse application/json
 server.use(express.json());
