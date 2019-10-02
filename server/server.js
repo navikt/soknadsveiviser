@@ -6,6 +6,9 @@ const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
 const getDecorator = require("./dekorator");
 const { getSecrets, getMockSecrets } = require("./getSecrets");
+const basePath = require("./basePath");
+
+const buildPath = path.join(__dirname, '../build');
 
 const server = express();
 
@@ -31,78 +34,7 @@ const [
   tjenesterUrl
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
-server.use(
-    "/soknader/static",
-    express.static(path.resolve(`${__dirname}/..`, "build/static"), {index: false})
-);
 
-server.use(
-    "/soknader/index.css",
-    express.static(path.resolve(`${__dirname}/..`, "build/index.css"))
-);
-
-server.use(
-    "/soknader/manifest.json",
-    express.static(path.resolve(`${__dirname}/..`, "build/manifest.json"))
-);
-
-server.use(
-    "/soknader/favicon.ico",
-    express.static(path.resolve(`${__dirname}/..`, "build/favicon.ico"))
-);
-
-server.get("/soknader/api/enheter", (req, res) => {
-    req.headers["x-nav-apiKey"] = enheterRSApiKey;
-    req.pipe(request(enheterRSURL)).pipe(res);
-});
-
-server.get("/soknader/config", (req, res) =>
-    res.send({
-        proxyUrl: soknadsveiviserproxyUrl,
-        tjenesteUrl: tjenesterUrl,
-        sanityDataset: sanityDataset
-    })
-);
-
-server.post("/soknader/api/forsteside", (req, res) => {
-    request(
-        securityTokenServiceTokenUrl +
-        "?grant_type=client_credentials&scope=openid",
-        {
-            auth: {
-                user: soknadsveiviserUser,
-                pass: soknadsveiviserPass
-            },
-            method: "GET",
-            json: true,
-            headers: {
-                "x-nav-apiKey": securityTokenServiceTokenApiKey
-            }
-        },
-        error => {
-            if (error) next(error);
-        }
-    ).then(result =>
-        request(
-            foerstesidegeneratorServiceUrl,
-            {
-                method: "POST",
-                json: true,
-                body: req.body,
-                auth: {
-                    bearer: result.access_token
-                },
-                headers: {
-                    "x-nav-apiKey": foerstesidegeneratorServiceApiKey
-                }
-            },
-            (error, result, body) => {
-                if (error) next(error);
-                res.send(body);
-            }
-        )
-    );
-});
 
 const renderApp = decoratorFragments =>
   new Promise((resolve, reject) =>
@@ -113,10 +45,65 @@ const renderApp = decoratorFragments =>
 );
 
 const startServer = html => {
-    server.get("/soknader/internal/isAlive|isReady", (req, res) =>
+    server.use(basePath("/"), express.static(buildPath, {index: false}));
+
+    server.get(basePath("/api/enheter"), (req, res) => {
+        req.headers["x-nav-apiKey"] = enheterRSApiKey;
+        req.pipe(request(enheterRSURL)).pipe(res);
+    });
+
+    server.get(basePath("/config"), (req, res) =>
+        res.send({
+            proxyUrl: soknadsveiviserproxyUrl,
+            tjenesteUrl: tjenesterUrl,
+            sanityDataset: sanityDataset
+        })
+    );
+
+    server.post(basePath("/api/forsteside"), (req, res) => {
+        request(
+            securityTokenServiceTokenUrl +
+            "?grant_type=client_credentials&scope=openid",
+            {
+                auth: {
+                    user: soknadsveiviserUser,
+                    pass: soknadsveiviserPass
+                },
+                method: "GET",
+                json: true,
+                headers: {
+                    "x-nav-apiKey": securityTokenServiceTokenApiKey
+                }
+            },
+            error => {
+                if (error) next(error);
+            }
+        ).then(result =>
+            request(
+                foerstesidegeneratorServiceUrl,
+                {
+                    method: "POST",
+                    json: true,
+                    body: req.body,
+                    auth: {
+                        bearer: result.access_token
+                    },
+                    headers: {
+                        "x-nav-apiKey": foerstesidegeneratorServiceApiKey
+                    }
+                },
+                (error, result, body) => {
+                    if (error) next(error);
+                    res.send(body);
+                }
+            )
+        );
+    });
+
+    server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
         res.sendStatus(200)
     );
-    server.use("/soknader", (req, res) => {
+    server.use(basePath("/*"), (req, res) => {
         res.send(html);
     });
 };
