@@ -34,7 +34,7 @@ const [
   tjenesterUrl
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
-server.use(basePath("/"), express.static(buildPath, {index: false}));
+server.use(basePath("/"), express.static(buildPath, {index: false, fallthrough: false}));
 
 server.get(basePath("/api/enheter"), (req, res) => {
     req.headers["x-nav-apiKey"] = enheterRSApiKey;
