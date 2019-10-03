@@ -38,11 +38,10 @@ export const finnesInngangTilSoknadsdialog = (
 
 export const finnesEttersendelseTilSoknadsdialog = (
     soknadsobjekt: Soknadsobjekt,
-) =>
-    soknadsobjekt.digitalinnsending &&
-    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
-    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
-    !soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ikkeVisEttersendelse;
+) =>  !(soknadsobjekt.digitalinnsending &&
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ikkeVisEttersendelse);
 
 export const finnesTilSkanning = (innsendingsmate?: Innsendingsmate) =>
   innsendingsmate && innsendingsmate.skanning;
