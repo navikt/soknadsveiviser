@@ -174,7 +174,9 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.tabell.skjemanummer": `ID`,
     "skjemautlisting.tabell.skjemanavn": `Skjemanavn`,
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
-    "skjemautlisting.tabell.pdf": `Filer`
+    "skjemautlisting.tabell.pdf": `Filer`,
+    "skjemaveilederlenke.person": `Gammel skjemaløsning for privatperson`,
+    "skjemaveilederlenke.bedrift": `Gammel skjemaløsning for arbeidsgiver`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -261,8 +263,10 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "ettersendelser.mellomledd.digital.beskrivelse": `Here you can forward documentation to a previously submitted electronic application.`,
     "ettersendelser.mellomledd.digital.advarsel": `NB! The deadline for forwarding documentation to an electronic application expires after 14 days. If the deadline has expired, you will need to submit the documentation on paper (see below).`,
     "ettersendelser.mellomledd.digital.knapp": `Forward digitally`,
-    "ettersendelser.mellomledd.papir.tittel": `Forward on paper`,
-    "ettersendelser.mellomledd.papir.beskrivelse": `Here you can forward documentation to a previously submitted paper application, and to an electronic application if the forward deadline has expired.`,
+    "ettersendelser.mellomledd.papir.finnesdigital.tittel": `Forward on paper`,
+    "ettersendelser.mellomledd.papir.finnesdigital.beskrivelse": `Here you can forward documentation to a previously submitted paper application, and to an electronic application if the forward deadline has expired.`,
+    "ettersendelser.mellomledd.papir.ikkedigital.tittel": `Forward to a submitted application`,
+    "ettersendelser.mellomledd.papir.ikkedigital.beskrivelse": `Here you can forward documentation to a previously submitted paper application.`,
     "ettersendelser.mellomledd.papir.knapp": `Forward on paper`,
     "ettersendelser.mellomledd.klage.tittel": `Forward to complaint / appeal`,
     "ettersendelser.mellomledd.klage.beskrivelse": `Forwarding documentation to a previously filed complaint or appeal.`,
@@ -347,7 +351,8 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.tabell.skjemanummer": `ID`,
     "skjemautlisting.tabell.skjemanavn": `Skjemanavn`,
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
-    "skjemautlisting.tabell.pdf": `Filer`
-
+    "skjemautlisting.tabell.pdf": `Filer`,
+    "skjemaveilederlenke.person": `Past solution for forms and applications`,
+    "skjemaveilederlenke.bedrift": `Past solution for forms and applications for employers`
   }
 };
