@@ -34,7 +34,7 @@ const [
   tjenesterUrl
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
-server.use(basePath("/"), express.static(buildPath, {index: false, fallthrough: false}));
+server.use(basePath("/"), express.static(buildPath, {index: false}));
 
 server.get(basePath("/api/enheter"), (req, res) => {
     req.headers["x-nav-apiKey"] = enheterRSApiKey;
@@ -101,7 +101,7 @@ const startServer = html => {
     server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
         res.sendStatus(200)
     );
-    server.use(basePath("/*"), (req, res) => {
+    server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
         res.send(html);
     });
 };
