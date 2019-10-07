@@ -16,6 +16,13 @@ export const finnesDigitalInnsending = (
   finnesDokumentinnsending(soknadsobjekt) ||
   finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
 
+export const finnesDigitalEttersendelse = (
+    soknadsobjekt: Soknadsobjekt,
+    locale: string
+) =>
+    finnesDokumentinnsending(soknadsobjekt) ||
+    (!!finnesInngangTilSoknadsdialog(soknadsobjekt, locale) && finnesEttersendelseTilSoknadsdialog(soknadsobjekt));
+
 export const finnesDokumentinnsending = (soknadsobjekt: Soknadsobjekt) =>
   soknadsobjekt.digitalinnsending &&
   soknadsobjekt.digitalinnsending.dokumentinnsending;
@@ -27,9 +34,14 @@ export const finnesInngangTilSoknadsdialog = (
   soknadsobjekt.digitalinnsending &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL &&
-  soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[
-    locale
-  ];
+  soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[locale];
+
+export const finnesEttersendelseTilSoknadsdialog = (
+    soknadsobjekt: Soknadsobjekt,
+) =>  !(soknadsobjekt.digitalinnsending &&
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ikkeVisEttersendelse);
 
 export const finnesTilSkanning = (innsendingsmate?: Innsendingsmate) =>
   innsendingsmate && innsendingsmate.skanning;

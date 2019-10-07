@@ -15,10 +15,10 @@ spec:
     - {{ingress2}}
   liveness:
     path: {{baseurl}}/internal/isAlive
-    initialDelay: 10
+    initialDelay: 5
   readiness:
     path: {{baseurl}}/internal/isReady
-    initialDelay: 10
+    initialDelay: 5
   vault:
     enabled: true
   replicas:

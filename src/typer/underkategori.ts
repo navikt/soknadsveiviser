@@ -5,7 +5,8 @@ export interface Inngangsoknadsdialog {
   soknadsdialogURL?: LocaleString;
   beskrivelse?: LocaleBlockText;
   lenker?: Lenkeobjekt[];
-  ettersendelselsURL?: LocaleString;
+  ettersendelselsURL?: LocaleString; // Skal fases ut, bruk Ettersendevarianten i stedet.
+  ettersendelse?: Ettersendelse;
 }
 
 export interface Underkategori {
@@ -15,4 +16,9 @@ export interface Underkategori {
   urlparam: string;
   lenketilhorlighet: string;
   inngangtilsoknadsdialog: Inngangsoknadsdialog;
+}
+
+interface Ettersendelse {
+  ikkeVisEttersendelse: boolean;
+  ettersendelselsURL?: LocaleString;
 }

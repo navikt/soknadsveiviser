@@ -4,7 +4,9 @@ import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { withRouter, RouteComponentProps } from "react-router";
 
-interface Props {}
+interface Props {
+    digitalEttersendelse?: boolean;
+}
 
 interface Routes {
   sprak: string;
@@ -16,8 +18,8 @@ interface Routes {
 }
 
 type MergedProps = Props & RouteComponentProps<Routes>;
-const PapirEttersendelse = (props: MergedProps) => {
-  const { match } = props;
+const PapirEttersendelse = (props: MergedProps ) => {
+  const { match, digitalEttersendelse } = props;
   const {
     sprak,
     skjemanummer,
@@ -30,11 +32,15 @@ const PapirEttersendelse = (props: MergedProps) => {
     <div className="ettersendelse__container">
       <div className="ettersendelse__innhold">
         <Undertittel>
-          <FormattedMessage id="ettersendelser.mellomledd.papir.tittel" />
+            {digitalEttersendelse ?
+                <FormattedMessage id="ettersendelser.mellomledd.papir.finnesdigital.tittel" />
+                : <FormattedMessage id="ettersendelser.mellomledd.papir.ikkedigital.tittel" />}
         </Undertittel>
         <div className="ettersendelse__beskrivelse">
           <Normaltekst>
-            <FormattedMessage id="ettersendelser.mellomledd.papir.beskrivelse" />
+              {digitalEttersendelse ?
+                  <FormattedMessage id="ettersendelser.mellomledd.papir.finnesdigital.beskrivelse" />
+                  : <FormattedMessage id="ettersendelser.mellomledd.papir.ikkedigital.beskrivelse" />}
           </Normaltekst>
         </div>
       </div>

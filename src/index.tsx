@@ -25,6 +25,7 @@ import Modal from "nav-frontend-modal";
 Modal.setAppElement(".app");
 
 const init = async () => {
+  serviceWorker.unregister();
   if (process.env.NODE_ENV === "development") {
     await import("./mock").then(({ setUpMock }) => setUpMock());
     document.body.innerHTML = document.body.innerHTML.replace(
@@ -73,6 +74,5 @@ const init = async () => {
     </IntlProviderWrapper>,
     document.getElementById("app")
   );
-  serviceWorker.unregister();
 };
 init();

@@ -6,12 +6,15 @@ const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
 const getDecorator = require("./dekorator");
 const { getSecrets, getMockSecrets } = require("./getSecrets");
+const basePath = require("./basePath");
+
+const buildPath = path.join(__dirname, '../build');
 
 const server = express();
 
-server.set("views", `${__dirname}/../build`);
-server.set("view engine", "mustache");
 server.engine("html", mustacheExpress());
+server.set("view engine", "mustache");
+server.set("views", `${__dirname}/../build`);
 
 // parse application/json
 server.use(express.json());
@@ -31,32 +34,14 @@ const [
   tjenesterUrl
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
-server.use(
-    "/soknader/static",
-    express.static(path.resolve(`${__dirname}/..`, "build/static"))
-);
+server.use(basePath("/"), express.static(buildPath, {index: false}));
 
-server.use(
-    "/soknader/index.css",
-    express.static(path.resolve(`${__dirname}/..`, "build/index.css"))
-);
-
-server.use(
-    "/soknader/manifest.json",
-    express.static(path.resolve(`${__dirname}/..`, "build/manifest.json"))
-);
-
-server.use(
-    "/soknader/favicon.ico",
-    express.static(path.resolve(`${__dirname}/..`, "build/favicon.ico"))
-);
-
-server.get("/soknader/api/enheter", (req, res) => {
+server.get(basePath("/api/enheter"), (req, res) => {
     req.headers["x-nav-apiKey"] = enheterRSApiKey;
     req.pipe(request(enheterRSURL)).pipe(res);
 });
 
-server.get("/soknader/config", (req, res) =>
+server.get(basePath("/config"), (req, res) =>
     res.send({
         proxyUrl: soknadsveiviserproxyUrl,
         tjenesteUrl: tjenesterUrl,
@@ -64,7 +49,7 @@ server.get("/soknader/config", (req, res) =>
     })
 );
 
-server.post("/soknader/api/forsteside", (req, res) => {
+server.post(basePath("/api/forsteside"), (req, res) => {
     request(
         securityTokenServiceTokenUrl +
         "?grant_type=client_credentials&scope=openid",
@@ -113,10 +98,11 @@ const renderApp = decoratorFragments =>
 );
 
 const startServer = html => {
-    server.get("/soknader/internal/isAlive|isReady", (req, res) =>
+    server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
         res.sendStatus(200)
     );
-    server.use("/soknader", (req, res) => {
+
+    server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => { // matcher alt bortsett fra internal og static
         res.send(html);
     });
 };
