@@ -19,6 +19,6 @@
     "./src"
   ],
   "exclude": [
-    "./src/appdynamics.js"
+    "./public/appdynamics.js"
   ]
 }
