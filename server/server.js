@@ -101,7 +101,8 @@ const startServer = html => {
     server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
         res.sendStatus(200)
     );
-    server.use(basePath("/*"), (req, res) => {
+
+    server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => { // matcher alt bortsett fra internal og static
         res.send(html);
     });
 };
