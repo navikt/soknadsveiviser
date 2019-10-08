@@ -85,7 +85,9 @@ const urlTilDokumentinnsendingEllerSoknadsdialog = (
 const hentDigitalEttersendelsesURL = (soknadsobjekt: Soknadsobjekt, locale: string) => {
   return (soknadsobjekt.digitalinnsending &&
       soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
-      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL &&
-      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL.nb) ?
-      localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelselsURL, locale) : `${getTjenesteUrl()}/saksoversikt/ettersending`;
+      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
+      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL &&
+      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL.nb) ?
+      localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL, locale)
+      : `${getTjenesteUrl()}/saksoversikt/ettersending`;
 };
