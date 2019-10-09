@@ -74,7 +74,7 @@ export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
   switch (action.type) {
     case "SETT_VEDLEGG": {
       const { soknadsobjekt } = action;
-      if (!soknadsobjekt) {
+      if (!soknadsobjekt || !soknadsobjekt.vedleggtilsoknad) {
         return state;
       }
 
