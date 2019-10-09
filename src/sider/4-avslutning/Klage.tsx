@@ -125,7 +125,7 @@ class Avslutning extends Component<MergedProps, State> {
           {!ettersendelse && (
             <SkjemaNedlasting
               steg={++steg}
-              hovedskjema={hovedskjema}
+              hovedskjema={klageskjema}
               skjemaSprak={skjemaSprak}
             />
           )}
