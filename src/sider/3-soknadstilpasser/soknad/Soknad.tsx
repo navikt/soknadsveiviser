@@ -60,15 +60,17 @@ class PapirSoknad extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        <Steg
-          tittel="velgvedlegg.informasjonspanel.tittel"
-          ingress="velgvedlegg.informasjonspanel.ingress"
-          beskrivelse="velgvedlegg.informasjonspanel.beskrivelse"
-        />
+        {relevanteVedlegg.length > 0 && (
+          <Steg
+            tittel="velgvedlegg.informasjonspanel.tittel"
+            ingress="velgvedlegg.informasjonspanel.ingress"
+            beskrivelse="velgvedlegg.informasjonspanel.beskrivelse"
+          />
+        )}
         <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
         <DineVedlegg
-          visErVedleggPakrevd
-          visRadioButtons
+          visRadioButtons={true}
+          visErVedleggPakrevd={true}
           vedleggTilInnsending={relevanteVedlegg}
         />
         <Personalia />
