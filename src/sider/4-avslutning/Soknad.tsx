@@ -128,10 +128,11 @@ class Avslutning extends Component<MergedProps, State> {
             relevanteVedlegg={relevanteVedlegg}
             skjemaSprak={skjemaSprak}
           />
-          {!ettersendelse && (
+          {/* Ikke tilby nedlasting av skjema NAV 00-03.00 - Annen post */}
+          {!ettersendelse && hovedskjema.skjemanummer !== "NAV 00-03.00" && (
             <SkjemaNedlasting
               steg={++steg}
-              soknadsobjekt={valgtSoknadsobjekt}
+              hovedskjema={hovedskjema}
               skjemaSprak={skjemaSprak}
             />
           )}

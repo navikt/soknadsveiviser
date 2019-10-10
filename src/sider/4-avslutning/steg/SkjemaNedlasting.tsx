@@ -1,19 +1,18 @@
 import * as React from "react";
 import StegOverskrift from "./Overskrift";
-import { Soknadsobjekt } from "../../../typer/soknad";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import SkjemaVisning from "./SkjemaVisning";
+import { Skjema } from "../../../typer/skjemaogvedlegg";
 
 interface Props {
   steg: number;
   skjemaSprak: string;
-  soknadsobjekt: Soknadsobjekt;
+  hovedskjema: Skjema;
 }
 
 type MergedProps = Props & InjectedIntlProps;
 const SkjemaNedlasting = (props: MergedProps) => {
-  const { steg, skjemaSprak, soknadsobjekt } = props;
-  const { hovedskjema } = soknadsobjekt;
+  const { steg, skjemaSprak, hovedskjema } = props;
   const { skjemanummer } = hovedskjema;
 
   return (
