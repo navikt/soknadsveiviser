@@ -4,9 +4,7 @@ import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 import { withRouter, RouteComponentProps } from "react-router";
 
-interface Props {
-    digitalEttersendelse?: boolean;
-}
+interface Props {}
 
 interface Routes {
   sprak: string;
@@ -18,8 +16,8 @@ interface Routes {
 }
 
 type MergedProps = Props & RouteComponentProps<Routes>;
-const PapirEttersendelse = (props: MergedProps ) => {
-  const { match, digitalEttersendelse } = props;
+const KlageEttersendelse = (props: MergedProps) => {
+  const { match } = props;
   const {
     sprak,
     skjemanummer,
@@ -32,15 +30,16 @@ const PapirEttersendelse = (props: MergedProps ) => {
     <div className="ettersendelse__container">
       <div className="ettersendelse__innhold">
         <Undertittel>
-            {digitalEttersendelse ?
-                <FormattedMessage id="ettersendelser.mellomledd.papir.finnesdigital.tittel" />
-                : <FormattedMessage id="ettersendelser.mellomledd.papir.ikkedigital.tittel" />}
+          <FormattedMessage id="ettersendelser.mellomledd.klageanke.tittel" />
         </Undertittel>
         <div className="ettersendelse__beskrivelse">
           <Normaltekst>
-              {digitalEttersendelse ?
-                  <FormattedMessage id="ettersendelser.mellomledd.papir.finnesdigital.beskrivelse" />
-                  : <FormattedMessage id="ettersendelser.mellomledd.papir.ikkedigital.beskrivelse" />}
+            <FormattedMessage id="ettersendelser.mellomledd.klage.beskrivelse" />
+          </Normaltekst>
+        </div>
+        <div className="ettersendelse__beskrivelse">
+          <Normaltekst>
+            <FormattedMessage id="ettersendelser.mellomledd.anke.beskrivelse" />
           </Normaltekst>
         </div>
       </div>
@@ -53,14 +52,28 @@ const PapirEttersendelse = (props: MergedProps ) => {
             `/${kategori}` +
             `/${underkategori}` +
             `/${skjemanummer}/brev` +
-            `/ettersendelse`
+            `/klage/ettersendelse`
           }
-          className="knapp knapp-hoved"
+          className="ettersendelse__knapp knapp knapp-hoved"
         >
-          <FormattedMessage id="ettersendelser.mellomledd.papir.knapp" />
+          <FormattedMessage id="ettersendelser.mellomledd.klage.knapp" />
+        </Link>
+        <Link
+          to={
+            `/soknader` +
+            `/${sprak}` +
+            `/${personEllerBedrift}` +
+            `/${kategori}` +
+            `/${underkategori}` +
+            `/${skjemanummer}/brev` +
+            `/anke/ettersendelse`
+          }
+          className="ettersendelse__knapp knapp knapp-hoved"
+        >
+          <FormattedMessage id="ettersendelser.mellomledd.anke.knapp" />
         </Link>
       </div>
     </div>
   );
 };
-export default withRouter(PapirEttersendelse);
+export default withRouter(KlageEttersendelse);
