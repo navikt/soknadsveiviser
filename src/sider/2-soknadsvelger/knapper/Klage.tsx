@@ -16,7 +16,7 @@ const Soknad = (props: MergedProps) => {
   return (
     <SettValgtSoknadsobjekt
       to={`${hentUrl(match.url)}/${skjemanummer}/brev/klage-eller-anke`}
-      title="klage.knapp"
+      title="klageanke.knapp"
       soknadsobjekt={soknadsobjekt}
     />
   );

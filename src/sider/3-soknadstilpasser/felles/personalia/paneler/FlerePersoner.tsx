@@ -21,7 +21,6 @@ const FlerePersonerPanel = (props: MergedProps) => {
 
   return (
     <Ekspanderbartpanel
-      border
       tittelProps="normaltekst"
       tittel={intl.formatMessage({ id: "personalia.bedrift.flerepersoner" })}
     >

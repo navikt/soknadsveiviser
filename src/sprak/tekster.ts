@@ -75,7 +75,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak
 
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
-    "klage.knapp": `Klage på vedtak`,
+    "klageanke.knapp": `Klage eller anke`,
     "klage.tittel.underbanner": `Klage på vedtak`,
     "klage.mellomledd.tittel": `Klage på vedtak`,
     "klage.mellomledd.beskrivelse": `Velg ‘Klage på vedtak’ hvis du ønsker å klage på et vedtak som er gjort i saken din.`,
@@ -255,7 +255,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "personalia.undertekstbold.tiltaksbedrift": `Example: Applications, invoice, list of participants, or other things that concern work-oriented measures
 
 In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
-    "klage.knapp": `Appeal`,
+    "klageanke.knapp": `Complaint or Appeal`,
     "klage.tittel.underbanner": `Appeal`,
     "klage.mellomledd.tittel": `TODO - Translate: Appeal`,
     "klage.mellomledd.beskrivelse": `TODO - Translate: Select ‘Appeal‘ if you want to appeal a decision made in your case.`,
