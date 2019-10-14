@@ -77,7 +77,11 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "klage.knapp": `Klage på vedtak`,
     "klage.tittel.underbanner": `Klage på vedtak`,
+    "klage.mellomledd.tittel": `Klage på vedtak`,
+    "klage.mellomledd.beskrivelse": `Velg ‘Klage på vedtak’ hvis du ønsker å klage på et vedtak som er gjort i saken din.`,
     "klage.ettersende": `Skal du ettersende dokumentasjon til en tidligere innsendt klage?`,
+    "anke.mellomledd.beskrivelse": `Velg ‘Anke en avslått klage’ hvis du har fått avslag på en klage som du mener er feil.`,
+    "anke.mellomledd.tittel": `Anke en avslått klage`,
     "ettersendelser.knapp": `Ettersendelse`,
     "ettersendelser.tittel.underbanner": `Velg hvilken dokumentasjon du skal ettersende`,
     "ettersendelser.mellomledd.tittel": `Velg ettersendelse`,
@@ -164,7 +168,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
 <p>For hver SED finnes det også forklaringer i et eget dokument med samme nummer som skjemaet etterfulgt av - (bindestrek).</p>
 
 <p>Innledningsvis under hvert fagområde er det en oversikt over alle flyter (og SED) som kan benyttes og en korrelasjonstabell som viser sammenhengen mellom tidligere E-skjemaer og de nye SED.</p>`,
-    "skjemautlisting": `Skjemautlisting`,
+    skjemautlisting: `Skjemautlisting`,
     "skjemautlisting.tabell.alleskjemaer": `Alle skjemaer`,
     "skjemautlisting.tabell.alle": `Alle`,
     "skjemautlisting.tabell.velgskjemaerfor": `Velg skjemaer for:`,
@@ -255,7 +259,11 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
 In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
     "klage.knapp": `Appeal`,
     "klage.tittel.underbanner": `Appeal`,
+    "klage.mellomledd.tittel": `TODO - Translate: Appeal`,
+    "klage.mellomledd.beskrivelse": `TODO - Translate: Select ‘Appeal‘ if you want to appeal a decision made in your case.`,
     "klage.ettersende": `Are you going to submit documentation to a previously filed complaint?`,
+    "anke.mellomledd.tittel": `TODO - Translate: Appeal a denied complaint`,
+    "anke.mellomledd.beskrivelse": `TODO - Translate: Velg ‘Anke en avslått klage’ hvis du har fått avslag på en klage som du mener er feil.`,
     "ettersendelser.knapp": `Forward`,
     "ettersendelser.tittel.underbanner": `Choose attachments to forward`,
     "ettersendelser.mellomledd.tittel": `Forward documentation`,
@@ -341,7 +349,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
 <p>For hver SED finnes det også forklaringer i et eget dokument med samme nummer som skjemaet etterfulgt av - (bindestrek).</p>
 
 <p>Innledningsvis under hvert fagområde er det en oversikt over alle flyter (og SED) som kan benyttes og en korrelasjonstabell som viser sammenhengen mellom tidligere E-skjemaer og de nye SED.</p>`,
-    "skjemautlisting": `Skjemautlisting`,
+    skjemautlisting: `Skjemautlisting`,
     "skjemautlisting.tabell.alleskjemaer": `Alle skjemaer`,
     "skjemautlisting.tabell.alle": `Alle`,
     "skjemautlisting.tabell.velgskjemaerfor": `Velg skjemaer for:`,
