@@ -34,7 +34,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
         valgtSoknadsobjekt.navn,
         intl.locale
       )} - ${intl.formatMessage({
-        id: "ettersendelser.mellomledd.tittel"
+        id: "anke.eller.klage.sidetittel"
       })}`
     );
 
