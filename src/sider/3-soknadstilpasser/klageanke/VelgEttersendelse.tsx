@@ -61,7 +61,13 @@ const VelgEttersendelse = (props: MergedProps) => {
             value: "nei"
           }
         ]}
-        checked={klage.skalEttersende ? "ja" : "nei"}
+        checked={
+          klage.skalEttersende !== undefined
+            ? klage.skalEttersende === true
+              ? "ja"
+              : "nei"
+            : undefined
+        }
         onChange={handleOnChange}
       />
     </PanelBase>

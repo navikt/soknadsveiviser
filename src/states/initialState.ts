@@ -14,7 +14,7 @@ export default {
     valgteVedlegg: []
   },
   klage: {
-    skalEttersende: false,
-    erVideresendt: false
+    skalEttersende: undefined,
+    erVideresendt: undefined
   }
 } as Store;

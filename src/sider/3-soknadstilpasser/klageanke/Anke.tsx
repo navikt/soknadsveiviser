@@ -5,7 +5,10 @@ import { Store } from "typer/store";
 import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
 import { Klage } from "typer/store";
 import { Soknadsobjekt } from "typer/soknad";
-import { settEttersendTilKlage } from "states/reducers/klage";
+import {
+  settEttersendTilKlage,
+  settVideresendtTilEnhet
+} from "states/reducers/klage";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
@@ -31,6 +34,7 @@ interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
   hentKlageSoknadsobjekt: (skalEttersende: boolean) => void;
   settEttersendTilKlage: (skalEttersende: boolean) => void;
+  settVideresendtTilEnhet: (erVideresendt: boolean) => void;
   settAlleVedleggSkalSendesForSoknadsobjekt: (
     soknadsobjekt: Soknadsobjekt
   ) => void;
@@ -57,6 +61,10 @@ class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
     const { klageSoknadsobjekt, match, klage } = this.props;
     const urlSkalEttersende = match.params.ettersendelse ? true : false;
+
+    // Anke er alltid vidersendt til enhet
+    this.props.settVideresendtTilEnhet(true);
+
     if (urlSkalEttersende && !klage.skalEttersende) {
       this.props.settEttersendTilKlage(true);
     }
@@ -88,19 +96,28 @@ class VisKlage extends Component<MergedProps> {
       return null;
     }
 
-    const {
-      valgteVedlegg,
-      valgtSoknadsobjekt,
-      klageSoknadsobjekt,
-      intl,
-      klage,
-      match
-    } = this.props;
-
+    const { intl, klage, match } = this.props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
+    const { valgteVedlegg } = this.props;
     const urlSkalEttersende = match.params.ettersendelse ? true : false;
-    const relevanteVedlegg = valgteVedlegg
+
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
       .filter(v => v.skalSendes);
+
+    const ikkePakrevdeVedlegg = valgteVedlegg
+      .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
+      .filter(v => !v.pakrevd);
+
+    const vedleggSvart = ikkePakrevdeVedlegg.filter(
+      vedlegg => vedlegg.skalSendes !== undefined
+    );
+
+    const erDisabled =
+      klage.erVideresendt === undefined ||
+      klage.skalEttersende === undefined ||
+      (!klage.skalEttersende &&
+        ikkePakrevdeVedlegg.length !== vedleggSvart.length);
 
     const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
@@ -118,9 +135,9 @@ class VisKlage extends Component<MergedProps> {
         )}
         <DineVedlegg
           visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
-          vedleggTilInnsending={relevanteVedlegg}
+          vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia />
+        <Personalia nesteDisabled={erDisabled} />
       </>
     );
   }
@@ -139,7 +156,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleValgtVedlegg: (_key: string, soknadsobjektId: string, klage: boolean) =>
     dispatch(toggleValgtVedlegg(_key, soknadsobjektId, klage)),
   settAlleVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
-    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
+    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt)),
+  settVideresendtTilEnhet: (erVideresendt: boolean) =>
+    dispatch(settVideresendtTilEnhet(erVideresendt))
 });
 
 export default medValgtSoknadsobjekt<Props>(

@@ -37,6 +37,7 @@ class PapirSoknad extends Component<MergedProps> {
   render() {
     const { intl } = this.props;
     const { valgteVedlegg, valgtSoknadsobjekt } = this.props;
+    const { hovedskjema } = valgtSoknadsobjekt;
 
     document.title = sideTittel(
       `${localeTekst(
@@ -47,12 +48,19 @@ class PapirSoknad extends Component<MergedProps> {
       })}`
     );
 
-    const relevanteVedlegg = valgteVedlegg
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
       .filter(v => v.skalSendes || v.pakrevd);
 
-    const { hovedskjema } = valgtSoknadsobjekt;
+    const ikkePakrevdeVedlegg = valgteVedlegg
+      .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
+      .filter(v => !v.pakrevd);
 
+    const vedleggSvart = ikkePakrevdeVedlegg.filter(
+      vedlegg => vedlegg.skalSendes !== undefined
+    );
+
+    let erDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length;
     return (
       <>
         <Underbanner
@@ -60,7 +68,7 @@ class PapirSoknad extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        {relevanteVedlegg.length > 0 && (
+        {vedleggTilInnsending.length > 0 && (
           <Steg
             tittel="velgvedlegg.informasjonspanel.tittel"
             ingress="velgvedlegg.informasjonspanel.ingress"
@@ -71,9 +79,9 @@ class PapirSoknad extends Component<MergedProps> {
         <DineVedlegg
           visRadioButtons={true}
           visErVedleggPakrevd={true}
-          vedleggTilInnsending={relevanteVedlegg}
+          vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia />
+        <Personalia nesteDisabled={erDisabled} />
       </>
     );
   }

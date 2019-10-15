@@ -85,6 +85,17 @@ class Dokumentinnsending extends Component<MergedProps> {
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
       .filter(v => (ettersendelse ? v.skalSendes : v.skalSendes || v.pakrevd));
 
+    const ikkePakrevdeVedlegg = valgteVedlegg
+      .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
+      .filter(v => !v.pakrevd);
+
+    const vedleggSvart = ikkePakrevdeVedlegg.filter(
+      vedlegg => vedlegg.skalSendes !== undefined
+    );
+
+    let erDisabled =
+      !ettersendelse && ikkePakrevdeVedlegg.length !== vedleggSvart.length;
+
     const URLvidere = this.genererDokumentinnsendingsUrl(
       valgtSoknadsobjekt,
       vedleggTilInnsending,
@@ -110,7 +121,7 @@ class Dokumentinnsending extends Component<MergedProps> {
           visErVedleggPakrevd={true}
           vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Neste lenke={URLvidere} ettersendelse={ettersendelse} />
+        <Neste lenke={URLvidere} disabled={erDisabled} />
       </>
     );
   }

@@ -54,7 +54,13 @@ const VelgOmBehandletAvEnhet = (props: MergedProps) => {
             value: "nei"
           }
         ]}
-        checked={klage.erVideresendt ? "ja" : "nei"}
+        checked={
+          klage.erVideresendt !== undefined
+            ? klage.erVideresendt === true
+              ? "ja"
+              : "nei"
+            : undefined
+        }
         onChange={handleOnChange}
       />
     </PanelBase>

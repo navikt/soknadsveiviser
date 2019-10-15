@@ -89,22 +89,32 @@ class VisKlage extends Component<MergedProps> {
       return null;
     }
 
-    const {
-      valgteVedlegg,
-      valgtSoknadsobjekt,
-      klageSoknadsobjekt,
-      intl,
-      klage,
-      match
-    } = this.props;
-
+    const { intl, klage, match } = this.props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
+    const { valgteVedlegg } = this.props;
     const urlSkalEttersende = match.params.ettersendelse ? true : false;
-    const relevanteVedlegg = valgteVedlegg
+
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
       .filter(v => v.skalSendes);
 
+    const ikkePakrevdeVedlegg = valgteVedlegg
+      .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
+      .filter(v => !v.pakrevd);
+
+    const vedleggSvart = ikkePakrevdeVedlegg.filter(
+      vedlegg => vedlegg.skalSendes !== undefined
+    );
+
     const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
+
+    const erDisabled =
+      klage.skalEttersende === undefined ||
+      klage.erVideresendt === undefined ||
+      (!klage.skalEttersende &&
+        ikkePakrevdeVedlegg.length !== vedleggSvart.length);
+
     return (
       <>
         <Underbanner
@@ -114,15 +124,15 @@ class VisKlage extends Component<MergedProps> {
         />
         <Steg tittel="klage.tittel.underbanner" />
         {!urlSkalEttersende && <VelgEttersendelse />}
-        <VelgOmBehandletAvEnhet />
-        {!klage.skalEttersende && (
+        {klage.skalEttersende !== undefined && <VelgOmBehandletAvEnhet />}
+        {klage.erVideresendt !== undefined && !klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg
           visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
-          vedleggTilInnsending={relevanteVedlegg}
+          vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia />
+        <Personalia nesteDisabled={erDisabled} />
       </>
     );
   }

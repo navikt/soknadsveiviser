@@ -27,10 +27,15 @@ interface Routes {
   personEllerBedrift: string;
 }
 
-type MergedProps = ValgtSoknad &
+interface Props {
+  nesteDisabled: boolean;
+}
+
+type MergedProps = Props &
+  ValgtSoknad &
   Personalia &
   RouteComponentProps<Routes> &
-  InjectedIntlProps & { ettersendelse?: string };
+  InjectedIntlProps;
 
 class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
   handleSubmit = (e: any) => {
@@ -93,7 +98,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
   render() {
     const { personEllerBedrift } = this.props.match.params;
-    const { ettersendelse } = this.props;
+    const { nesteDisabled } = this.props;
 
     const initAdresse = this.props.adresse || {
       navn: "",
@@ -147,7 +152,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                     <TiltaksBedriftPanel />
                   </>
                 )}
-                <NesteKnapp ettersendelse={ettersendelse} />
+                <NesteKnapp disabled={nesteDisabled} />
               </Form>
             </>
           );
@@ -157,11 +162,12 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
   }
 }
 
-export default medPersonalia<Personalia & { ettersendelse?: string }>(
-  medValgtSoknadsobjekt<ValgtSoknad & Personalia>(
-    injectIntl<ValgtSoknad & Personalia & InjectedIntlProps>(
+export default medPersonalia<Props & Personalia>(
+  medValgtSoknadsobjekt<Props & ValgtSoknad & Personalia>(
+    injectIntl<Props & ValgtSoknad & Personalia & InjectedIntlProps>(
       withRouter<
-        ValgtSoknad &
+        Props &
+          ValgtSoknad &
           Personalia &
           InjectedIntlProps &
           RouteComponentProps<Routes>
