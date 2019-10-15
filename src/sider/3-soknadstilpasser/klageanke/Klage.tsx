@@ -1,27 +1,26 @@
 import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Store } from "../../../typer/store";
-import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
-import { Klage } from "../../../typer/store";
-import { Soknadsobjekt } from "../../../typer/soknad";
-import { settEttersendTilKlage } from "../../../states/reducers/klage";
+import { Store } from "typer/store";
+import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
+import { Klage } from "typer/store";
+import { Soknadsobjekt } from "typer/soknad";
+import { settEttersendTilKlage } from "states/reducers/klage";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
-import {
-  toggleValgtVedlegg,
-  settAlleVedleggSkalSendesForSoknadsobjekt
-} from "../../../states/reducers/vedlegg";
+import { settAlleVedleggSkalSendesForSoknadsobjekt } from "states/reducers/vedlegg";
+import { toggleValgtVedlegg } from "states/reducers/vedlegg";
+import VelgOmBehandletAvEnhet from "./VelgOmBehandletAvEnhet";
 import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
-import Underbanner from "../../../komponenter/bannere/Underbanner";
+import Underbanner from "komponenter/bannere/Underbanner";
 import VelgEttersendelse from "./VelgEttersendelse";
 import Personalia from "../felles/personalia/Personalia";
-import Steg from "../../../komponenter/bannere/Steg";
-import { localeTekst } from "../../../utils/sprak";
-import { apiHentSoknadsobjektForKlage } from "../../../klienter/sanityKlient";
-import { sideTittel } from "../../../utils/sprak";
-import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
+import Steg from "komponenter/bannere/Steg";
+import { localeTekst } from "utils/sprak";
+import { apiHentSoknadsobjektForKlage } from "klienter/sanityKlient";
+import { sideTittel } from "utils/sprak";
+import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 
 interface Props {
   klageSoknadsobjekt: Soknadsobjekt;
@@ -115,6 +114,7 @@ class VisKlage extends Component<MergedProps> {
         />
         <Steg tittel="klage.tittel.underbanner" />
         {!urlSkalEttersende && <VelgEttersendelse />}
+        <VelgOmBehandletAvEnhet />
         {!klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}

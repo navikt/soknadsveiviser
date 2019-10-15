@@ -77,6 +77,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "klageanke.knapp": `Klage eller anke`,
     "klage.tittel.underbanner": `Klage på vedtak`,
+    "klage.videresendt.enhet": `Har du fått brev om at saken din er videresendt til behandling av en annen enhet?`,
     "klage.mellomledd.tittel": `Klage på vedtak`,
     "klage.mellomledd.beskrivelse": `Velg ‘Klage på vedtak’ hvis du ønsker å klage på et vedtak som er gjort i saken din.`,
     "klage.ettersende": `Skal du ettersende dokumentasjon til en tidligere innsendt klage?`,
