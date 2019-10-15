@@ -60,7 +60,7 @@ class PapirSoknad extends Component<MergedProps> {
       vedlegg => vedlegg.skalSendes !== undefined
     );
 
-    let erDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length;
+    let erNesteDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length;
     return (
       <>
         <Underbanner
@@ -81,7 +81,7 @@ class PapirSoknad extends Component<MergedProps> {
           visErVedleggPakrevd={true}
           vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia nesteDisabled={erDisabled} />
+        <Personalia nesteDisabled={erNesteDisabled} />
       </>
     );
   }

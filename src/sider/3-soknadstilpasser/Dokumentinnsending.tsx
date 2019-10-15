@@ -93,7 +93,7 @@ class Dokumentinnsending extends Component<MergedProps> {
       vedlegg => vedlegg.skalSendes !== undefined
     );
 
-    let erDisabled =
+    let erNesteDisabled =
       !ettersendelse && ikkePakrevdeVedlegg.length !== vedleggSvart.length;
 
     const URLvidere = this.genererDokumentinnsendingsUrl(
@@ -121,7 +121,7 @@ class Dokumentinnsending extends Component<MergedProps> {
           visErVedleggPakrevd={true}
           vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Neste lenke={URLvidere} disabled={erDisabled} />
+        <Neste lenke={URLvidere} disabled={erNesteDisabled} />
       </>
     );
   }

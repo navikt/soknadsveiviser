@@ -109,7 +109,7 @@ class VisKlage extends Component<MergedProps> {
     const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
 
-    const erDisabled =
+    const erNesteDisabled =
       klage.skalEttersende === undefined ||
       klage.erVideresendt === undefined ||
       (!klage.skalEttersende &&
@@ -132,7 +132,7 @@ class VisKlage extends Component<MergedProps> {
           visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
           vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia nesteDisabled={erDisabled} />
+        <Personalia nesteDisabled={erNesteDisabled} />
       </>
     );
   }
