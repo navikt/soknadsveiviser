@@ -53,7 +53,7 @@ class Dokumentinnsending extends Component<MergedProps> {
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
       .filter(v => v.skalSendes || v.pakrevd)
       .map(({ vedlegg }) => hentSkjemanrEllerVedleggid(vedlegg))
-      .toString();
+      .join();
 
     return encodeURI(
       getTjenesteUrl() +
