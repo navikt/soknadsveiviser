@@ -8,29 +8,37 @@ import {
   Fodselsnummer,
   medPersonalia,
   Personalia
-} from "../../../../../states/providers/Personalia";
+} from "states/providers/Personalia";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
-} from "../../../../../states/providers/ValgtSoknadsobjekt";
+} from "states/providers/ValgtSoknadsobjekt";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import {
   finnesVisEnheter,
   finnesTilSkanning,
   finnesSpesifisertAdresse
-} from "../../../../../utils/soknadsobjekter";
+} from "utils/soknadsobjekter";
+import { Klage, Store } from "typer/store";
+import { connect } from "react-redux";
+import ErVideresendtTilEnhet from "./ErVideresendtTilEnhet";
 
 interface Routes {
   personEllerBedrift: string;
 }
 
+interface ReduxProps {
+  klage: Klage;
+}
+
 type MergedProps = ValgtSoknad &
   Personalia &
   RouteComponentProps<Routes> &
-  InjectedIntlProps;
+  InjectedIntlProps &
+  ReduxProps;
 
 const FodselsnummerPanel = (props: MergedProps) => {
-  const { intl, valgtSoknadsobjekt } = props;
+  const { intl, valgtSoknadsobjekt, klage } = props;
   const { personEllerBedrift } = props.match.params;
   const { innsendingsmate } = valgtSoknadsobjekt;
   const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
@@ -61,12 +69,26 @@ const FodselsnummerPanel = (props: MergedProps) => {
               {...pr}
             />
           )}
+          {klage.erVideresendt && <ErVideresendtTilEnhet {...pr} />}
         </Ekspanderbartpanel>
       )}
     />
   );
 };
 
-export default medValgtSoknadsobjekt(
-  injectIntl(withRouter(medPersonalia(FodselsnummerPanel)))
+const mapStateToProps = (store: Store) => ({
+  klage: store.klage
+});
+
+export default medValgtSoknadsobjekt<ValgtSoknad>(
+  injectIntl<ValgtSoknad & InjectedIntlProps>(
+    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>>(
+      medPersonalia<
+        Personalia &
+          ValgtSoknad &
+          InjectedIntlProps &
+          RouteComponentProps<Routes>
+      >(connect(mapStateToProps)(FodselsnummerPanel))
+    )
+  )
 );

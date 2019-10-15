@@ -4,7 +4,7 @@ import {
   Adresse,
   Personalia,
   medPersonalia
-} from "../../../../../states/providers/Personalia";
+} from "states/providers/Personalia";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
@@ -20,21 +20,26 @@ import {
   finnesVisEnheter,
   finnesTilSkanning,
   finnesSpesifisertAdresse
-} from "../../../../../utils/soknadsobjekter";
+} from "utils/soknadsobjekter";
 import {
   medValgtSoknadsobjekt,
   ValgtSoknad
-} from "../../../../../states/providers/ValgtSoknadsobjekt";
+} from "states/providers/ValgtSoknadsobjekt";
+import ErVideresendtTilEnhet from "./ErVideresendtTilEnhet";
+import { Klage, Store } from "typer/store";
+import { connect } from "react-redux";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
 }
 
-interface Props {}
+interface ReduxProps {
+  klage: Klage;
+}
 
-type MergedProps = Props &
-  ValgtSoknad &
+type MergedProps = ReduxProps &
   Personalia &
+  ValgtSoknad &
   FieldProps<Adresse> &
   InjectedIntlProps;
 
@@ -46,7 +51,7 @@ class AdresseFelter extends Component<MergedProps, State> {
     });
 
   render() {
-    const { intl, touched, valgtSoknadsobjekt } = this.props;
+    const { intl, touched, valgtSoknadsobjekt, klage } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
     const { innsendingsmate } = valgtSoknadsobjekt;
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
@@ -91,6 +96,7 @@ class AdresseFelter extends Component<MergedProps, State> {
               {...this.props}
             />
           )}
+          {klage.erVideresendt && <ErVideresendtTilEnhet {...this.props} />}
         </div>
       </>
     ) : (
@@ -99,4 +105,14 @@ class AdresseFelter extends Component<MergedProps, State> {
   }
 }
 
-export default medValgtSoknadsobjekt(medPersonalia(injectIntl(AdresseFelter)));
+const mapStateToProps = (store: Store) => ({
+  klage: store.klage
+});
+
+export default injectIntl<InjectedIntlProps>(
+  medValgtSoknadsobjekt<InjectedIntlProps & ValgtSoknad>(
+    medPersonalia<InjectedIntlProps & ValgtSoknad & Personalia>(
+      connect(mapStateToProps)(AdresseFelter)
+    )
+  )
+);
