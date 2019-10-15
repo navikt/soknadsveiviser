@@ -63,10 +63,12 @@ export const NesteLenke = (lenke: string, erDisabled: boolean) => {
   return (
     <div className="knapp__neste">
       <Knapp
-        aria-details={lenke}
         className="knapp knapp--hoved sentrert__knapp row"
         disabled={erDisabled}
-        onClick={() => (window.location.href = lenke)}
+        onClick={() => {
+          console.log(`Redirecing to ${lenke}`);
+          window.location.href = lenke;
+        }}
       >
         <FormattedMessage id="personalia.knapp" />
       </Knapp>
