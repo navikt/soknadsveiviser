@@ -48,13 +48,13 @@ class Dokumentinnsending extends Component<MergedProps> {
       .map(ved => ved.vedlegg.vedleggsid)
       .toString();
 
-    return (
+    return encodeURI(
       getTjenesteUrl() +
-      "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
-      hovedskjema.skjemanummer +
-      "&erEttersendelse=" +
-      (ettersendelse ? "true" : "false") +
-      (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
+        "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
+        hovedskjema.skjemanummer +
+        "&erEttersendelse=" +
+        (ettersendelse ? "true" : "false") +
+        (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
     );
   };
 
