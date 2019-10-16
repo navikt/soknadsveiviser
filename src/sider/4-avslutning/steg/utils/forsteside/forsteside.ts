@@ -35,7 +35,8 @@ export const hentForsteside = (params: Params): Promise<string> =>
       typeKlage,
       skalAnke
     } = params;
-    const soknadsobjekt = skalKlage ? klageSoknadsobjekt : valgtSoknadsobjekt;
+    const soknadsobjekt =
+      skalKlage || skalAnke ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
     const vedleggSomSkalSendes = params.relevanteVedlegg
