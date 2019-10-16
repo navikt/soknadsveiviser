@@ -29,7 +29,8 @@ interface Routes {
 
 interface Props {
   nesteDisabled: boolean;
-  klageEllerAnke?: boolean;
+  skalKlage?: boolean;
+  skalAnke?: boolean;
 }
 
 type MergedProps = Props &
@@ -99,7 +100,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
   render() {
     const { personEllerBedrift } = this.props.match.params;
-    const { nesteDisabled, klageEllerAnke } = this.props;
+    const { nesteDisabled, skalKlage, skalAnke } = this.props;
 
     const initAdresse = this.props.adresse || {
       navn: "",
@@ -145,8 +146,8 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                 )}
               </div>
               <Form className="personalia__paneler" autoComplete="off">
-                <FodselsnummerPanel />
-                {!klageEllerAnke && (
+                <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />
+                {!(skalKlage || skalAnke) && (
                   <>
                     <AdressePanel />
                     {personEllerBedrift === "bedrift" && (

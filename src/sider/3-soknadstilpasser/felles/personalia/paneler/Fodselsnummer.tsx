@@ -28,17 +28,23 @@ interface Routes {
 }
 
 interface ReduxProps {
-  klage: Klage;
+  klageType: Klage;
 }
 
-type MergedProps = ValgtSoknad &
+interface Props {
+  skalKlage?: boolean;
+  skalAnke?: boolean;
+}
+
+type MergedProps = Props &
+  ValgtSoknad &
   Personalia &
   RouteComponentProps<Routes> &
   InjectedIntlProps &
   ReduxProps;
 
 const FodselsnummerPanel = (props: MergedProps) => {
-  const { intl, valgtSoknadsobjekt, klage } = props;
+  const { intl, valgtSoknadsobjekt, klageType, skalAnke, skalKlage } = props;
   const { personEllerBedrift } = props.match.params;
   const { innsendingsmate } = valgtSoknadsobjekt;
   const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
@@ -69,7 +75,9 @@ const FodselsnummerPanel = (props: MergedProps) => {
               {...pr}
             />
           )}
-          {klage.erVideresendt && <ErVideresendtTilEnhet {...pr} />}
+          {(skalAnke || (skalKlage && klageType.erVideresendt)) && (
+            <ErVideresendtTilEnhet {...pr} />
+          )}
         </Ekspanderbartpanel>
       )}
     />
@@ -77,18 +85,17 @@ const FodselsnummerPanel = (props: MergedProps) => {
 };
 
 const mapStateToProps = (store: Store) => ({
-  klage: store.klage
+  klageType: store.klage
 });
 
-export default medValgtSoknadsobjekt<ValgtSoknad>(
-  injectIntl<ValgtSoknad & InjectedIntlProps>(
-    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>>(
-      medPersonalia<
-        Personalia &
-          ValgtSoknad &
-          InjectedIntlProps &
-          RouteComponentProps<Routes>
-      >(connect(mapStateToProps)(FodselsnummerPanel))
+export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
+  injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
+    withRouter<
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+    >(
+      medPersonalia<Exclude<MergedProps, ReduxProps>>(
+        connect(mapStateToProps)(FodselsnummerPanel)
+      )
     )
   )
 );

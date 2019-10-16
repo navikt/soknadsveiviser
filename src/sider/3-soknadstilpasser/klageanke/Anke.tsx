@@ -137,7 +137,7 @@ class VisKlage extends Component<MergedProps> {
           visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
           vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia nesteDisabled={erNesteDisabled} klageEllerAnke={true} />
+        <Personalia nesteDisabled={erNesteDisabled} skalAnke={true} />
       </>
     );
   }
