@@ -8,18 +8,22 @@ interface Props {
   soknadsobjekt: Soknadsobjekt;
 }
 
-type MergedProps = Props & RouteComponentProps;
+interface Routes {
+  personEllerBedrift: string;
+}
+
+type MergedProps = Props & RouteComponentProps<Routes>;
 const Soknad = (props: MergedProps) => {
   const { soknadsobjekt, match } = props;
   const { skjemanummer } = soknadsobjekt.hovedskjema;
-
-  return (
+  const { personEllerBedrift } = match.params;
+  return personEllerBedrift !== "bedrift" ? (
     <SettValgtSoknadsobjekt
       to={`${hentUrl(match.url)}/${skjemanummer}/brev/klage-eller-anke`}
       title="klageanke.knapp"
       soknadsobjekt={soknadsobjekt}
     />
-  );
+  ) : null;
 };
 
 export default withRouter(Soknad);
