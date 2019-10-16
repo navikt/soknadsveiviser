@@ -49,6 +49,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
     const { settTouched } = this.props;
     const { innsendingsmate } = valgtSoknadsobjekt;
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
+    const erKlageVideresendt = typeKlage && typeKlage.erVideresendt;
     /*
       TODO: Restruktur alle forms og validering
      */
@@ -57,10 +58,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
       (!skalKlage && !skalAnke && !visEnheter) ||
       (e.fodselsnummer.valgtEnhet && visEnheter) ||
       (e.fodselsnummer.valgtEnhet && skalAnke) ||
-      (e.fodselsnummer.valgtEnhet &&
-        skalKlage &&
-        typeKlage &&
-        typeKlage.erVideresendt);
+      (e.fodselsnummer.valgtEnhet && skalKlage && erKlageVideresendt);
 
     const validertFormFodselsnummer =
       e.fodselsnummer.fodselsnummer &&
