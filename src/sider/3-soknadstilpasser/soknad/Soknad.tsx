@@ -48,14 +48,15 @@ class PapirSoknad extends Component<MergedProps> {
       })}`
     );
 
-    const vedleggTilInnsending = valgteVedlegg
-      .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
-      .filter(v => v.skalSendes || v.pakrevd);
+    const relevanteVedlegg = valgteVedlegg.filter(
+      v => v.soknadsobjektId === valgtSoknadsobjekt._id
+    );
 
-    const ikkePakrevdeVedlegg = valgteVedlegg
-      .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
-      .filter(v => !v.pakrevd);
+    const vedleggTilInnsending = relevanteVedlegg.filter(
+      v => v.skalSendes || v.pakrevd
+    );
 
+    const ikkePakrevdeVedlegg = relevanteVedlegg.filter(v => !v.pakrevd);
     const vedleggSvart = ikkePakrevdeVedlegg.filter(
       vedlegg => vedlegg.skalSendes !== undefined
     );
@@ -68,7 +69,7 @@ class PapirSoknad extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        {vedleggTilInnsending.length > 0 && (
+        {relevanteVedlegg.length > 0 && (
           <Steg
             tittel="velgvedlegg.informasjonspanel.tittel"
             ingress="velgvedlegg.informasjonspanel.ingress"

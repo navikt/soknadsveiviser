@@ -17,6 +17,7 @@ import FlerePersonerPanel from "./paneler/FlerePersoner";
 import TiltaksBedriftPanel from "./paneler/TiltaksBedrift";
 import NesteKnapp from "./knapper/Neste";
 import { finnesVisEnheter } from "../../../../utils/soknadsobjekter";
+import { Klage } from "../../../../typer/store";
 
 interface ValgtSoknad {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -29,6 +30,7 @@ interface Routes {
 
 interface Props {
   nesteDisabled: boolean;
+  typeKlage?: Klage;
   skalKlage?: boolean;
   skalAnke?: boolean;
 }
@@ -42,33 +44,62 @@ type MergedProps = Props &
 class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
   handleSubmit = (e: any) => {
     const { history, match, valgtSoknadsobjekt, intl } = this.props;
+    const { skalAnke, skalKlage, typeKlage } = this.props;
+    const { settFodselsnummer, settAdresse, settValgtEnhet } = this.props;
+    const { settTouched } = this.props;
     const { innsendingsmate } = valgtSoknadsobjekt;
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
-    this.props.resetState();
-    if (
-      (e.fodselsnummer.valgtEnhet || !visEnheter) &&
+    /*
+      TODO: Restruktur alle forms og validering
+     */
+
+    const validertFormFodselsnummerValgtEnhet =
+      (!skalKlage && !skalAnke && !visEnheter) ||
+      (e.fodselsnummer.valgtEnhet && visEnheter) ||
+      (e.fodselsnummer.valgtEnhet && skalAnke) ||
+      (e.fodselsnummer.valgtEnhet &&
+        skalKlage &&
+        typeKlage &&
+        typeKlage.erVideresendt);
+
+    const validertFormFodselsnummer =
       e.fodselsnummer.fodselsnummer &&
-      erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer)
-    ) {
-      loggEvent("soknadsveiviser.harNorskFodselsnummer", {
-        harNorskFodselsNummer: true
-      });
-      this.props.settFodselsnummer({
-        fodselsnummer: e.fodselsnummer.fodselsnummer,
-        valgtEnhet: e.fodselsnummer.valgtEnhet
-      });
-      history.push(`${match.url}/avslutning`);
-    } else if (
+      erGyldigFodselsnummer(e.fodselsnummer.fodselsnummer) &&
+      validertFormFodselsnummerValgtEnhet;
+
+    const validertFormAdresse =
       (e.adresse.valgtEnhet || !visEnheter) &&
       e.adresse.navn &&
       e.adresse.adresse &&
       e.adresse.sted &&
-      e.adresse.land
-    ) {
+      e.adresse.land;
+
+    const validertFormFlerpersoner = e.flerepersoner.valgtEnhet;
+    const validertFormTiltaksbedrift = e.flerepersoner.valgtEnhet;
+
+    // Reset
+    this.props.resetState();
+
+    if (validertFormFodselsnummer) {
+      /*
+       Validert fødselsnummer
+      */
+      loggEvent("soknadsveiviser.harNorskFodselsnummer", {
+        harNorskFodselsNummer: true
+      });
+      settFodselsnummer({
+        fodselsnummer: e.fodselsnummer.fodselsnummer,
+        valgtEnhet: e.fodselsnummer.valgtEnhet
+      });
+      history.push(`${match.url}/avslutning`);
+    } else if (validertFormAdresse) {
+      /*
+        Validert adresse
+       */
       loggEvent("soknadsveiviser.harNorskFodselsnummer", {
         harNorskFodselsNummer: false
       });
-      this.props.settAdresse({
+      settAdresse({
         navn: e.adresse.navn,
         adresse: e.adresse.adresse,
         sted: e.adresse.sted,
@@ -78,14 +109,23 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
         valgtEnhet: e.adresse.valgtEnhet
       });
       history.push(`${match.url}/avslutning`);
-    } else if (e.flerepersoner.valgtEnhet) {
-      this.props.settValgtEnhet(e.flerepersoner.valgtEnhet, "flerepersoner");
+    } else if (validertFormFlerpersoner) {
+      /*
+        Fler personer
+      */
+      settValgtEnhet(e.flerepersoner.valgtEnhet, "flerepersoner");
       history.push(`${match.url}/avslutning`);
-    } else if (e.tiltaksbedrift.valgtEnhet) {
-      this.props.settValgtEnhet(e.tiltaksbedrift.valgtEnhet, "tiltaksbedrift");
+    } else if (validertFormTiltaksbedrift) {
+      /*
+        Tiltaksbedrift
+      */
+      settValgtEnhet(e.tiltaksbedrift.valgtEnhet, "tiltaksbedrift");
       history.push(`${match.url}/avslutning`);
     } else {
-      this.props.settTouched({
+      /*
+       Ingen gyldige forms
+      */
+      settTouched({
         fodselsnummer: true,
         navn: true,
         adresse: true,
@@ -171,13 +211,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 export default medPersonalia<Props & Personalia>(
   medValgtSoknadsobjekt<Props & ValgtSoknad & Personalia>(
     injectIntl<Props & ValgtSoknad & Personalia & InjectedIntlProps>(
-      withRouter<
-        Props &
-          ValgtSoknad &
-          Personalia &
-          InjectedIntlProps &
-          RouteComponentProps<Routes>
-      >(VisPersonalia)
+      withRouter<MergedProps>(VisPersonalia)
     )
   )
 );
