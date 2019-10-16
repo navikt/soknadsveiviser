@@ -147,7 +147,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "veileder.ettersendelse.steg2": `2. Klikk på knappen «Ettersendelse» på den søknaden det gjelder og følg instruksjonene videre.`,
     "veileder.klage.tittel": "Klage på vedtak",
     "veileder.klage.steg1": `1. Velg hvilken søknad klagen gjelder i oversikten nedenfor. `,
-    "veileder.klage.steg2": `2. Klikk på knappen «Klage / anke» på den søknaden det gjelder og følge instruksjonene videre.`,
+    "veileder.klage.steg2": `2. Klikk på knappen «Klage eller anke» på den søknaden det gjelder og følge instruksjonene videre.`,
     "errors.api.fetch": "Oisann, noe gikk galt ved henting av data!",
     "errors.api.kategori": `Vi fant dessverre ikke valgt kategori.`,
     "errors.api.underkategori": `Vi fant dessverre ikke valgt underkategori.`,
