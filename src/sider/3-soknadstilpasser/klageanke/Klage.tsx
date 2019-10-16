@@ -123,16 +123,18 @@ class VisKlage extends Component<MergedProps> {
           skjemanummer={klageskjema.skjemanummer}
         />
         <Steg tittel="klage.tittel.underbanner" />
-        {!urlSkalEttersende && <VelgEttersendelse />}
-        {klage.skalEttersende !== undefined && <VelgOmBehandletAvEnhet />}
-        {klage.erVideresendt !== undefined && !klage.skalEttersende && (
+        <VelgOmBehandletAvEnhet />
+        {klage.erVideresendt !== undefined && !urlSkalEttersende && (
+          <VelgEttersendelse />
+        )}
+        {klage.skalEttersende !== undefined && !klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg
           visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
           vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia nesteDisabled={erNesteDisabled} />
+        <Personalia nesteDisabled={erNesteDisabled} klageEllerAnke={true} />
       </>
     );
   }

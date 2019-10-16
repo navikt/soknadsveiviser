@@ -29,6 +29,7 @@ interface Routes {
 
 interface Props {
   nesteDisabled: boolean;
+  klageEllerAnke?: boolean;
 }
 
 type MergedProps = Props &
@@ -98,7 +99,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
   render() {
     const { personEllerBedrift } = this.props.match.params;
-    const { nesteDisabled } = this.props;
+    const { nesteDisabled, klageEllerAnke } = this.props;
 
     const initAdresse = this.props.adresse || {
       navn: "",
@@ -145,11 +146,15 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
               </div>
               <Form className="personalia__paneler" autoComplete="off">
                 <FodselsnummerPanel />
-                <AdressePanel />
-                {personEllerBedrift === "bedrift" && (
+                {!klageEllerAnke && (
                   <>
-                    <FlerePersonerPanel />
-                    <TiltaksBedriftPanel />
+                    <AdressePanel />
+                    {personEllerBedrift === "bedrift" && (
+                      <>
+                        <FlerePersonerPanel />
+                        <TiltaksBedriftPanel />
+                      </>
+                    )}
                   </>
                 )}
                 <NesteKnapp disabled={nesteDisabled} />

@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { FieldProps } from "formik/dist/Field";
-import {
-  Adresse,
-  Personalia,
-  medPersonalia
-} from "states/providers/Personalia";
+import { medPersonalia } from "states/providers/Personalia";
+import { Adresse, Personalia } from "states/providers/Personalia";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
@@ -16,30 +13,20 @@ import InputPostnummer from "./felter/Postnummer";
 import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
-import {
-  finnesVisEnheter,
-  finnesTilSkanning,
-  finnesSpesifisertAdresse
-} from "utils/soknadsobjekter";
-import {
-  medValgtSoknadsobjekt,
-  ValgtSoknad
-} from "states/providers/ValgtSoknadsobjekt";
-import ErVideresendtTilEnhet from "./ErVideresendtTilEnhet";
-import { Klage, Store } from "typer/store";
-import { connect } from "react-redux";
+import { finnesSpesifisertAdresse } from "utils/soknadsobjekter";
+import { finnesVisEnheter, finnesTilSkanning } from "utils/soknadsobjekter";
+import { ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
+import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
 }
 
-interface ReduxProps {
-  klage: Klage;
-}
+interface Props {}
 
-type MergedProps = ReduxProps &
-  Personalia &
+type MergedProps = Props &
   ValgtSoknad &
+  Personalia &
   FieldProps<Adresse> &
   InjectedIntlProps;
 
@@ -51,7 +38,7 @@ class AdresseFelter extends Component<MergedProps, State> {
     });
 
   render() {
-    const { intl, touched, valgtSoknadsobjekt, klage } = this.props;
+    const { intl, touched, valgtSoknadsobjekt } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
     const { innsendingsmate } = valgtSoknadsobjekt;
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
@@ -96,7 +83,6 @@ class AdresseFelter extends Component<MergedProps, State> {
               {...this.props}
             />
           )}
-          {klage.erVideresendt && <ErVideresendtTilEnhet {...this.props} />}
         </div>
       </>
     ) : (
@@ -105,14 +91,4 @@ class AdresseFelter extends Component<MergedProps, State> {
   }
 }
 
-const mapStateToProps = (store: Store) => ({
-  klage: store.klage
-});
-
-export default injectIntl<InjectedIntlProps>(
-  medValgtSoknadsobjekt<InjectedIntlProps & ValgtSoknad>(
-    medPersonalia<InjectedIntlProps & ValgtSoknad & Personalia>(
-      connect(mapStateToProps)(AdresseFelter)
-    )
-  )
-);
+export default medValgtSoknadsobjekt(medPersonalia(injectIntl(AdresseFelter)));

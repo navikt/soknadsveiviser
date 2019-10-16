@@ -1,23 +1,24 @@
 import * as React from "react";
 import { Field, FieldProps } from "formik";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { medPersonalia, Personalia } from "states/providers/Personalia";
 import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import VisEnheter from "./felter/VisEnheter";
 import { UndertekstBold } from "nav-frontend-typografi";
-import { Klage, Store } from "typer/store";
-import { connect } from "react-redux";
 
-interface ReduxProps {
-  klage: Klage;
+interface Routes {
+  personEllerBedrift: string;
 }
 
-type MergedProps = ReduxProps & InjectedIntlProps;
+type MergedProps = Personalia & RouteComponentProps<Routes> & InjectedIntlProps;
 const FlerePersonerPanel = (props: MergedProps) => {
   const { intl } = props;
 
   return (
     <Ekspanderbartpanel
+      border={true}
       tittel={intl.formatMessage({ id: "personalia.bedrift.tiltaksbedrift" })}
       tittelProps="normaltekst"
     >
@@ -47,10 +48,4 @@ const FlerePersonerPanel = (props: MergedProps) => {
   );
 };
 
-const mapStateToProps = (store: Store) => ({
-  klage: store.klage
-});
-
-export default injectIntl<InjectedIntlProps>(
-  connect(mapStateToProps)(FlerePersonerPanel)
-);
+export default injectIntl(withRouter(medPersonalia(FlerePersonerPanel)));
