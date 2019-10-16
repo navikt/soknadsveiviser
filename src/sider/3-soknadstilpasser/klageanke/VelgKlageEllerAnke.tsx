@@ -6,7 +6,7 @@ import { Soknadsobjekt } from "typer/soknad";
 import { localeTekst } from "utils/sprak";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "utils/sprak";
-import { Normaltekst, Undertittel } from "nav-frontend-typografi";
+import { Undertittel } from "nav-frontend-typografi";
 import { Link } from "react-router-dom";
 
 interface Props {
