@@ -52,6 +52,7 @@ class Ettersendelse extends Component<MergedProps> {
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt!._id)
       .filter(v => v.skalSendes);
 
+    const nesteDisabled = vedleggTilInnsending.length === 0;
     const { hovedskjema } = valgtSoknadsobjekt;
     return (
       <>
@@ -63,7 +64,7 @@ class Ettersendelse extends Component<MergedProps> {
         <Steg tittel="ettersendelser.tittel.underbanner" />
         <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
         <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
-        <Personalia nesteDisabled={false} {...this.props} />
+        <Personalia nesteDisabled={nesteDisabled} {...this.props} />
       </>
     );
   }
