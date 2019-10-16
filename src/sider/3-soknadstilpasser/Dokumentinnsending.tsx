@@ -94,7 +94,7 @@ class Dokumentinnsending extends Component<MergedProps> {
     );
 
     let erNesteDisabled =
-      (ettersendelse && vedleggTilInnsending.length > 0) ||
+      (ettersendelse && vedleggTilInnsending.length === 0) ||
       (!ettersendelse && ikkePakrevdeVedlegg.length !== vedleggSvart.length);
 
     const URLvidere = this.genererDokumentinnsendingsUrl(
