@@ -120,7 +120,7 @@ class Avslutning extends Component<MergedProps, State> {
             steg={++steg}
             relevanteVedlegg={relevanteVedlegg}
             skjemaSprak={skjemaSprak}
-            klage={true}
+            skalAnke={true}
           />
           {!ettersendelse && (
             <SkjemaNedlasting

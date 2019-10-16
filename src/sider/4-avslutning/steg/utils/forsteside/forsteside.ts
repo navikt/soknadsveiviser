@@ -1,14 +1,15 @@
-import { Personalia } from "../../../../../states/providers/Personalia";
+import { Personalia } from "states/providers/Personalia";
 import { hentVedleggslisteForJoark, hentDokumentliste } from "./lister";
-import { Vedleggsobjekt } from "../../../../../typer/skjemaogvedlegg";
+import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
 import { adresseOgBrukerInfo } from "./json/brukerInfo";
-import { Soknadsobjekt } from "../../../../../typer/soknad";
+import { Soknadsobjekt } from "typer/soknad";
 import { velgGyldigLocale } from "./locale";
-import { parseJson } from "../../../../../klienter/parser";
-import { sjekkForFeil } from "../../../../../klienter/felles";
-import { localeTekst } from "../../../../../utils/sprak";
-import { LocaleString } from "../../../../../typer/sprak";
-import { loggApiError } from "../../../../../utils/logger";
+import { parseJson } from "klienter/parser";
+import { sjekkForFeil } from "klienter/felles";
+import { localeTekst } from "utils/sprak";
+import { LocaleString } from "typer/sprak";
+import { loggApiError } from "utils/logger";
+import { Klage } from "typer/store";
 
 export interface Params {
   personalia: Personalia;
@@ -18,19 +19,23 @@ export interface Params {
   globalLocale: string;
   valgtLocale: string;
   ettersendelse?: string;
-  klage?: boolean;
+  skalKlage?: boolean;
+  typeKlage?: Klage;
+  skalAnke?: boolean;
 }
 
 export const hentForsteside = (params: Params): Promise<string> =>
   new Promise(async (resolve, reject) => {
     const url = "/soknader/api/forsteside";
     const {
-      klage,
       klageSoknadsobjekt,
       valgtSoknadsobjekt,
-      ettersendelse
+      ettersendelse,
+      skalKlage,
+      typeKlage,
+      skalAnke
     } = params;
-    const soknadsobjekt = klage ? klageSoknadsobjekt : valgtSoknadsobjekt;
+    const soknadsobjekt = skalKlage ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
     const vedleggSomSkalSendes = params.relevanteVedlegg
@@ -41,7 +46,12 @@ export const hentForsteside = (params: Params): Promise<string> =>
       foerstesidetype: ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
       navSkjemaId: hovedskjema.skjemanummer,
       spraakkode: locale.toUpperCase(),
-      overskriftstittel: hentOverskriftstittel(navn, locale, hovedskjema.skjemanummer, ettersendelse),
+      overskriftstittel: hentOverskriftstittel(
+        navn,
+        locale,
+        hovedskjema.skjemanummer,
+        ettersendelse
+      ),
       arkivtittel: hovedskjema.navn
         ? hentArkivtittel(hovedskjema.navn, ettersendelse)
         : "Finner ikke navn",
@@ -53,11 +63,20 @@ export const hentForsteside = (params: Params): Promise<string> =>
         params.valgtLocale,
         params.ettersendelse
       ),
-      ...adresseOgBrukerInfo(innsendingsmate, params.personalia)
+      ...adresseOgBrukerInfo(
+        innsendingsmate,
+        params.personalia,
+        skalKlage,
+        typeKlage,
+        skalAnke
+      )
     };
 
     console.group("Innsending førsteside-generator");
-    if (window.location.hostname.includes("-q0") || window.location.hostname.includes("localhost")) {
+    if (
+      window.location.hostname.includes("-q0") ||
+      window.location.hostname.includes("localhost")
+    ) {
       console.log(json);
     }
     console.groupEnd();
@@ -84,7 +103,7 @@ const hentOverskriftstittel = (
   navn: LocaleString,
   locale: string,
   skjemanummer: string,
-  ettersendelse?: string,
+  ettersendelse?: string
 ) => {
   if (ettersendelse) {
     const ettersendelseTil = {

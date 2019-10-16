@@ -7,7 +7,7 @@ import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { RouteComponentProps, Redirect } from "react-router-dom";
 import { Soknadsobjekt } from "../../typer/soknad";
 import { Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
-import { Store } from "../../typer/store";
+import { Klage, Store } from "../../typer/store";
 import { erTom } from "../../utils/validering/personalia";
 import StegOverskrift from "./steg/Overskrift";
 import StegBanner from "../../komponenter/bannere/Steg";
@@ -31,6 +31,7 @@ interface ValgtSoknad {
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
+  klage: Klage;
 }
 
 interface Routes {
@@ -54,7 +55,7 @@ class Avslutning extends Component<MergedProps, State> {
 
   render() {
     const { props } = this;
-    const { valgtSoknadsobjekt, klageSoknadsobjekt } = props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt, klage } = props;
     const { url } = props.match;
     const { ettersendelse } = props.match.params;
     const { skjemaSprak } = this.state;
@@ -120,7 +121,8 @@ class Avslutning extends Component<MergedProps, State> {
             steg={++steg}
             relevanteVedlegg={relevanteVedlegg}
             skjemaSprak={skjemaSprak}
-            klage={true}
+            skalKlage={true}
+            typeKlage={klage}
           />
           {!ettersendelse && (
             <SkjemaNedlasting
@@ -162,7 +164,8 @@ class Avslutning extends Component<MergedProps, State> {
 }
 
 const mapStateToProps = (store: Store) => ({
-  valgteVedlegg: store.vedlegg.valgteVedlegg
+  valgteVedlegg: store.vedlegg.valgteVedlegg,
+  klage: store.klage
 });
 
 export default medValgtSoknadsobjekt<ValgtSoknad>(
