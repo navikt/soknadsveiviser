@@ -53,18 +53,13 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        <div className="ettersendelse__container">
-          <div className="ettersendelse__innhold">
+        <div className="klageanke__container">
+          <div className="klageanke__innhold">
             <Undertittel>
               <FormattedMessage id="klage.mellomledd.tittel" />
             </Undertittel>
-            <div className="ettersendelse__beskrivelse">
-              <Normaltekst>
-                <FormattedMessage id="klage.mellomledd.beskrivelse" />
-              </Normaltekst>
-            </div>
           </div>
-          <div className="ettersendelse__knapper">
+          <div className="klageanke__knapper">
             <Link
               to={
                 `/soknader` +
@@ -81,18 +76,13 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
             </Link>
           </div>
         </div>
-        <div className="ettersendelse__container">
-          <div className="ettersendelse__innhold">
+        <div className="klageanke__container">
+          <div className="klageanke__innhold">
             <Undertittel>
               <FormattedMessage id="anke.mellomledd.tittel" />
             </Undertittel>
-            <div className="ettersendelse__beskrivelse">
-              <Normaltekst>
-                <FormattedMessage id="anke.mellomledd.beskrivelse" />
-              </Normaltekst>
-            </div>
           </div>
-          <div className="ettersendelse__knapper">
+          <div className="klageanke__knapper">
             <Link
               to={
                 `/soknader` +

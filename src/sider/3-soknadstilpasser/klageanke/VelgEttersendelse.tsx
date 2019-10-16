@@ -13,12 +13,13 @@ import { settEttersendTilKlage } from "../../../states/reducers/klage";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Props {
+  skalAnke?: boolean;
   klageSoknadsobjekt: Soknadsobjekt;
   valgtSoknadsobjekt: Soknadsobjekt;
 }
 
 interface ReduxProps {
-  klage: Klage;
+  klageType: Klage;
   settEttersendTilKlage: (skalEttersende: boolean) => void;
   settAlleVedleggSkalSendesForSoknadsobjekt: (
     soknadsobjekt: Soknadsobjekt
@@ -27,7 +28,7 @@ interface ReduxProps {
 
 type MergedProps = Props & ReduxProps & InjectedIntlProps;
 const VelgEttersendelse = (props: MergedProps) => {
-  const { intl, klage, klageSoknadsobjekt } = props;
+  const { intl, klageType, klageSoknadsobjekt, skalAnke } = props;
   const handleOnChange = (
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
@@ -44,7 +45,9 @@ const VelgEttersendelse = (props: MergedProps) => {
   return (
     <PanelBase className="seksjon">
       <Undertittel>
-        <FormattedMessage id="klage.ettersende" />
+        <FormattedMessage
+          id={skalAnke ? "anke.ettersende" : "klage.ettersende"}
+        />
       </Undertittel>
       <RadioPanelGruppe
         className="vedlegg__sjekkbokser"
@@ -62,8 +65,8 @@ const VelgEttersendelse = (props: MergedProps) => {
           }
         ]}
         checked={
-          klage.skalEttersende !== undefined
-            ? klage.skalEttersende === true
+          klageType.skalEttersende !== undefined
+            ? klageType.skalEttersende === true
               ? "ja"
               : "nei"
             : undefined
@@ -75,7 +78,7 @@ const VelgEttersendelse = (props: MergedProps) => {
 };
 
 const mapStateToProps = (store: Store) => ({
-  klage: store.klage
+  klageType: store.klage
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
