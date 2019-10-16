@@ -1,23 +1,20 @@
 import React, { Component } from "react";
-import {
-  medPersonalia,
-  Personalia
-} from "../../../../states/providers/Personalia";
-import { medValgtSoknadsobjekt } from "../../../../states/providers/ValgtSoknadsobjekt";
+import { medPersonalia, Personalia } from "states/providers/Personalia";
+import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { Form, Formik } from "formik";
-import { Soknadsobjekt } from "../../../../typer/soknad";
+import { Soknadsobjekt } from "typer/soknad";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { erGyldigFodselsnummer } from "../../../../utils/validering/fodselsnummer";
+import { erGyldigFodselsnummer } from "utils/validering/fodselsnummer";
 import { Undertittel } from "nav-frontend-typografi";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import { loggEvent } from "../../../../utils/logger";
+import { loggEvent } from "utils/logger";
 import FodselsnummerPanel from "./paneler/Fodselsnummer";
 import AdressePanel from "./paneler/AdressePanel";
 import FlerePersonerPanel from "./paneler/FlerePersoner";
 import TiltaksBedriftPanel from "./paneler/TiltaksBedrift";
 import NesteKnapp from "./knapper/Neste";
-import { finnesVisEnheter } from "../../../../utils/soknadsobjekter";
-import { Klage } from "../../../../typer/store";
+import { finnesVisEnheter } from "utils/soknadsobjekter";
+import { Klage } from "typer/store";
 
 interface ValgtSoknad {
   valgtSoknadsobjekt: Soknadsobjekt;
