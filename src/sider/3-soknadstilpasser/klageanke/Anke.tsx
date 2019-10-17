@@ -100,6 +100,7 @@ class VisKlage extends Component<MergedProps> {
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
     const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    const valgtSkalEttersende = klage.skalEttersende;
 
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
@@ -128,7 +129,11 @@ class VisKlage extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
-        <Steg tittel="anke.tittel.underbanner" />
+        {urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende) ? (
+          <Steg tittel="anke.ettersendelse.tittel.underbanner" />
+        ) : (
+          <Steg tittel="anke.tittel.underbanner" />
+        )}
         {!urlSkalEttersende && <VelgEttersendelse skalAnke={true} />}
         {!klage.skalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
