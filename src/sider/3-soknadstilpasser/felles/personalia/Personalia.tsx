@@ -186,12 +186,12 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                 {!(skalKlage || skalAnke) && (
                   <>
                     <AdressePanel />
-                    {personEllerBedrift === "bedrift" && (
-                      <>
-                        <FlerePersonerPanel />
-                        <TiltaksBedriftPanel />
-                      </>
-                    )}
+                  </>
+                )}
+                {personEllerBedrift === "bedrift" && (
+                  <>
+                    <FlerePersonerPanel />
+                    <TiltaksBedriftPanel />
                   </>
                 )}
                 <NesteKnapp disabled={nesteDisabled} />

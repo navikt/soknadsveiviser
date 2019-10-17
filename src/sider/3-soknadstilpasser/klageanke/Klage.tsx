@@ -93,6 +93,7 @@ class VisKlage extends Component<MergedProps> {
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
     const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    const valgtSkalEttersende = klage.skalEttersende;
 
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
@@ -110,9 +111,9 @@ class VisKlage extends Component<MergedProps> {
     const klageskjema = klageSoknadsobjekt.hovedskjema;
 
     const erNesteDisabled =
-      klage.skalEttersende === undefined ||
+      valgtSkalEttersende === undefined ||
       klage.erVideresendt === undefined ||
-      (!klage.skalEttersende &&
+      (!valgtSkalEttersende &&
         ikkePakrevdeVedlegg.length !== vedleggSvart.length);
 
     return (
@@ -123,15 +124,15 @@ class VisKlage extends Component<MergedProps> {
           skjemanummer={klageskjema.skjemanummer}
         />
         <Steg tittel="klage.tittel.underbanner" />
-        <VelgOmBehandletAvEnhet />
-        {klage.erVideresendt !== undefined && !urlSkalEttersende && (
-          <VelgEttersendelse />
+        {!urlSkalEttersende && <VelgEttersendelse />}
+        {(urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende)) && (
+          <VelgOmBehandletAvEnhet />
         )}
-        {klage.skalEttersende !== undefined && !klage.skalEttersende && (
+        {klage.skalEttersende !== undefined && !valgtSkalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg
-          visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
+          visRadioButtons={!urlSkalEttersende && !valgtSkalEttersende}
           vedleggTilInnsending={vedleggTilInnsending}
         />
         <Personalia
