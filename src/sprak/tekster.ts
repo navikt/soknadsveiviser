@@ -265,7 +265,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "klage.videresendt.enhet": `Have you received a letter saying that your case has been transferred to another NAV-unit?`,
     "klage.velg.behanlende.enhet": `Translate: Choose the NAV-unit that is handling your case (specified in the letter you have received)`,
     "klage.mellomledd.tittel": `Complaint`,
-    "klage.ettersende": xxx `Do you want to submit documentation to a previously filed complaint?`,
+    "klage.ettersende": `Do you want to submit documentation to a previously filed complaint?`,
     "anke.tittel.underbanner": `Appeal to the National Insurance Court`,
     "anke.mellomledd.tittel": `Appeal to the National Insurance Court`,
     "anke.ettersende": `Do you want to forward documentation to a previously submitted appeal?`,
