@@ -53,6 +53,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
     const validertFormFodselsnummerValgtEnhet =
       (!skalKlage && !skalAnke && !visEnheter) ||
+      (skalKlage && !erKlageVideresendt) ||
       (e.fodselsnummer.valgtEnhet && visEnheter) ||
       (e.fodselsnummer.valgtEnhet && skalAnke) ||
       (e.fodselsnummer.valgtEnhet && skalKlage && erKlageVideresendt);
