@@ -16,14 +16,13 @@ type MergedProps = Props & RouteComponentProps<Routes>;
 const Soknad = (props: MergedProps) => {
   const { soknadsobjekt, match } = props;
   const { skjemanummer } = soknadsobjekt.hovedskjema;
-  const { personEllerBedrift } = match.params;
-  return personEllerBedrift !== "bedrift" ? (
+  return (
     <SettValgtSoknadsobjekt
       to={`${hentUrl(match.url)}/${skjemanummer}/brev/klage-eller-anke`}
       title="klageanke.knapp"
       soknadsobjekt={soknadsobjekt}
     />
-  ) : null;
+  );
 };
 
 export default withRouter(Soknad);
