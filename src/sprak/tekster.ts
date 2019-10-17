@@ -267,6 +267,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "klage.mellomledd.tittel": `Complaint`,
     "klage.ettersende": `Do you want to submit documentation to a previously filed complaint?`,
     "anke.tittel.underbanner": `Appeal to the National Insurance Court`,
+    "anke.ettersendelse.tittel.underbanner": `TODO - Translate: Ettersende til anke til trygderetten`,
     "anke.mellomledd.tittel": `Appeal to the National Insurance Court`,
     "anke.ettersende": `Do you want to forward documentation to a previously submitted appeal?`,
     "anke.eller.klage.sidetittel": `Choose complaint or appeal`,
