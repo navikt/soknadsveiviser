@@ -123,7 +123,11 @@ class VisKlage extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
-        <Steg tittel="klage.tittel.underbanner" />
+        {urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende) ? (
+          <Steg tittel="klage.ettersendelse.tittel.underbanner" />
+        ) : (
+          <Steg tittel="klage.tittel.underbanner" />
+        )}
         {!urlSkalEttersende && <VelgEttersendelse />}
         {(urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende)) && (
           <VelgOmBehandletAvEnhet />
