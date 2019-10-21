@@ -7,7 +7,7 @@ import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import { RouteComponentProps, Redirect } from "react-router-dom";
 import { Soknadsobjekt } from "../../typer/soknad";
 import { Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
-import { Store } from "../../typer/store";
+import { Klage, Store } from "../../typer/store";
 import { erTom } from "../../utils/validering/personalia";
 import StegOverskrift from "./steg/Overskrift";
 import StegBanner from "../../komponenter/bannere/Steg";
@@ -30,6 +30,7 @@ interface ValgtSoknad {
 }
 
 interface ReduxProps {
+  klage: Klage;
   valgteVedlegg: Vedleggsobjekt[];
 }
 
@@ -54,13 +55,14 @@ class Avslutning extends Component<MergedProps, State> {
 
   render() {
     const { props } = this;
-    const { valgtSoknadsobjekt, klageSoknadsobjekt } = props;
-    const { url } = props.match;
-    const { ettersendelse } = props.match.params;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt, klage } = props;
+    const { url, params } = props.match;
     const { skjemaSprak } = this.state;
     const { bedrift, adresse, fodselsnummer } = props;
-    const locale = props.intl.locale;
     const { valgteVedlegg } = props;
+    const locale = props.intl.locale;
+    const skalEttersende = params.ettersendelse || klage.skalEttersende;
+
     const harPersonalia =
       !erTom(fodselsnummer) || !erTom(adresse) || !erTom(bedrift);
 
@@ -70,7 +72,7 @@ class Avslutning extends Component<MergedProps, State> {
 
     const relevanteVedlegg = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
-      .filter(v => (ettersendelse ? v.skalSendes : v.skalSendes || v.pakrevd));
+      .filter(v => (skalEttersende ? v.skalSendes : v.skalSendes || v.pakrevd));
 
     const vedleggTilNedlasting = relevanteVedlegg
       .filter(v => !v.skalEttersendes)
@@ -122,7 +124,7 @@ class Avslutning extends Component<MergedProps, State> {
             skjemaSprak={skjemaSprak}
             skalAnke={true}
           />
-          {!ettersendelse && (
+          {!skalEttersende && (
             <SkjemaNedlasting
               steg={++steg}
               hovedskjema={klageskjema}
@@ -162,7 +164,8 @@ class Avslutning extends Component<MergedProps, State> {
 }
 
 const mapStateToProps = (store: Store) => ({
-  valgteVedlegg: store.vedlegg.valgteVedlegg
+  valgteVedlegg: store.vedlegg.valgteVedlegg,
+  klage: store.klage
 });
 
 export default medValgtSoknadsobjekt<ValgtSoknad>(

@@ -56,12 +56,13 @@ class Avslutning extends Component<MergedProps, State> {
   render() {
     const { props } = this;
     const { valgtSoknadsobjekt, klageSoknadsobjekt, klage } = props;
-    const { url } = props.match;
-    const { ettersendelse } = props.match.params;
+    const { url, params } = props.match;
     const { skjemaSprak } = this.state;
     const { bedrift, adresse, fodselsnummer } = props;
-    const locale = props.intl.locale;
     const { valgteVedlegg } = props;
+    const locale = props.intl.locale;
+    const skalEttersende = params.ettersendelse || klage.skalEttersende;
+
     const harPersonalia =
       !erTom(fodselsnummer) || !erTom(adresse) || !erTom(bedrift);
 
@@ -71,7 +72,7 @@ class Avslutning extends Component<MergedProps, State> {
 
     const relevanteVedlegg = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
-      .filter(v => (ettersendelse ? v.skalSendes : v.skalSendes || v.pakrevd));
+      .filter(v => (skalEttersende ? v.skalSendes : v.skalSendes || v.pakrevd));
 
     const vedleggTilNedlasting = relevanteVedlegg
       .filter(v => !v.skalEttersendes)
@@ -124,7 +125,7 @@ class Avslutning extends Component<MergedProps, State> {
             skalKlage={true}
             typeKlage={klage}
           />
-          {!ettersendelse && (
+          {!skalEttersende && (
             <SkjemaNedlasting
               steg={++steg}
               hovedskjema={klageskjema}
