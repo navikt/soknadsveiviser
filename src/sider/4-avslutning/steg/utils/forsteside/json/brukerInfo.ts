@@ -20,7 +20,7 @@ export const adresseOgBrukerInfo = (
       : // Tiltaksbedrift
         {
           enhetsnummer: enhet.enhetsnummer,
-          ...mottakerAdresse(innsendingsmate)
+          ...mottakerAdresse(innsendingsmate, enhet)
         }
     : // Personbruker
       {
