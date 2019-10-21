@@ -65,7 +65,7 @@ const ForstesideGenerator = (props: MergedProps) => {
 
     const ettersendelse = !!(
       params.ettersendelse ||
-      (typeKlage && typeKlage.skalEttersende)
+      ((skalAnke || skalKlage) && typeKlage && typeKlage.skalEttersende)
     );
 
     const personalia = {
