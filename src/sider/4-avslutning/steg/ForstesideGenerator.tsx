@@ -26,6 +26,7 @@ interface Props {
   skalKlage?: boolean;
   typeKlage?: Klage;
   skalAnke?: boolean;
+  ettersendelse?: string;
   relevanteVedlegg: Vedleggsobjekt[];
   skjemaSprak: string;
 }
@@ -57,10 +58,16 @@ const ForstesideGenerator = (props: MergedProps) => {
     setState({ status: "LOADING" });
 
     const { skalKlage, typeKlage, skalAnke } = props;
+    const { params } = props.match;
     const { valgtSoknadsobjekt, klageSoknadsobjekt, relevanteVedlegg } = props;
-    const { ettersendelse } = props.match.params;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
+
+    const ettersendelse = !!(
+      params.ettersendelse ||
+      (typeKlage && typeKlage.skalEttersende)
+    );
+
     const personalia = {
       fodselsnummer: props.fodselsnummer,
       adresse: props.adresse,

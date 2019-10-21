@@ -18,7 +18,7 @@ export interface Params {
   klageSoknadsobjekt: Soknadsobjekt;
   globalLocale: string;
   valgtLocale: string;
-  ettersendelse?: string;
+  ettersendelse: boolean;
   skalKlage?: boolean;
   typeKlage?: Klage;
   skalAnke?: boolean;
@@ -94,7 +94,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
       .catch(err => reject && loggApiError(url, err));
   });
 
-const hentArkivtittel = (navn: LocaleString, ettersendelse?: string) => {
+const hentArkivtittel = (navn: LocaleString, ettersendelse: boolean) => {
   return ettersendelse
     ? "Ettersendelse til " + localeTekst(navn, "nb").toLocaleLowerCase()
     : localeTekst(navn, "nb");
@@ -104,7 +104,7 @@ const hentOverskriftstittel = (
   navn: LocaleString,
   locale: string,
   skjemanummer: string,
-  ettersendelse?: string
+  ettersendelse: boolean
 ) => {
   if (ettersendelse) {
     const ettersendelseTil = {
