@@ -270,7 +270,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "ettersendelser.mellomledd.klage.tittel": `Forward to complaint / appeal`,
     "ettersendelser.mellomledd.klage.beskrivelse": `Forwarding documentation to a previously filed complaint or appeal.`,
     "ettersendelser.mellomledd.klage.knapp": `Forward to complaint / appeal`,
-    "kategori.beskrivelse": `Forms, applications, forwarding and complaints`,
+    "kategori.beskrivelse": `Forms, Applications, Forwarding and Complaints`,
     "kategori.velg": `Menu`,
     "kategorier.knapp.bedrift": `Employers`,
     "kategorier.knapp.engelsk": `English`,
