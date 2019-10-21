@@ -4,7 +4,7 @@ import VelgVedleggEttersendelse from "./ettersendelse/VelgVedlegg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
-import { Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
+import { Vedlegg, Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
 import { Store } from "../../typer/store";
 import { Soknadsobjekt } from "../../typer/soknad";
 import { connect } from "react-redux";
@@ -42,19 +42,26 @@ class Dokumentinnsending extends Component<MergedProps> {
     ettersendelse: string
   ) => {
     const { hovedskjema } = valgtSoknadsobjekt;
+
+    // Send med skjemanummer dersom det eksisterer, ellers vedleggsid
+    const hentSkjemanrEllerVedleggid = (vedlegg: Vedlegg) =>
+      vedlegg.skjematilvedlegg
+        ? vedlegg.skjematilvedlegg.skjemanummer
+        : vedlegg.vedleggsid;
+
     const vedleggTilInnsending = vedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
       .filter(v => v.skalSendes || v.pakrevd)
-      .map(ved => ved.vedlegg.vedleggsid)
-      .toString();
+      .map(({ vedlegg }) => hentSkjemanrEllerVedleggid(vedlegg))
+      .join();
 
-    return (
+    return encodeURI(
       getTjenesteUrl() +
-      "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
-      hovedskjema.skjemanummer +
-      "&erEttersendelse=" +
-      (ettersendelse ? "true" : "false") +
-      (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
+        "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
+        hovedskjema.skjemanummer +
+        "&erEttersendelse=" +
+        (ettersendelse ? "true" : "false") +
+        (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
     );
   };
 
@@ -100,7 +107,7 @@ class Dokumentinnsending extends Component<MergedProps> {
           <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
         )}
         <DineVedlegg
-          visErVedleggPakrevd
+          visErVedleggPakrevd={true}
           vedleggTilInnsending={vedleggTilInnsending}
         />
         <Neste lenke={URLvidere} ettersendelse={ettersendelse} />
