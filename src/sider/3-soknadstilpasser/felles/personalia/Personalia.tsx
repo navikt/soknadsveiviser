@@ -71,7 +71,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
       e.adresse.land;
 
     const validertFormFlerpersoner = e.flerepersoner.valgtEnhet;
-    const validertFormTiltaksbedrift = e.flerepersoner.valgtEnhet;
+    const validertFormTiltaksbedrift = e.tiltaksbedrift.valgtEnhet;
 
     // Reset
     this.props.resetState();
