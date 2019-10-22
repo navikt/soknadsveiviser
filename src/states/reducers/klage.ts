@@ -15,7 +15,7 @@ export const settEttersendTilKlage = (skalEttersende: boolean) => {
   return { type: "SETT_ETTERSEND_TIL_KLAGE", skalEttersende };
 };
 
-export const settVideresendtTilEnhet = (erVideresendt: boolean) => {
+export const settVideresendtTilEnhet = (erVideresendt?: boolean) => {
   return { type: "SETT_VIDERESENDT_TIL_ENHET", erVideresendt };
 };
 

@@ -9,7 +9,10 @@ import { RadioPanelGruppe } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import { settAlleVedleggSkalSendesForSoknadsobjekt } from "../../../states/reducers/vedlegg";
-import { settEttersendTilKlage } from "../../../states/reducers/klage";
+import {
+  settEttersendTilKlage,
+  settVideresendtTilEnhet
+} from "../../../states/reducers/klage";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Props {
@@ -20,6 +23,7 @@ interface Props {
 
 interface ReduxProps {
   klageType: Klage;
+  settVideresendtTilEnhet: (erVideresendt?: boolean) => void;
   settEttersendTilKlage: (skalEttersende: boolean) => void;
   settAlleVedleggSkalSendesForSoknadsobjekt: (
     soknadsobjekt: Soknadsobjekt
@@ -38,6 +42,8 @@ const VelgEttersendelse = (props: MergedProps) => {
       props.settEttersendTilKlage(skalEttersende);
       if (skalEttersende) {
         props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
+      } else {
+        props.settVideresendtTilEnhet(undefined);
       }
     }
   };
@@ -85,7 +91,9 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   settEttersendTilKlage: (skalEttersende: boolean) =>
     dispatch(settEttersendTilKlage(skalEttersende)),
   settAlleVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
-    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
+    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt)),
+  settVideresendtTilEnhet: (erVideresendt?: boolean) =>
+    dispatch(settVideresendtTilEnhet(erVideresendt))
 });
 
 export default medValgtSoknadsobjekt<Props>(
