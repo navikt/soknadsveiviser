@@ -134,7 +134,7 @@ class VisKlage extends Component<MergedProps> {
           <Steg tittel="anke.tittel.underbanner" />
         )}
         {!urlSkalEttersende && <VelgEttersendelse skalAnke={true} />}
-        {!klage.skalEttersende && (
+        {klage.skalEttersende !== undefined && !valgtSkalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg
