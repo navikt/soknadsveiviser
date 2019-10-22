@@ -3,9 +3,8 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import { Soknadsobjekt } from "../../../typer/soknad";
-import DigitalEttersendelse from "./seksjoner/Digital";
-import PapirEttersendelse from "./seksjoner/Papir";
-import KlageEttersendelse from "./seksjoner/Klage";
+import SoknadEttersendelse from "./seksjoner/Soknad";
+import KlageAnkeEttersendelse from "./seksjoner/KlageAnke";
 import { localeTekst } from "../../../utils/sprak";
 import {
   finnesDigitalEttersendelse,
@@ -31,7 +30,10 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     const { valgtSoknadsobjekt } = this.props;
     const { intl } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
-    const erDigitalEttersendelse = finnesDigitalEttersendelse(valgtSoknadsobjekt, intl.locale);
+    const erDigitalEttersendelse = finnesDigitalEttersendelse(
+      valgtSoknadsobjekt,
+      intl.locale
+    );
 
     document.title = sideTittel(
       `${localeTekst(
@@ -49,17 +51,15 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
-        {erDigitalEttersendelse &&  (
-          <DigitalEttersendelse
-            url={urlTilDokumentinnsendingEllerSoknadsdialog(
-              this.props.match.url,
-              valgtSoknadsobjekt,
-              intl.locale
-            )}
-          />
-        )}
-        <PapirEttersendelse digitalEttersendelse={erDigitalEttersendelse} />
-        <KlageEttersendelse />
+        <SoknadEttersendelse
+          digitalEttersendelse={erDigitalEttersendelse}
+          url={urlTilDokumentinnsendingEllerSoknadsdialog(
+            this.props.match.url,
+            valgtSoknadsobjekt,
+            intl.locale
+          )}
+        />
+        <KlageAnkeEttersendelse />
       </>
     );
   }
@@ -82,12 +82,21 @@ const urlTilDokumentinnsendingEllerSoknadsdialog = (
     ? `${path}/dokumentinnsending`
     : hentDigitalEttersendelsesURL(valgtSoknadsobjekt, locale);
 
-const hentDigitalEttersendelsesURL = (soknadsobjekt: Soknadsobjekt, locale: string) => {
-  return (soknadsobjekt.digitalinnsending &&
-      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
-      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
-      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL &&
-      soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL.nb) ?
-      localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL, locale)
-      : `${getTjenesteUrl()}/saksoversikt/ettersending`;
+const hentDigitalEttersendelsesURL = (
+  soknadsobjekt: Soknadsobjekt,
+  locale: string
+) => {
+  return soknadsobjekt.digitalinnsending &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
+      .ettersendelsesURL &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
+      .ettersendelsesURL.nb
+    ? localeTekst(
+        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
+          .ettersendelsesURL,
+        locale
+      )
+    : `${getTjenesteUrl()}/saksoversikt/ettersending`;
 };

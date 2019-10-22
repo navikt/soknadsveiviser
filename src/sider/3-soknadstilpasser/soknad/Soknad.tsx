@@ -37,6 +37,7 @@ class PapirSoknad extends Component<MergedProps> {
   render() {
     const { intl } = this.props;
     const { valgteVedlegg, valgtSoknadsobjekt } = this.props;
+    const { hovedskjema } = valgtSoknadsobjekt;
 
     document.title = sideTittel(
       `${localeTekst(
@@ -47,12 +48,20 @@ class PapirSoknad extends Component<MergedProps> {
       })}`
     );
 
-    const relevanteVedlegg = valgteVedlegg
-      .filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id)
-      .filter(v => v.skalSendes || v.pakrevd);
+    const relevanteVedlegg = valgteVedlegg.filter(
+      v => v.soknadsobjektId === valgtSoknadsobjekt._id
+    );
 
-    const { hovedskjema } = valgtSoknadsobjekt;
+    const vedleggTilInnsending = relevanteVedlegg.filter(
+      v => v.skalSendes || v.pakrevd
+    );
 
+    const ikkePakrevdeVedlegg = relevanteVedlegg.filter(v => !v.pakrevd);
+    const vedleggSvart = ikkePakrevdeVedlegg.filter(
+      vedlegg => vedlegg.skalSendes !== undefined
+    );
+
+    let erNesteDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length;
     return (
       <>
         <Underbanner
@@ -71,9 +80,9 @@ class PapirSoknad extends Component<MergedProps> {
         <DineVedlegg
           visRadioButtons={true}
           visErVedleggPakrevd={true}
-          vedleggTilInnsending={relevanteVedlegg}
+          vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia />
+        <Personalia nesteDisabled={erNesteDisabled} />
       </>
     );
   }

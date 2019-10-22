@@ -15,6 +15,7 @@ import { hentForsteside, Params } from "./utils/forsteside/forsteside";
 import { lastNedFilBase64 } from "./utils/pdf";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { Hovedknapp } from "nav-frontend-knapper";
+import { Klage } from "../../../typer/store";
 
 interface Routes {
   ettersendelse?: string;
@@ -22,7 +23,10 @@ interface Routes {
 
 interface Props {
   steg: number;
-  klage?: boolean;
+  skalKlage?: boolean;
+  typeKlage?: Klage;
+  skalAnke?: boolean;
+  ettersendelse?: string;
   relevanteVedlegg: Vedleggsobjekt[];
   skjemaSprak: string;
 }
@@ -53,11 +57,17 @@ const ForstesideGenerator = (props: MergedProps) => {
   const genererPDF = async () => {
     setState({ status: "LOADING" });
 
-    const { klage } = props;
+    const { skalKlage, typeKlage, skalAnke } = props;
+    const { params } = props.match;
     const { valgtSoknadsobjekt, klageSoknadsobjekt, relevanteVedlegg } = props;
-    const { ettersendelse } = props.match.params;
     const valgtLocale = props.skjemaSprak;
     const globalLocale = props.intl.locale;
+
+    const ettersendelse = !!(
+      params.ettersendelse ||
+      ((skalAnke || skalKlage) && typeKlage && typeKlage.skalEttersende)
+    );
+
     const personalia = {
       fodselsnummer: props.fodselsnummer,
       adresse: props.adresse,
@@ -73,7 +83,9 @@ const ForstesideGenerator = (props: MergedProps) => {
       globalLocale,
       valgtLocale,
       ettersendelse,
-      klage
+      skalKlage,
+      typeKlage,
+      skalAnke
     } as Params;
 
     // 1) Generer førsteside
@@ -83,7 +95,9 @@ const ForstesideGenerator = (props: MergedProps) => {
     hentForsteside(foerstesideParams)
       .then(samletPdf => {
         setState({ status: "DOWNLOAD" });
-        const navn = props.intl.formatMessage({id: "avslutning.steg.forsteside.pdf.tittel"})
+        const navn = props.intl.formatMessage({
+          id: "avslutning.steg.forsteside.pdf.tittel"
+        });
         lastNedFilBase64(samletPdf, `NAV - ${navn}`, "pdf");
       })
       .then(() => {

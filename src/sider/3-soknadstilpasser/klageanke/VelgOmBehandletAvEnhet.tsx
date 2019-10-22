@@ -8,8 +8,7 @@ import PanelBase from "nav-frontend-paneler";
 import { RadioPanelGruppe } from "nav-frontend-skjema";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { settAlleVedleggSkalSendesForSoknadsobjekt } from "../../../states/reducers/vedlegg";
-import { settEttersendTilKlage } from "../../../states/reducers/klage";
+import { settVideresendtTilEnhet } from "../../../states/reducers/klage";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 
 interface Props {
@@ -19,38 +18,32 @@ interface Props {
 
 interface ReduxProps {
   klage: Klage;
-  settEttersendTilKlage: (skalEttersende: boolean) => void;
-  settAlleVedleggSkalSendesForSoknadsobjekt: (
-    soknadsobjekt: Soknadsobjekt
-  ) => void;
+  settVideresendtTilEnhet: (erVideresendt: boolean) => void;
 }
 
 type MergedProps = Props & ReduxProps & InjectedIntlProps;
-const VelgEttersendelse = (props: MergedProps) => {
-  const { intl, klage, klageSoknadsobjekt } = props;
+const VelgOmBehandletAvEnhet = (props: MergedProps) => {
+  const { intl, klage } = props;
   const handleOnChange = (
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
   ) => {
-    const skalEttersende = value === "ja" ? true : false;
-    if (skalEttersende !== undefined) {
-      props.settEttersendTilKlage(skalEttersende);
-      if (skalEttersende) {
-        props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
-      }
+    const erVideresendt = value === "ja" ? true : false;
+    if (erVideresendt !== undefined) {
+      props.settVideresendtTilEnhet(erVideresendt);
     }
   };
 
   return (
     <PanelBase className="seksjon">
       <Undertittel>
-        <FormattedMessage id="klage.ettersende" />
+        <FormattedMessage id="klage.videresendt.enhet" />
       </Undertittel>
       <RadioPanelGruppe
         className="vedlegg__sjekkbokser"
-        key={"skalEttersend"}
+        key={"erVideresendtEnhet"}
         legend={""}
-        name="Skal ettersende"
+        name="Er videresendt enhet"
         radios={[
           {
             label: intl.formatMessage({ id: "velgvedlegg.ja" }),
@@ -61,7 +54,13 @@ const VelgEttersendelse = (props: MergedProps) => {
             value: "nei"
           }
         ]}
-        checked={klage.skalEttersende ? "ja" : "nei"}
+        checked={
+          klage.erVideresendt !== undefined
+            ? klage.erVideresendt === true
+              ? "ja"
+              : "nei"
+            : undefined
+        }
         onChange={handleOnChange}
       />
     </PanelBase>
@@ -73,10 +72,8 @@ const mapStateToProps = (store: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  settEttersendTilKlage: (skalEttersende: boolean) =>
-    dispatch(settEttersendTilKlage(skalEttersende)),
-  settAlleVedleggSkalSendesForSoknadsobjekt: (soknadsobjekt: Soknadsobjekt) =>
-    dispatch(settAlleVedleggSkalSendesForSoknadsobjekt(soknadsobjekt))
+  settVideresendtTilEnhet: (erVideresendt: boolean) =>
+    dispatch(settVideresendtTilEnhet(erVideresendt))
 });
 
 export default medValgtSoknadsobjekt<Props>(
@@ -84,6 +81,6 @@ export default medValgtSoknadsobjekt<Props>(
     connect(
       mapStateToProps,
       mapDispatchToProps
-    )(VelgEttersendelse)
+    )(VelgOmBehandletAvEnhet)
   )
 );
