@@ -112,7 +112,7 @@ class VisKlage extends Component<MergedProps> {
 
     const erNesteDisabled =
       valgtSkalEttersende === undefined ||
-      klage.erVideresendt === undefined ||
+      (valgtSkalEttersende && klage.erVideresendt === undefined) ||
       (!valgtSkalEttersende &&
         ikkePakrevdeVedlegg.length !== vedleggSvart.length);
 
