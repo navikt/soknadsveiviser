@@ -19,9 +19,14 @@
   }
   &__knapper {
     display: flex;
+    flex-direction: column;
     padding: 0.5rem 0;
     .knapp {
       align-self: flex-end;
+    }
+
+    > * {
+      margin: 1rem 0;
     }
 
     @media @desktop {

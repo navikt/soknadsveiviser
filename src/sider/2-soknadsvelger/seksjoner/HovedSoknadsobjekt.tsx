@@ -50,7 +50,7 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           <FormattedMessage id="vissoknadsobjekter.knapp.soknadsdialog" />
         </a>
         <HashLink
-          smooth
+          smooth={true}
           to="#papirsoknader"
           className="soknadsobjekt__lenke lenke"
         >
@@ -58,15 +58,20 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
             <FormattedMessage id="vissoknadsobjekter.ikkeelektroniskID" />
           </Normaltekst>
         </HashLink>
-        {!(ettersendelse && ettersendelse.ikkeVisEttersendelse) &&
+        {!(ettersendelse && ettersendelse.ikkeVisEttersendelse) && (
           <a
-              href={ettersendelse && ettersendelse.ettersendelsesURL && ettersendelse.ettersendelsesURL.nb ?
-                  localeTekst(ettersendelse.ettersendelsesURL, locale) : `${getTjenesteUrl()}/saksoversikt/ettersending`}
-              className="soknadsobjekt__knapp knapp knapp-hoved"
+            href={
+              ettersendelse &&
+              ettersendelse.ettersendelsesURL &&
+              ettersendelse.ettersendelsesURL.nb
+                ? localeTekst(ettersendelse.ettersendelsesURL, locale)
+                : `${getTjenesteUrl()}/saksoversikt/ettersending`
+            }
+            className="soknadsobjekt__knapp knapp knapp-hoved"
           >
-            <FormattedMessage id="ettersendelser.mellomledd.digital.knapp"/>
+            <FormattedMessage id="ettersendelser.mellomledd.digital.knapp" />
           </a>
-        }
+        )}
       </div>
     </div>
   );

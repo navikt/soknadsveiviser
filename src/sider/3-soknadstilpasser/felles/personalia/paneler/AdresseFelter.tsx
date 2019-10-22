@@ -1,10 +1,7 @@
 import React, { Component } from "react";
 import { FieldProps } from "formik/dist/Field";
-import {
-  Adresse,
-  Personalia,
-  medPersonalia
-} from "../../../../../states/providers/Personalia";
+import { medPersonalia } from "states/providers/Personalia";
+import { Adresse, Personalia } from "states/providers/Personalia";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
@@ -16,15 +13,10 @@ import InputPostnummer from "./felter/Postnummer";
 import InputPoststed from "./felter/Poststed";
 import InputLand from "./felter/Land";
 import CheckboxTidligereKontaktMedNAV from "./sjekkbokser/TidligereKontaktMedNAV";
-import {
-  finnesVisEnheter,
-  finnesTilSkanning,
-  finnesSpesifisertAdresse
-} from "../../../../../utils/soknadsobjekter";
-import {
-  medValgtSoknadsobjekt,
-  ValgtSoknad
-} from "../../../../../states/providers/ValgtSoknadsobjekt";
+import { finnesSpesifisertAdresse } from "utils/soknadsobjekter";
+import { finnesVisEnheter, finnesTilSkanning } from "utils/soknadsobjekter";
+import { ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
+import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 
 interface State {
   tidligereKontaktMedNAV: boolean;

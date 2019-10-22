@@ -1,27 +1,26 @@
 import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Store } from "../../../typer/store";
-import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
-import { Klage } from "../../../typer/store";
-import { Soknadsobjekt } from "../../../typer/soknad";
-import { settEttersendTilKlage } from "../../../states/reducers/klage";
+import { Store } from "typer/store";
+import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
+import { Klage } from "typer/store";
+import { Soknadsobjekt } from "typer/soknad";
+import { settEttersendTilKlage } from "states/reducers/klage";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
-import {
-  toggleValgtVedlegg,
-  settAlleVedleggSkalSendesForSoknadsobjekt
-} from "../../../states/reducers/vedlegg";
+import { settAlleVedleggSkalSendesForSoknadsobjekt } from "states/reducers/vedlegg";
+import { toggleValgtVedlegg } from "states/reducers/vedlegg";
+import VelgOmBehandletAvEnhet from "./VelgOmBehandletAvEnhet";
 import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
-import Underbanner from "../../../komponenter/bannere/Underbanner";
+import Underbanner from "komponenter/bannere/Underbanner";
 import VelgEttersendelse from "./VelgEttersendelse";
 import Personalia from "../felles/personalia/Personalia";
-import Steg from "../../../komponenter/bannere/Steg";
-import { localeTekst } from "../../../utils/sprak";
-import { apiHentSoknadsobjektForKlage } from "../../../klienter/sanityKlient";
-import { sideTittel } from "../../../utils/sprak";
-import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
+import Steg from "komponenter/bannere/Steg";
+import { localeTekst } from "utils/sprak";
+import { apiHentSoknadsobjektForKlage } from "klienter/sanityKlient";
+import { sideTittel } from "utils/sprak";
+import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 
 interface Props {
   klageSoknadsobjekt: Soknadsobjekt;
@@ -90,22 +89,33 @@ class VisKlage extends Component<MergedProps> {
       return null;
     }
 
-    const {
-      valgteVedlegg,
-      valgtSoknadsobjekt,
-      klageSoknadsobjekt,
-      intl,
-      klage,
-      match
-    } = this.props;
-
+    const { intl, klage, match } = this.props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
+    const { valgteVedlegg } = this.props;
     const urlSkalEttersende = match.params.ettersendelse ? true : false;
-    const relevanteVedlegg = valgteVedlegg
+    const valgtSkalEttersende = klage.skalEttersende;
+
+    const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
       .filter(v => v.skalSendes);
 
+    const ikkePakrevdeVedlegg = valgteVedlegg
+      .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
+      .filter(v => !v.pakrevd);
+
+    const vedleggSvart = ikkePakrevdeVedlegg.filter(
+      vedlegg => vedlegg.skalSendes !== undefined
+    );
+
     const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
+
+    const erNesteDisabled =
+      valgtSkalEttersende === undefined ||
+      (valgtSkalEttersende && klage.erVideresendt === undefined) ||
+      (!valgtSkalEttersende &&
+        ikkePakrevdeVedlegg.length !== vedleggSvart.length);
+
     return (
       <>
         <Underbanner
@@ -113,16 +123,27 @@ class VisKlage extends Component<MergedProps> {
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
-        <Steg tittel="klage.tittel.underbanner" />
+        {urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende) ? (
+          <Steg tittel="klage.ettersendelse.tittel.underbanner" />
+        ) : (
+          <Steg tittel="klage.tittel.underbanner" />
+        )}
         {!urlSkalEttersende && <VelgEttersendelse />}
-        {!klage.skalEttersende && (
+        {(urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende)) && (
+          <VelgOmBehandletAvEnhet />
+        )}
+        {klage.skalEttersende !== undefined && !valgtSkalEttersende && (
           <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
         )}
         <DineVedlegg
-          visRadioButtons={!urlSkalEttersende && !klage.skalEttersende}
-          vedleggTilInnsending={relevanteVedlegg}
+          visRadioButtons={!urlSkalEttersende && !valgtSkalEttersende}
+          vedleggTilInnsending={vedleggTilInnsending}
         />
-        <Personalia />
+        <Personalia
+          skalKlage={true}
+          typeKlage={klage}
+          nesteDisabled={erNesteDisabled}
+        />
       </>
     );
   }
