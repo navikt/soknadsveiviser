@@ -28,10 +28,14 @@ export const adresseOgBrukerInfo = (
         ? // Flere personer
           { ...enhetAdresse(enhet) }
         : // Tiltaksbedrift
-          {
-            enhetsnummer: enhet.enhetsnummer,
-            ...mottakerAdresse(innsendingsmate)
-          }
+            (innsendingsmate && innsendingsmate.skanning)
+                ? {
+                    enhetsnummer: enhet.enhetsnummer,
+                    netsPostboks: "1400"
+                }
+                : {
+                    ...enhetAdresse(enhet)
+                }
       : // Personbruker
         {
           ...(fodselsnummer.fodselsnummer
