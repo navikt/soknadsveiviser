@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import Kategorier from "./seksjoner/kategorier/Kategorier";
+import Kategorier from "./seksjoner/kategorier/Kategorimeny/Kategorimeny";
 import { typeTilNorsk } from "../../utils/kategorier";
 import { settValgtType } from "../../states/reducers/kategorier";
 import { Kategori } from "../../typer/kategori";
 import { withRouter, RouteComponentProps } from "react-router";
-import Kategoriinnhold from "./seksjoner/kategorier/Kategoriinnhold";
+import Kategoriinnhold from "./seksjoner/kategorier/Kategoriinnhold/Kategoriinnhold";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Header from "../../komponenter/header/Header";
@@ -35,7 +35,7 @@ class Soknadsveiviser extends Component<MergedProps> {
     return (
       <div className="forside__wrapper" id="maincontent">
         <Header visTyper={true} inngang={match.params.inngang} />
-        <Skjemaveilederlenke type={match.params.personEllerBedrift}/>
+        <Skjemaveilederlenke type={match.params.personEllerBedrift} />
         <section className="seksjon oversikt">
           <Kategorier />
           <Kategoriinnhold />

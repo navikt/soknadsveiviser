@@ -1,15 +1,16 @@
 import * as React from "react";
-import { Kategori } from "../../../typer/kategori";
-import { Underkategori } from "../../../typer/underkategori";
-import { Store } from "../../../typer/store";
+import { Kategori } from "../../../../../typer/kategori";
+import { Underkategori } from "../../../../../typer/underkategori";
+import { Store } from "../../../../../typer/store";
 import { connect } from "react-redux";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import { withRouter, RouteComponentProps } from "react-router";
-import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import { Link } from "react-router-dom";
-import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
+import LocaleTekst from "../../../../../komponenter/localetekst/LocaleTekst";
 import { Dispatch } from "redux";
-import { settValgtUnderkategori } from "../../../states/reducers/kategorier";
+import { settValgtUnderkategori } from "../../../../../states/reducers/kategorier";
+import infoIkon from "../../../../../img/filled-version-infomation-circle.svg";
+import { Element } from "nav-frontend-typografi";
 
 interface Routes {
   sprak: string;
@@ -35,32 +36,33 @@ const Underkategorier = (props: MergedProps) => {
 
   return (
     <div className="underkategori" key={valgtKategori.tittel[intl.locale]}>
-      <Undertittel>
-        {props.intl.formatMessage({
-          id: "underkategori.tittel.alfabet"
-        })}
-      </Undertittel>
-      <ul>
-        {sorterteUnderkategorier(underkategorier, intl.locale).map(
-          underkategori => (
-            <li key={underkategori.urlparam}>
-              <Link
-                onClick={() => props.settValgtUnderkategori(underkategori)}
-                to={
-                  `/soknader` +
-                  `/${match.params.sprak}` +
-                  `/${match.params.personEllerBedrift}` +
-                  `/${valgtKategori.urlparam}` +
-                  `/${underkategori.urlparam}`
-                }
-                className="lenke"
-              >
-                <LocaleTekst tekst={underkategori.navn} />
-              </Link>
-            </li>
-          )
-        )}
-      </ul>
+      <img className="underkategori__ikon" src={infoIkon} alt="" />
+      <div>
+        <Element>
+          <FormattedMessage id="kategoriinnhold.infotekst" />
+        </Element>
+        <ul>
+          {sorterteUnderkategorier(underkategorier, intl.locale).map(
+            underkategori => (
+              <li key={underkategori.urlparam}>
+                <Link
+                  onClick={() => props.settValgtUnderkategori(underkategori)}
+                  to={
+                    `/soknader` +
+                    `/${match.params.sprak}` +
+                    `/${match.params.personEllerBedrift}` +
+                    `/${valgtKategori.urlparam}` +
+                    `/${underkategori.urlparam}`
+                  }
+                  className="lenke"
+                >
+                  <LocaleTekst tekst={underkategori.navn} />
+                </Link>
+              </li>
+            )
+          )}
+        </ul>
+      </div>
     </div>
   );
 };
