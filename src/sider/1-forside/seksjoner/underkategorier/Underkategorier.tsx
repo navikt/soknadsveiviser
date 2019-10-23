@@ -1,15 +1,15 @@
 import * as React from "react";
-import { Kategori } from "../../../../../typer/kategori";
-import { Underkategori } from "../../../../../typer/underkategori";
-import { Store } from "../../../../../typer/store";
+import { Kategori } from "../../../../typer/kategori";
+import { Underkategori } from "../../../../typer/underkategori";
+import { Store } from "../../../../typer/store";
 import { connect } from "react-redux";
 import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
 import { withRouter, RouteComponentProps } from "react-router";
 import { Link } from "react-router-dom";
-import LocaleTekst from "../../../../../komponenter/localetekst/LocaleTekst";
+import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
 import { Dispatch } from "redux";
-import { settValgtUnderkategori } from "../../../../../states/reducers/kategorier";
-import infoIkon from "../../../../../img/filled-version-infomation-circle.svg";
+import { settValgtUnderkategori } from "../../../../states/reducers/kategorier";
+import infoIkon from "../../../../img/info-ikon.svg";
 import { Element } from "nav-frontend-typografi";
 
 interface Routes {
