@@ -1,5 +1,5 @@
 import * as React from "react";
-import Underkategorier from "../../underkategorier/Underkategorier/Underkategorier";
+import Underkategorier from "../../underkategorier/Underkategorier";
 import Hovedbanner from "../../../../../komponenter/bannere/Hovedbanner";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Kategori } from "../../../../../typer/kategori";
