@@ -18,29 +18,18 @@ interface ValgtSoknad {
 
 interface Props {
   lenke?: string;
-  ettersendelse?: string;
+  disabled?: boolean;
 }
 
 type MergedProps = Props & ReduxProps & ValgtSoknad;
 
 const Neste = (props: MergedProps) => {
-  const { lenke, ettersendelse } = props;
-
-  const relevanteVedlegg = props.valgteVedlegg
-    .filter(vedlegg => vedlegg.soknadsobjektId === props.valgtSoknadsobjekt._id)
-    .filter(vedlegg => !vedlegg.pakrevd);
-
-  const vedleggSvart = relevanteVedlegg.filter(
-    vedlegg => vedlegg.skalSendes !== undefined
-  );
-
-  let erDisabled = relevanteVedlegg.length !== vedleggSvart.length;
-
+  const { lenke, disabled } = props;
   return (
     <>
       {lenke
-        ? NesteLenke(lenke, ettersendelse ? false : erDisabled)
-        : NesteKnapp(ettersendelse ? false : erDisabled)}
+        ? NesteLenke(lenke, disabled || false)
+        : NesteKnapp(disabled || false)}
     </>
   );
 };

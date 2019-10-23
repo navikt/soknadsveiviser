@@ -2,11 +2,8 @@ import * as React from "react";
 import { Field, FieldProps } from "formik";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
-import {
-  ValgtEnhet,
-  medPersonalia,
-  Personalia
-} from "../../../../../states/providers/Personalia";
+import { medPersonalia, Personalia } from "states/providers/Personalia";
+import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import VisEnheter from "./felter/VisEnheter";
 import { UndertekstBold } from "nav-frontend-typografi";
@@ -21,7 +18,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
 
   return (
     <Ekspanderbartpanel
-      border
+      border={true}
       tittelProps="normaltekst"
       tittel={intl.formatMessage({ id: "personalia.bedrift.flerepersoner" })}
     >

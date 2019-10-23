@@ -30,8 +30,8 @@ interface ValgtSoknad {
 }
 
 interface ReduxProps {
-  valgteVedlegg: Vedleggsobjekt[];
   klage: Klage;
+  valgteVedlegg: Vedleggsobjekt[];
 }
 
 interface Routes {
@@ -122,8 +122,8 @@ class Avslutning extends Component<MergedProps, State> {
             steg={++steg}
             relevanteVedlegg={relevanteVedlegg}
             skjemaSprak={skjemaSprak}
-            skalKlage={true}
             typeKlage={klage}
+            skalAnke={true}
           />
           {!skalEttersende && (
             <SkjemaNedlasting

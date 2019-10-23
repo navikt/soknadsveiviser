@@ -8,7 +8,7 @@ const getDecorator = require("./dekorator");
 const { getSecrets, getMockSecrets } = require("./getSecrets");
 const basePath = require("./basePath");
 
-const buildPath = path.join(__dirname, '../build');
+const buildPath = path.join(__dirname, "../build");
 
 const server = express();
 
@@ -18,7 +18,7 @@ server.set("views", `${__dirname}/../build`);
 
 // parse application/json
 server.use(express.json());
-server.disable('X-Powered-By');
+server.disable("X-Powered-By");
 
 const [
   enheterRSURL,
@@ -34,59 +34,59 @@ const [
   tjenesterUrl
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
-server.use(basePath("/"), express.static(buildPath, {index: false}));
+server.use(basePath("/"), express.static(buildPath, { index: false }));
 
 server.get(basePath("/api/enheter"), (req, res) => {
-    req.headers["x-nav-apiKey"] = enheterRSApiKey;
-    req.pipe(request(enheterRSURL)).pipe(res);
+  req.headers["x-nav-apiKey"] = enheterRSApiKey;
+  req.pipe(request(enheterRSURL)).pipe(res);
 });
 
 server.get(basePath("/config"), (req, res) =>
-    res.send({
-        proxyUrl: soknadsveiviserproxyUrl,
-        tjenesteUrl: tjenesterUrl,
-        sanityDataset: sanityDataset
-    })
+  res.send({
+    proxyUrl: soknadsveiviserproxyUrl,
+    tjenesteUrl: tjenesterUrl,
+    sanityDataset: sanityDataset
+  })
 );
 
 server.post(basePath("/api/forsteside"), (req, res) => {
+  request(
+    securityTokenServiceTokenUrl +
+      "?grant_type=client_credentials&scope=openid",
+    {
+      auth: {
+        user: soknadsveiviserUser,
+        pass: soknadsveiviserPass
+      },
+      method: "GET",
+      json: true,
+      headers: {
+        "x-nav-apiKey": securityTokenServiceTokenApiKey
+      }
+    },
+    error => {
+      if (error) next(error);
+    }
+  ).then(result =>
     request(
-        securityTokenServiceTokenUrl +
-        "?grant_type=client_credentials&scope=openid",
-        {
-            auth: {
-                user: soknadsveiviserUser,
-                pass: soknadsveiviserPass
-            },
-            method: "GET",
-            json: true,
-            headers: {
-                "x-nav-apiKey": securityTokenServiceTokenApiKey
-            }
+      foerstesidegeneratorServiceUrl,
+      {
+        method: "POST",
+        json: true,
+        body: req.body,
+        auth: {
+          bearer: result.access_token
         },
-        error => {
-            if (error) next(error);
+        headers: {
+          "x-nav-apiKey": foerstesidegeneratorServiceApiKey
         }
-    ).then(result =>
-        request(
-            foerstesidegeneratorServiceUrl,
-            {
-                method: "POST",
-                json: true,
-                body: req.body,
-                auth: {
-                    bearer: result.access_token
-                },
-                headers: {
-                    "x-nav-apiKey": foerstesidegeneratorServiceApiKey
-                }
-            },
-            (error, result, body) => {
-                if (error) next(error);
-                res.send(body);
-            }
-        )
-    );
+      },
+      (error, result, body) => {
+        if (error) next(error);
+        res.send(body);
+      }
+    )
+  );
 });
 
 const renderApp = decoratorFragments =>
@@ -95,23 +95,24 @@ const renderApp = decoratorFragments =>
       if (err) reject(err);
       resolve(html);
     })
-);
+  );
 
 const startServer = html => {
-    server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
-        res.sendStatus(200)
-    );
+  server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
+    res.sendStatus(200)
+  );
 
-    server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => { // matcher alt bortsett fra internal og static
-        res.send(html);
-    });
+  server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
+    // matcher alt bortsett fra internal og static
+    res.send(html);
+  });
 };
 
 const logError = (errorMessage, details) => console.log(errorMessage, details); // eslint-disable-line
 
 getDecorator()
-    .then(renderApp, error => logError("Failed to get decorator", error))
-    .then(startServer, error => logError("Failed to render app", error));
+  .then(renderApp, error => logError("Failed to get decorator", error))
+  .then(startServer, error => logError("Failed to render app", error));
 
 const port = process.env.PORT || 8080;
 server.listen(port, () => console.log(`App listening on port: ${port}`)); // eslint-disable-line

@@ -20,7 +20,8 @@ export type Vedlegg = {
 };
 
 export type Klage = {
-  skalEttersende: boolean;
+  skalEttersende?: boolean;
+  erVideresendt?: boolean;
 };
 
 export type FetchKategorier = { valgtType: "Person" | "Bedrift" } & (
