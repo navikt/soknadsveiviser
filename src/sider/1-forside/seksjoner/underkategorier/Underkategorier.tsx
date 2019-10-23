@@ -10,6 +10,7 @@ import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
 import { Dispatch } from "redux";
 import { settValgtUnderkategori } from "../../../../states/reducers/kategorier";
 import infoIkon from "../../../../img/info-ikon.svg";
+
 import { Element } from "nav-frontend-typografi";
 
 interface Routes {
