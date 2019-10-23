@@ -31,7 +31,7 @@ type MergedProps = Props &
   ReduxProps;
 
 const Underkategorier = (props: MergedProps) => {
-  const { valgtKategori, intl, match } = props;
+  const { valgtKategori, intl, match, valgtType } = props;
   const { underkategorier } = valgtKategori;
 
   return (
@@ -39,7 +39,11 @@ const Underkategorier = (props: MergedProps) => {
       <img className="underkategori__ikon" src={infoIkon} alt="" />
       <div>
         <Element>
-          <FormattedMessage id="kategoriinnhold.infotekst" />
+          {valgtType === "bedrift" ? (
+            <FormattedMessage id="kategoriinnhold.infotekst.bedrift" />
+          ) : (
+            <FormattedMessage id="kategoriinnhold.infotekst.person" />
+          )}
         </Element>
         <ul>
           {sorterteUnderkategorier(underkategorier, intl.locale).map(

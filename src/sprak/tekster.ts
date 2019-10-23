@@ -181,7 +181,8 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.tabell.pdf": `Filer`,
     "skjemaveilederlenke.person": `Gammel skjemaløsning for privatperson`,
     "skjemaveilederlenke.bedrift": `Gammel skjemaløsning for arbeidsgiver`,
-    "kategoriinnhold.infotekst": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer ved å klikke på rett emne nedenfor`
+    "kategoriinnhold.infotekst.person": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer ved å klikke på rett emne nedenfor`,
+    "kategoriinnhold.infotekst.bedrift": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer ved å klikke på rett emne nedenfor`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -363,6 +364,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.tabell.pdf": `Filer`,
     "skjemaveilederlenke.person": `Past solution for forms and applications`,
     "skjemaveilederlenke.bedrift": `Past solution for forms and applications for employers`,
-    "kategoriinnhold.infotekst": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer ved å klikke på rett emne nedenfor`
+    "kategoriinnhold.infotekst.person": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer ved å klikke på rett emne nedenfor`,
+    "kategoriinnhold.infotekst.bedrift": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer ved å klikke på rett emne nedenfor`
   }
 };
