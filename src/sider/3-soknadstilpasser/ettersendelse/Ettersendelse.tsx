@@ -6,7 +6,7 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { connect } from "react-redux";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
-import VelgVedleggEttersendelse from "./VelgVedlegg";
+import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
@@ -62,7 +62,7 @@ class Ettersendelse extends Component<MergedProps> {
           skjemanummer={hovedskjema.skjemanummer}
         />
         <Steg tittel="ettersendelser.tittel.underbanner" />
-        <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
+        <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
         <DineVedlegg vedleggTilInnsending={vedleggTilInnsending} />
         <Personalia nesteDisabled={nesteDisabled} {...this.props} />
       </>

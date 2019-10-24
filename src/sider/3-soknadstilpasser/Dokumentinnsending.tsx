@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import VelgVedlegg from "./felles/velgvedlegg/VelgVedlegg";
-import VelgVedleggEttersendelse from "./ettersendelse/VelgVedlegg";
+import VelgVedlegg from "./felles/velgvedlegg/VeiledendeVedleggsvalg";
+import Sjekkbokser from "./felles/velgvedlegg/Sjekkbokser";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
@@ -113,7 +113,7 @@ class Dokumentinnsending extends Component<MergedProps> {
         {ettersendelse ? (
           <>
             <Steg tittel="ettersendelser.tittel.underbanner" />
-            <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
+            <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
           </>
         ) : (
           <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />

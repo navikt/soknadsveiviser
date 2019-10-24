@@ -1,15 +1,15 @@
 import React, { SyntheticEvent } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
+import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
 import { Dispatch } from "redux";
-import { toggleValgtVedleggForEttersendelse } from "../../../states/reducers/vedlegg";
-import { Store } from "../../../typer/store";
-import { Soknadsobjekt } from "../../../typer/soknad";
+import { toggleValgtVedleggForSjekkbokser } from "../../../../states/reducers/vedlegg";
+import { Store } from "../../../../typer/store";
+import { Soknadsobjekt } from "../../../../typer/soknad";
 import { withRouter, RouteComponentProps } from "react-router";
 import { connect } from "react-redux";
 import PanelBase from "nav-frontend-paneler";
 import CheckboksPanelGruppe from "nav-frontend-skjema/lib/checkboks-panel-gruppe";
-import { localeTekst } from "../../../utils/sprak";
+import { localeTekst } from "../../../../utils/sprak";
 
 interface Props {
   soknadsobjekt?: Soknadsobjekt;
@@ -17,7 +17,7 @@ interface Props {
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
-  toggleValgtVedleggForEttersendelse: (
+  toggleValgtVedleggForSjekkbokser: (
     _key: string,
     soknadsobjektId: string
   ) => void;
@@ -29,7 +29,7 @@ const Sjekkbokser = (props: MergedProps) => {
     intl,
     soknadsobjekt,
     valgteVedlegg,
-    toggleValgtVedleggForEttersendelse
+    toggleValgtVedleggForSjekkbokser
   } = props;
 
   if (!soknadsobjekt) {
@@ -39,7 +39,7 @@ const Sjekkbokser = (props: MergedProps) => {
   const handleOnChange = (
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
-  ) => value && toggleValgtVedleggForEttersendelse(value, soknadsobjekt._id);
+  ) => value && toggleValgtVedleggForSjekkbokser(value, soknadsobjekt._id);
 
   const lagCheckboks = (vedleggsobjekt: Vedleggsobjekt) => {
     const { vedlegg, _key } = vedleggsobjekt;
@@ -77,8 +77,8 @@ const mapStateToProps = (store: Store) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggleValgtVedleggForEttersendelse: (_key: string, soknadsobjektId: string) =>
-    dispatch(toggleValgtVedleggForEttersendelse(_key, soknadsobjektId))
+  toggleValgtVedleggForSjekkbokser: (_key: string, soknadsobjektId: string) =>
+    dispatch(toggleValgtVedleggForSjekkbokser(_key, soknadsobjektId))
 });
 
 export default injectIntl<Props & InjectedIntlProps>(

@@ -39,11 +39,11 @@ export const toggleValgtVedlegg = (
   klage?: boolean
 ) => ({ type: "TOGGLE_VALGT_VEDLEGG", _key, soknadsobjektId, klage });
 
-export const toggleValgtVedleggForEttersendelse = (
+export const toggleValgtVedleggForSjekkbokser = (
   _key: string,
   soknadsobjektId: string
 ) => ({
-  type: "TOGGLE_VALGT_VEDLEGG_ETTERSENDELSE",
+  type: "TOGGLE_VALGT_VEDLEGG_SJEKKBOKSER",
   _key,
   soknadsobjektId
 });
@@ -132,7 +132,7 @@ export const vedlegg = (state: Vedlegg, action: Action, root: Store) => {
       };
     }
 
-    case "TOGGLE_VALGT_VEDLEGG_ETTERSENDELSE":
+    case "TOGGLE_VALGT_VEDLEGG_SJEKKBOKSER":
       return {
         ...state,
         valgteVedlegg: valgteVedlegg.map(vedleggsobjekt =>

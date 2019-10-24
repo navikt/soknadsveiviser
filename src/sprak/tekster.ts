@@ -181,7 +181,10 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
     "skjemautlisting.tabell.pdf": `Filer`,
     "skjemaveilederlenke.person": `Gammel skjemaløsning for privatperson`,
-    "skjemaveilederlenke.bedrift": `Gammel skjemaløsning for arbeidsgiver`
+    "skjemaveilederlenke.bedrift": `Gammel skjemaløsning for arbeidsgiver`,
+    "vedleggsvalg.toggle.advarsel": `Du er selv ansvarlig for å sende all nødvendig dokumentasjon. Ufullstendige søknader kan bli avslått.`,
+    "vedleggsvalg.toggle.veiledning": `Jeg trenger veiledning for å finne ut hvilke vedlegg jeg må legge ved`,
+    "vedleggsvalg.toggle.ikkeveiledning": `Jeg vet hvilke vedlegg jeg skal legge ved`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -363,6 +366,9 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
     "skjemautlisting.tabell.pdf": `Filer`,
     "skjemaveilederlenke.person": `Past solution for forms and applications`,
-    "skjemaveilederlenke.bedrift": `Past solution for forms and applications for employers`
+    "skjemaveilederlenke.bedrift": `Past solution for forms and applications for employers`,
+    "vedleggsvalg.toggle.advarsel": `You are responsible for sending all necessary documentation. Incomplete applications may be declined.`,
+    "vedleggsvalg.toggle.veiledning": `I need guidance to decide which attachments to submit`,
+    "vedleggsvalg.toggle.ikkeveiledning": `I know which attachments to submit`
   }
 };
