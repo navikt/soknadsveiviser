@@ -75,7 +75,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
               }
               className="knapp knapp-hoved"
             >
-              <FormattedMessage id="klage.mellomledd.tittel" />
+              <FormattedMessage id="klage.mellomledd.knapp" />
             </Link>
           </div>
         </div>
@@ -101,7 +101,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
               }
               className="knapp knapp-hoved"
             >
-              <FormattedMessage id="anke.mellomledd.tittel" />
+              <FormattedMessage id="anke.mellomledd.knapp" />
             </Link>
           </div>
         </div>
