@@ -43,7 +43,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   }
 });
 
-export default withRouter<Props & RouteComponentProps>(
+export default withRouter<Props & RouteComponentProps, any>(
   injectIntl<Props & RouteComponentProps & InjectedIntlProps>(
     connect(
       undefined,

@@ -120,7 +120,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       connect(
         undefined,
         mapDispatchToProps

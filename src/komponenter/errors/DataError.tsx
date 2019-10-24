@@ -11,7 +11,7 @@ const Error = (props: props) => {
   const { error } = props;
   return (
     <div className="error__container" style={props.style}>
-      <AlertStripe type="advarsel" solid>
+      <AlertStripe type="advarsel">
         {error && <FormattedMessage id={error} />}
       </AlertStripe>
     </div>

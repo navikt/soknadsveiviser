@@ -53,7 +53,7 @@ class Avslutning extends Component<MergedProps, State> {
   byttSprak = (valgtSprak: string) =>
     this.setState({ skjemaSprak: valgtSprak });
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     const { skjemanummer } = this.props.match.params;
     loggEvent("soknadsveiviser.valgt.skjemanummer", undefined, {
       skjemanummer
@@ -174,7 +174,7 @@ const mapStateToProps = (store: Store) => ({
 
 export default medValgtSoknadsobjekt<ValgtSoknad>(
   injectIntl<ValgtSoknad & InjectedIntlProps>(
-    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       medPersonalia<
         Personalia &
           ValgtSoknad &

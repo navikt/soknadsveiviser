@@ -106,7 +106,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
 
 export default medValgtSoknadsobjekt(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       VelgKlageEllerAnke
     )
   )
