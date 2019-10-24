@@ -81,10 +81,6 @@ class VisKlage extends Component<MergedProps> {
     }
   };
 
-  UNSAFE_componentWillReceiveProps() {
-
-  }
-
   render() {
     if (!this.props.klageSoknadsobjekt) {
       return null;
