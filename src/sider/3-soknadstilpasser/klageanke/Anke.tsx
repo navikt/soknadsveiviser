@@ -59,8 +59,20 @@ type MergedProps = Props &
 
 class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
-    const { klageSoknadsobjekt, match, klage } = this.props;
-    const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    const { klageSoknadsobjekt, match, klage, valgtSoknadsobjekt, intl } = this.props;
+    const urlSkalEttersende = !!match.params.ettersendelse;
+
+    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
+    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
+    const tittelEttersendelse = klage.skalEttersende
+      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
+      : "";
+
+    if (klageSoknadsobjekt) {
+      document.title = sideTittel(
+        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
+      );
+    }
 
     // Anke er alltid vidersendt til enhet
     this.props.settVideresendtTilEnhet(true);
@@ -75,22 +87,6 @@ class VisKlage extends Component<MergedProps> {
     }
   };
 
-  componentWillReceiveProps() {
-    const { klageSoknadsobjekt, valgtSoknadsobjekt, intl, klage } = this.props;
-
-    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
-    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
-    const tittelEttersendelse = klage.skalEttersende
-      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
-      : "";
-
-    if (klageSoknadsobjekt) {
-      document.title = sideTittel(
-        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
-      );
-    }
-  }
-
   render() {
     if (!this.props.klageSoknadsobjekt) {
       return null;
@@ -99,7 +95,7 @@ class VisKlage extends Component<MergedProps> {
     const { intl, klage, match } = this.props;
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
-    const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    const urlSkalEttersende = !!match.params.ettersendelse;
     const valgtSkalEttersende = klage.skalEttersende;
 
     const vedleggTilInnsending = valgteVedlegg
