@@ -16,6 +16,7 @@ import { sideTittel } from "../../../utils/sprak";
 import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
 import AlertStripe from "nav-frontend-alertstriper";
 import { ToggleGruppe, ToggleKnappPureProps } from "nav-frontend-toggle";
+import { Normaltekst } from "nav-frontend-typografi";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -87,39 +88,41 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
         />
         {relevanteVedlegg.length > 0 && (
           <>
-            <Steg
-              tittel="velgvedlegg.informasjonspanel.tittel"
-              ingress={
-                this.state.veiledning
-                  ? "velgvedlegg.informasjonspanel.ingress"
-                  : ""
-              }
-              beskrivelse={
-                this.state.veiledning
-                  ? "velgvedlegg.informasjonspanel.beskrivelse"
-                  : ""
-              }
-            />
-            <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
-              <ToggleGruppe
-                defaultToggles={[
-                  {
-                    children: <FormattedMessage id="vedleggsvalg.toggle.veiledning" />,
-                    pressed: true
-                  },
-                  {
-                    children: <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning" />,
-                  }
-                ]}
-                minstEn={true}
-                onChange={(event, toggle) => this.onClick(event, toggle)}
-              />
-            </div>
-            {!this.state.veiledning && (
-              <AlertStripe type="advarsel">
-                <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
-              </AlertStripe>
-            )}
+            <Steg tittel="velgvedlegg.informasjonspanel.tittel">
+              {this.state.veiledning ? (
+                <div className="stegBanner__seksjon">
+                  <Normaltekst>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
+                  </Normaltekst>
+                  <Normaltekst>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+                  </Normaltekst>
+                </div>
+              ) : (
+                <AlertStripe type="advarsel">
+                  <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
+                </AlertStripe>
+              )}
+              <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
+                <ToggleGruppe
+                  defaultToggles={[
+                    {
+                      children: (
+                        <FormattedMessage id="vedleggsvalg.toggle.veiledning" />
+                      ),
+                      pressed: true
+                    },
+                    {
+                      children: (
+                        <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning" />
+                      )
+                    }
+                  ]}
+                  minstEn={true}
+                  onChange={(event, toggle) => this.onClick(event, toggle)}
+                />
+              </div>
+            </Steg>
           </>
         )}
         {this.state.veiledning ? (
