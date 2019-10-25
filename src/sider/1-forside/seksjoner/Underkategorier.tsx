@@ -90,7 +90,7 @@ const mapStateToProps = (store: Store) => {
   };
 };
 
-export default withRouter<Props & RouteComponentProps<Routes>>(
+export default withRouter<Props & RouteComponentProps<Routes>, any>(
   injectIntl<Props & RouteComponentProps<Routes> & InjectedIntlProps>(
     connect(
       mapStateToProps,

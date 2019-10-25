@@ -92,7 +92,7 @@ const mapStateToProps = (store: Store) => ({
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
   injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
     withRouter<
-      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any
     >(
       medPersonalia<Exclude<MergedProps, ReduxProps>>(
         connect(mapStateToProps)(FodselsnummerPanel)

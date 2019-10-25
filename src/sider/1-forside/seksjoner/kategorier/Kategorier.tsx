@@ -74,6 +74,6 @@ class Kategorier extends Component<MergedProps, State> {
 
 export default medKategorier<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps>(Kategorier)
+    withRouter<Props & InjectedIntlProps & RouteComponentProps, any>(Kategorier)
   )
 );

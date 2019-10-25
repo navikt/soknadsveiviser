@@ -53,4 +53,5 @@ const SprakVelger = (props: MergedProps) => {
   );
 };
 
+// @ts-ignore
 export default withRouter(IntlProviderWrapperHOC(SprakVelger));

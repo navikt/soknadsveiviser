@@ -61,7 +61,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export default injectIntl<Props & InjectedIntlProps>(
-  withRouter<Props & RouteComponentProps<Routes> & InjectedIntlProps>(
+  withRouter<Props & RouteComponentProps<Routes> & InjectedIntlProps, any>(
     connect(
       mapStateToProps,
       mapDispatchToProps

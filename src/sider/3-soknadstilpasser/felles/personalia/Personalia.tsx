@@ -207,7 +207,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 export default medPersonalia<Props & Personalia>(
   medValgtSoknadsobjekt<Props & ValgtSoknad & Personalia>(
     injectIntl<Props & ValgtSoknad & Personalia & InjectedIntlProps>(
-      withRouter<MergedProps>(VisPersonalia)
+      withRouter<MergedProps, any>(VisPersonalia)
     )
   )
 );
