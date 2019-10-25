@@ -77,7 +77,7 @@ const mapStateToProps = (store: Store) => {
   };
 };
 
-export default withRouter<Props & RouteComponentProps>(
+export default withRouter<Props & RouteComponentProps, any>(
   injectIntl<Props & RouteComponentProps & InjectedIntlProps>(
     connect(mapStateToProps)(Wrapper)
   )

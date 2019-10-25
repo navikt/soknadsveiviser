@@ -6,7 +6,7 @@ import { Soknadsobjekt } from "typer/soknad";
 import { localeTekst } from "utils/sprak";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "utils/sprak";
-import { Undertittel } from "nav-frontend-typografi";
+import { Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -58,6 +58,9 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
             <Undertittel>
               <FormattedMessage id="klage.mellomledd.tittel" />
             </Undertittel>
+            <Normaltekst>
+              <FormattedMessage id="klage.mellomledd.beskrivelse" />
+            </Normaltekst>
           </div>
           <div className="klageanke__knapper">
             <Link
@@ -72,7 +75,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
               }
               className="knapp knapp-hoved"
             >
-              <FormattedMessage id="klage.mellomledd.tittel" />
+              <FormattedMessage id="klage.mellomledd.knapp" />
             </Link>
           </div>
         </div>
@@ -81,6 +84,9 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
             <Undertittel>
               <FormattedMessage id="anke.mellomledd.tittel" />
             </Undertittel>
+            <Normaltekst>
+              <FormattedMessage id="anke.mellomledd.beskrivelse" />
+            </Normaltekst>
           </div>
           <div className="klageanke__knapper">
             <Link
@@ -95,7 +101,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
               }
               className="knapp knapp-hoved"
             >
-              <FormattedMessage id="anke.mellomledd.tittel" />
+              <FormattedMessage id="anke.mellomledd.knapp" />
             </Link>
           </div>
         </div>
@@ -106,7 +112,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
 
 export default medValgtSoknadsobjekt(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       VelgKlageEllerAnke
     )
   )

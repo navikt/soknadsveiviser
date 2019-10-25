@@ -78,6 +78,7 @@ const mapStateToProps = (store: Store) => ({
   kategorier: store.kategorier
 });
 
-export default withRouter<Props & RouteComponentProps<Routes>>(
+export default withRouter<Props & RouteComponentProps<Routes>, any>(
   connect(mapStateToProps)(VeiledendeVedleggsvalg)
+
 );

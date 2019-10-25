@@ -18,7 +18,9 @@
 @import "~nav-frontend-toggle-style";
 
 @import "./sider/1-forside/Forside.less";
-@import "./sider/1-forside/seksjoner/kategorier/Kategorier.less";
+@import "sider/1-forside/seksjoner/kategorier/Kategorimeny/Kategorimeny.less";
+@import "sider/1-forside/seksjoner/kategorier/Kategoriinnhold/Kategoriinnhold.less";
+@import "sider/1-forside/seksjoner/underkategorier/Underkategorier.less";
 @import "./sider/2-soknadsvelger/Soknadsvelger.less";
 @import "./sider/3-soknadstilpasser/felles/personalia/Personalia.less";
 @import "./sider/3-soknadstilpasser/felles/dinevedlegg/DineVedlegg.less";
@@ -121,6 +123,12 @@ body {
 
 .stormargin {
   margin: 2rem;
+}
+
+.innhold__container {
+  margin: 0 0.5rem 0 0.5rem;
+  width: @pageWidth;
+  max-width: 100%;
 }
 
 @media @mobile {

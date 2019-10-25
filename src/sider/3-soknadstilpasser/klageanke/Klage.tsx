@@ -56,8 +56,9 @@ type MergedProps = Props &
 
 class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
-    const { klageSoknadsobjekt, match, klage } = this.props;
-    const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    const { klageSoknadsobjekt, klage, match } = this.props;
+
+    const urlSkalEttersende = !!match.params.ettersendelse;
     if (urlSkalEttersende && !klage.skalEttersende) {
       this.props.settEttersendTilKlage(true);
     }
@@ -68,8 +69,16 @@ class VisKlage extends Component<MergedProps> {
     }
   };
 
-  componentWillReceiveProps() {
-    const { klageSoknadsobjekt, valgtSoknadsobjekt, intl, klage } = this.props;
+  render() {
+    if (!this.props.klageSoknadsobjekt) {
+      return null;
+    }
+
+    const { intl, klage, match } = this.props;
+    const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
+    const { valgteVedlegg } = this.props;
+    const urlSkalEttersende = !!match.params.ettersendelse;
+    const valgtSkalEttersende = klage.skalEttersende;
 
     const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
     const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
@@ -82,18 +91,6 @@ class VisKlage extends Component<MergedProps> {
         `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
       );
     }
-  }
-
-  render() {
-    if (!this.props.klageSoknadsobjekt) {
-      return null;
-    }
-
-    const { intl, klage, match } = this.props;
-    const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
-    const { valgteVedlegg } = this.props;
-    const urlSkalEttersende = match.params.ettersendelse ? true : false;
-    const valgtSkalEttersende = klage.skalEttersende;
 
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
@@ -167,7 +164,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       connect(
         mapStateToProps,
         mapDispatchToProps

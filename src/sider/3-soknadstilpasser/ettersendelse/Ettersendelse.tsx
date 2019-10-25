@@ -76,7 +76,7 @@ const mapStateToProps = (store: Store) => ({
 
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       connect(mapStateToProps)(Ettersendelse)
     )
   )
