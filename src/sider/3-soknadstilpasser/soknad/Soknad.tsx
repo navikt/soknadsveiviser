@@ -78,7 +78,7 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
       vedlegg => vedlegg.skalSendes !== undefined
     );
 
-    let erNesteDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length;
+    let erNesteDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length && this.state.veiledning;
     return (
       <>
         <Underbanner
