@@ -13,6 +13,7 @@ import { localeTekst } from "../../../../utils/sprak";
 
 interface Props {
   soknadsobjekt?: Soknadsobjekt;
+  hukAvPakrevde?: boolean;
 }
 
 interface ReduxProps {

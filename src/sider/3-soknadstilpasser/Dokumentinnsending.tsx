@@ -38,10 +38,13 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class Dokumentinnsending extends Component<MergedProps, {veiledning: boolean}> {
+class Dokumentinnsending extends Component<
+  MergedProps,
+  { veiledning: boolean }
+> {
   constructor(props: MergedProps) {
     super(props);
-    this.state = {veiledning: true};
+    this.state = { veiledning: true };
   }
 
   genererDokumentinnsendingsUrl = (
@@ -78,7 +81,7 @@ class Dokumentinnsending extends Component<MergedProps, {veiledning: boolean}> {
     toggles: ToggleKnappPureProps[]
   ) => {
     this.state.veiledning !== toggles[0].pressed &&
-    this.setState({ veiledning: !this.state.veiledning });
+      this.setState({ veiledning: !this.state.veiledning });
   };
 
   render() {
@@ -111,7 +114,9 @@ class Dokumentinnsending extends Component<MergedProps, {veiledning: boolean}> {
 
     let erNesteDisabled =
       (ettersendelse && vedleggTilInnsending.length === 0) ||
-      (!ettersendelse && ikkePakrevdeVedlegg.length !== vedleggSvart.length);
+      (!ettersendelse &&
+        ikkePakrevdeVedlegg.length !== vedleggSvart.length &&
+        this.state.veiledning);
 
     const URLvidere = this.genererDokumentinnsendingsUrl(
       valgtSoknadsobjekt,
@@ -168,13 +173,21 @@ class Dokumentinnsending extends Component<MergedProps, {veiledning: boolean}> {
                 />
               </div>
             </Steg>
-            <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
+            {this.state.veiledning ? (
+              <>
+                <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
+                {!erNesteDisabled && (
+                  <DineVedlegg
+                    visErVedleggPakrevd={true}
+                    vedleggTilInnsending={vedleggTilInnsending}
+                  />
+                )}
+              </>
+            ) : (
+              <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
+            )}
           </>
         )}
-        <DineVedlegg
-          visErVedleggPakrevd={true}
-          vedleggTilInnsending={vedleggTilInnsending}
-        />
         <Neste lenke={URLvidere} disabled={erNesteDisabled} />
       </>
     );

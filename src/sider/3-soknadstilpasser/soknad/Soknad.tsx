@@ -78,7 +78,8 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
       vedlegg => vedlegg.skalSendes !== undefined
     );
 
-    let erNesteDisabled = ikkePakrevdeVedlegg.length !== vedleggSvart.length && this.state.veiledning;
+    let svartPaAlleSporsmal =
+      ikkePakrevdeVedlegg.length === vedleggSvart.length || !this.state.veiledning;
     return (
       <>
         <Underbanner
@@ -128,16 +129,18 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
         {this.state.veiledning ? (
           <>
             <VeiledendeVedleggsvalg soknadsobjekt={valgtSoknadsobjekt} />
-            <DineVedlegg
-              visRadioButtons={true}
-              visErVedleggPakrevd={true}
-              vedleggTilInnsending={vedleggTilInnsending}
-            />
+            {svartPaAlleSporsmal && (
+              <DineVedlegg
+                visRadioButtons={true}
+                visErVedleggPakrevd={true}
+                vedleggTilInnsending={vedleggTilInnsending}
+              />
+            )}
           </>
         ) : (
           <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
         )}
-        <Personalia nesteDisabled={erNesteDisabled} />
+        <Personalia nesteDisabled={!svartPaAlleSporsmal} />
       </>
     );
   }
