@@ -104,7 +104,6 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "kategorier.knapp.bedrift": `Bedrift`,
     "kategorier.knapp.engelsk": `English`,
     "kategorier.knapp.person": `Person`,
-    "underkategori.tittel.alfabet": `A til Å`,
     "stegindikator.steg1": `Velg søknadstype`,
     "stegindikator.steg2": `Velg vedlegg`,
     "stegindikator.steg3": `Velg ettersendelser`,
@@ -181,7 +180,9 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
     "skjemautlisting.tabell.pdf": `Filer`,
     "skjemaveilederlenke.person": `Gammel skjemaløsning for privatperson`,
-    "skjemaveilederlenke.bedrift": `Gammel skjemaløsning for arbeidsgiver`
+    "skjemaveilederlenke.bedrift": `Gammel skjemaløsning for arbeidsgiver`,
+    "kategoriinnhold.infotekst.person": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer når du velger emne nedenfor.`,
+    "kategoriinnhold.infotekst.bedrift": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer når du velger emne nedenfor.`
   },
   en: {
     "tittel.soknader": "Applications",
@@ -287,7 +288,6 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "kategorier.knapp.bedrift": `Employers`,
     "kategorier.knapp.engelsk": `English`,
     "kategorier.knapp.person": `Person`,
-    "underkategori.tittel.alfabet": `A to Z`,
     "stegindikator.steg1": `Type of application`,
     "stegindikator.steg2": `Choose documentation`,
     "stegindikator.steg3": `Later submittion`,
@@ -363,6 +363,8 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "skjemautlisting.tabell.malgruppe": `Målgruppe`,
     "skjemautlisting.tabell.pdf": `Filer`,
     "skjemaveilederlenke.person": `Past solution for forms and applications`,
-    "skjemaveilederlenke.bedrift": `Past solution for forms and applications for employers`
+    "skjemaveilederlenke.bedrift": `Past solution for forms and applications for employers`,
+    "kategoriinnhold.infotekst.person": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`,
+    "kategoriinnhold.infotekst.bedrift": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`
   }
 };
