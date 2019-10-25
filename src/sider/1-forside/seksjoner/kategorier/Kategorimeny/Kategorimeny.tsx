@@ -1,13 +1,13 @@
 import React, { Component } from "react";
-import Desktop from "./responsiv/Desktop";
-import TabletEllerMobil from "./responsiv/TabletEllerMobil";
-import { Kategori } from "../../../../typer/kategori";
-import { Underkategori } from "../../../../typer/underkategori";
+import Desktop from "../responsiv/Desktop";
+import TabletEllerMobil from "../responsiv/TabletEllerMobil";
+import { Kategori } from "../../../../../typer/kategori";
+import { Underkategori } from "../../../../../typer/underkategori";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { withRouter, RouteComponentProps } from "react-router";
-import { filtrerKategorier } from "../../../../utils/kategorier";
-import { medKategorier } from "../../../../states/providers/Kategorier";
-import { localeTekst, sideTittel } from "../../../../utils/sprak";
+import { filtrerKategorier } from "../../../../../utils/kategorier";
+import { medKategorier } from "../../../../../states/providers/Kategorier";
+import { localeTekst, sideTittel } from "../../../../../utils/sprak";
 
 type State = {
   windowSize: number;
@@ -21,7 +21,7 @@ interface Props {
 }
 
 type MergedProps = Props & RouteComponentProps & InjectedIntlProps;
-class Kategorier extends Component<MergedProps, State> {
+class Kategorimeny extends Component<MergedProps, State> {
   state = {
     windowSize: window.innerWidth
   };
@@ -74,6 +74,6 @@ class Kategorier extends Component<MergedProps, State> {
 
 export default medKategorier<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps>(Kategorier)
+    withRouter<Props & InjectedIntlProps & RouteComponentProps, any>(Kategorimeny)
   )
 );
