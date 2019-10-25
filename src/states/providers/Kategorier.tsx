@@ -80,7 +80,7 @@ export const medKategorier = <P extends ValgtKategori>(
 );
 
 export default injectIntl<Props & InjectedIntlProps>(
-  withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+  withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
     connect(
       mapStateToProps,
       mapDispatchToProps

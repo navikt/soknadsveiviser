@@ -56,20 +56,7 @@ type MergedProps = Props &
 
 class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
-    const { klageSoknadsobjekt, match, klage } = this.props;
-    const urlSkalEttersende = match.params.ettersendelse ? true : false;
-    if (urlSkalEttersende && !klage.skalEttersende) {
-      this.props.settEttersendTilKlage(true);
-    }
-    if (klageSoknadsobjekt) {
-      this.props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
-    } else {
-      this.props.hentKlageSoknadsobjekt(urlSkalEttersende);
-    }
-  };
-
-  componentWillReceiveProps() {
-    const { klageSoknadsobjekt, valgtSoknadsobjekt, intl, klage } = this.props;
+    const { klageSoknadsobjekt, valgtSoknadsobjekt, intl, klage, match } = this.props;
 
     const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
     const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
@@ -82,7 +69,17 @@ class VisKlage extends Component<MergedProps> {
         `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
       );
     }
-  }
+
+    const urlSkalEttersende = !!match.params.ettersendelse;
+    if (urlSkalEttersende && !klage.skalEttersende) {
+      this.props.settEttersendTilKlage(true);
+    }
+    if (klageSoknadsobjekt) {
+      this.props.settAlleVedleggSkalSendesForSoknadsobjekt(klageSoknadsobjekt);
+    } else {
+      this.props.hentKlageSoknadsobjekt(urlSkalEttersende);
+    }
+  };
 
   render() {
     if (!this.props.klageSoknadsobjekt) {
@@ -92,7 +89,7 @@ class VisKlage extends Component<MergedProps> {
     const { intl, klage, match } = this.props;
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
-    const urlSkalEttersende = match.params.ettersendelse ? true : false;
+    const urlSkalEttersende = !!match.params.ettersendelse;
     const valgtSkalEttersende = klage.skalEttersende;
 
     const vedleggTilInnsending = valgteVedlegg
@@ -167,7 +164,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>>(
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
       connect(
         mapStateToProps,
         mapDispatchToProps

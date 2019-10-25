@@ -74,6 +74,6 @@ class Kategorimeny extends Component<MergedProps, State> {
 
 export default medKategorier<Props>(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps>(Kategorimeny)
+    withRouter<Props & InjectedIntlProps & RouteComponentProps, any>(Kategorimeny)
   )
 );

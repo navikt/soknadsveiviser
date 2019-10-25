@@ -12,7 +12,7 @@ const Error = (props: props) => {
   const { error } = props;
   return (
     <div className="error__container" style={props.style}>
-      <AlertStripe type="advarsel" solid>
+      <AlertStripe type="advarsel">
         <FormattedMessage id="errors.api.fetch" />
         <br />
         {error.code && error.text && (

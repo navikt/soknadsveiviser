@@ -39,7 +39,7 @@ const Underkategorier = (props: MergedProps) => {
     <div className="underkategori" key={valgtKategori.tittel[intl.locale]}>
       <img className="underkategori__ikon" src={infoIkon} alt="" />
       <div>
-        <Element>
+        <Element className="underkategori__info">
           {valgtType === "bedrift" ? (
             <FormattedMessage id="kategoriinnhold.infotekst.bedrift" />
           ) : (
@@ -97,7 +97,7 @@ const mapStateToProps = (store: Store) => {
   };
 };
 
-export default withRouter<Props & RouteComponentProps<Routes>>(
+export default withRouter<Props & RouteComponentProps<Routes>, any>(
   injectIntl<Props & RouteComponentProps<Routes> & InjectedIntlProps>(
     connect(
       mapStateToProps,
