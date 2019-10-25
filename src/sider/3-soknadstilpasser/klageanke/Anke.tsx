@@ -59,20 +59,8 @@ type MergedProps = Props &
 
 class VisKlage extends Component<MergedProps> {
   componentDidMount = () => {
-    const { klageSoknadsobjekt, match, klage, valgtSoknadsobjekt, intl } = this.props;
+    const { klageSoknadsobjekt, match, klage } = this.props;
     const urlSkalEttersende = !!match.params.ettersendelse;
-
-    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
-    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
-    const tittelEttersendelse = klage.skalEttersende
-      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
-      : "";
-
-    if (klageSoknadsobjekt) {
-      document.title = sideTittel(
-        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
-      );
-    }
 
     // Anke er alltid vidersendt til enhet
     this.props.settVideresendtTilEnhet(true);
@@ -97,6 +85,18 @@ class VisKlage extends Component<MergedProps> {
     const { valgteVedlegg } = this.props;
     const urlSkalEttersende = !!match.params.ettersendelse;
     const valgtSkalEttersende = klage.skalEttersende;
+
+    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
+    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
+    const tittelEttersendelse = klage.skalEttersende
+      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
+      : "";
+
+    if (klageSoknadsobjekt) {
+      document.title = sideTittel(
+        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
+      );
+    }
 
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
