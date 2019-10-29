@@ -16,7 +16,7 @@ import { lastNedFilBase64 } from "./utils/pdf";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
-import { loggApiError, loggError } from "../../../utils/logger";
+import { loggError } from "../../../utils/logger";
 
 interface Routes {
   ettersendelse?: string;
