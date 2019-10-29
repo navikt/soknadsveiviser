@@ -16,6 +16,7 @@ import { lastNedFilBase64 } from "./utils/pdf";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
+import { loggApiError, loggError } from "../../../utils/logger";
 
 interface Routes {
   ettersendelse?: string;
@@ -103,8 +104,11 @@ const ForstesideGenerator = (props: MergedProps) => {
       .then(() => {
         setState({ status: "READY" });
       })
-      .catch(error => {
-        setState({ status: "ERROR", error });
+      .catch(e => {
+        const error = `Klarte ikke å laste ned førstesideark: ${e}`;
+        setState({ status: "ERROR", error: e });
+        loggError(error);
+        console.error(error);
       });
   };
 
@@ -145,7 +149,8 @@ const ForstesideGenerator = (props: MergedProps) => {
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
   injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
     withRouter<
-      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>,
+      any
     >(
       medPersonalia<
         Personalia &

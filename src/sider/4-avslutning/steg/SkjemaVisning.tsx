@@ -5,9 +5,12 @@ import { FormattedMessage } from "react-intl";
 import { localeTekst } from "../../../utils/sprak";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
-import { hentPDFurl, lastNedFil } from "./utils/pdf";
+import { hentPDFurl, lastNedFilBlob } from "./utils/pdf";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
+import { loggApiError } from "../../../utils/logger";
+import { useState } from "react";
+import AlertStripe from "nav-frontend-alertstriper";
 
 interface Props {
   skjema: Skjema;
@@ -18,12 +21,25 @@ interface Props {
 type MergedProps = Props & InjectedIntlProps;
 const Skjemavisning = (props: MergedProps) => {
   const { skjemaSprak, intl, visEtikett, skjema } = props;
+  const [loading, settLoading] = useState(false);
+  const [error, settError] = useState();
 
   const lastNed = () => {
     const url = hentPDFurl(skjema.pdf, skjemaSprak, intl.locale);
     const tittel = localeTekst(skjema.navn, skjemaSprak);
     const filtype = url.split(".").pop() || "pdf";
-    lastNedFil(url, `NAV - ${tittel}`, filtype);
+
+    settLoading(true);
+    fetch(url)
+      .then(response => response.blob())
+      .then(blob => lastNedFilBlob(blob, `NAV - ${tittel}`, filtype))
+      .catch(e => {
+        const error = `Klarte ikke å laste ned ${tittel}: ${e}`;
+        settError(error);
+        loggApiError(url, error);
+        console.error(error);
+      })
+      .then(() => settLoading(false));
   };
 
   return (
@@ -37,10 +53,15 @@ const Skjemavisning = (props: MergedProps) => {
         </div>
       )}
       <div className="skjema__knapp">
-        <Hovedknapp onClick={lastNed}>
+        <Hovedknapp onClick={lastNed} disabled={loading} spinner={loading}>
           <FormattedMessage id="avslutning.steg.lastned.knapp.ready" />
         </Hovedknapp>
       </div>
+      {error && (
+        <div className="error__container">
+          <AlertStripe type="advarsel">{error}</AlertStripe>
+        </div>
+      )}
     </div>
   );
 };

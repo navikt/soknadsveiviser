@@ -1,7 +1,6 @@
 import { b64toBlob } from "./blob";
 import FileSaver from "file-saver";
 import { LocalePDFObjekt } from "../../../../typer/sprak";
-import { loggApiError } from "../../../../utils/logger";
 
 export const hentPDFurl = (
   pdfObjekt: LocalePDFObjekt,
@@ -35,15 +34,9 @@ export const hentPDFobjekt = (
   }
 };
 
-export const lastNedFil = (url: string, tittel: string, filtype: string) => {
+export const lastNedFilBlob = (blob: Blob, tittel: string, filtype: string) => {
   console.log(`Laster ned ${tittel}`);
-  fetch(url)
-    .then(response => response.blob())
-    .then(blob => FileSaver.saveAs(blob, `${tittel}.${filtype}`))
-    .catch(e => {
-      loggApiError(url, e);
-      console.error(e, `Klarte ikke å laste ned ${tittel}`);
-    });
+  FileSaver.saveAs(blob, `${tittel}.${filtype}`);
 };
 
 export const lastNedFilBase64 = (
