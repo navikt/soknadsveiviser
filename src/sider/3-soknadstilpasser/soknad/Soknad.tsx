@@ -138,7 +138,7 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
             )}
           </>
         ) : (
-          <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
+          <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} skillUtPakrevde={true} />
         )}
         <Personalia nesteDisabled={!svartPaAlleSporsmal} />
       </>

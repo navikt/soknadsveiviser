@@ -2,7 +2,7 @@ import React, { SyntheticEvent } from "react";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
 import { Dispatch } from "redux";
-import { toggleValgtVedleggForSjekkbokser } from "../../../../states/reducers/vedlegg";
+import { toggleInnsendingVedlegg, toggleValgtVedleggForSjekkbokser } from "../../../../states/reducers/vedlegg";
 import { Store } from "../../../../typer/store";
 import { Soknadsobjekt } from "../../../../typer/soknad";
 import { withRouter, RouteComponentProps } from "react-router";
@@ -13,12 +13,16 @@ import { localeTekst } from "../../../../utils/sprak";
 
 interface Props {
   soknadsobjekt?: Soknadsobjekt;
-  hukAvPakrevde?: boolean;
+  skillUtPakrevde?: boolean;
 }
 
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
   toggleValgtVedleggForSjekkbokser: (
+    _key: string,
+    soknadsobjektId: string
+  ) => void;
+  toggleInnsendingVedlegg: (
     _key: string,
     soknadsobjektId: string
   ) => void;
@@ -30,7 +34,8 @@ const Sjekkbokser = (props: MergedProps) => {
     intl,
     soknadsobjekt,
     valgteVedlegg,
-    toggleValgtVedleggForSjekkbokser
+    toggleValgtVedleggForSjekkbokser,
+    toggleInnsendingVedlegg
   } = props;
 
   if (!soknadsobjekt) {
@@ -47,7 +52,7 @@ const Sjekkbokser = (props: MergedProps) => {
     const { navn } = vedlegg;
     const label = navn;
 
-    const vedleggMarkert = valgteVedlegg
+    const markert = valgteVedlegg
       .filter(v => v._key === _key)
       .filter(v => v.soknadsobjektId === soknadsobjekt._id)
       .filter(v => v.skalSendes)
@@ -57,18 +62,66 @@ const Sjekkbokser = (props: MergedProps) => {
       key: _key,
       label: localeTekst(label, intl.locale),
       value: _key,
-      checked: !!vedleggMarkert
+      checked: !!markert
+    };
+  };
+
+  // Dersom påkrevde vedlegg er i egen bolk
+  const handleOnChangePakrevdeVedlegg = (
+    event: SyntheticEvent<EventTarget, Event>,
+    value?: string
+  ) => {
+    value && toggleInnsendingVedlegg(value, soknadsobjekt._id);
+  };
+
+  // Dersom påkrevde vedlegg er i egen bolk
+  const lagEgenCheckboksForPakrevdeVedlegg = (vedleggsobjekt: Vedleggsobjekt) => {
+    const { vedlegg, _key } = vedleggsobjekt;
+    const { navn } = vedlegg;
+    const label = navn;
+
+    const markert = valgteVedlegg
+      .filter(v => v._key === _key)
+      .filter(v => v.soknadsobjektId === soknadsobjekt._id)
+      .filter(v => !v.skalEttersendes)
+      .shift();
+
+    return {
+      key: _key,
+      label: localeTekst(label, intl.locale),
+      value: _key,
+      checked: !!markert
     };
   };
 
   const vedleggTilSoknad = soknadsobjekt.vedleggtilsoknad || [];
+  const pakrevde = vedleggTilSoknad.filter(v => v.pakrevd);
   return vedleggTilSoknad.length > 0 ? (
     <PanelBase className="seksjon">
-      <CheckboksPanelGruppe
-        legend=""
-        checkboxes={vedleggTilSoknad.map(vedlegg => lagCheckboks(vedlegg))}
-        onChange={handleOnChange}
-      />
+      {(props.skillUtPakrevde && pakrevde.length > 0) ? (
+        <>
+          <CheckboksPanelGruppe
+            legend={intl.formatMessage({id: "sjekkbokser.pakrevde"})}
+            checkboxes={vedleggTilSoknad
+              .filter(v => v.pakrevd)
+              .map(vedlegg => lagEgenCheckboksForPakrevdeVedlegg(vedlegg))}
+            onChange={handleOnChangePakrevdeVedlegg}
+          />
+          <CheckboksPanelGruppe
+            legend={intl.formatMessage({id: "sjekkbokser.situasjonsbestemte"})}
+            checkboxes={vedleggTilSoknad
+              .filter(v => !v.pakrevd)
+              .map(vedlegg => lagCheckboks(vedlegg))}
+            onChange={handleOnChange}
+          />
+        </>
+      ) : (
+        <CheckboksPanelGruppe
+          legend=""
+          checkboxes={vedleggTilSoknad.map(vedlegg => lagCheckboks(vedlegg))}
+          onChange={handleOnChange}
+        />
+      )}
     </PanelBase>
   ) : null;
 };
@@ -79,7 +132,9 @@ const mapStateToProps = (store: Store) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleValgtVedleggForSjekkbokser: (_key: string, soknadsobjektId: string) =>
-    dispatch(toggleValgtVedleggForSjekkbokser(_key, soknadsobjektId))
+    dispatch(toggleValgtVedleggForSjekkbokser(_key, soknadsobjektId)),
+  toggleInnsendingVedlegg: (_key: string, soknadsobjektId: string) =>
+    dispatch(toggleInnsendingVedlegg(_key, soknadsobjektId))
 });
 
 export default injectIntl<Props & InjectedIntlProps>(
