@@ -16,7 +16,6 @@ import { lastNedFilBase64 } from "./utils/pdf";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
-import { loggError } from "../../../utils/logger";
 
 interface Routes {
   ettersendelse?: string;
@@ -105,10 +104,7 @@ const ForstesideGenerator = (props: MergedProps) => {
         setState({ status: "READY" });
       })
       .catch(e => {
-        const error = `Klarte ikke å laste ned førstesideark: ${e}`;
         setState({ status: "ERROR", error: e });
-        loggError(error);
-        console.error(error);
       });
   };
 
