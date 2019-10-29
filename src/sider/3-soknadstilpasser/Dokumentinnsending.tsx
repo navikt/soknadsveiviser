@@ -184,7 +184,7 @@ class Dokumentinnsending extends Component<
                 )}
               </>
             ) : (
-              <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
+              <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} skillUtPakrevde={true} />
             )}
           </>
         )}
