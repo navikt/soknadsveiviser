@@ -10,7 +10,6 @@ import Nummer from "./Nummer";
 import Sporsmal from "./Sporsmal";
 
 interface Routes {
-  ettersendelse: string;
   klage: string;
 }
 
@@ -24,14 +23,13 @@ interface ReduxProps {
 }
 
 type MergedProps = Props & RouteComponentProps<Routes> & ReduxProps;
-const VelgVedlegg = (props: MergedProps) => {
+const VeiledendeVedleggsvalg = (props: MergedProps) => {
   if (props.kategorier.status !== "RESULT") {
     return null;
   }
 
   const { valgtKategori } = props.kategorier;
   const { soknadsobjekt, valgteVedlegg } = props;
-  const { ettersendelse } = props.match.params;
 
   let label;
   let ukjentValg = 0;
@@ -47,10 +45,7 @@ const VelgVedlegg = (props: MergedProps) => {
   return (
     <>
       {vedleggForUtlisting.map(vedleggsobj => {
-        label = ettersendelse
-          ? vedleggsobj.vedlegg.navn
-          : vedleggsobj.situasjon || vedleggsobj.vedlegg.navn;
-
+        label = vedleggsobj.situasjon || vedleggsobj.vedlegg.navn;
         if (vedleggsobj.skalSendes === undefined) {
           // logikk for bare å vise èn og en
           ukjentValg++;
@@ -84,5 +79,6 @@ const mapStateToProps = (store: Store) => ({
 });
 
 export default withRouter<Props & RouteComponentProps<Routes>, any>(
-  connect(mapStateToProps)(VelgVedlegg)
+  connect(mapStateToProps)(VeiledendeVedleggsvalg)
+
 );

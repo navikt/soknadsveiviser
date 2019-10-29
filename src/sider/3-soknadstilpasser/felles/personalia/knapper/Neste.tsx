@@ -55,7 +55,6 @@ export const NesteLenke = (lenke: string, erDisabled: boolean) => {
         className="knapp knapp--hoved sentrert__knapp row"
         disabled={erDisabled}
         onClick={() => {
-          console.log(`Redirecing to ${lenke}`);
           window.location.href = lenke;
         }}
       >

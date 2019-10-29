@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import VelgVedlegg from "./felles/velgvedlegg/VelgVedlegg";
-import VelgVedleggEttersendelse from "./ettersendelse/VelgVedlegg";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import React, { Component, SyntheticEvent } from "react";
+import VelgVedlegg from "./felles/velgvedlegg/VeiledendeVedleggsvalg";
+import Sjekkbokser from "./felles/velgvedlegg/Sjekkbokser";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
 import Underbanner from "../../komponenter/bannere/Underbanner";
 import { Vedlegg, Vedleggsobjekt } from "../../typer/skjemaogvedlegg";
@@ -14,6 +14,9 @@ import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
 import Neste from "./felles/personalia/knapper/Neste";
 import Steg from "../../komponenter/bannere/Steg";
+import { Normaltekst } from "nav-frontend-typografi";
+import AlertStripe from "nav-frontend-alertstriper";
+import { ToggleGruppe, ToggleKnappPureProps } from "nav-frontend-toggle";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -35,7 +38,15 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class Dokumentinnsending extends Component<MergedProps> {
+class Dokumentinnsending extends Component<
+  MergedProps,
+  { veiledning: boolean }
+> {
+  constructor(props: MergedProps) {
+    super(props);
+    this.state = { veiledning: true };
+  }
+
   genererDokumentinnsendingsUrl = (
     valgtSoknadsobjekt: Soknadsobjekt,
     vedlegg: Vedleggsobjekt[],
@@ -63,6 +74,14 @@ class Dokumentinnsending extends Component<MergedProps> {
         (ettersendelse ? "true" : "false") +
         (vedleggTilInnsending ? "&vedleggsIder=" + vedleggTilInnsending : "")
     );
+  };
+
+  onClick = (
+    event: SyntheticEvent<EventTarget>,
+    toggles: ToggleKnappPureProps[]
+  ) => {
+    this.state.veiledning !== toggles[0].pressed &&
+      this.setState({ veiledning: !this.state.veiledning });
   };
 
   render() {
@@ -95,7 +114,9 @@ class Dokumentinnsending extends Component<MergedProps> {
 
     let erNesteDisabled =
       (ettersendelse && vedleggTilInnsending.length === 0) ||
-      (!ettersendelse && ikkePakrevdeVedlegg.length !== vedleggSvart.length);
+      (!ettersendelse &&
+        ikkePakrevdeVedlegg.length !== vedleggSvart.length &&
+        this.state.veiledning);
 
     const URLvidere = this.genererDokumentinnsendingsUrl(
       valgtSoknadsobjekt,
@@ -113,15 +134,60 @@ class Dokumentinnsending extends Component<MergedProps> {
         {ettersendelse ? (
           <>
             <Steg tittel="ettersendelser.tittel.underbanner" />
-            <VelgVedleggEttersendelse soknadsobjekt={valgtSoknadsobjekt} />
+            <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} />
           </>
         ) : (
-          <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
+          <>
+            <Steg tittel="velgvedlegg.informasjonspanel.tittel">
+              {this.state.veiledning ? (
+                <div className="stegBanner__seksjon">
+                  <Normaltekst>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
+                  </Normaltekst>
+                  <Normaltekst>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+                  </Normaltekst>
+                </div>
+              ) : (
+                <AlertStripe type="advarsel">
+                  <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
+                </AlertStripe>
+              )}
+              <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
+                <ToggleGruppe
+                  defaultToggles={[
+                    {
+                      children: (
+                        <FormattedMessage id="vedleggsvalg.toggle.veiledning" />
+                      ),
+                      pressed: true
+                    },
+                    {
+                      children: (
+                        <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning" />
+                      )
+                    }
+                  ]}
+                  minstEn={true}
+                  onChange={(event, toggle) => this.onClick(event, toggle)}
+                />
+              </div>
+            </Steg>
+            {this.state.veiledning ? (
+              <>
+                <VelgVedlegg soknadsobjekt={valgtSoknadsobjekt} />
+                {!erNesteDisabled && (
+                  <DineVedlegg
+                    visErVedleggPakrevd={true}
+                    vedleggTilInnsending={vedleggTilInnsending}
+                  />
+                )}
+              </>
+            ) : (
+              <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} skillUtPakrevde={true} />
+            )}
+          </>
         )}
-        <DineVedlegg
-          visErVedleggPakrevd={true}
-          vedleggTilInnsending={vedleggTilInnsending}
-        />
         <Neste lenke={URLvidere} disabled={erNesteDisabled} />
       </>
     );
