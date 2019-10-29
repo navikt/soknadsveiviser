@@ -103,8 +103,8 @@ const ForstesideGenerator = (props: MergedProps) => {
       .then(() => {
         setState({ status: "READY" });
       })
-      .catch(e => {
-        setState({ status: "ERROR", error: e });
+      .catch(error => {
+        setState({ status: "ERROR", error });
       });
   };
 
