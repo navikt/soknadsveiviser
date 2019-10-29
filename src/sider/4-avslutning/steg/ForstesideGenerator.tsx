@@ -145,7 +145,8 @@ const ForstesideGenerator = (props: MergedProps) => {
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
   injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
     withRouter<
-      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any
+      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>,
+      any
     >(
       medPersonalia<
         Personalia &
