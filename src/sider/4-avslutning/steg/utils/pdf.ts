@@ -34,16 +34,23 @@ export const hentPDFobjekt = (
   }
 };
 
-export const lastNedFil = (url: string, tittel: string, filtype: string) => {
+export const lastNedFil = async (
+  url: string,
+  tittel: string,
+  filtype: string
+) => {
   console.log(`Laster ned ${tittel}`);
-  try {
-    FileSaver.saveAs(url, `${tittel}.${filtype}`);
-  } catch (e) {
-    console.error(e, `Klarte ikke å laste ned ${tittel}`);
-  }
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => FileSaver.saveAs(blob, `${tittel}.${filtype}`))
+    .catch(e => console.error(e, `Klarte ikke å laste ned ${tittel}`));
 };
 
-export const lastNedFilBase64 = (base64: string, tittel: string, filtype: string) => {
+export const lastNedFilBase64 = (
+  base64: string,
+  tittel: string,
+  filtype: string
+) => {
   console.log(`Laster ned ${tittel}`);
   try {
     FileSaver.saveAs(b64toBlob(base64), `${tittel}.${filtype}`);
