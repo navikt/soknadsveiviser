@@ -70,7 +70,7 @@ const FodselsnummerPanel = (props: MergedProps) => {
           tittel={intl.formatMessage({ id: personHarFodselsnummerTekst() })}
         >
           <FodselsnummerFelter {...pr} />
-          {skalTilValgtEnhet && (
+          {skalTilValgtEnhet && !(skalKlage || skalAnke) && (
             <BrukerVelgerEnhet
               beskrivelse={innsendingsmate.visenheter!}
               {...pr}

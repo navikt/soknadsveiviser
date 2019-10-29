@@ -19,7 +19,7 @@ interface Routes {
 }
 
 type MergedProps = Props & RouteComponentProps<Routes>;
-const PapirEttersendelse = (props: MergedProps) => {
+const Ettersendelse = (props: MergedProps) => {
   const { match, digitalEttersendelse } = props;
   const {
     sprak,
@@ -68,4 +68,4 @@ const PapirEttersendelse = (props: MergedProps) => {
     </div>
   );
 };
-export default withRouter(PapirEttersendelse);
+export default withRouter(Ettersendelse);
