@@ -1,5 +1,4 @@
 import * as React from "react";
-import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
 import { FormattedMessage, injectIntl, InjectedIntlProps } from "react-intl";
 import Systemtittel from "nav-frontend-typografi/lib/systemtittel";
 import dokument from "../../img/dokument.svg";
@@ -9,8 +8,7 @@ import { medKategorier } from "../../states/providers/Kategorier";
 
 interface Props {
   tittel?: string;
-  ingress?: string;
-  beskrivelse?: string;
+  children?: React.ReactNode
   valgtType: "Person" | "Bedrift";
   valgtKategori: Kategori;
   valgtUnderkategori: Underkategori;
@@ -33,23 +31,12 @@ const Steg = (props: MergedProps) => {
       </div>
       {props.tittel && (
         <div className="stegBanner__seksjon">
-          <Systemtittel>
+          <Systemtittel className="stegBanner__tittel">
             <FormattedMessage id={props.tittel} />
           </Systemtittel>
         </div>
       )}
-      <div className="stegBanner__seksjon">
-        {props.ingress && (
-          <Normaltekst>
-            <FormattedMessage id={props.ingress} />
-          </Normaltekst>
-        )}
-        {props.beskrivelse && (
-          <Normaltekst>
-            <FormattedMessage id={props.beskrivelse} />
-          </Normaltekst>
-        )}
-      </div>
+      {props.children}
     </div>
   );
 };

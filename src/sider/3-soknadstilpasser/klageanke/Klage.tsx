@@ -12,7 +12,7 @@ import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
 import { settAlleVedleggSkalSendesForSoknadsobjekt } from "states/reducers/vedlegg";
 import { toggleValgtVedlegg } from "states/reducers/vedlegg";
 import VelgOmBehandletAvEnhet from "./VelgOmBehandletAvEnhet";
-import VelgVedlegg from "../felles/velgvedlegg/VelgVedlegg";
+import VelgVedlegg from "../felles/velgvedlegg/VeiledendeVedleggsvalg";
 import Underbanner from "komponenter/bannere/Underbanner";
 import VelgEttersendelse from "./VelgEttersendelse";
 import Personalia from "../felles/personalia/Personalia";
