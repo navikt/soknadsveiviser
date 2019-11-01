@@ -100,9 +100,11 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
                   </Normaltekst>
                 </div>
               ) : (
-                <AlertStripe type="advarsel">
-                  <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
-                </AlertStripe>
+                <div className="papirsoknad__alertstripe">
+                  <AlertStripe type="advarsel" >
+                    <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
+                  </AlertStripe>
+                </div>
               )}
               <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
                 <ToggleGruppe
