@@ -100,7 +100,8 @@ const Sjekkbokser = (props: MergedProps) => {
     <PanelBase className="seksjon">
       {(props.skillUtPakrevde && pakrevde.length > 0) ? (
         <>
-          <CheckboksPanelGruppe
+          <CheckboksPanelGruppe 
+            className="sjekkbokser__panelgruppe"
             legend={intl.formatMessage({id: "sjekkbokser.pakrevde"})}
             checkboxes={vedleggTilSoknad
               .filter(v => v.pakrevd)
