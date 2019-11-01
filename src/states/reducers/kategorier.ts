@@ -5,6 +5,7 @@ import { typeTilNorsk } from "../../utils/kategorier";
 import { filtrerKategorier } from "../../utils/kategorier";
 import { HTTPError } from "../../typer/errors";
 import { ReduxDataError, ReduxHttpError } from "./felles";
+import { loggError } from "../../utils/logger";
 
 // Interfaces
 interface SettValgtType {
@@ -102,24 +103,30 @@ export const kategorier = (
           .filter(kategori => urlUnderkategori === kategori.urlparam)
           .shift();
 
-      return !valgtKategori
-        ? {
-            status: "DATA_ERROR",
-            error: "errors.api.kategori"
-          }
-        : urlUnderkategori && !valgtUnderkategori
-        ? {
-            status: "DATA_ERROR",
-            error: "errors.api.underkategori"
-          }
-        : {
-            ...state,
-            status: "RESULT",
-            valgtType: valgtType,
-            valgtKategori: valgtKategori,
-            valgtUnderkategori: valgtUnderkategori,
-            alleKategorier: sorterteKategorier
-          };
+      if (!valgtKategori) {
+        loggError(`Finner ikke valgt kategori ${urlKategori}, som ble lenket til fra ${document.referrer}`);
+        return {
+          status: "DATA_ERROR",
+          error: "errors.api.kategori"
+        };
+      }
+
+      if (urlUnderkategori && !valgtUnderkategori) {
+        loggError(`Finner ikke valgt underkategori ${urlUnderkategori}, som ble lenket til fra ${document.referrer}`);
+        return {
+          status: "DATA_ERROR",
+          error: "errors.api.underkategori"
+        };
+      }
+
+      return {
+        ...state,
+        status: "RESULT",
+        valgtType: valgtType,
+        valgtKategori: valgtKategori,
+        valgtUnderkategori: valgtUnderkategori,
+        alleKategorier: sorterteKategorier
+      };
 
     case "SETT_KATEGORIER_DATA_ERROR":
       return { ...state, status: "DATA_ERROR", error: action.error };
