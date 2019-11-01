@@ -16,7 +16,7 @@ import { sideTittel } from "../../../utils/sprak";
 import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
 import AlertStripe from "nav-frontend-alertstriper";
 import { ToggleGruppe, ToggleKnappPureProps } from "nav-frontend-toggle";
-import { Normaltekst } from "nav-frontend-typografi";
+import { Normaltekst, Element } from "nav-frontend-typografi";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -91,14 +91,18 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
           <>
             <Steg tittel="velgvedlegg.informasjonspanel.tittel">
               {this.state.veiledning ? (
-                <div className="stegBanner__seksjon">
+                <>
+                <div className="stegBanner__seksjon stegBanner__ingress">
                   <Normaltekst>
                     <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
                   </Normaltekst>
-                  <Normaltekst>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
-                  </Normaltekst>
                 </div>
+                <div className="stegBanner__seksjon stegBanner__ingress">
+                  <Element>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+                  </Element>
+                </div>
+                </>
               ) : (
                 <div className="papirsoknad__alertstripe">
                   <AlertStripe type="advarsel" >
