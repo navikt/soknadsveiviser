@@ -14,7 +14,7 @@ import { localeTekst, sideTittel } from "../../utils/sprak";
 import { medValgtSoknadsobjekt } from "../../states/providers/ValgtSoknadsobjekt";
 import Neste from "./felles/personalia/knapper/Neste";
 import Steg from "../../komponenter/bannere/Steg";
-import { Normaltekst } from "nav-frontend-typografi";
+import { Normaltekst, Element } from "nav-frontend-typografi";
 import AlertStripe from "nav-frontend-alertstriper";
 import { ToggleGruppe, ToggleKnappPureProps } from "nav-frontend-toggle";
 
@@ -140,14 +140,18 @@ class Dokumentinnsending extends Component<
           <>
             <Steg tittel="velgvedlegg.informasjonspanel.tittel">
               {this.state.veiledning ? (
-                <div className="stegBanner__seksjon">
+                <>
+                <div className="stegBanner__seksjon stegBanner__ingress">
                   <Normaltekst>
                     <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
                   </Normaltekst>
-                  <Normaltekst>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
-                  </Normaltekst>
                 </div>
+                <div className="stegBanner__seksjon stegBanner__ingress">
+                  <Element>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+                  </Element>
+                </div>
+                </>
               ) : (
                 <AlertStripe type="advarsel">
                   <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
