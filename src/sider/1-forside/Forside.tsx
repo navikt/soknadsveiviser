@@ -8,7 +8,6 @@ import Kategoriinnhold from "./seksjoner/kategorier/Kategoriinnhold/Kategoriinnh
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Header from "../../komponenter/header/Header";
-import Skjemaveilederlenke from "./seksjoner/kategorier/Skjemaveilederlenke";
 
 interface Routes {
   inngang: string;
@@ -35,7 +34,6 @@ class Soknadsveiviser extends Component<MergedProps> {
     return (
       <div className="forside__wrapper" id="maincontent">
         <Header visTyper={true} inngang={match.params.inngang} />
-        <Skjemaveilederlenke type={match.params.personEllerBedrift} />
         <section className="seksjon oversikt">
           <Kategorier />
           <Kategoriinnhold />
