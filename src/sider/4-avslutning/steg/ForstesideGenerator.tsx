@@ -23,6 +23,9 @@ ReactGA.set({ anonymizeIp: true });
 
 interface Routes {
   ettersendelse?: string;
+  kategori?: string;
+  underkategori?: string;
+  personEllerBedrift?: string;
 }
 
 interface Props {
@@ -72,10 +75,12 @@ const ForstesideGenerator = (props: MergedProps) => {
       ((skalAnke || skalKlage) && typeKlage && typeKlage.skalEttersende)
     );
 
+    const { kategori, underkategori, personEllerBedrift } = params;
+
     ReactGA.event({
       category: "Søknadsveiviser",
       action: "Last ned førsteside",
-      label: `/nedlasting/førsteside/${valgtSoknadsobjekt.navn}`
+      label: `/${personEllerBedrift}/${kategori}/${underkategori}/${valgtSoknadsobjekt.hovedskjema.skjemanummer}/nedlasting/forsteside`
     });
 
     const personalia = {
