@@ -11,6 +11,10 @@ import { Skjema } from "../../../typer/skjemaogvedlegg";
 import { loggApiError } from "../../../utils/logger";
 import { useState } from "react";
 import AlertStripe from "nav-frontend-alertstriper";
+import ReactGA from "react-ga";
+
+ReactGA.initialize("UA-9127381-16");
+ReactGA.set({ anonymizeIp: true });
 
 interface Props {
   skjema: Skjema;
@@ -30,6 +34,12 @@ const Skjemavisning = (props: MergedProps) => {
     const filtype = url.split(".").pop() || "pdf";
 
     settLoading(true);
+    ReactGA.event({
+      category: "Søknadsveiviser",
+      action: "Last ned skjema",
+      label: `/nedlasting/skjema/${skjema.skjemanummer}`
+    });
+
     fetch(url)
       .then(response => response.blob())
       .then(blob => lastNedFilBlob(blob, `NAV - ${tittel}`, filtype))
