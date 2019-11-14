@@ -39,9 +39,14 @@ export const hentForsteside = (params: Params): Promise<string> =>
       skalKlage || skalAnke ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
-    const vedleggSomSkalSendes = params.relevanteVedlegg
-      .filter(vedlegg => !vedlegg.skalEttersendes)
-      .map(vedlegg => vedlegg.vedlegg);
+
+    const vedleggsobjektSomSkalSendes = params.relevanteVedlegg.filter(
+      vedlegg => !vedlegg.skalEttersendes
+    );
+
+    const vedleggSomSkalSendes = vedleggsobjektSomSkalSendes.map(
+      vedlegg => vedlegg.vedlegg
+    );
 
     const json = {
       foerstesidetype: ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
@@ -59,7 +64,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
       tema: params.valgtSoknadsobjekt.tema.temakode,
       vedleggsliste: hentVedleggslisteForJoark(vedleggSomSkalSendes, locale),
       dokumentlisteFoersteside: hentDokumentliste(
-        vedleggSomSkalSendes,
+        vedleggsobjektSomSkalSendes,
         hovedskjema,
         params.valgtLocale,
         params.ettersendelse
