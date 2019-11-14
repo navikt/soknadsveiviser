@@ -34,8 +34,8 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     const { intl, valgtSoknadsobjekt } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
     const erDigitalEttersendelse = finnesDigitalEttersendelse(
-      this.props.valgtSoknadsobjekt,
-      this.props.intl.locale
+      valgtSoknadsobjekt,
+      intl.locale
     );
 
     if (!erDigitalEttersendelse && !this.props.valgtSoknadsobjekt.kanKlage) {
