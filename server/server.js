@@ -78,7 +78,8 @@ server.post(basePath("/api/forsteside"), (req, res) => {
           bearer: result.access_token
         },
         headers: {
-          "x-nav-apiKey": foerstesidegeneratorServiceApiKey
+          "x-nav-apiKey": foerstesidegeneratorServiceApiKey,
+          "Nav-Consumer-Id": soknadsveiviserUser
         }
       },
       (error, result, body) => {
