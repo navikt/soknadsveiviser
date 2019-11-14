@@ -13,6 +13,7 @@ import {
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "../../../utils/sprak";
 import { getTjenesteUrl } from "../../../config";
+import { Redirect } from "react-router-dom";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -22,18 +23,35 @@ interface Routes {
   skjemanummer: string;
   kategori: string;
   underkategori: string;
+  sprak: string;
+  personEllerBedrift: string;
 }
 
 type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
 class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
+
   render() {
-    const { valgtSoknadsobjekt } = this.props;
-    const { intl } = this.props;
+    const { intl, valgtSoknadsobjekt } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
     const erDigitalEttersendelse = finnesDigitalEttersendelse(
-      valgtSoknadsobjekt,
-      intl.locale
+      this.props.valgtSoknadsobjekt,
+      this.props.intl.locale
     );
+
+    if (!erDigitalEttersendelse && !this.props.valgtSoknadsobjekt.kanKlage) {
+      const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = this.props.match.params;
+      return (
+        <Redirect
+          to={`/soknader` +
+        `/${sprak}` +
+        `/${personEllerBedrift}` +
+        `/${kategori}` +
+        `/${underkategori}` +
+        `/${skjemanummer}/brev` +
+        `/ettersendelse`}
+        />
+      );
+    }
 
     document.title = sideTittel(
       `${localeTekst(

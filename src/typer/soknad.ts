@@ -19,6 +19,7 @@ export interface Soknadsobjekt {
   tema: Tema;
   urlparam: string;
   innsendingsmate: Innsendingsmate;
+  kanKlage: boolean;
 }
 
 export interface Soknadslenke {

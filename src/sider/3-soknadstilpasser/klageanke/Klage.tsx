@@ -70,13 +70,14 @@ class VisKlage extends Component<MergedProps> {
   };
 
   render() {
-    if (!this.props.klageSoknadsobjekt) {
-      return null;
-    }
-
     const { intl, klage, match } = this.props;
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
+
+    if (!klageSoknadsobjekt || !valgtSoknadsobjekt.kanKlage) {
+      return null;
+    }
+
     const urlSkalEttersende = !!match.params.ettersendelse;
     const valgtSkalEttersende = klage.skalEttersende;
 

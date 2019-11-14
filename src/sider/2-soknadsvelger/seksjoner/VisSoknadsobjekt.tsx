@@ -32,7 +32,7 @@ const VisSoknadsobjekt = (
 ) => {
   const { locale } = props.intl;
   const { soknadsobjekt, key, apen } = props;
-  const { navn, beskrivelse, lenker, hovedskjema } = soknadsobjekt;
+  const { navn, beskrivelse, lenker, hovedskjema, kanKlage } = soknadsobjekt;
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
 
@@ -83,7 +83,7 @@ const VisSoknadsobjekt = (
             )}
             <KnappPapirSoknad soknadsobjekt={soknadsobjekt} />
             <KnappEttersendelse soknadsobjekt={soknadsobjekt} />
-            <KnappKlage soknadsobjekt={soknadsobjekt} />
+            {kanKlage && <KnappKlage soknadsobjekt={soknadsobjekt} />}
           </div>
         </div>
       </EkspanderbartpanelBase>
