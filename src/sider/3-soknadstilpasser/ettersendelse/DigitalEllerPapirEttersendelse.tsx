@@ -38,7 +38,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       intl.locale
     );
 
-    if (!erDigitalEttersendelse && !this.props.valgtSoknadsobjekt.kanKlage) {
+    if (!erDigitalEttersendelse && !valgtSoknadsobjekt.kanKlage) {
       const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = this.props.match.params;
       return (
         <Redirect
@@ -77,7 +77,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
             intl.locale
           )}
         />
-        <KlageAnkeEttersendelse />
+        {valgtSoknadsobjekt.kanKlage && <KlageAnkeEttersendelse />}
       </>
     );
   }
