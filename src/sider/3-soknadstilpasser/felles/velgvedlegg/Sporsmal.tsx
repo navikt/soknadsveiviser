@@ -3,18 +3,19 @@ import { Element, Undertittel } from "nav-frontend-typografi";
 import { RadioPanelGruppe } from "nav-frontend-skjema";
 import Lesmerpanel from "nav-frontend-lesmerpanel";
 import BlockContent from "@sanity/block-content-to-react";
-import { link } from "../../../../utils/serializers";
-import { Soknadsobjekt } from "../../../../typer/soknad";
+import { link } from "utils/serializers";
+import { Soknadsobjekt } from "typer/soknad";
 import { Dispatch } from "redux";
-import { toggleValgtVedlegg } from "../../../../states/reducers/vedlegg";
+import { toggleValgtVedlegg } from "states/reducers/vedlegg";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
-import { LocaleString } from "../../../../typer/sprak";
-import { localeBlockTekst } from "../../../../utils/sprak";
-import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
-import { medValgtSoknadsobjekt } from "../../../../states/providers/ValgtSoknadsobjekt";
+import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
+import { LocaleString } from "typer/sprak";
+import { localeBlockTekst } from "utils/sprak";
+import LocaleTekst from "komponenter/localetekst/LocaleTekst";
+import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
+import { localeVedleggstittel } from "utils/soknadsobjekter";
 
 interface Routes {
   klage: string;
@@ -41,13 +42,8 @@ type MergedProps = Props &
   ReduxProps;
 
 const Sporsmal = (props: MergedProps) => {
-  const {
-    label,
-    vedleggsobj,
-    intl,
-    valgtSoknadsobjekt,
-    toggleValgtVedlegg
-  } = props;
+  const { label, vedleggsobj } = props;
+  const { intl, valgtSoknadsobjekt, toggleValgtVedlegg } = props;
   const { klage } = props.match.params;
 
   const handleOnChange = (
@@ -105,7 +101,7 @@ const Sporsmal = (props: MergedProps) => {
         >
           <Element>
             <FormattedMessage id="velgvedlegg.vedlegg" />
-            <LocaleTekst tekst={vedleggsobj.vedlegg.navn} />
+            <span>{localeVedleggstittel(vedleggsobj, intl.locale)}</span>
           </Element>
         </div>
       </div>

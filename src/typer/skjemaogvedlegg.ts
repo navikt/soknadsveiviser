@@ -2,6 +2,7 @@ import { LocaleBlockText, LocalePDFObjekt, LocaleString } from "./sprak";
 
 export interface Vedleggsobjekt {
   _key: string;
+  alternativtittel?: LocaleString;
   pakrevd?: boolean;
   situasjon?: LocaleString;
   beskrivelse?: LocaleBlockText;

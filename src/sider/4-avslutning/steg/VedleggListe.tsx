@@ -4,6 +4,7 @@ import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { Normaltekst } from "nav-frontend-typografi";
 import { localeTekst } from "../../../utils/sprak";
+import { localeVedleggstittel } from "../../../utils/soknadsobjekter";
 
 interface Props {
   steg: number;
@@ -21,16 +22,18 @@ const VedleggNedlasting = (props: MergedProps) => {
       <StegOverskrift steg={steg} tittel={tittel} beskrivelse={beskrivelse} />
       <div className="skjema">
         <ul>
-          {vedlegg
-            .map(({ vedlegg, _key }) => (
+          {vedlegg.map(vedleggsobjekt => {
+            const { vedlegg, _key } = vedleggsobjekt;
+            return (
               <li key={_key} className="steg__vedlegg-ettersendelse">
                 <Normaltekst>
                   {vedlegg.skjematilvedlegg
                     ? localeTekst(vedlegg.skjematilvedlegg.navn, intl.locale)
-                    : localeTekst(vedlegg.navn, intl.locale)}
+                    : localeVedleggstittel(vedleggsobjekt, intl.locale)}
                 </Normaltekst>
               </li>
-            ))}
+            );
+          })}
         </ul>
       </div>
     </div>
