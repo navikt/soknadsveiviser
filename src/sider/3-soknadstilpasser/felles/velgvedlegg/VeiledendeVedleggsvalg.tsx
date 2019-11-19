@@ -9,6 +9,7 @@ import { FetchKategorier } from "../../../../typer/store";
 import Nummer from "./Nummer";
 import Sporsmal from "./Sporsmal";
 import { useEffect } from "react";
+import { scrollTilNesteSpm } from "./Utils";
 
 interface Routes {
   klage: string;
@@ -35,22 +36,7 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
 
   useEffect(() => {
     if (location.hash) {
-      // Kun scroll til neste spørsmål dersom det ikke er besvart
-      const nesteSpmHash = document.getElementById(location.hash);
-      const nesteSpmInt = parseInt(location.hash.split("#")[1], 10);
-      const nesteEksisterer = nesteSpmInt < vedleggForUtlisting.length;
-
-      if (nesteSpmHash && nesteEksisterer) {
-        const nesteSpmErUbesvart =
-          vedleggForUtlisting[nesteSpmInt].skalSendes === undefined;
-
-        // Scroll
-        if (nesteSpmErUbesvart) {
-          nesteSpmHash.scrollIntoView({
-            behavior: "smooth"
-          });
-        }
-      }
+      scrollTilNesteSpm(location.hash, vedleggForUtlisting);
     }
   }, [location.hash, vedleggForUtlisting]);
 
