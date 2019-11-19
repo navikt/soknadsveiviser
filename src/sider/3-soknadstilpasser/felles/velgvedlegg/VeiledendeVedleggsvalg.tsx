@@ -52,7 +52,7 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
         }
       }
     }
-  }, [location.hash, relevanteVedlegg]);
+  }, [location.hash, vedleggForUtlisting]);
 
   if (props.kategorier.status !== "RESULT") {
     return null;
