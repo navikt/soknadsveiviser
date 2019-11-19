@@ -29,20 +29,20 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
   const { location } = history;
   const { soknadsobjekt, valgteVedlegg } = props;
 
-  const relevanteVedlegg = valgteVedlegg.filter(
-    v => v.soknadsobjektId === soknadsobjekt._id
-  );
+  const vedleggForUtlisting = valgteVedlegg
+    .filter(v => v.soknadsobjektId === soknadsobjekt._id)
+    .filter(v => !v.pakrevd);
 
   useEffect(() => {
     if (location.hash) {
       // Kun scroll til neste spørsmål dersom det ikke er besvart
       const nesteSpmHash = document.getElementById(location.hash);
       const nesteSpmInt = parseInt(location.hash.split("#")[1], 10);
-      const nesteEksisterer = nesteSpmInt < relevanteVedlegg.length;
+      const nesteEksisterer = nesteSpmInt < vedleggForUtlisting.length;
 
       if (nesteSpmHash && nesteEksisterer) {
         const nesteSpmErUbesvart =
-          relevanteVedlegg[nesteSpmInt].skalSendes === undefined;
+          vedleggForUtlisting[nesteSpmInt].skalSendes === undefined;
 
         // Scroll
         if (nesteSpmErUbesvart) {
@@ -62,7 +62,6 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
   let ukjentValg = 0;
   let spmNummer = 0;
   const { valgtKategori } = props.kategorier;
-  const vedleggForUtlisting = relevanteVedlegg.filter(v => !v.pakrevd);
   const kategoriFarge = valgtKategori
     ? valgtKategori.domenefarge
     : "@navLysGra";
