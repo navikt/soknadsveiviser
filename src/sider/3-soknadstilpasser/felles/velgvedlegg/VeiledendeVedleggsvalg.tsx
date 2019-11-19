@@ -27,28 +27,29 @@ type MergedProps = Props & RouteComponentProps<Routes> & ReduxProps;
 const VeiledendeVedleggsvalg = (props: MergedProps) => {
   const { history } = props;
   const { location } = history;
+  const { soknadsobjekt, valgteVedlegg } = props;
 
   useEffect(() => {
     if (location.hash) {
-      const nesteSpm = document.getElementById(location.hash);
-      if (nesteSpm) {
-        nesteSpm.scrollIntoView({
+      // Kun scroll til neste spørsmål dersom det ikke er besvart
+      const nesteSpmHash = document.getElementById(location.hash);
+      const nesteSpmInt = parseInt(location.hash.split("#")[1], 10);
+      if (nesteSpmHash && valgteVedlegg[nesteSpmInt].skalSendes === undefined) {
+        nesteSpmHash.scrollIntoView({
           behavior: "smooth"
         });
       }
     }
-  }, [location.hash]);
+  }, [location.hash, valgteVedlegg]);
 
   if (props.kategorier.status !== "RESULT") {
     return null;
   }
 
-  const { valgtKategori } = props.kategorier;
-  const { soknadsobjekt, valgteVedlegg } = props;
-
   let label;
   let ukjentValg = 0;
   let spmNummer = 0;
+  const { valgtKategori } = props.kategorier;
   const kategoriFarge = valgtKategori
     ? valgtKategori.domenefarge
     : "@navLysGra";
