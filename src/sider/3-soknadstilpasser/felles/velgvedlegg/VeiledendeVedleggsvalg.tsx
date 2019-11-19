@@ -57,6 +57,13 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
 
         return (
           <PanelBase className="seksjon vedlegg__panel" key={vedleggsobj._key}>
+            <a
+              href={`${window.location.href}#`}
+              id={spmNummer.toString()}
+              className={"vedlegg__anchor"}
+            >
+              Anchor
+            </a>
             {vedleggForUtlisting.length > 1 && (
               <Nummer
                 key={spmNummer}
@@ -65,7 +72,11 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
                 antallSpm={vedleggForUtlisting.length}
               />
             )}
-            <Sporsmal label={label} vedleggsobj={vedleggsobj} />
+            <Sporsmal
+              spmNummer={spmNummer}
+              label={label}
+              vedleggsobj={vedleggsobj}
+            />
           </PanelBase>
         );
       })}
@@ -80,5 +91,4 @@ const mapStateToProps = (store: Store) => ({
 
 export default withRouter<Props & RouteComponentProps<Routes>, any>(
   connect(mapStateToProps)(VeiledendeVedleggsvalg)
-
 );
