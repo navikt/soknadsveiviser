@@ -8,6 +8,7 @@ import PanelBase from "nav-frontend-paneler";
 import { FetchKategorier } from "../../../../typer/store";
 import Nummer from "./Nummer";
 import Sporsmal from "./Sporsmal";
+import { useEffect } from "react";
 
 interface Routes {
   klage: string;
@@ -24,6 +25,20 @@ interface ReduxProps {
 
 type MergedProps = Props & RouteComponentProps<Routes> & ReduxProps;
 const VeiledendeVedleggsvalg = (props: MergedProps) => {
+  const { history } = props;
+  const { location } = history;
+
+  useEffect(() => {
+    if (location.hash) {
+      const nesteSpm = document.getElementById(location.hash);
+      if (nesteSpm) {
+        nesteSpm.scrollIntoView({
+          behavior: "smooth"
+        });
+      }
+    }
+  }, [location.hash]);
+
   if (props.kategorier.status !== "RESULT") {
     return null;
   }
@@ -46,6 +61,8 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
     <>
       {vedleggForUtlisting.map(vedleggsobj => {
         label = vedleggsobj.situasjon || vedleggsobj.vedlegg.navn;
+        spmNummer++;
+
         if (vedleggsobj.skalSendes === undefined) {
           // logikk for bare å vise èn og en
           ukjentValg++;
@@ -57,17 +74,14 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
 
         return (
           <PanelBase className="seksjon vedlegg__panel" key={vedleggsobj._key}>
-            <a
-              href={`${window.location.href}#`}
-              id={spmNummer.toString()}
+            <div
               className={"vedlegg__anchor"}
-            >
-              Anchor
-            </a>
+              id={`#${spmNummer.toString()}`}
+            />
             {vedleggForUtlisting.length > 1 && (
               <Nummer
                 key={spmNummer}
-                spmNummer={++spmNummer}
+                spmNummer={spmNummer}
                 kategoriFarge={kategoriFarge}
                 antallSpm={vedleggForUtlisting.length}
               />

@@ -51,10 +51,10 @@ const Sporsmal = (props: MergedProps) => {
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
   ) => {
-    const nesteId = spmNummer;
+    const nesteId = spmNummer + 1;
     if (value) {
       toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage);
-      window.location.href = `#${nesteId}`;
+      window.location.hash = `#${nesteId}`;
     }
   };
 
