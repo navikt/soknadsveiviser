@@ -29,18 +29,30 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
   const { location } = history;
   const { soknadsobjekt, valgteVedlegg } = props;
 
+  const relevanteVedlegg = valgteVedlegg.filter(
+    v => v.soknadsobjektId === soknadsobjekt._id
+  );
+
   useEffect(() => {
     if (location.hash) {
       // Kun scroll til neste spørsmål dersom det ikke er besvart
       const nesteSpmHash = document.getElementById(location.hash);
       const nesteSpmInt = parseInt(location.hash.split("#")[1], 10);
-      if (nesteSpmHash && valgteVedlegg[nesteSpmInt].skalSendes === undefined) {
-        nesteSpmHash.scrollIntoView({
-          behavior: "smooth"
-        });
+      const nesteEksisterer = nesteSpmInt < relevanteVedlegg.length;
+
+      if (nesteSpmHash && nesteEksisterer) {
+        const nesteSpmErUbesvart =
+          relevanteVedlegg[nesteSpmInt].skalSendes === undefined;
+
+        // Scroll
+        if (nesteSpmErUbesvart) {
+          nesteSpmHash.scrollIntoView({
+            behavior: "smooth"
+          });
+        }
       }
     }
-  }, [location.hash, valgteVedlegg]);
+  }, [location.hash, relevanteVedlegg]);
 
   if (props.kategorier.status !== "RESULT") {
     return null;
@@ -50,13 +62,10 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
   let ukjentValg = 0;
   let spmNummer = 0;
   const { valgtKategori } = props.kategorier;
+  const vedleggForUtlisting = relevanteVedlegg.filter(v => !v.pakrevd);
   const kategoriFarge = valgtKategori
     ? valgtKategori.domenefarge
     : "@navLysGra";
-
-  const vedleggForUtlisting = valgteVedlegg
-    .filter(v => v.soknadsobjektId === soknadsobjekt._id)
-    .filter(v => !v.pakrevd);
 
   return (
     <>
