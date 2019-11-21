@@ -4,9 +4,9 @@ const express = require("express");
 const path = require("path");
 const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
-const getDecorator = require("./dekorator");
-const { getSecrets, getMockSecrets } = require("./getSecrets");
-const basePath = require("./basePath");
+const getDecorator = require("./utils/dekorator");
+const { getSecrets, getMockSecrets } = require("./utils/getSecrets");
+const basePath = require("./utils/basePath");
 
 const buildPath = path.join(__dirname, "../build");
 
@@ -109,11 +109,20 @@ const startServer = html => {
   });
 };
 
-const logError = (errorMessage, details) => console.log(errorMessage, details); // eslint-disable-line
+const logErrorAndTryAgain = (errorMessage, details) => {
+    console.log(errorMessage, details);
+    setTimeout(fetchDecoratorAndStartServer, 5000);
+};
 
-getDecorator()
-  .then(renderApp, error => logError("Failed to get decorator", error))
-  .then(startServer, error => logError("Failed to render app", error));
+const fetchDecoratorAndStartServer = () => {
+    getDecorator()
+        .then(renderApp, error => {throw new Error("Failed to fetch decorator: " + error)})
+        .then(startServer, error => {throw new Error("Failed to render app: " + error)})
+        .catch(error => logErrorAndTryAgain(error));
+};
+
+
+fetchDecoratorAndStartServer();
 
 const port = process.env.PORT || 8080;
 server.listen(port, () => console.log(`App listening on port: ${port}`)); // eslint-disable-line
