@@ -14,6 +14,7 @@ import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobj
 import { sideTittel } from "../../../utils/sprak";
 import { getTjenesteUrl } from "../../../config";
 import { Redirect } from "react-router-dom";
+import { kanKlage } from "../../../utils/kanKlage";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -37,9 +38,9 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       valgtSoknadsobjekt,
       intl.locale
     );
+    const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = this.props.match.params;
 
-    if (!erDigitalEttersendelse && !valgtSoknadsobjekt.kanKlage) {
-      const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = this.props.match.params;
+    if (!erDigitalEttersendelse && !kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)) {
       return (
         <Redirect
           to={`/soknader` +
@@ -77,7 +78,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
             intl.locale
           )}
         />
-        {valgtSoknadsobjekt.kanKlage && <KlageAnkeEttersendelse />}
+        {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && <KlageAnkeEttersendelse />}
       </>
     );
   }
