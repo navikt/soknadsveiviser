@@ -23,6 +23,7 @@ interface Routes {
 
 interface Props {
   label: LocaleString;
+  spmNummer: number;
   vedleggsobj: Vedleggsobjekt;
   valgtSoknadsobjekt: Soknadsobjekt;
   klageSoknadsobjekt: Soknadsobjekt;
@@ -42,14 +43,20 @@ type MergedProps = Props &
   ReduxProps;
 
 const Sporsmal = (props: MergedProps) => {
-  const { label, vedleggsobj } = props;
+  const { label, vedleggsobj, spmNummer } = props;
   const { intl, valgtSoknadsobjekt, toggleValgtVedlegg } = props;
   const { klage } = props.match.params;
 
   const handleOnChange = (
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
-  ) => value && toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage);
+  ) => {
+    if (value) {
+      const nesteId = spmNummer + 1;
+      toggleValgtVedlegg(value, valgtSoknadsobjekt._id, !!klage);
+      window.location.hash = `#${nesteId}`;
+    }
+  };
 
   return (
     <div className="maks-bredde vedlegg__sporsmal">
