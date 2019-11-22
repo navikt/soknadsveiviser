@@ -8,6 +8,8 @@ import PanelBase from "nav-frontend-paneler";
 import { FetchKategorier } from "../../../../typer/store";
 import Nummer from "./Nummer";
 import Sporsmal from "./Sporsmal";
+import { useEffect } from "react";
+import { scrollTilNesteSpm } from "./Utils";
 
 interface Routes {
   klage: string;
@@ -24,28 +26,38 @@ interface ReduxProps {
 
 type MergedProps = Props & RouteComponentProps<Routes> & ReduxProps;
 const VeiledendeVedleggsvalg = (props: MergedProps) => {
-  if (props.kategorier.status !== "RESULT") {
-    return null;
-  }
-
-  const { valgtKategori } = props.kategorier;
+  const { history } = props;
+  const { location } = history;
   const { soknadsobjekt, valgteVedlegg } = props;
-
-  let label;
-  let ukjentValg = 0;
-  let spmNummer = 0;
-  const kategoriFarge = valgtKategori
-    ? valgtKategori.domenefarge
-    : "@navLysGra";
 
   const vedleggForUtlisting = valgteVedlegg
     .filter(v => v.soknadsobjektId === soknadsobjekt._id)
     .filter(v => !v.pakrevd);
 
+  useEffect(() => {
+    if (location.hash) {
+      scrollTilNesteSpm(location.hash, vedleggForUtlisting);
+    }
+  }, [location.hash, vedleggForUtlisting]);
+
+  if (props.kategorier.status !== "RESULT") {
+    return null;
+  }
+
+  let label;
+  let ukjentValg = 0;
+  let spmNummer = 0;
+  const { valgtKategori } = props.kategorier;
+  const kategoriFarge = valgtKategori
+    ? valgtKategori.domenefarge
+    : "@navLysGra";
+
   return (
     <>
       {vedleggForUtlisting.map(vedleggsobj => {
         label = vedleggsobj.situasjon || vedleggsobj.vedlegg.navn;
+        spmNummer++;
+
         if (vedleggsobj.skalSendes === undefined) {
           // logikk for bare å vise èn og en
           ukjentValg++;
@@ -57,15 +69,23 @@ const VeiledendeVedleggsvalg = (props: MergedProps) => {
 
         return (
           <PanelBase className="seksjon vedlegg__panel" key={vedleggsobj._key}>
+            <div
+              className={"vedlegg__anchor"}
+              id={`#${spmNummer.toString()}`}
+            />
             {vedleggForUtlisting.length > 1 && (
               <Nummer
                 key={spmNummer}
-                spmNummer={++spmNummer}
+                spmNummer={spmNummer}
                 kategoriFarge={kategoriFarge}
                 antallSpm={vedleggForUtlisting.length}
               />
             )}
-            <Sporsmal label={label} vedleggsobj={vedleggsobj} />
+            <Sporsmal
+              spmNummer={spmNummer}
+              label={label}
+              vedleggsobj={vedleggsobj}
+            />
           </PanelBase>
         );
       })}
@@ -80,5 +100,4 @@ const mapStateToProps = (store: Store) => ({
 
 export default withRouter<Props & RouteComponentProps<Routes>, any>(
   connect(mapStateToProps)(VeiledendeVedleggsvalg)
-
 );

@@ -1,4 +1,4 @@
-import "babel-polyfill";
+import "./polyfills";
 import * as ReactDOM from "react-dom";
 import * as React from "react";
 import IntlProviderWrapper from "./sprak/IntlProviderWrapper";
