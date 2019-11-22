@@ -36,7 +36,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
       typeKlage,
       skalAnke
     } = params;
-    const soknadsobjekt = skalKlage || skalAnke ? klageSoknadsobjekt : valgtSoknadsobjekt;
+    const soknadsobjekt = (skalKlage || skalAnke) ? klageSoknadsobjekt : valgtSoknadsobjekt;
     const { navn, hovedskjema } = soknadsobjekt;
 
     const rutingAvSoknad =
