@@ -37,7 +37,8 @@ export const hentForsteside = (params: Params): Promise<string> =>
     } = params;
     const soknadsobjekt =
       skalKlage || skalAnke ? klageSoknadsobjekt : valgtSoknadsobjekt;
-    const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
+    const { navn, hovedskjema } = soknadsobjekt;
+    const { innsendingsmate } = valgtSoknadsobjekt;
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
 
     const vedleggsobjektSomSkalSendes = params.relevanteVedlegg.filter(
