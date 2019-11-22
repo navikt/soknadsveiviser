@@ -10,6 +10,7 @@ import { localeTekst } from "utils/sprak";
 import { LocaleString } from "typer/sprak";
 import { loggApiError } from "utils/logger";
 import { Klage } from "typer/store";
+import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../utils/erKlageEllerAnke";
 
 export interface Params {
   personalia: Personalia;
@@ -35,9 +36,13 @@ export const hentForsteside = (params: Params): Promise<string> =>
       typeKlage,
       skalAnke
     } = params;
-    const soknadsobjekt =
-      skalKlage || skalAnke ? klageSoknadsobjekt : valgtSoknadsobjekt;
-    const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
+    const soknadsobjekt = (skalKlage || skalAnke) ? klageSoknadsobjekt : valgtSoknadsobjekt;
+    const { navn, hovedskjema } = soknadsobjekt;
+
+    const rutingAvSoknad =
+      erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, typeKlage, skalAnke) ?
+        klageSoknadsobjekt.innsendingsmate : valgtSoknadsobjekt.innsendingsmate;
+
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
 
     const vedleggsobjektSomSkalSendes = params.relevanteVedlegg.filter(
@@ -70,7 +75,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
         params.ettersendelse
       ),
       ...adresseOgBrukerInfo(
-        innsendingsmate,
+        rutingAvSoknad,
         params.personalia,
         skalKlage,
         typeKlage,
