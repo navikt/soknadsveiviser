@@ -36,9 +36,13 @@ export const hentForsteside = (params: Params): Promise<string> =>
       typeKlage,
       skalAnke
     } = params;
-    const soknadsobjekt = erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, typeKlage, skalAnke) ?
-      klageSoknadsobjekt : valgtSoknadsobjekt;
-    const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
+    const soknadsobjekt = (skalKlage || skalAnke) ? klageSoknadsobjekt : valgtSoknadsobjekt;
+    const { navn, hovedskjema } = soknadsobjekt;
+
+    const rutingAvSoknad =
+      erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, typeKlage, skalAnke) ?
+        klageSoknadsobjekt.innsendingsmate : valgtSoknadsobjekt.innsendingsmate;
+
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
 
     const vedleggsobjektSomSkalSendes = params.relevanteVedlegg.filter(
@@ -71,7 +75,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
         params.ettersendelse
       ),
       ...adresseOgBrukerInfo(
-        innsendingsmate,
+        rutingAvSoknad,
         params.personalia,
         skalKlage,
         typeKlage,
