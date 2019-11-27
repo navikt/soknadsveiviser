@@ -329,7 +329,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "dinevedlegg.beskrivelse": `You can download the application form and attachments on the next page. Send a copy of the documentation and keep the original yourself. Receipts must be originals.`,
     "vissoknadsobjekter.papirsoknader": `Applications by mail`,
     "vissoknadsobjekter.papirsoknader.beskrivelse": `The applications below are used when you do not have an electronic ID. Please note that an application by paper takes longer time to process due to mailing and manual handling of the application papers.`,
-    "vissoknadsobjekter.ekspanderbartpanel.tittel": `Submit application on paper`,
+    "vissoknadsobjekter.ekspanderbartpanel.tittel": `Submit on paper`,
     "vissoknadsobjekter.innholdstittel": `What do you want to apply for?`,
     "vissoknadsobjekter.relevantinformasjon": `Related information`,
     "vissoknadsobjekter.knapp.soknadpapapir": `Submit on paper`,
