@@ -31,7 +31,7 @@ interface Routes {
 type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
 class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
   render() {
-    const { intl, valgtSoknadsobjekt } = this.props;
+    const { intl, valgtSoknadsobjekt, match } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
     const erDigitalEttersendelse = finnesDigitalEttersendelse(
       valgtSoknadsobjekt,
@@ -43,7 +43,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       kategori,
       underkategori,
       skjemanummer
-    } = this.props.match.params;
+    } = match.params;
 
     if (
       !erDigitalEttersendelse &&
