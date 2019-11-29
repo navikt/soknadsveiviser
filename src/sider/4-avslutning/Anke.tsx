@@ -171,7 +171,10 @@ const mapStateToProps = (store: Store) => ({
 
 export default medValgtSoknadsobjekt<ValgtSoknad>(
   injectIntl<ValgtSoknad & InjectedIntlProps>(
-    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any>(
+    withRouter<
+      ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>,
+      any
+    >(
       medPersonalia<
         Personalia &
           ValgtSoknad &

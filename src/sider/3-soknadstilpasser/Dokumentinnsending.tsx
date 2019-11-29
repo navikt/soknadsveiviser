@@ -128,7 +128,6 @@ class Dokumentinnsending extends Component<
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         {ettersendelse ? (
@@ -141,16 +140,16 @@ class Dokumentinnsending extends Component<
             <Steg tittel="velgvedlegg.informasjonspanel.tittel">
               {this.state.veiledning ? (
                 <>
-                <div className="stegBanner__seksjon stegBanner__ingress">
-                  <Normaltekst>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
-                  </Normaltekst>
-                </div>
-                <div className="stegBanner__seksjon stegBanner__ingress">
-                  <Element>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
-                  </Element>
-                </div>
+                  <div className="stegBanner__seksjon stegBanner__ingress">
+                    <Normaltekst>
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
+                    </Normaltekst>
+                  </div>
+                  <div className="stegBanner__seksjon stegBanner__ingress">
+                    <Element>
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+                    </Element>
+                  </div>
                 </>
               ) : (
                 <AlertStripe type="advarsel">
@@ -188,7 +187,10 @@ class Dokumentinnsending extends Component<
                 )}
               </>
             ) : (
-              <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} skillUtPakrevde={true} />
+              <Sjekkbokser
+                soknadsobjekt={valgtSoknadsobjekt}
+                skillUtPakrevde={true}
+              />
             )}
           </>
         )}
