@@ -29,7 +29,6 @@ interface Routes {
 
 type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
 class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
-
   render() {
     const { intl, valgtSoknadsobjekt } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
@@ -39,16 +38,24 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     );
 
     if (!erDigitalEttersendelse && !valgtSoknadsobjekt.kanKlage) {
-      const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = this.props.match.params;
+      const {
+        sprak,
+        personEllerBedrift,
+        kategori,
+        underkategori,
+        skjemanummer
+      } = this.props.match.params;
       return (
         <Redirect
-          to={`/soknader` +
-        `/${sprak}` +
-        `/${personEllerBedrift}` +
-        `/${kategori}` +
-        `/${underkategori}` +
-        `/${skjemanummer}/brev` +
-        `/ettersendelse`}
+          to={
+            `/soknader` +
+            `/${sprak}` +
+            `/${personEllerBedrift}` +
+            `/${kategori}` +
+            `/${underkategori}` +
+            `/${skjemanummer}/brev` +
+            `/ettersendelse`
+          }
         />
       );
     }
@@ -66,7 +73,6 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         <SoknadEttersendelse

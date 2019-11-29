@@ -105,7 +105,6 @@ class VisKlage extends Component<MergedProps> {
       vedlegg => vedlegg.skalSendes !== undefined
     );
 
-    const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
 
     const erNesteDisabled =
@@ -118,7 +117,6 @@ class VisKlage extends Component<MergedProps> {
       <>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
         {urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende) ? (

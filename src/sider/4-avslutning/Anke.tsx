@@ -87,13 +87,11 @@ class Avslutning extends Component<MergedProps, State> {
       .filter(({ vedlegg }) => !vedlegg.skjematilvedlegg);
 
     let steg = 0;
-    const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
     return (
       <>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, locale)}
-          undertittel={localeTekst(hovedskjema.navn, locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
         <StegBanner tittel="avslutning.sidetittel" />
@@ -171,7 +169,10 @@ const mapStateToProps = (store: Store) => ({
 
 export default medValgtSoknadsobjekt<ValgtSoknad>(
   injectIntl<ValgtSoknad & InjectedIntlProps>(
-    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any>(
+    withRouter<
+      ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>,
+      any
+    >(
       medPersonalia<
         Personalia &
           ValgtSoknad &
