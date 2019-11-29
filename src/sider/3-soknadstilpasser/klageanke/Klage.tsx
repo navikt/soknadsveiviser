@@ -21,6 +21,7 @@ import { localeTekst } from "utils/sprak";
 import { apiHentSoknadsobjektForKlage } from "klienter/sanityKlient";
 import { sideTittel } from "utils/sprak";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
+import { kanKlage } from "../../../utils/kanKlage";
 
 interface Props {
   klageSoknadsobjekt: Soknadsobjekt;
@@ -47,6 +48,7 @@ interface Routes {
   skjemanummer: string;
   kategori: string;
   underkategori: string;
+  personEllerBedrift: string;
 }
 
 type MergedProps = Props &
@@ -74,7 +76,7 @@ class VisKlage extends Component<MergedProps> {
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
 
-    if (!klageSoknadsobjekt || !valgtSoknadsobjekt.kanKlage) {
+    if (!klageSoknadsobjekt || !kanKlage(valgtSoknadsobjekt.kanKlage, match.params.personEllerBedrift)) {
       return null;
     }
 

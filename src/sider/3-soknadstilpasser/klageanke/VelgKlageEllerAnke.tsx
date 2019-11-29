@@ -9,6 +9,7 @@ import { sideTittel } from "utils/sprak";
 import { Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { Link } from "react-router-dom";
 import NotFound from "../../404/404";
+import { kanKlage } from "../../../utils/kanKlage";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -28,7 +29,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
   render() {
     const { valgtSoknadsobjekt } = this.props;
     const { intl, match } = this.props;
-    const { hovedskjema, kanKlage } = valgtSoknadsobjekt;
+    const { hovedskjema } = valgtSoknadsobjekt;
 
     document.title = sideTittel(
       `${localeTekst(
@@ -47,7 +48,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
       personEllerBedrift
     } = match.params;
 
-    if (kanKlage) {
+    if (kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)) {
       return (
         <>
           <Underbanner
