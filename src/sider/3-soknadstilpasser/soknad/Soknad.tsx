@@ -79,12 +79,12 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
     );
 
     let svartPaAlleSporsmal =
-      ikkePakrevdeVedlegg.length === vedleggSvart.length || !this.state.veiledning;
+      ikkePakrevdeVedlegg.length === vedleggSvart.length ||
+      !this.state.veiledning;
     return (
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         {relevanteVedlegg.length > 0 && (
@@ -92,20 +92,20 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
             <Steg tittel="velgvedlegg.informasjonspanel.tittel">
               {this.state.veiledning ? (
                 <>
-                <div className="stegBanner__seksjon stegBanner__ingress">
-                  <Normaltekst>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
-                  </Normaltekst>
-                </div>
-                <div className="stegBanner__seksjon stegBanner__ingress">
-                  <Element>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
-                  </Element>
-                </div>
+                  <div className="stegBanner__seksjon stegBanner__ingress">
+                    <Normaltekst>
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
+                    </Normaltekst>
+                  </div>
+                  <div className="stegBanner__seksjon stegBanner__ingress">
+                    <Element>
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+                    </Element>
+                  </div>
                 </>
               ) : (
                 <div className="papirsoknad__alertstripe">
-                  <AlertStripe type="advarsel" >
+                  <AlertStripe type="advarsel">
                     <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
                   </AlertStripe>
                 </div>
@@ -144,7 +144,10 @@ class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
             )}
           </>
         ) : (
-          <Sjekkbokser soknadsobjekt={valgtSoknadsobjekt} skillUtPakrevde={true} />
+          <Sjekkbokser
+            soknadsobjekt={valgtSoknadsobjekt}
+            skillUtPakrevde={true}
+          />
         )}
         <Personalia nesteDisabled={!svartPaAlleSporsmal} />
       </>

@@ -98,7 +98,6 @@ class Avslutning extends Component<MergedProps, State> {
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, locale)}
-          undertittel={localeTekst(hovedskjema.navn, locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         <StegBanner tittel="avslutning.sidetittel" />
@@ -174,7 +173,10 @@ const mapStateToProps = (store: Store) => ({
 
 export default medValgtSoknadsobjekt<ValgtSoknad>(
   injectIntl<ValgtSoknad & InjectedIntlProps>(
-    withRouter<ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any>(
+    withRouter<
+      ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>,
+      any
+    >(
       medPersonalia<
         Personalia &
           ValgtSoknad &

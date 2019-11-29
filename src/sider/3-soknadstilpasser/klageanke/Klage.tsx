@@ -76,7 +76,10 @@ class VisKlage extends Component<MergedProps> {
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
     const { valgteVedlegg } = this.props;
 
-    if (!klageSoknadsobjekt || !kanKlage(valgtSoknadsobjekt.kanKlage, match.params.personEllerBedrift)) {
+    if (
+      !klageSoknadsobjekt ||
+      !kanKlage(valgtSoknadsobjekt.kanKlage, match.params.personEllerBedrift)
+    ) {
       return null;
     }
 

@@ -30,26 +30,36 @@ interface Routes {
 
 type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
 class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
-
   render() {
-    const { intl, valgtSoknadsobjekt } = this.props;
+    const { intl, valgtSoknadsobjekt, match } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
     const erDigitalEttersendelse = finnesDigitalEttersendelse(
       valgtSoknadsobjekt,
       intl.locale
     );
-    const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = this.props.match.params;
+    const {
+      sprak,
+      personEllerBedrift,
+      kategori,
+      underkategori,
+      skjemanummer
+    } = match.params;
 
-    if (!erDigitalEttersendelse && !kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)) {
+    if (
+      !erDigitalEttersendelse &&
+      !kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)
+    ) {
       return (
         <Redirect
-          to={`/soknader` +
-        `/${sprak}` +
-        `/${personEllerBedrift}` +
-        `/${kategori}` +
-        `/${underkategori}` +
-        `/${skjemanummer}/brev` +
-        `/ettersendelse`}
+          to={
+            `/soknader` +
+            `/${sprak}` +
+            `/${personEllerBedrift}` +
+            `/${kategori}` +
+            `/${underkategori}` +
+            `/${skjemanummer}/brev` +
+            `/ettersendelse`
+          }
         />
       );
     }
@@ -67,7 +77,6 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         <SoknadEttersendelse
@@ -78,7 +87,9 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
             intl.locale
           )}
         />
-        {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && <KlageAnkeEttersendelse />}
+        {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && (
+          <KlageAnkeEttersendelse />
+        )}
       </>
     );
   }
