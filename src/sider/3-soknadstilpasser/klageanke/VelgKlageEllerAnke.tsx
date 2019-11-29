@@ -52,6 +52,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
         <>
           <Underbanner
             tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
+            undertittel={localeTekst(hovedskjema.navn, intl.locale)}
             skjemanummer={hovedskjema.skjemanummer}
           />
           <div className="klageanke__container">
