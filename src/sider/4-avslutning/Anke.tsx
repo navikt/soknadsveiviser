@@ -87,11 +87,13 @@ class Avslutning extends Component<MergedProps, State> {
       .filter(({ vedlegg }) => !vedlegg.skjematilvedlegg);
 
     let steg = 0;
+    const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
     return (
       <>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, locale)}
+          undertittel={localeTekst(hovedskjema.navn, locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
         <StegBanner tittel="avslutning.sidetittel" />

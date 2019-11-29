@@ -116,11 +116,13 @@ class VisKlage extends Component<MergedProps> {
       (!klage.skalEttersende &&
         ikkePakrevdeVedlegg.length !== vedleggSvart.length);
 
+    const hovedskjema = valgtSoknadsobjekt.hovedskjema;
     const klageskjema = klageSoknadsobjekt.hovedskjema;
     return (
       <>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, intl.locale)}
+          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
         {urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende) ? (
