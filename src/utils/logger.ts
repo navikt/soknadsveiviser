@@ -1,7 +1,7 @@
 const { frontendlogger } = window as any;
 
 const mask = (error: string) =>
-  error.replace("(^|\W)\d{11}(?=$|\W)", "1**********");
+  error.replace(/(^|\W)\d{11}(?=$|\W)/, "1**********");
 
 export const loggEvent = (
   tittel: string,
