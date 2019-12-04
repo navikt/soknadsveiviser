@@ -1,16 +1,12 @@
 import React from "react";
-import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
+import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
 import { Element } from "nav-frontend-typografi";
-import LocaleTekst from "../../../../komponenter/localetekst/LocaleTekst";
-import { LocaleBlockText } from "../../../../typer/sprak";
+import { LocaleBlockText } from "typer/sprak";
 import RadioButtons from "./RadioButtons";
-import {
-  FormattedMessage,
-  FormattedHTMLMessage,
-  injectIntl,
-  InjectedIntlProps
-} from "react-intl";
-import { blockToPlainText } from "../../../../utils/sprak";
+import { injectIntl, InjectedIntlProps } from "react-intl";
+import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import { blockToPlainText } from "utils/sprak";
+import { localeVedleggstittel } from "utils/soknadsobjekter";
 
 interface Props {
   i: number;
@@ -23,8 +19,9 @@ interface Props {
 const VedleggRad = (props: Props & InjectedIntlProps) => {
   const { vedleggsobjekt, setShowModal, i, intl } = props;
   const { visRadioButtons, visErVedleggPakrevd } = props;
-  const { _key, pakrevd, vedlegg, skalEttersendes } = vedleggsobjekt;
+  const { _key, pakrevd, skalEttersendes } = vedleggsobjekt;
   const { beskrivelse } = vedleggsobjekt;
+
   return (
     <div key={_key} className="dinevedlegg__vedlegg">
       <div className="dinevedlegg__id">{i}.</div>
@@ -38,7 +35,7 @@ const VedleggRad = (props: Props & InjectedIntlProps) => {
           <div className="dinevedlegg__beskrivelse-container">
             <div className="dinevedlegg__beskrivelse">
               <Element>
-                <LocaleTekst tekst={vedlegg.navn} />
+                {localeVedleggstittel(vedleggsobjekt, intl.locale)}
               </Element>
             </div>
             <div className="dinevedlegg__hvaerdette">

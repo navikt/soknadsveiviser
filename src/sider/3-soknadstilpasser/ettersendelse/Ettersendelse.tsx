@@ -58,7 +58,6 @@ class Ettersendelse extends Component<MergedProps> {
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         <Steg tittel="ettersendelser.tittel.underbanner" />

@@ -1,5 +1,6 @@
 import { Soknadsobjekt, Soknader, Innsendingsmate } from "../typer/soknad";
 import { blockToPlainText } from "./sprak";
+import { Vedleggsobjekt } from "../typer/skjemaogvedlegg";
 
 export const filtrerSoknadsojekt = (soknader: Soknader, skjemanummer: string) =>
   soknader.soknadsobjekter
@@ -17,11 +18,12 @@ export const finnesDigitalInnsending = (
   finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
 
 export const finnesDigitalEttersendelse = (
-    soknadsobjekt: Soknadsobjekt,
-    locale: string
+  soknadsobjekt: Soknadsobjekt,
+  locale: string
 ) =>
-    finnesDokumentinnsending(soknadsobjekt) ||
-    (!!finnesInngangTilSoknadsdialog(soknadsobjekt, locale) && finnesEttersendelseTilSoknadsdialog(soknadsobjekt));
+  finnesDokumentinnsending(soknadsobjekt) ||
+  (!!finnesInngangTilSoknadsdialog(soknadsobjekt, locale) &&
+    finnesEttersendelseTilSoknadsdialog(soknadsobjekt));
 
 export const finnesDokumentinnsending = (soknadsobjekt: Soknadsobjekt) =>
   soknadsobjekt.digitalinnsending &&
@@ -34,14 +36,20 @@ export const finnesInngangTilSoknadsdialog = (
   soknadsobjekt.digitalinnsending &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL &&
-  soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[locale];
+  soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[
+    locale
+  ];
 
 export const finnesEttersendelseTilSoknadsdialog = (
-    soknadsobjekt: Soknadsobjekt,
-) =>  !(soknadsobjekt.digitalinnsending &&
-        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
-        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
-        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ikkeVisEttersendelse);
+  soknadsobjekt: Soknadsobjekt
+) =>
+  !(
+    soknadsobjekt.digitalinnsending &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
+      .ikkeVisEttersendelse
+  );
 
 export const finnesTilSkanning = (innsendingsmate?: Innsendingsmate) =>
   innsendingsmate && innsendingsmate.skanning;
@@ -55,6 +63,14 @@ export const finnesVisEnheter = (
 ) =>
   innsendingsmate &&
   innsendingsmate.visenheter &&
-    !innsendingsmate.skanning &&
-    !innsendingsmate.spesifisertadresse &&
-    blockToPlainText(innsendingsmate.visenheter, locale);
+  !innsendingsmate.skanning &&
+  !innsendingsmate.spesifisertadresse &&
+  blockToPlainText(innsendingsmate.visenheter, locale);
+
+export const localeVedleggstittel = (
+  vedleggsobjekt: Vedleggsobjekt,
+  locale: string
+) =>
+  vedleggsobjekt.alternativtittel && vedleggsobjekt.alternativtittel[locale]
+    ? vedleggsobjekt.alternativtittel[locale]
+    : vedleggsobjekt.vedlegg.navn[locale];

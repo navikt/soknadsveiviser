@@ -10,6 +10,7 @@ import { localeTekst } from "utils/sprak";
 import { LocaleString } from "typer/sprak";
 import { loggApiError } from "utils/logger";
 import { Klage } from "typer/store";
+import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../utils/erKlageEllerAnke";
 
 export interface Params {
   personalia: Personalia;
@@ -35,13 +36,22 @@ export const hentForsteside = (params: Params): Promise<string> =>
       typeKlage,
       skalAnke
     } = params;
-    const soknadsobjekt =
-      skalKlage || skalAnke ? klageSoknadsobjekt : valgtSoknadsobjekt;
-    const { navn, hovedskjema, innsendingsmate } = soknadsobjekt;
+    const soknadsobjekt = (skalKlage || skalAnke) ? klageSoknadsobjekt : valgtSoknadsobjekt;
+    const { navn, hovedskjema } = soknadsobjekt;
+
+    const rutingAvSoknad =
+      erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, typeKlage, skalAnke) ?
+        klageSoknadsobjekt.innsendingsmate : valgtSoknadsobjekt.innsendingsmate;
+
     const locale = velgGyldigLocale(params.valgtLocale, params.globalLocale);
-    const vedleggSomSkalSendes = params.relevanteVedlegg
-      .filter(vedlegg => !vedlegg.skalEttersendes)
-      .map(vedlegg => vedlegg.vedlegg);
+
+    const vedleggsobjektSomSkalSendes = params.relevanteVedlegg.filter(
+      vedlegg => !vedlegg.skalEttersendes
+    );
+
+    const vedleggSomSkalSendes = vedleggsobjektSomSkalSendes.map(
+      vedlegg => vedlegg.vedlegg
+    );
 
     const json = {
       foerstesidetype: ettersendelse ? "ETTERSENDELSE" : "SKJEMA",
@@ -59,13 +69,13 @@ export const hentForsteside = (params: Params): Promise<string> =>
       tema: params.valgtSoknadsobjekt.tema.temakode,
       vedleggsliste: hentVedleggslisteForJoark(vedleggSomSkalSendes, locale),
       dokumentlisteFoersteside: hentDokumentliste(
-        vedleggSomSkalSendes,
+        vedleggsobjektSomSkalSendes,
         hovedskjema,
         params.valgtLocale,
         params.ettersendelse
       ),
       ...adresseOgBrukerInfo(
-        innsendingsmate,
+        rutingAvSoknad,
         params.personalia,
         skalKlage,
         typeKlage,

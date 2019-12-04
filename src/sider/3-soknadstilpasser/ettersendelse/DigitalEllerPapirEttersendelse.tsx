@@ -13,6 +13,8 @@ import {
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "../../../utils/sprak";
 import { getTjenesteUrl } from "../../../config";
+import { Redirect } from "react-router-dom";
+import { kanKlage } from "../../../utils/kanKlage";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -22,18 +24,45 @@ interface Routes {
   skjemanummer: string;
   kategori: string;
   underkategori: string;
+  sprak: string;
+  personEllerBedrift: string;
 }
 
 type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps;
 class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
   render() {
-    const { valgtSoknadsobjekt } = this.props;
-    const { intl } = this.props;
+    const { intl, valgtSoknadsobjekt, match } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
     const erDigitalEttersendelse = finnesDigitalEttersendelse(
       valgtSoknadsobjekt,
       intl.locale
     );
+    const {
+      sprak,
+      personEllerBedrift,
+      kategori,
+      underkategori,
+      skjemanummer
+    } = match.params;
+
+    if (
+      !erDigitalEttersendelse &&
+      !kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)
+    ) {
+      return (
+        <Redirect
+          to={
+            `/soknader` +
+            `/${sprak}` +
+            `/${personEllerBedrift}` +
+            `/${kategori}` +
+            `/${underkategori}` +
+            `/${skjemanummer}/brev` +
+            `/ettersendelse`
+          }
+        />
+      );
+    }
 
     document.title = sideTittel(
       `${localeTekst(
@@ -48,7 +77,6 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       <>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}
         />
         <SoknadEttersendelse
@@ -59,7 +87,9 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
             intl.locale
           )}
         />
-        <KlageAnkeEttersendelse />
+        {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && (
+          <KlageAnkeEttersendelse />
+        )}
       </>
     );
   }

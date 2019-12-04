@@ -22,6 +22,7 @@ import {
 import { Klage, Store } from "typer/store";
 import { connect } from "react-redux";
 import ErVideresendtTilEnhet from "./ErVideresendtTilEnhet";
+import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../utils/erKlageEllerAnke";
 
 interface Routes {
   personEllerBedrift: string;
@@ -70,13 +71,13 @@ const FodselsnummerPanel = (props: MergedProps) => {
           tittel={intl.formatMessage({ id: personHarFodselsnummerTekst() })}
         >
           <FodselsnummerFelter {...pr} />
-          {skalTilValgtEnhet && !(skalKlage || skalAnke) && (
+          {skalTilValgtEnhet && !erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
             <BrukerVelgerEnhet
               beskrivelse={innsendingsmate.visenheter!}
               {...pr}
             />
           )}
-          {(skalAnke || (skalKlage && klageType.erVideresendt)) && (
+          {erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
             <ErVideresendtTilEnhet {...pr} />
           )}
         </Ekspanderbartpanel>

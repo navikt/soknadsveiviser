@@ -1,5 +1,10 @@
-import { Skjema, Vedlegg } from "../../../../../typer/skjemaogvedlegg";
+import {
+  Skjema,
+  Vedlegg,
+  Vedleggsobjekt
+} from "../../../../../typer/skjemaogvedlegg";
 import { localeTekst } from "../../../../../utils/sprak";
+import { localeVedleggstittel } from "../../../../../utils/soknadsobjekter";
 
 export const hentVedleggslisteForJoark = (
   vedleggsliste: Vedlegg[],
@@ -13,19 +18,20 @@ export const hentVedleggslisteForJoark = (
   );
 
 export const hentDokumentliste = (
-  vedleggsliste: Vedlegg[],
+  vedleggsobjektliste: Vedleggsobjekt[],
   hovedskjema: Skjema,
   locale: string,
   ettersendelse: boolean
 ) => {
-  const dokumentlisteTilVisning = vedleggsliste.map(vedlegg =>
-    vedlegg.skjematilvedlegg
+  const dokumentlisteTilVisning = vedleggsobjektliste.map(vedleggsobjekt => {
+    const { vedlegg } = vedleggsobjekt;
+    return vedlegg.skjematilvedlegg
       ? `${vedlegg.skjematilvedlegg.skjemanummer} ${localeTekst(
           vedlegg.skjematilvedlegg.navn,
           locale
         )}`
-      : localeTekst(vedlegg.navn, locale)
-  );
+      : localeVedleggstittel(vedleggsobjekt, locale);
+  });
 
   if (!ettersendelse) {
     dokumentlisteTilVisning.unshift(
