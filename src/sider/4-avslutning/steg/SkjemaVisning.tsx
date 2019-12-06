@@ -26,7 +26,7 @@ const Skjemavisning = (props: MergedProps) => {
   const url = hentPDFurl(skjema.pdf, skjemaSprak, intl.locale);
   const tittel = `NAV - ${localeTekst(skjema.navn, skjemaSprak)}`;
   const filtype = url.split(".").pop() || "pdf";
-  const filnavn = `${tittel}.${filtype}`;
+  const filnavn = encodeURI(`${tittel}.${filtype}`);
   const filUrl = `${url}?dl=${filnavn}`;
 
   return (
