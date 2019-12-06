@@ -8,19 +8,15 @@ import KnappPapirSoknad from "../knapper/PapirSoknad";
 import KnappEttersendelse from "../knapper/Ettersendelse";
 import KnappKlage from "../knapper/Klage";
 import RelevantInformasjon from "./RelevantInformasjon";
-import { link } from "../../../utils/serializers";
-import {
-  finnesDokumentinnsending,
-  finnesInngangTilSoknadsdialog
-} from "../../../utils/soknadsobjekter";
-import { Soknadsobjekt } from "../../../typer/soknad";
-import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
-import { localeBlockTekst } from "../../../utils/sprak";
+import { link } from "utils/serializers";
+import { finnesInngangTilSoknadsdialog } from "utils/soknadsobjekter";
+import { finnesDokumentinnsending } from "utils/soknadsobjekter";
+import { Soknadsobjekt } from "typer/soknad";
+import LocaleTekst from "komponenter/localetekst/LocaleTekst";
+import { localeBlockTekst } from "utils/sprak";
 import { RouteComponentProps, withRouter } from "react-router";
-import {
-  convertNAVSkjemanummerTilHash,
-  hentSkjemanummerHash
-} from "../../../utils/hentSkjemanummerHash";
+import { hentSkjemanummerHash } from "utils/hentSkjemanummerHash";
+import { convertNAVSkjemanummerTilHash } from "utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
 import Undertekst from "nav-frontend-typografi/lib/undertekst";
 

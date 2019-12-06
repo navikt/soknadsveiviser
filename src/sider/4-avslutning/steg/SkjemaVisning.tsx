@@ -2,11 +2,11 @@ import * as React from "react";
 import Element from "nav-frontend-typografi/lib/element";
 import EtikettLiten from "nav-frontend-typografi/lib/etikett-liten";
 import { FormattedMessage } from "react-intl";
-import { localeTekst } from "../../../utils/sprak";
+import { localeTekst } from "utils/sprak";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
+import LocaleTekst from "komponenter/localetekst/LocaleTekst";
 import { hentPDFurl } from "./utils/pdf";
-import { Skjema } from "../../../typer/skjemaogvedlegg";
+import { Skjema } from "typer/skjemaogvedlegg";
 import ReactGA from "react-ga";
 
 ReactGA.initialize("UA-9127381-16");
