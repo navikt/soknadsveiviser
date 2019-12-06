@@ -7,6 +7,7 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import LocaleTekst from "komponenter/localetekst/LocaleTekst";
 import { hentPDFurl } from "./utils/pdf";
 import { Skjema } from "typer/skjemaogvedlegg";
+import { useParams } from "react-router";
 import ReactGA from "react-ga";
 
 ReactGA.initialize("UA-9127381-16");
@@ -21,6 +22,7 @@ interface Props {
 type MergedProps = Props & InjectedIntlProps;
 const Skjemavisning = (props: MergedProps) => {
   const { skjemaSprak, intl, visEtikett, skjema } = props;
+  const { personEllerBedrift, kategori, underkategori } = useParams();
 
   // Definer url og filnavn
   const url = hentPDFurl(skjema.pdf, skjemaSprak, intl.locale);
@@ -28,6 +30,13 @@ const Skjemavisning = (props: MergedProps) => {
   const filtype = url.split(".").pop() || "pdf";
   const filnavn = encodeURI(`${tittel}.${filtype}`);
   const filUrl = `${url}?dl=${filnavn}`;
+
+  // Logg
+  ReactGA.event({
+    category: "Søknadsveiviser",
+    action: "Last ned skjema",
+    label: `/${personEllerBedrift}/${kategori}/${underkategori}/${skjema.skjemanummer}/nedlasting/skjema`
+  });
 
   return (
     <div className="skjema__container">
