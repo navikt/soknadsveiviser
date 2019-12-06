@@ -1,5 +1,5 @@
 import * as React from "react";
-import Undertittel from "nav-frontend-typografi/lib/undertittel";
+import { Undertittel, Normaltekst } from "nav-frontend-typografi";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import BlockContent from "@sanity/block-content-to-react";
 import KnappSoknadsdialog from "../knapper/Soknadsdialog";
@@ -18,7 +18,6 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { hentSkjemanummerHash } from "utils/hentSkjemanummerHash";
 import { convertNAVSkjemanummerTilHash } from "utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
-import Undertekst from "nav-frontend-typografi/lib/undertekst";
 
 interface Props {
   key: number;
@@ -54,7 +53,7 @@ const VisSoknadsobjekt = (
               <LocaleTekst tekst={navn} />
             </Undertittel>
             {hovedskjema.skjemanummer ? (
-              <Undertekst>{hovedskjema.skjemanummer}</Undertekst>
+              <Normaltekst>{hovedskjema.skjemanummer}</Normaltekst>
             ) : null}
           </div>
         }
