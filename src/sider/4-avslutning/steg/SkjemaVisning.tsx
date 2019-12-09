@@ -32,11 +32,12 @@ const Skjemavisning = (props: MergedProps) => {
   const filUrl = `${url}?dl=${filnavn}`;
 
   // Logg
-  ReactGA.event({
-    category: "Søknadsveiviser",
-    action: "Last ned skjema",
-    label: `/${personEllerBedrift}/${kategori}/${underkategori}/${skjema.skjemanummer}/nedlasting/skjema`
-  });
+  const loggGA = () =>
+    ReactGA.event({
+      category: "Søknadsveiviser",
+      action: "Last ned skjema",
+      label: `/${personEllerBedrift}/${kategori}/${underkategori}/${skjema.skjemanummer}/nedlasting/skjema`
+    });
 
   return (
     <div className="skjema__container">
@@ -49,7 +50,7 @@ const Skjemavisning = (props: MergedProps) => {
         </div>
       )}
       <div className="skjema__knapp">
-        <a href={filUrl} className={"knapp knapp--hoved"}>
+        <a href={filUrl} className={"knapp knapp--hoved"} onClick={loggGA}>
           <FormattedMessage id="avslutning.steg.lastned.knapp.ready" />
         </a>
       </div>
