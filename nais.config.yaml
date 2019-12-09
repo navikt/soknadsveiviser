@@ -19,6 +19,9 @@ spec:
   readiness:
     path: {{baseurl}}/internal/isReady
     initialDelay: 5
+  prometheus:
+    enabled: true
+    path: {{baseurl}}/internal/metrics
   vault:
     enabled: true
   replicas:
