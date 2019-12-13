@@ -24,7 +24,7 @@ const VedleggNedlasting = (props: MergedProps) => {
         vedleggsobjekt =>
           vedleggsobjekt.vedlegg.skjematilvedlegg && (
             <SkjemaVisning
-              visEtikett
+              visEtikett={true}
               key={vedleggsobjekt._key}
               skjemaSprak={skjemaSprak}
               skjema={vedleggsobjekt.vedlegg.skjematilvedlegg}
