@@ -1,5 +1,5 @@
 import { Soknadsobjekt, Soknader, Innsendingsmate } from "../typer/soknad";
-import { blockToPlainText } from "./sprak";
+import { blockToPlainText, localeTekst } from "./sprak";
 import { Vedleggsobjekt } from "../typer/skjemaogvedlegg";
 
 export const filtrerSoknadsojekt = (soknader: Soknader, skjemanummer: string) =>
@@ -72,5 +72,5 @@ export const localeVedleggstittel = (
   locale: string
 ) =>
   vedleggsobjekt.alternativtittel && vedleggsobjekt.alternativtittel[locale]
-    ? vedleggsobjekt.alternativtittel[locale]
-    : vedleggsobjekt.vedlegg.navn[locale];
+    ? localeTekst(vedleggsobjekt.alternativtittel, locale)
+    : localeTekst(vedleggsobjekt.vedlegg.navn, locale);
