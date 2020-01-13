@@ -71,7 +71,7 @@ export default {
     "personalia.undertekstbold.flerepersoner": `OBS: Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
 
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
-    "personalia.undertekstbold.gdpr": `Denne informasjonen blir ikke lagret, og brukes kun for å generere en førsteside for innsending på papir.`,
+    "personalia.undertekstbold.gdpr": `Denne informasjonen brukes for å generere en førsteside for innsending på papir.`,
     "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak
 
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
@@ -262,7 +262,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "personalia.undertekstbold.flerepersoner": `NOTE: This choice should not be used for occupational injury reports, sick pay and work-related measures.
 
 In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
-    "personalia.undertekstbold.gdpr": `This information is not stored, and is only used to generate a front page for your application.`,
+    "personalia.undertekstbold.gdpr": `This information is used to generate a front page for your application.`,
     "personalia.undertekstbold.tiltaksbedrift": `Example: Applications, invoice, list of participants, or other things that concern work-oriented measures
 
 In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
