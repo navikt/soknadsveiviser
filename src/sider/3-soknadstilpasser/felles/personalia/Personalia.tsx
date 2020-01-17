@@ -182,16 +182,22 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                 )}
               </div>
               <Form className="personalia__paneler" autoComplete="off">
-                {personEllerBedrift === "bedrift" && (
+                {(personEllerBedrift === "bedrift") ? (
+                    <>
+                      <TiltaksBedriftPanel />
+                      <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />
+                      {!(skalKlage || skalAnke) && (
+                        <AdressePanel />
+                      )}
+                      <FlerePersonerPanel />
+                    </>
+
+                ) : (
                   <>
-                    <TiltaksBedriftPanel />
-                    <FlerePersonerPanel />
-                  </>
-                )}
-                <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />
-                {!(skalKlage || skalAnke) && (
-                  <>
-                    <AdressePanel />
+                    <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />
+                    {!(skalKlage || skalAnke) && (
+                      <AdressePanel />
+                      )}
                   </>
                 )}
                 <NesteKnapp disabled={nesteDisabled} />
