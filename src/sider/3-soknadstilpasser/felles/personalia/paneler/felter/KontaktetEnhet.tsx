@@ -74,7 +74,7 @@ class VisEnheter extends Component<MergedProps, State> {
           .filter(enhet => enhet.enhetsnummer === kontaktetEnhet.enhetsnummer)
           .map(enhet => ({
             value: enhet.enhetsnummer,
-            label: `${enhet.enhetsnavn} - ${enhet.enhetsnummer}`
+            label: enhet.enhetsnavn
           }))[0]
       : undefined;
 
@@ -92,7 +92,7 @@ class VisEnheter extends Component<MergedProps, State> {
             defaultValue={defaultValue}
             options={enheter.map(enhet => ({
               value: enhet.enhetsnummer,
-              label: `${enhet.enhetsnavn} - ${enhet.enhetsnummer}`
+              label: enhet.enhetsnavn
             }))}
           />
         )}
