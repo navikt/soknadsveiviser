@@ -94,7 +94,7 @@ class VisEnheter extends Component<MergedProps, State> {
             defaultValue={defaultValue}
             options={enheter.map(enhet => ({
               value: enhet.enhetsnummer,
-              label: `${enhet.enhetsnavn} - ${enhet.enhetsnummer}`
+              label: enhet.enhetsnavn
             }))}
           />
         )}
