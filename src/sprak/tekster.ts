@@ -6,7 +6,7 @@ export default {
     "avslutning.sidetittel": `Last ned søknadspapirene`,
     "avslutning.vedlegg": `Vedlegg:`,
     "avslutning.sprakvelger.kunettsprak": `Skjemaet finnes kun på`,
-    "avslutning.sprakvelger.label": `Velg språk du vil ha skjemapapirene på:`,
+    "avslutning.sprakvelger.label": `Velg språk du vil ha søknadspapirene på:`,
     "avslutning.sprakvelger.de": `Tysk`,
     "avslutning.sprakvelger.en": `Engelsk`,
     "avslutning.sprakvelger.es": `Spansk`,
