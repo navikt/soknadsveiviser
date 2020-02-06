@@ -197,7 +197,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "avslutning.sidetittel": `Download the application papers`,
     "avslutning.vedlegg": `Attachment:`,
     "avslutning.sprakvelger.kunettsprak": `The form only exists in`,
-    "avslutning.sprakvelger.label": `Choose the language you want for the PDFs:`,
+    "avslutning.sprakvelger.label": `Choose the language you want for the application papers:`,
     "avslutning.sprakvelger.de": `German`,
     "avslutning.sprakvelger.en": `English`,
     "avslutning.sprakvelger.es": `Spanish`,
