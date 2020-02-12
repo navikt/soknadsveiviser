@@ -13,7 +13,9 @@
     "file-system": "^2.2.2",
     "jsdom": "^15.1.1",
     "mustache-express": "^1.2.8",
-    "request-promise": "^4.2.4"
+    "node-cache": "^5.1.0",
+    "request-promise": "^4.2.4",
+    "winston": "^3.2.1"
   },
   "browserslist": [
     ">0.2%",

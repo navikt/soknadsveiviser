@@ -4,9 +4,10 @@ const express = require("express");
 const path = require("path");
 const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
-const getDecorator = require("./utils/dekorator");
+const getDecorator = require("./utils/getDecorator");
 const { getSecrets, getMockSecrets } = require("./utils/getSecrets");
 const basePath = require("./utils/basePath");
+const logger = require("./utils/logger");
 
 const buildPath = path.join(__dirname, "../build");
 
@@ -90,43 +91,26 @@ server.post(basePath("/api/forsteside"), (req, res) => {
   );
 });
 
-const renderApp = decoratorFragments =>
-  new Promise((resolve, reject) =>
-    server.render("index.html", decoratorFragments, (err, html) => {
-      if (err) reject(err);
-      resolve(html);
-    })
-  );
-
-const startServer = html => {
-  server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
-    res.sendStatus(200)
-  );
-
-  server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
-    // matcher alt bortsett fra internal og static
-    res.send(html);
-  });
-};
-
-const logErrorAndTryAgain = (errorMessage, details) => {
-    console.log(errorMessage, details);
-    setTimeout(fetchDecoratorAndStartServer, 5000);
-};
-
-const fetchDecoratorAndStartServer = () => {
+server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
     getDecorator()
-        .then(renderApp, error => {throw new Error("Failed to fetch decorator: " + error)})
-        .then(startServer, error => {throw new Error("Failed to render app: " + error)})
-        .catch(error => logErrorAndTryAgain(error));
-};
+        .then(fragments => {
+            res.render("index.html", fragments);
+        })
+        .catch(e => {
+            const error = `Failed to get decorator: ${e}`;
+            logger.error(error);
+            res.status(500).send(error);
+        });
+});
 
-
-fetchDecoratorAndStartServer();
+// Nais functions
+server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
+    res.sendStatus(200)
+);
 
 const port = process.env.PORT || 8080;
-server.listen(port, () => console.log(`App listening on port: ${port}`)); // eslint-disable-line
+server.listen(port, () => logger.info(`App listening on port: ${port}`)); // eslint-disable-line
 
 process.on("SIGTERM", () =>
-  setTimeout(() => console.log("Har sovet i 30 sekunder"), 30000)
+  setTimeout(() => logger.info("Har sovet i 30 sekunder"), 30000)
 );
