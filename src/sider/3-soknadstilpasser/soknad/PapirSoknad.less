@@ -1,0 +1,22 @@
+.papirsoknad {
+  &__vedleggsvalgtoggle {
+    margin: 0.5rem 0 0 0;
+
+    .toggleGruppe {
+      display: flex;
+      margin: 0.8rem 0 0 0;
+      @media (max-width: 300px) {
+        flex-direction: column;
+      }
+    }
+    .toggleKnapp {
+      width: 100%;
+      white-space: normal;
+      padding: 0.8rem;
+    }
+
+    &--button {
+      border: none;
+    }
+  }
+}

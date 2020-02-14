@@ -5,7 +5,6 @@ import AvslutningKlage from "../4-avslutning/Klage";
 import MedPersonalia from "../../states/providers/Personalia";
 import Wrapper from "../../komponenter/wrapper/Wrapper";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import Soknad from "./soknad/Soknad";
 import Klage from "./klageanke/Klage";
 import Anke from "./klageanke/Anke";
 import VelgKlageEllerAnke from "./klageanke/VelgKlageEllerAnke";
@@ -19,6 +18,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
+import PapirSoknad from "./soknad/PapirSoknad";
 
 interface Routes {
   personEllerBedrift: string;
@@ -48,7 +48,7 @@ class SkjemaVelgerRoutes extends Component<MergedProps> {
         <Wrapper>
           <MedValgtSoknadsobjekt>
             <MedPersonalia>
-              <Route exact={true} path={`${path}/brev`} component={Soknad} />
+              <Route exact={true} path={`${path}/brev`} component={PapirSoknad} />
               <Route
                 exact={true}
                 path={`${path}/brev/klage-eller-anke`}
