@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
-import { Normaltekst, Undertittel } from "nav-frontend-typografi";
+import { Element, Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { localeTekst } from "../../../../utils/sprak";
 import AlertStripe from "nav-frontend-alertstriper";
 import { LocaleBlockText } from "../../../../typer/sprak";
@@ -49,13 +49,9 @@ const DineVedlegg = (props: MergedProps) => {
       <Undertittel>
         <FormattedMessage id="dinevedlegg.tittel" />
       </Undertittel>
-      <div className="dinevedlegg__ingress">
-        <Normaltekst>
-          <FormattedMessage id="dinevedlegg.ingress" />
-        </Normaltekst>
-      </div>
       <form>
         <div className="dinevedlegg__wrapper">
+          <Element><FormattedMessage id="dinevedlegg.ingress.pakrevde" /></Element>
           {visRadioButtons && <TableHeader />}
           <VedleggModal
             display={showModal.display}
@@ -74,6 +70,10 @@ const DineVedlegg = (props: MergedProps) => {
                 setShowModal={setShowModal}
               />
             ))}
+        </div>
+        <div className="dinevedlegg__wrapper">
+          <Element><FormattedMessage id="dinevedlegg.ingress.situasjonsbestemte" /></Element>
+          {visRadioButtons && <TableHeader />}
           {vedleggTilInnsending
             .filter(vedlegg => !vedlegg.pakrevd)
             .map(vedleggsobjekt => (
