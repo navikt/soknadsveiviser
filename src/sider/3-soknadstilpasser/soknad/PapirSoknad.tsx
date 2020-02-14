@@ -16,6 +16,7 @@ import { Store } from "../../../typer/store";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { connect } from "react-redux";
 import { getToggleValue } from "../felles/velgvedlegg/Utils";
+import infoIkon from "../../../img/info-ikon.svg";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -107,6 +108,16 @@ const PapirSoknad = (props: MergedProps) => {
                     onChange={(event, toggles) => onClick(event, toggles)}
                   />
                 </div>
+                {visVeiledendeSporsmal !== undefined && (
+                  <div className="papirsoknad__vedleggsvalgtoggle--info">
+                    <img src={infoIkon} alt="" />
+                    <Element style={{margin: "3px 0 0 5px"}}>
+                      {visVeiledendeSporsmal ?
+                        <FormattedMessage id="vedleggsvalg.toggle.info.ja"/>
+                        : <FormattedMessage id="vedleggsvalg.toggle.info.nei" />}
+                    </Element>
+                  </div>
+                )}
               </>
             )}
           </Steg>
