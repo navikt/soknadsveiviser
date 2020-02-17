@@ -57,8 +57,8 @@ const Ettersendelse = (props: MergedProps) => {
             `/${personEllerBedrift}` +
             `/${kategori}` +
             `/${underkategori}` +
-            `/${skjemanummer}/brev` +
-            `/ettersendelse`
+            `/${skjemanummer}/ettersendelse` +
+            `/brev`
           }
           className="ettersendelse__knapp knapp knapp-hoved"
         >

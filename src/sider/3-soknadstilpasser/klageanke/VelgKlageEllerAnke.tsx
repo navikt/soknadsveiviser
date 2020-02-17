@@ -72,8 +72,8 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
                   `/${personEllerBedrift}` +
                   `/${kategori}` +
                   `/${underkategori}` +
-                  `/${skjemanummer}/brev` +
-                  `/klage`
+                  `/${skjemanummer}` +
+                  `/klage/brev`
                 }
                 className="knapp knapp-hoved"
               >
@@ -98,8 +98,8 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
                   `/${personEllerBedrift}` +
                   `/${kategori}` +
                   `/${underkategori}` +
-                  `/${skjemanummer}/brev` +
-                  `/anke`
+                  `/${skjemanummer}` +
+                  `/anke/brev`
                 }
                 className="knapp knapp-hoved"
               >

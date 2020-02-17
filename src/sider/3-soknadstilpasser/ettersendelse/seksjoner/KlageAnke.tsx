@@ -51,8 +51,8 @@ const KlageEttersendelse = (props: MergedProps) => {
             `/${personEllerBedrift}` +
             `/${kategori}` +
             `/${underkategori}` +
-            `/${skjemanummer}/brev` +
-            `/klage/ettersendelse`
+            `/${skjemanummer}` +
+            `/klage/ettersendelse/brev`
           }
           className="ettersendelse__knapp knapp knapp-hoved"
         >
@@ -65,8 +65,8 @@ const KlageEttersendelse = (props: MergedProps) => {
             `/${personEllerBedrift}` +
             `/${kategori}` +
             `/${underkategori}` +
-            `/${skjemanummer}/brev` +
-            `/anke/ettersendelse`
+            `/${skjemanummer}` +
+            `/anke/ettersendelse/brev`
           }
           className="ettersendelse__knapp knapp knapp-hoved"
         >

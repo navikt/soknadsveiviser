@@ -9,8 +9,10 @@ import KnappEttersendelse from "../knapper/Ettersendelse";
 import KnappKlage from "../knapper/Klage";
 import RelevantInformasjon from "./RelevantInformasjon";
 import { link } from "utils/serializers";
-import { finnesInngangTilSoknadsdialog } from "utils/soknadsobjekter";
-import { finnesDokumentinnsending } from "utils/soknadsobjekter";
+import {
+  finnesInngangTilSoknadsdialog,
+  finnesDokumentinnsending
+} from "utils/soknadsobjekter";
 import { Soknadsobjekt } from "typer/soknad";
 import LocaleTekst from "komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "utils/sprak";

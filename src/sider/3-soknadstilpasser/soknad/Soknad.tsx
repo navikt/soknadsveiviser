@@ -17,15 +17,16 @@ import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobj
 import { connect } from "react-redux";
 import { getToggleValue } from "../felles/velgvedlegg/Utils";
 import infoIkon from "../../../img/info-ikon.svg";
+import Neste from "../felles/personalia/knapper/Neste";
+import { genererDokumentinnsendingsUrl } from "../felles/dokumentinnsendingUtils";
+import { finnesDokumentinnsending } from "../../../utils/soknadsobjekter";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
 }
 
 interface Routes {
-  skjemanummer: string;
-  kategori: string;
-  underkategori: string;
+  innsendingsmate: string;
 }
 
 interface ReduxProps {
@@ -37,24 +38,36 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-const PapirSoknad = (props: MergedProps) => {
-  const {intl} = props;
-  const {valgteVedlegg, valgtSoknadsobjekt} = props;
-  const {hovedskjema} = valgtSoknadsobjekt;
+const Soknad = (props: MergedProps) => {
+  const { intl } = props;
+  const { valgteVedlegg, valgtSoknadsobjekt, match } = props;
+  const { hovedskjema } = valgtSoknadsobjekt;
+  const { innsendingsmate } = match.params;
 
   const [visVeiledendeSporsmal, setVisVeiledendeSporsmal] = useState();
+  const [tilDokumentinnsending, setTilDokumentinnsending] = useState();
 
-  const relevanteVedlegg = valgteVedlegg.filter(v => v.soknadsobjektId === valgtSoknadsobjekt._id);
-  const vedleggTilInnsending = relevanteVedlegg.filter(v => v.skalSendes || v.pakrevd);
+  const relevanteVedlegg = valgteVedlegg.filter(
+    v => v.soknadsobjektId === valgtSoknadsobjekt._id
+  );
+  const vedleggTilInnsending = relevanteVedlegg.filter(
+    v => v.skalSendes || v.pakrevd
+  );
   const ikkePakrevdeVedlegg = relevanteVedlegg.filter(v => !v.pakrevd);
-  const vedleggSvart = ikkePakrevdeVedlegg.filter(vedlegg => vedlegg.skalSendes !== undefined);
-  let svartPaAlleSporsmal = ikkePakrevdeVedlegg.length === vedleggSvart.length || !visVeiledendeSporsmal;
+  const vedleggSvart = ikkePakrevdeVedlegg.filter(
+    vedlegg => vedlegg.skalSendes !== undefined
+  );
+  let svartPaAlleSporsmal =
+    ikkePakrevdeVedlegg.length === vedleggSvart.length ||
+    !visVeiledendeSporsmal;
 
   const onClick = (
     event: SyntheticEvent<EventTarget>,
     toggles: ToggleKnappPureProps[]
   ) => {
-    let pressedToggleIndexString = toggles.findIndex(toggle => toggle.pressed === true).toString();
+    let pressedToggleIndexString = toggles
+      .findIndex(toggle => toggle.pressed === true)
+      .toString();
     let newValue = getToggleValue(pressedToggleIndexString);
     if (visVeiledendeSporsmal !== newValue) {
       setVisVeiledendeSporsmal(newValue);
@@ -66,12 +79,22 @@ const PapirSoknad = (props: MergedProps) => {
       `${localeTekst(
         valgtSoknadsobjekt.navn,
         intl.locale
-      )}  - ${intl.formatMessage({id: "tittel.soknader"})}`);
-  },        [valgtSoknadsobjekt.navn, intl]);
+      )}  - ${intl.formatMessage({ id: "tittel.soknader" })}`
+    );
+  }, [valgtSoknadsobjekt.navn, intl]);
 
   useEffect(() => {
-    (ikkePakrevdeVedlegg.length <= 1) && setVisVeiledendeSporsmal(true);
-  },        [ikkePakrevdeVedlegg]);
+    ikkePakrevdeVedlegg.length <= 1 && setVisVeiledendeSporsmal(true);
+  }, [ikkePakrevdeVedlegg]);
+
+  useEffect(() => {
+    if (
+      innsendingsmate === "dokumentinnsending" &&
+      finnesDokumentinnsending(valgtSoknadsobjekt)
+    ) {
+      setTilDokumentinnsending(true);
+    }
+  }, [innsendingsmate, valgtSoknadsobjekt]);
 
   return (
     <>
@@ -86,35 +109,38 @@ const PapirSoknad = (props: MergedProps) => {
               <>
                 <div className="stegBanner__seksjon stegBanner__ingress">
                   <Normaltekst>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress"/>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
                   </Normaltekst>
                 </div>
                 <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
-                  <Element><FormattedMessage id="velgvedlegg.informasjonspanel.sporsmal"/></Element>
+                  <Element>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.sporsmal" />
+                  </Element>
                   <ToggleGruppe
                     defaultToggles={[
                       {
                         children: (
-                          <FormattedMessage id="vedleggsvalg.toggle.veiledning"/>
+                          <FormattedMessage id="vedleggsvalg.toggle.veiledning" />
                         )
                       },
                       {
-
                         children: (
-                          <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning"/>
+                          <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning" />
                         )
                       }
                     ]}
-                    onChange={(event, toggles) => onClick(event, toggles)}
+                    onChange={onClick}
                   />
                 </div>
                 {visVeiledendeSporsmal !== undefined && (
                   <div className="papirsoknad__vedleggsvalgtoggle--info">
                     <img src={infoIkon} alt="" />
-                    <Element style={{margin: "3px 0 0 5px"}}>
-                      {visVeiledendeSporsmal ?
-                        <FormattedMessage id="vedleggsvalg.toggle.info.ja"/>
-                        : <FormattedMessage id="vedleggsvalg.toggle.info.nei" />}
+                    <Element style={{ margin: "3px 0 0 5px" }}>
+                      {visVeiledendeSporsmal ? (
+                        <FormattedMessage id="vedleggsvalg.toggle.info.ja" />
+                      ) : (
+                        <FormattedMessage id="vedleggsvalg.toggle.info.nei" />
+                      )}
                     </Element>
                   </div>
                 )}
@@ -125,15 +151,26 @@ const PapirSoknad = (props: MergedProps) => {
             <>
               {visVeiledendeSporsmal ? (
                 <>
-                  <VeiledendeVedleggsvalg soknadsobjekt={valgtSoknadsobjekt}/>
+                  <VeiledendeVedleggsvalg soknadsobjekt={valgtSoknadsobjekt} />
                   {svartPaAlleSporsmal && (
                     <>
                       <DineVedlegg
-                        visRadioButtons={true}
+                        visRadioButtons={!tilDokumentinnsending}
                         visErVedleggPakrevd={true}
                         vedleggTilInnsending={vedleggTilInnsending}
                       />
-                      <Personalia nesteDisabled={!svartPaAlleSporsmal}/>
+                      {tilDokumentinnsending ? (
+                        <Neste
+                          lenke={genererDokumentinnsendingsUrl(
+                            valgtSoknadsobjekt,
+                            vedleggTilInnsending,
+                            false
+                          )}
+                          disabled={!svartPaAlleSporsmal}
+                        />
+                      ) : (
+                        <Personalia nesteDisabled={!svartPaAlleSporsmal} />
+                      )}
                     </>
                   )}
                 </>
@@ -143,13 +180,39 @@ const PapirSoknad = (props: MergedProps) => {
                     soknadsobjekt={valgtSoknadsobjekt}
                     skillUtPakrevde={true}
                   />
-                  <Personalia nesteDisabled={!svartPaAlleSporsmal}/>
+                  {tilDokumentinnsending ? (
+                    <Neste
+                      lenke={genererDokumentinnsendingsUrl(
+                        valgtSoknadsobjekt,
+                        vedleggTilInnsending,
+                        false
+                      )}
+                      disabled={!svartPaAlleSporsmal}
+                    />
+                  ) : (
+                    <Personalia nesteDisabled={!svartPaAlleSporsmal} />
+                  )}
                 </>
               )}
             </>
           )}
         </>
-      ) : <Personalia nesteDisabled={!svartPaAlleSporsmal}/>}
+      ) : (
+        <>
+          {tilDokumentinnsending ? (
+            <Neste
+              lenke={genererDokumentinnsendingsUrl(
+                valgtSoknadsobjekt,
+                vedleggTilInnsending,
+                false
+              )}
+              disabled={!svartPaAlleSporsmal}
+            />
+          ) : (
+            <Personalia nesteDisabled={!svartPaAlleSporsmal} />
+          )}
+        </>
+      )}
     </>
   );
 };
@@ -161,7 +224,7 @@ const mapStateToProps = (store: Store) => ({
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
     withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
-      connect(mapStateToProps)(PapirSoknad)
+      connect(mapStateToProps)(Soknad)
     )
   )
 );
