@@ -42,8 +42,6 @@ class SkjemaVelgerRoutes extends Component<MergedProps> {
 
   render = () => {
     const { path } = this.props.match;
-    // @ts-ignore
-    // @ts-ignore
     return (
       <Switch>
         <Wrapper>
