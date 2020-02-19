@@ -54,7 +54,7 @@ const Soknad = (props: MergedProps) => {
   const vedleggTilInnsending = relevanteVedlegg.filter(
     v => v.skalSendes || v.pakrevd
   );
-  const ikkePakrevdeVedlegg = relevanteVedlegg.filter(v => !v.pakrevd);
+  const ikkePakrevdeVedlegg = valgtSoknadsobjekt.vedleggtilsoknad.filter(v => !v.pakrevd);
   const vedleggSvart = ikkePakrevdeVedlegg.filter(
     vedlegg => vedlegg.skalSendes !== undefined
   );
@@ -139,6 +139,7 @@ const Soknad = (props: MergedProps) => {
                 </div>
                 {visVeiledendeSporsmal !== undefined && (
                   <div className="papirsoknad__vedleggsvalgtoggle--info">
+                    {console.log(visVeiledendeSporsmal)}
                     <img src={infoIkon} alt="" />
                     <Element style={{ margin: "3px 0 0 5px" }}>
                       {visVeiledendeSporsmal ? (
