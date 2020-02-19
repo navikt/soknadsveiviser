@@ -186,7 +186,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "skjemautlisting.tabell.pdf": `Filer`,
     "vedleggsvalg.toggle.veiledning": `Ja`,
     "vedleggsvalg.toggle.ikkeveiledning": `Nei`,
-    "vedleggsvalg.toggle.info.ja": `Når du har svart på spørsmålene under, får du en liste med dokumentasjon du må legge ved saken.`,
+    "vedleggsvalg.toggle.info.ja": `Når du har svart på spørsmålene under, får du en liste med dokumentasjon du må legge ved.`,
     "vedleggsvalg.toggle.info.nei": `Kryss av for hvilken dokumentasjon du sender inn.`,
     "kategoriinnhold.infotekst.person": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer når du velger emne nedenfor.`,
     "kategoriinnhold.infotekst.bedrift": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer når du velger emne nedenfor.`,
