@@ -19,3 +19,14 @@ export const scrollTilNesteSpm = (hash: string, vedlegg: Vedleggsobjekt[]) => {
     }
   }
 };
+
+const possibleToggleValues = {"-1": undefined, "0": true, "1": false};
+
+function validateToggleValue(value: string): value is keyof typeof possibleToggleValues {
+  return value in possibleToggleValues;
+}
+
+export function getToggleValue(value: string): boolean | undefined {
+  return validateToggleValue(value) ? possibleToggleValues[value] : undefined
+
+}

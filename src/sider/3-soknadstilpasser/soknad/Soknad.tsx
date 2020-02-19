@@ -1,31 +1,33 @@
-import React, { Component, SyntheticEvent } from "react";
-import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import { RouteComponentProps, withRouter } from "react-router";
-import { localeTekst } from "../../../utils/sprak";
-import { Store } from "../../../typer/store";
-import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
-import { connect } from "react-redux";
+import React, { SyntheticEvent, useEffect, useState } from "react";
 import { Soknadsobjekt } from "../../../typer/soknad";
-import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
-import VeiledendeVedleggsvalg from "../felles/velgvedlegg/VeiledendeVedleggsvalg";
+import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
+import { RouteComponentProps, withRouter } from "react-router";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { localeTekst, sideTittel } from "../../../utils/sprak";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
-import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";
-import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
-import { sideTittel } from "../../../utils/sprak";
-import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
-import AlertStripe from "nav-frontend-alertstriper";
+import { Element, Normaltekst } from "nav-frontend-typografi";
 import { ToggleGruppe, ToggleKnappPureProps } from "nav-frontend-toggle";
-import { Normaltekst, Element } from "nav-frontend-typografi";
+import VeiledendeVedleggsvalg from "../felles/velgvedlegg/VeiledendeVedleggsvalg";
+import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
+import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
+import Personalia from "../felles/personalia/Personalia";
+import { Store } from "../../../typer/store";
+import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
+import { connect } from "react-redux";
+import { getToggleValue } from "../felles/velgvedlegg/Utils";
+import infoIkon from "../../../img/info-ikon.svg";
+import Neste from "../felles/personalia/knapper/Neste";
+import { genererDokumentinnsendingsUrl } from "../felles/dokumentinnsendingUtils";
+import { finnesDokumentinnsending } from "../../../utils/soknadsobjekter";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
 }
 
 interface Routes {
-  skjemanummer: string;
-  kategori: string;
-  underkategori: string;
+  innsendingsmate: string;
+  personEllerBedrift: string;
 }
 
 interface ReduxProps {
@@ -37,123 +39,189 @@ type MergedProps = Props &
   RouteComponentProps<Routes> &
   InjectedIntlProps;
 
-class PapirSoknad extends Component<MergedProps, { veiledning: boolean }> {
-  constructor(props: MergedProps) {
-    super(props);
-    this.state = { veiledning: true };
-  }
+const Soknad = (props: MergedProps) => {
+  const { intl } = props;
+  const { valgteVedlegg, valgtSoknadsobjekt, match } = props;
+  const { hovedskjema } = valgtSoknadsobjekt;
+  const { innsendingsmate, personEllerBedrift } = match.params;
 
-  onClick = (
+  const [visVeiledendeSporsmal, setVisVeiledendeSporsmal] = useState();
+  const [tilDokumentinnsending, setTilDokumentinnsending] = useState();
+
+  const relevanteVedlegg = valgteVedlegg.filter(
+    v => v.soknadsobjektId === valgtSoknadsobjekt._id
+  );
+  const vedleggTilInnsending = relevanteVedlegg.filter(
+    v => v.skalSendes || v.pakrevd
+  );
+  const ikkePakrevdeVedlegg = valgtSoknadsobjekt.vedleggtilsoknad.filter(v => !v.pakrevd);
+  const vedleggSvart = ikkePakrevdeVedlegg.filter(
+    vedlegg => vedlegg.skalSendes !== undefined
+  );
+  let svartPaAlleSporsmal =
+    ikkePakrevdeVedlegg.length === vedleggSvart.length ||
+    !visVeiledendeSporsmal;
+
+  const onClick = (
     event: SyntheticEvent<EventTarget>,
     toggles: ToggleKnappPureProps[]
   ) => {
-    this.state.veiledning !== toggles[0].pressed &&
-      this.setState({ veiledning: !this.state.veiledning });
+    let pressedToggleIndexString = toggles
+      .findIndex(toggle => toggle.pressed === true)
+      .toString();
+    let newValue = getToggleValue(pressedToggleIndexString);
+    if (visVeiledendeSporsmal !== newValue) {
+      setVisVeiledendeSporsmal(newValue);
+    }
   };
 
-  render() {
-    const { intl } = this.props;
-    const { valgteVedlegg, valgtSoknadsobjekt } = this.props;
-    const { hovedskjema } = valgtSoknadsobjekt;
-
+  useEffect(() => {
     document.title = sideTittel(
       `${localeTekst(
         valgtSoknadsobjekt.navn,
         intl.locale
-      )}  - ${intl.formatMessage({
-        id: "tittel.soknader"
-      })}`
+      )}  - ${intl.formatMessage({ id: "tittel.soknader" })}`
     );
+  }, [valgtSoknadsobjekt.navn, intl]);
 
-    const relevanteVedlegg = valgteVedlegg.filter(
-      v => v.soknadsobjektId === valgtSoknadsobjekt._id
-    );
+  useEffect(() => {
+    ikkePakrevdeVedlegg.length <= 1 && setVisVeiledendeSporsmal(true);
+  }, [ikkePakrevdeVedlegg]);
 
-    const vedleggTilInnsending = relevanteVedlegg.filter(
-      v => v.skalSendes || v.pakrevd
-    );
+  useEffect(() => {
+    if (
+      innsendingsmate === "dokumentinnsending" &&
+      finnesDokumentinnsending(valgtSoknadsobjekt)
+    ) {
+      setTilDokumentinnsending(true);
+    }
+  }, [innsendingsmate, valgtSoknadsobjekt]);
 
-    const ikkePakrevdeVedlegg = relevanteVedlegg.filter(v => !v.pakrevd);
-    const vedleggSvart = ikkePakrevdeVedlegg.filter(
-      vedlegg => vedlegg.skalSendes !== undefined
-    );
-
-    let svartPaAlleSporsmal =
-      ikkePakrevdeVedlegg.length === vedleggSvart.length ||
-      !this.state.veiledning;
-    return (
-      <>
-        <Underbanner
-          tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          skjemanummer={hovedskjema.skjemanummer}
-        />
-        {relevanteVedlegg.length > 0 && (
-          <>
-            <Steg tittel="velgvedlegg.informasjonspanel.tittel">
-              {this.state.veiledning ? (
-                <>
-                  <div className="stegBanner__seksjon stegBanner__ingress">
-                    <Normaltekst>
-                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
-                    </Normaltekst>
-                  </div>
-                  <div className="stegBanner__seksjon stegBanner__ingress">
-                    <Element>
-                      <FormattedMessage id="velgvedlegg.informasjonspanel.beskrivelse" />
+  return (
+    <>
+      <Underbanner
+        tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
+        skjemanummer={hovedskjema.skjemanummer}
+      />
+      {relevanteVedlegg.length > 0 ? (
+        <>
+          <Steg tittel="velgvedlegg.informasjonspanel.tittel">
+            {ikkePakrevdeVedlegg.length > 1 && (
+              <>
+                <div className="stegBanner__seksjon stegBanner__ingress">
+                  <Normaltekst>
+                    {personEllerBedrift === "bedrift" ? (
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress.bedrift" />
+                    ) : (
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress.person" />
+                    )}
+                  </Normaltekst>
+                </div>
+                <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
+                  <Element>
+                    <FormattedMessage id="velgvedlegg.informasjonspanel.sporsmal" />
+                  </Element>
+                  <ToggleGruppe
+                    defaultToggles={[
+                      {
+                        children: (
+                          <FormattedMessage id="vedleggsvalg.toggle.veiledning" />
+                        )
+                      },
+                      {
+                        children: (
+                          <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning" />
+                        )
+                      }
+                    ]}
+                    onChange={onClick}
+                  />
+                </div>
+                {visVeiledendeSporsmal !== undefined && (
+                  <div className="papirsoknad__vedleggsvalgtoggle--info">
+                    {console.log(visVeiledendeSporsmal)}
+                    <img src={infoIkon} alt="" />
+                    <Element style={{ margin: "3px 0 0 5px" }}>
+                      {visVeiledendeSporsmal ? (
+                        <FormattedMessage id="vedleggsvalg.toggle.info.ja" />
+                      ) : (
+                        <FormattedMessage id="vedleggsvalg.toggle.info.nei" />
+                      )}
                     </Element>
                   </div>
+                )}
+              </>
+            )}
+          </Steg>
+          {visVeiledendeSporsmal !== undefined && (
+            <>
+              {visVeiledendeSporsmal ? (
+                <>
+                  <VeiledendeVedleggsvalg soknadsobjekt={valgtSoknadsobjekt} />
+                  {svartPaAlleSporsmal && (
+                    <>
+                      <DineVedlegg
+                        visRadioButtons={!tilDokumentinnsending}
+                        visErVedleggPakrevd={true}
+                        vedleggTilInnsending={vedleggTilInnsending}
+                      />
+                      {tilDokumentinnsending ? (
+                        <Neste
+                          lenke={genererDokumentinnsendingsUrl(
+                            valgtSoknadsobjekt,
+                            vedleggTilInnsending,
+                            false
+                          )}
+                          disabled={!svartPaAlleSporsmal}
+                        />
+                      ) : (
+                        <Personalia nesteDisabled={!svartPaAlleSporsmal} />
+                      )}
+                    </>
+                  )}
                 </>
               ) : (
-                <div className="papirsoknad__alertstripe">
-                  <AlertStripe type="advarsel">
-                    <FormattedMessage id="vedleggsvalg.toggle.advarsel" />
-                  </AlertStripe>
-                </div>
+                <>
+                  <Sjekkbokser
+                    soknadsobjekt={valgtSoknadsobjekt}
+                    skillUtPakrevde={true}
+                  />
+                  {tilDokumentinnsending ? (
+                    <Neste
+                      lenke={genererDokumentinnsendingsUrl(
+                        valgtSoknadsobjekt,
+                        vedleggTilInnsending,
+                        false
+                      )}
+                      disabled={!svartPaAlleSporsmal}
+                    />
+                  ) : (
+                    <Personalia nesteDisabled={!svartPaAlleSporsmal} />
+                  )}
+                </>
               )}
-              <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
-                <ToggleGruppe
-                  defaultToggles={[
-                    {
-                      children: (
-                        <FormattedMessage id="vedleggsvalg.toggle.veiledning" />
-                      ),
-                      pressed: true
-                    },
-                    {
-                      children: (
-                        <FormattedMessage id="vedleggsvalg.toggle.ikkeveiledning" />
-                      )
-                    }
-                  ]}
-                  minstEn={true}
-                  onChange={(event, toggle) => this.onClick(event, toggle)}
-                />
-              </div>
-            </Steg>
-          </>
-        )}
-        {this.state.veiledning ? (
-          <>
-            <VeiledendeVedleggsvalg soknadsobjekt={valgtSoknadsobjekt} />
-            {svartPaAlleSporsmal && (
-              <DineVedlegg
-                visRadioButtons={true}
-                visErVedleggPakrevd={true}
-                vedleggTilInnsending={vedleggTilInnsending}
-              />
-            )}
-          </>
-        ) : (
-          <Sjekkbokser
-            soknadsobjekt={valgtSoknadsobjekt}
-            skillUtPakrevde={true}
-          />
-        )}
-        <Personalia nesteDisabled={!svartPaAlleSporsmal} />
-      </>
-    );
-  }
-}
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          {tilDokumentinnsending ? (
+            <Neste
+              lenke={genererDokumentinnsendingsUrl(
+                valgtSoknadsobjekt,
+                vedleggTilInnsending,
+                false
+              )}
+              disabled={!svartPaAlleSporsmal}
+            />
+          ) : (
+            <Personalia nesteDisabled={!svartPaAlleSporsmal} />
+          )}
+        </>
+      )}
+    </>
+  );
+};
 
 const mapStateToProps = (store: Store) => ({
   valgteVedlegg: store.vedlegg.valgteVedlegg
@@ -162,7 +230,7 @@ const mapStateToProps = (store: Store) => ({
 export default medValgtSoknadsobjekt<Props>(
   injectIntl<Props & InjectedIntlProps>(
     withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
-      connect(mapStateToProps)(PapirSoknad)
+      connect(mapStateToProps)(Soknad)
     )
   )
 );

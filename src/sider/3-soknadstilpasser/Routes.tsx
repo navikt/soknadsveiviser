@@ -5,12 +5,10 @@ import AvslutningKlage from "../4-avslutning/Klage";
 import MedPersonalia from "../../states/providers/Personalia";
 import Wrapper from "../../komponenter/wrapper/Wrapper";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import Soknad from "./soknad/Soknad";
 import Klage from "./klageanke/Klage";
 import Anke from "./klageanke/Anke";
 import VelgKlageEllerAnke from "./klageanke/VelgKlageEllerAnke";
 import Ettersendelse from "./ettersendelse/Ettersendelse";
-import Dokumentinnsending from "./Dokumentinnsending";
 import MedValgtSoknadsobjekt from "../../states/providers/ValgtSoknadsobjekt";
 import DigitalEllerPapirEttersendelse from "./ettersendelse/DigitalEllerPapirEttersendelse";
 import {
@@ -19,6 +17,7 @@ import {
   Switch,
   withRouter
 } from "react-router-dom";
+import Soknad from "./soknad/Soknad";
 
 interface Routes {
   personEllerBedrift: string;
@@ -48,52 +47,50 @@ class SkjemaVelgerRoutes extends Component<MergedProps> {
         <Wrapper>
           <MedValgtSoknadsobjekt>
             <MedPersonalia>
-              <Route exact={true} path={`${path}/brev`} component={Soknad} />
               <Route
                 exact={true}
-                path={`${path}/brev/klage-eller-anke`}
+                path={`${path}/klage-eller-anke/brev`}
                 component={VelgKlageEllerAnke}
               />
               <Route
                 exact={true}
-                path={`${path}/brev/klage/:ettersendelse(ettersendelse)?`}
+                path={`${path}/klage/:ettersendelse(ettersendelse)?/brev`}
                 component={Klage}
               />
               <Route
                 exact={true}
-                path={`${path}/brev/anke/:ettersendelse(ettersendelse)?`}
+                path={`${path}/anke/:ettersendelse(ettersendelse)?/brev`}
                 component={Anke}
               />
               <Route
                 exact={true}
-                path={`${path}/brev/klage/:ettersendelse(ettersendelse)?/avslutning`}
+                path={`${path}/klage/:ettersendelse(ettersendelse)?/brev/avslutning`}
+                /* tslint:disable-next-line:jsx-no-lambda */
                 render={props => <AvslutningKlage {...props} />}
               />
               <Route
                 exact={true}
-                path={`${path}/brev/anke/:ettersendelse(ettersendelse)?/avslutning`}
+                path={`${path}/anke/:ettersendelse(ettersendelse)?/brev/avslutning`}
+                /* tslint:disable-next-line:jsx-no-lambda */
                 render={props => <AvslutningAnke {...props} />}
               />
               <Route
                 exact={true}
-                path={`${path}/brev/ettersendelse`}
-                component={Ettersendelse}
+                path={`${path}/:ettersendelse(ettersendelse)?/brev/avslutning`}
+                /* tslint:disable-next-line:jsx-no-lambda */
+                render={props => <AvslutningSoknad {...props} />}
               />
               <Route
                 exact={true}
-                path={`${path}/brev/:ettersendelse(ettersendelse)?/avslutning`}
-                render={props => <AvslutningSoknad {...props} />}
+                path={`${path}/ettersendelse/:innsendingsmate(brev|dokumentinnsending)`}
+                component={Ettersendelse}
               />
               <Route
                 exact={true}
                 path={`${path}/ettersendelse`}
                 component={DigitalEllerPapirEttersendelse}
               />
-              <Route
-                exact={true}
-                path={`${path}/:ettersendelse(ettersendelse)?/dokumentinnsending`}
-                component={Dokumentinnsending}
-              />
+              <Route exact={true} path={`${path}/:innsendingsmate(brev|dokumentinnsending)`} component={Soknad} />
             </MedPersonalia>
           </MedValgtSoknadsobjekt>
         </Wrapper>

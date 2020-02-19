@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Vedleggsobjekt } from "../../../../typer/skjemaogvedlegg";
-import { Normaltekst, Undertittel } from "nav-frontend-typografi";
+import { Element, Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { localeTekst } from "../../../../utils/sprak";
 import AlertStripe from "nav-frontend-alertstriper";
 import { LocaleBlockText } from "../../../../typer/sprak";
@@ -37,10 +37,15 @@ const DineVedlegg = (props: MergedProps) => {
     vedlegg => vedlegg.skalEttersendes === true
   );
 
-  const vedleggTilInnsendingSortert = vedleggTilInnsending.sort((a, b) =>
-    localeTekst(a.vedlegg.navn, locale).localeCompare(
-      localeTekst(b.vedlegg.navn, locale)
-    )
+  const [
+    pakrevdeVedlegg,
+    situasjonsbestemteVedlegg
+  ] = vedleggTilInnsending.reduce<Vedleggsobjekt[][]>(
+    ([pakrevde, situasjonsbestemte], vedlegg) =>
+      vedlegg.pakrevd
+        ? [[...pakrevde, vedlegg], situasjonsbestemte]
+        : [pakrevde, [...situasjonsbestemte, vedlegg]],
+    [[], []]
   );
 
   let i = 0;
@@ -49,43 +54,55 @@ const DineVedlegg = (props: MergedProps) => {
       <Undertittel>
         <FormattedMessage id="dinevedlegg.tittel" />
       </Undertittel>
-      <div className="dinevedlegg__ingress">
-        <Normaltekst>
-          <FormattedMessage id="dinevedlegg.ingress" />
-        </Normaltekst>
-      </div>
       <form>
-        <div className="dinevedlegg__wrapper">
-          {visRadioButtons && <TableHeader />}
-          <VedleggModal
-            display={showModal.display}
-            content={showModal.content}
-            onRequestClose={() => setShowModal({ display: false })}
-          />
-          {vedleggTilInnsendingSortert
-            .filter(vedlegg => vedlegg.pakrevd)
-            .map(vedleggsobjekt => (
-              <VedleggRad
-                i={++i}
-                key={vedleggsobjekt._key}
-                visErVedleggPakrevd={visErVedleggPakrevd}
-                visRadioButtons={visRadioButtons}
-                vedleggsobjekt={vedleggsobjekt}
-                setShowModal={setShowModal}
-              />
-            ))}
-          {vedleggTilInnsending
-            .filter(vedlegg => !vedlegg.pakrevd)
-            .map(vedleggsobjekt => (
-              <VedleggRad
-                i={++i}
-                key={vedleggsobjekt._key}
-                visRadioButtons={visRadioButtons}
-                vedleggsobjekt={vedleggsobjekt}
-                setShowModal={setShowModal}
-              />
-            ))}
-        </div>
+        {situasjonsbestemteVedlegg.length > 0 && (
+          <div className="dinevedlegg__wrapper">
+            <Element>
+              <FormattedMessage id="dinevedlegg.ingress.situasjonsbestemte" />
+            </Element>
+            {visRadioButtons && <TableHeader />}
+            {vedleggTilInnsending
+              .filter(vedlegg => !vedlegg.pakrevd)
+              .map(vedleggsobjekt => (
+                <VedleggRad
+                  i={++i}
+                  key={vedleggsobjekt._key}
+                  visRadioButtons={visRadioButtons}
+                  vedleggsobjekt={vedleggsobjekt}
+                  setShowModal={setShowModal}
+                />
+              ))}
+          </div>
+        )}
+        {pakrevdeVedlegg.length > 0 && (
+          <div className="dinevedlegg__wrapper">
+            <Element>
+              <FormattedMessage id="dinevedlegg.ingress.pakrevde" />
+            </Element>
+            {visRadioButtons && <TableHeader />}
+            <VedleggModal
+              display={showModal.display}
+              content={showModal.content}
+              onRequestClose={() => setShowModal({ display: false })}
+            />
+            {pakrevdeVedlegg
+              .sort((a, b) =>
+                localeTekst(a.vedlegg.navn, locale).localeCompare(
+                  localeTekst(b.vedlegg.navn, locale)
+                )
+              )
+              .map(vedleggsobjekt => (
+                <VedleggRad
+                  i={++i}
+                  key={vedleggsobjekt._key}
+                  visErVedleggPakrevd={visErVedleggPakrevd}
+                  visRadioButtons={visRadioButtons}
+                  vedleggsobjekt={vedleggsobjekt}
+                  setShowModal={setShowModal}
+                />
+              ))}
+          </div>
+        )}
       </form>
       {vedleggTilEttersending.length > 0 && (
         <AlertStripe type="advarsel" className="dinevedlegg__alert">
