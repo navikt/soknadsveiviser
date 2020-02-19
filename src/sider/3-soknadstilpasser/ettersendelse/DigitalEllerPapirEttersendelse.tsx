@@ -57,8 +57,8 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
             `/${personEllerBedrift}` +
             `/${kategori}` +
             `/${underkategori}` +
-            `/${skjemanummer}/brev` +
-            `/ettersendelse`
+            `/${skjemanummer}` +
+            `/ettersendelse/brev`
           }
         />
       );
