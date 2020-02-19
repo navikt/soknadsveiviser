@@ -84,7 +84,7 @@ const VisSoknadsobjekt = (
               <KnappDokumentinnsending soknadsobjekt={soknadsobjekt} />
             )}
             <KnappPapirSoknad soknadsobjekt={soknadsobjekt} />
-            <KnappEttersendelse soknadsobjekt={soknadsobjekt} />
+            {soknadsobjekt.vedleggtilsoknad.length > 0 && <KnappEttersendelse soknadsobjekt={soknadsobjekt} />}x
             <KnappKlage soknadsobjekt={soknadsobjekt} />
           </div>
         </div>
