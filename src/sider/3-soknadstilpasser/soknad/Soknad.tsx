@@ -27,6 +27,7 @@ interface Props {
 
 interface Routes {
   innsendingsmate: string;
+  personEllerBedrift: string;
 }
 
 interface ReduxProps {
@@ -42,7 +43,7 @@ const Soknad = (props: MergedProps) => {
   const { intl } = props;
   const { valgteVedlegg, valgtSoknadsobjekt, match } = props;
   const { hovedskjema } = valgtSoknadsobjekt;
-  const { innsendingsmate } = match.params;
+  const { innsendingsmate, personEllerBedrift } = match.params;
 
   const [visVeiledendeSporsmal, setVisVeiledendeSporsmal] = useState();
   const [tilDokumentinnsending, setTilDokumentinnsending] = useState();
@@ -109,7 +110,11 @@ const Soknad = (props: MergedProps) => {
               <>
                 <div className="stegBanner__seksjon stegBanner__ingress">
                   <Normaltekst>
-                    <FormattedMessage id="velgvedlegg.informasjonspanel.ingress" />
+                    {personEllerBedrift === "bedrift" ? (
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress.bedrift" />
+                    ) : (
+                      <FormattedMessage id="velgvedlegg.informasjonspanel.ingress.person" />
+                    )}
                   </Normaltekst>
                 </div>
                 <div className="papirsoknad__vedleggsvalgtoggle papirsoknad__vedleggsvalgtoggle--container">
