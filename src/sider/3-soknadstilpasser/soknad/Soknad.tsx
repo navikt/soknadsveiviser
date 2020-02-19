@@ -139,7 +139,6 @@ const Soknad = (props: MergedProps) => {
                 </div>
                 {visVeiledendeSporsmal !== undefined && (
                   <div className="papirsoknad__vedleggsvalgtoggle--info">
-                    {console.log(visVeiledendeSporsmal)}
                     <img src={infoIkon} alt="" />
                     <Element style={{ margin: "3px 0 0 5px" }}>
                       {visVeiledendeSporsmal ? (
