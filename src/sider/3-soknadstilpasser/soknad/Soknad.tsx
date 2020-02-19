@@ -54,7 +54,9 @@ const Soknad = (props: MergedProps) => {
   const vedleggTilInnsending = relevanteVedlegg.filter(
     v => v.skalSendes || v.pakrevd
   );
-  const ikkePakrevdeVedlegg = valgtSoknadsobjekt.vedleggtilsoknad.filter(v => !v.pakrevd);
+  const ikkePakrevdeVedlegg = valgtSoknadsobjekt.vedleggtilsoknad?.filter(
+    v => !v.pakrevd
+  );
   const vedleggSvart = ikkePakrevdeVedlegg.filter(
     vedlegg => vedlegg.skalSendes !== undefined
   );
@@ -85,7 +87,7 @@ const Soknad = (props: MergedProps) => {
   }, [valgtSoknadsobjekt.navn, intl]);
 
   useEffect(() => {
-    ikkePakrevdeVedlegg.length <= 1 && setVisVeiledendeSporsmal(true);
+    ikkePakrevdeVedlegg && ikkePakrevdeVedlegg.length <= 1 && setVisVeiledendeSporsmal(true);
   }, [ikkePakrevdeVedlegg]);
 
   useEffect(() => {
