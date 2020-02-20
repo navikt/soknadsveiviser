@@ -136,7 +136,25 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
   render() {
     const { personEllerBedrift } = this.props.match.params;
-    const { nesteDisabled, skalKlage, skalAnke } = this.props;
+    const {
+      nesteDisabled,
+      skalKlage,
+      skalAnke,
+      valgtSoknadsobjekt
+    } = this.props;
+
+    const visTiltaksbedrift =
+      personEllerBedrift === "bedrift" &&
+      valgtSoknadsobjekt.brukertyper?.includes("tiltaksbedrift");
+    const visPersonMedFnr = valgtSoknadsobjekt.brukertyper?.includes(
+      "personmedfnr"
+    );
+    const visPersonUtenFnr = valgtSoknadsobjekt.brukertyper?.includes(
+      "personutenfnr"
+    );
+    const visFlerePersoner =
+      personEllerBedrift === "bedrift" &&
+      valgtSoknadsobjekt.brukertyper?.includes("flerepersoner");
 
     const initAdresse = this.props.adresse || {
       navn: "",
@@ -182,24 +200,17 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                 )}
               </div>
               <Form className="personalia__paneler" autoComplete="off">
-                {(personEllerBedrift === "bedrift") ? (
-                    <>
-                      <TiltaksBedriftPanel />
-                      <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />
-                      {!(skalKlage || skalAnke) && (
-                        <AdressePanel />
-                      )}
-                      <FlerePersonerPanel />
-                    </>
-
-                ) : (
-                  <>
-                    <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />
-                    {!(skalKlage || skalAnke) && (
-                      <AdressePanel />
-                      )}
-                  </>
+                {visTiltaksbedrift && <TiltaksBedriftPanel />}
+                {visPersonMedFnr && (
+                  <FodselsnummerPanel
+                    skalKlage={skalKlage}
+                    skalAnke={skalAnke}
+                  />
                 )}
+                {visPersonUtenFnr && !(skalKlage || skalAnke) && (
+                  <AdressePanel />
+                )}
+                {visFlerePersoner && <FlerePersonerPanel />}
                 <NesteKnapp disabled={nesteDisabled} />
               </Form>
             </>
