@@ -20,6 +20,7 @@ export interface Soknadsobjekt {
   urlparam: string;
   innsendingsmate: Innsendingsmate;
   kanKlage: boolean;
+  brukertyper: Brukertype[];
 }
 
 export interface Soknadslenke {
@@ -58,3 +59,5 @@ export interface Lenkeobjekt {
   tekst: LocaleString;
   lenke: LocaleString; // burde hete url
 }
+
+type Brukertype = "tiltaksbedrift" | "personmedfnr" | "personutenfnr" | "flerepersoner";
