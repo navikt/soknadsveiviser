@@ -316,7 +316,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
     "velgvedlegg.knapp": `Next`,
     "velgvedlegg.sidetittel": `Select documentation`,
     "velgvedlegg.lesmer.hvaerdette": `What is this?`,
-    "velgvedlegg.lesmer.apne": `Learn more about this attachment`,
+    "velgvedlegg.lesmer.apne": `Read more about this attachment`,
     "velgvedlegg.lesmer.lukk": `Close`,
     "velgvedlegg.ja": "Yes",
     "velgvedlegg.nei": "No",
