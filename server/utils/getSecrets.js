@@ -43,10 +43,6 @@ function getSecrets() {
     secretsFilePath + "/soknadsveiviserproxy.url",
     "utf8"
   );
-  const tjenesterUrl = fs.readFileSync(
-    secretsFilePath + "/tjenester.url",
-    "utf8"
-  );
 
   return [
     enheterRSURL,
@@ -59,12 +55,11 @@ function getSecrets() {
     foerstesidegeneratorServiceUrl,
     foerstesidegeneratorServiceApiKey,
     soknadsveiviserproxyUrl,
-    tjenesterUrl
   ];
 }
 
 function getMockSecrets() {
-  return ["", "", "", "", "", "", "", "", "", "", ""];
+  return ["", "", "", "", "", "", "", "", "", ""];
 }
 
 module.exports = { getSecrets, getMockSecrets };

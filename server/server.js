@@ -32,7 +32,6 @@ const [
   foerstesidegeneratorServiceUrl,
   foerstesidegeneratorServiceApiKey,
   soknadsveiviserproxyUrl,
-  tjenesterUrl
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
 server.use(basePath("/"), express.static(buildPath, { index: false }));
@@ -45,7 +44,6 @@ server.get(basePath("/api/enheter"), (req, res) => {
 server.get(basePath("/config"), (req, res) =>
   res.send({
     proxyUrl: soknadsveiviserproxyUrl,
-    tjenesteUrl: tjenesterUrl,
     sanityDataset: sanityDataset
   })
 );

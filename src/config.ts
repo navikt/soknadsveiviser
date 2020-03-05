@@ -11,8 +11,17 @@ export const setConfig = (data: Config): void => {
 };
 
 export const getProxyUrl = (): string => config.proxyUrl;
-export const getTjenesteUrl = (): string => config.tjenesteUrl;
 export const getSanityDataset = (): string => config.sanityDataset;
+
+export const getTjenesteUrl = (): string => {
+  if (window.location.href.indexOf("www-q0") !== -1) {
+    return "https://tjenester-q0.nav.no";
+  } else if (window.location.href.indexOf("www-q1") !== -1) {
+    return "https://tjenester-q1.nav.no";
+  } else {
+    return "https://tjenester.nav.no";
+  }
+};
 
 export const getConfig = (): Config => config;
 export const getDefault = (): Config => ({
