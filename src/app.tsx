@@ -14,6 +14,7 @@ import {
   IntlProviderWrapperContextType,
   IntlProviderWrapperHOC
 } from "./sprak/IntlProviderWrapper";
+import Skjemanedlasting from "./sider/Skjemanedlasting";
 
 interface Routes {
   sprak: string;
@@ -54,7 +55,6 @@ class App extends Component<MergedProps> {
       <Switch>
         <Redirect exact from={`/soknader/${sprak}`} to={`/soknader/${sprak}/person`} />
         <Redirect exact from={`${path}/:inngang(ettersendelse|klage)`} to={`${path}/:inngang(ettersendelse|klage)/person`} />
-
         <Route path={`${path}/:inngang(ettersendelse|klage)?/:personEllerBedrift(person|bedrift)`}>
           <MedKategorier>
             <Route
@@ -82,6 +82,10 @@ class App extends Component<MergedProps> {
           exact
           path={`${path}/skjemautlisting/detaljert`}
           component={SkjemautlistingDetaljert}
+        />
+        <Route
+          path={`/soknader/:sprak/nedlasting/:skjemanummer`}
+          component={Skjemanedlasting}
         />
         <Route component={NotFound} />
       </Switch>

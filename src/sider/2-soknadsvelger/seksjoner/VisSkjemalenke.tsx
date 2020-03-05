@@ -1,6 +1,6 @@
 import * as React from "react";
-import { Undertittel, Normaltekst, Element } from "nav-frontend-typografi";
-import { injectIntl, InjectedIntlProps, FormattedMessage } from "react-intl";
+import { Undertittel, Normaltekst } from "nav-frontend-typografi";
+import { injectIntl, InjectedIntlProps } from "react-intl";
 import BlockContent from "@sanity/block-content-to-react";
 import RelevantInformasjon from "./RelevantInformasjon";
 import { link } from "utils/serializers";
@@ -11,7 +11,7 @@ import { RouteComponentProps, withRouter } from "react-router";
 import { hentSkjemanummerHash } from "utils/hentSkjemanummerHash";
 import { convertNAVSkjemanummerTilHash } from "utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
-import { utlistingAvPDFerBasertPaSprak } from "../../interne/skjemautlisting/tabeller/innslagITabell";
+import { Skjemalenkeliste, Fillenke } from "./Skjemalenker";
 
 interface Props {
   key: number;
@@ -25,6 +25,7 @@ const VisSkjemalenke = (
   const { locale } = props.intl;
   const { skjemalenke, key, apen } = props;
   const { navn, beskrivelse, infoLenker, hovedskjema } = skjemalenke;
+  const { pdf, skjemanummer } = hovedskjema;
 
   const markert =
     hentSkjemanummerHash(props.location.hash) ===
@@ -66,10 +67,18 @@ const VisSkjemalenke = (
               <RelevantInformasjon lenker={infoLenker} locale={locale} />
             )}
           </div>
-          <div className="knapper-wrapper litenavstand">
-            <Element><FormattedMessage id="skjemalenke.lastned" /></Element>
-            <div>{utlistingAvPDFerBasertPaSprak(skjemalenke.hovedskjema)}</div>
-          </div>
+          <Skjemalenkeliste pdf={pdf} skjemanummer={skjemanummer}>
+            {Object.entries(pdf)
+              .filter(([, file]) => file?.asset?.url)
+              .map(([key, file]) => (
+                <Fillenke
+                  key={key}
+                  languageKey={key}
+                  file={file}
+                  skjemanummer={hovedskjema.skjemanummer}
+                />
+              ))}
+          </Skjemalenkeliste>
         </div>
       </EkspanderbartpanelBase>
     </div>
