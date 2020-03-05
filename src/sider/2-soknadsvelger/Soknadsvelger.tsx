@@ -19,6 +19,7 @@ import { loggEvent } from "../../utils/logger";
 import { medKategorier } from "../../states/providers/Kategorier";
 import hashLinkScroll from "../../utils/hashScroll";
 import { localeTekst, sideTittel } from "../../utils/sprak";
+import VisSkjemalenke from "./seksjoner/VisSkjemalenke";
 
 interface Routes {
   kategori: string;
@@ -70,21 +71,42 @@ class Soknadsobjekter extends Component<MergedProps> {
             case "LOADING":
               return <Spinner style={{ backgroundColor: "white" }} />;
             case "RESULT":
-              let ettApentObjekt = soknader.soknadsobjekter.length + soknader.soknadslenker.length < 2;
-              let apentSoknadsobjekt = ettApentObjekt && soknader.soknadsobjekter.length === 1;
-              let apenSoknadslenke = ettApentObjekt && soknader.soknadslenker.length === 1;
+              let ettApentObjekt =
+                soknader.soknadsobjekter.length +
+                  soknader.soknadslenker.length +
+                  soknader.soknadslenker.length ===
+                1;
+              let apentSoknadsobjekt =
+                ettApentObjekt && soknader.soknadsobjekter.length === 1;
+              let apenSkjemalenke =
+                ettApentObjekt && soknader.skjemalenker.length === 1;
+              let apenSoknadslenke =
+                ettApentObjekt && soknader.soknadslenker.length === 1;
               return (
                 <>
                   {valgtUnderkategori && (
                     <Soknadsdialog valgtUnderkategori={valgtUnderkategori} />
                   )}
-
-                  {soknader.soknadsobjekter.map((soknadsobjekt, id) => (
-                    <VisSoknadsobjekt key={id} soknadsobjekt={soknadsobjekt} apen={apentSoknadsobjekt} />
+                  {soknader.soknadsobjekter?.map((soknadsobjekt, id) => (
+                    <VisSoknadsobjekt
+                      key={id}
+                      soknadsobjekt={soknadsobjekt}
+                      apen={apentSoknadsobjekt}
+                    />
                   ))}
-
-                  {soknader.soknadslenker.map((soknadslenke, id) => (
-                    <VisSoknadslenke key={id} soknadslenke={soknadslenke} apen={apenSoknadslenke} />
+                  {soknader.skjemalenker?.map((skjemalenke, id) => (
+                    <VisSkjemalenke
+                      key={id}
+                      skjemalenke={skjemalenke}
+                      apen={apenSkjemalenke}
+                    />
+                  ))}
+                  {soknader.soknadslenker?.map((soknadslenke, id) => (
+                    <VisSoknadslenke
+                      key={id}
+                      soknadslenke={soknadslenke}
+                      apen={apenSoknadslenke}
+                    />
                   ))}
                 </>
               );
@@ -123,10 +145,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export default medKategorier<Props>(
   injectIntl<Props & InjectedIntlProps>(
     withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
-      connect(
-        mapStateToProps,
-        mapDispatchToProps
-      )(Soknadsobjekter)
+      connect(mapStateToProps, mapDispatchToProps)(Soknadsobjekter)
     )
   )
 );

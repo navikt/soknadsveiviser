@@ -31,9 +31,18 @@ export interface Soknadslenke {
   infoLenker?: Lenkeobjekt[];
 }
 
+export interface Skjemalenke {
+  _id: string;
+  navn: LocaleString;
+  hovedskjema: Skjema
+  beskrivelse?: LocaleBlockText;
+  infoLenker?: Lenkeobjekt[];
+}
+
 export interface Soknader {
   soknadsobjekter: Soknadsobjekt[];
   soknadslenker: Soknadslenke[];
+  skjemalenker: Skjemalenke[];
 }
 
 export interface Innsendingsmate {
