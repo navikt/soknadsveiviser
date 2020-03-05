@@ -39,6 +39,7 @@ jobs:
           ingresses:
             - https://soknadsveiviser.nais.oera-q.no
             - https://www-q0.nav.no/soknader
+            - https://www-q1.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           EOF

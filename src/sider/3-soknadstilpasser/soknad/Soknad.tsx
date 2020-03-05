@@ -45,8 +45,8 @@ const Soknad = (props: MergedProps) => {
   const { hovedskjema } = valgtSoknadsobjekt;
   const { innsendingsmate, personEllerBedrift } = match.params;
 
-  const [visVeiledendeSporsmal, setVisVeiledendeSporsmal] = useState();
-  const [tilDokumentinnsending, setTilDokumentinnsending] = useState();
+  const [visVeiledendeSporsmal, setVisVeiledendeSporsmal] = useState<boolean|undefined>();
+  const [tilDokumentinnsending, setTilDokumentinnsending] = useState(false);
 
   const relevanteVedlegg = valgteVedlegg.filter(
     v => v.soknadsobjektId === valgtSoknadsobjekt._id

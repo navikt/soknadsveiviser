@@ -24,7 +24,7 @@ export const innslagITabell = (skjema: Skjema) => {
   };
 };
 
-const utlistingAvPDFerBasertPaSprak = (skjema: Skjema) => {
+export const utlistingAvPDFerBasertPaSprak = (skjema: Skjema) => {
   if (skjema.pdf) {
     return (
       <>
