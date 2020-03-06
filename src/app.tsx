@@ -14,7 +14,6 @@ import {
   IntlProviderWrapperContextType,
   IntlProviderWrapperHOC
 } from "./sprak/IntlProviderWrapper";
-import Skjemanedlasting from "./sider/Skjemanedlasting";
 
 interface Routes {
   sprak: string;
@@ -82,10 +81,6 @@ class App extends Component<MergedProps> {
           exact
           path={`${path}/skjemautlisting/detaljert`}
           component={SkjemautlistingDetaljert}
-        />
-        <Route
-          path={`/soknader/:sprak/nedlasting/:skjemanummer`}
-          component={Skjemanedlasting}
         />
         <Route component={NotFound} />
       </Switch>
