@@ -59,7 +59,7 @@ function getSecrets() {
 }
 
 function getMockSecrets() {
-  return ["", "", "", "", "", "", "", "", "", ""];
+  return ["", "", "", "", "", "", "", "", "", "https://tjenester-q0.nav.no/soknadsveiviserproxy"];
 }
 
 module.exports = { getSecrets, getMockSecrets };
