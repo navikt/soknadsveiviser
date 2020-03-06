@@ -2,7 +2,6 @@ import React, { FunctionComponent } from "react";
 import { Element } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 import { PDFObjekt } from "../../../typer/pdf";
-import { Link } from "react-router-dom";
 import { LocalePDFObjekt } from "../../../typer/sprak";
 
 export const Skjemalenkeliste: FunctionComponent<{
@@ -29,12 +28,12 @@ export const Fillenke = (props: {
 }) => {
   return (
     <span>
-      <Link
+      <a
         className="lenke"
-        to={`/soknader/${props.languageKey}/nedlasting/${props.skjemanummer}`}
+        href={`${window.location.origin}/soknader/${props.languageKey}/nedlasting/${props.skjemanummer}`}
       >
         {props.languageKey.toLocaleUpperCase()}
-      </Link>
+      </a>
       <span>{`  |  `}</span>
     </span>
   );
