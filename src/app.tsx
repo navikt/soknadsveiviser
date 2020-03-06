@@ -54,7 +54,6 @@ class App extends Component<MergedProps> {
       <Switch>
         <Redirect exact from={`/soknader/${sprak}`} to={`/soknader/${sprak}/person`} />
         <Redirect exact from={`${path}/:inngang(ettersendelse|klage)`} to={`${path}/:inngang(ettersendelse|klage)/person`} />
-
         <Route path={`${path}/:inngang(ettersendelse|klage)?/:personEllerBedrift(person|bedrift)`}>
           <MedKategorier>
             <Route

@@ -48,6 +48,31 @@ server.get(basePath("/config"), (req, res) =>
   })
 );
 
+server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
+        const path = req.url.split("/");
+
+        const skjemanummer = path[4];
+        const locale = path[2];
+        request(
+            {
+                uri: `${soknadsveiviserproxyUrl}/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
+                method: "GET",
+            },
+            (error, result, body) => {
+                if (error) logger.error(error);
+                try {
+                    const json = JSON.parse(body);
+                    if (json.url) {
+                        res.redirect(JSON.parse(body).url)
+                    }
+                } catch {
+                    res.sendStatus(404);
+                }
+            }
+        )
+    }
+);
+
 server.post(basePath("/api/forsteside"), (req, res) => {
   request(
     securityTokenServiceTokenUrl +
