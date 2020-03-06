@@ -14,7 +14,9 @@ export const settSoknaderRequest = () => {
 };
 
 export const settSoknaderResult = (soknader: Soknader) =>
-  !soknader.soknadslenker.length && !soknader.soknadsobjekter.length && !soknader.skjemalenker.length
+  !soknader.soknadslenker.length &&
+  !soknader.soknadsobjekter.length &&
+  !soknader.skjemalenker.length
     ? settSoknaderDataError("errors.api.soknader")
     : { type: "SETT_SOKNADER_RESULT", soknader };
 

@@ -74,7 +74,7 @@ class Soknadsobjekter extends Component<MergedProps> {
               let ettApentObjekt =
                 soknader.soknadsobjekter.length +
                   soknader.soknadslenker.length +
-                  soknader.soknadslenker.length ===
+                  soknader.skjemalenker.length ===
                 1;
               let apentSoknadsobjekt =
                 ettApentObjekt && soknader.soknadsobjekter.length === 1;
