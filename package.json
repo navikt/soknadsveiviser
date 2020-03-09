@@ -71,6 +71,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.0",
     "react-accessible-accordion": "^2.4.4",
+    "react-app-polyfill": "^1.0.6",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.13.0",
     "react-ga": "^2.7.0",
