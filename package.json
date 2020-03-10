@@ -5,7 +5,6 @@
   "private": true,
   "scripts": {
     "start": "npm-run-all -p start:*",
-    "start:lint": "tslint src/**/*.ts*",
     "start:ts": "react-scripts start",
     "start:less": "less-watch-compiler",
     "build": "npm-run-all -p build:*",
@@ -123,7 +122,6 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 11",
     "not op_mini all"
   ]
 }

@@ -54,6 +54,7 @@ const init = async () => {
     );
   }
   const config = await fetchConfig();
+  console.log("config etter fetch: "+config);
   setConfig(config);
 
   const baseUrl = "/soknader";
