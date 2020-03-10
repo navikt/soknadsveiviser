@@ -69,8 +69,10 @@
     "nav-frontend-veilederpanel": "^0.1.22",
     "nav-frontend-veilederpanel-style": "0.0.23",
     "prop-types": "^15.7.2",
+    "proxy-polyfill": "^0.3.1",
     "react": "^16.13.0",
     "react-accessible-accordion": "^2.4.4",
+    "react-app-polyfill": "^1.0.6",
     "react-collapse": "^4.0.3",
     "react-dom": "^16.13.0",
     "react-ga": "^2.7.0",
@@ -88,7 +90,8 @@
     "redux-devtools-extension": "^2.13.8",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
-    "smoothscroll-polyfill": "^0.4.4"
+    "smoothscroll-polyfill": "^0.4.4",
+    "unorm": "^1.6.0"
   },
   "devDependencies": {
     "@types/classnames": "^2.2.9",
@@ -120,7 +123,6 @@
   "browserslist": [
     ">0.2%",
     "not dead",
-    "not ie <= 11",
     "not op_mini all"
   ]
 }
