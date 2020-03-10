@@ -4,7 +4,7 @@ import { parseJson } from "./parser";
 
 export const fetchConfig = (): Promise<Config> =>
   fetch("/soknader/config")
-    .then(parseJson)
+    .then((res) => Object.isExtensible(res) ? res.json() : res.clone().json())
     .catch(console.error);
 
 export const fetchEnheter: () => Promise<Enhet[]> = () =>
