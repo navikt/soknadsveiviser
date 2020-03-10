@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "start": "npm-run-all -p start:*",
+    "start:lint": "tslint src/**/*.ts*",
     "start:ts": "react-scripts start",
     "start:less": "less-watch-compiler",
     "build": "npm-run-all -p build:*",
