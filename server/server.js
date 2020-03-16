@@ -48,7 +48,8 @@ server.get(basePath("/config"), (req, res) =>
   })
 );
 
-const logRequestFailed = (requestUrl, exception, res) => {
+const logRequestFailed = (exception) => {
+  const requestUrl = 'unknown request url, sorry Sissel';
   logger.error(`server error while requesting ${requestUrl}`, exception);
 };
 
@@ -92,9 +93,10 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
 );
 
 server.post(basePath("/api/forsteside"), (req, res, next) => {
+  const requestUrl = securityTokenServiceTokenUrl +
+    "?grant_type=client_credentials&scope=openid";
   request(
-    securityTokenServiceTokenUrl +
-    "?grant_type=client_credentials&scope=openid",
+    requestUrl,
     {
       auth: {
         user: soknadsveiviserUser,
@@ -105,9 +107,6 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
       headers: {
         "x-nav-apiKey": securityTokenServiceTokenApiKey
       }
-    },
-    error => {
-      if (error) next(error);
     }
   ).then(result =>
     request(
@@ -124,12 +123,13 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
           "Nav-Consumer-Id": soknadsveiviserUser
         }
       },
-      (error, result, body) => {
-        if (error) next(error);
-        res.send(body);
-      }
     )
-  );
+      .then((parsedBody) => res.send(JSON.stringify(parsedBody)))
+  )
+    .catch(error => {
+        logRequestFailed(error);
+        res.sendStatus(500);
+    });
 });
 
 server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
