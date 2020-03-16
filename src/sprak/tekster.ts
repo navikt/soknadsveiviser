@@ -68,7 +68,7 @@ export default {
     "personalia.ikkeFodselsnummerDnummer": `Jeg har ikke fødselsnummer`,
     "personalia.oppgiFodselsnummerDnummer": `Jeg har et fødselsnummer eller D-nummer`,
     "personalia.undertekstbold.adresse": `Hvis du har en adresse du bor på i Norge, bruk den adressen. Hvis du ikke har en adresse i Norge, vennligst fyll inn din vanlige adresse.`,
-    "personalia.undertekstbold.flerepersoner": `OBS: Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
+    "personalia.undertekstbold.flerepersoner": `OBS: Hvis du skal permittere arbeidstakere som bor i flere fylker skal du sende skjemaet til det fylket de de fleste bor. Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
 
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "personalia.undertekstbold.gdpr": `Denne informasjonen brukes for å generere en førsteside for innsending på papir.`,
@@ -262,7 +262,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
     "personalia.ikkeFodselsnummerDnummer": `I do not have a Norwegian national identification number`,
     "personalia.oppgiFodselsnummerDnummer": `I have a Norwegian national identification number`,
     "personalia.undertekstbold.adresse": `If you have an address you stay at in Norway, use that address. Otherwise, please fill inn your the address you currently reside in.`,
-    "personalia.undertekstbold.flerepersoner": `NOTE: This choice should not be used for occupational injury reports, sick pay and work-related measures.
+    "personalia.undertekstbold.flerepersoner": `NOTE: If you are going to lay off workers who live in several counties, send the form to the county that most people live in. This choice should not be used for occupational injury reports, sick pay and work-related measures.
 
 In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
     "personalia.undertekstbold.gdpr": `This information is used to generate a front page for your application.`,
