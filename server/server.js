@@ -60,7 +60,8 @@ server.get(basePath('/syver-sludder'),
     // next(error);
     if (true) {
       logRequestFailed('http://other-server.example.org/important-request', error);
-      res.sendStatus(500);
+      res.status(500);
+      res.render('error', {error: error});
       return;
     }
     // res.sendStatus(500);
@@ -128,7 +129,8 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
   )
     .catch(error => {
         logRequestFailed(error);
-        res.sendStatus(500);
+        res.status(500);
+        res.render('error', {error: error});
     });
 });
 
