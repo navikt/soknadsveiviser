@@ -18,6 +18,13 @@ Kjør prosjektet
 npm start
 ```
 
+Kjør opp server, hvis nødvendig
+```
+cd server
+npm install
+node server.js
+```
+
 ### Bygging og deploy
 Vi bruker github actions.
 

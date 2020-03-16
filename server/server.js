@@ -5,7 +5,7 @@ const path = require("path");
 const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
 const getDecorator = require("./utils/getDecorator");
-const { getSecrets, getMockSecrets } = require("./utils/getSecrets");
+const {getSecrets, getMockSecrets} = require("./utils/getSecrets");
 const basePath = require("./utils/basePath");
 const logger = require("./utils/logger");
 
@@ -34,7 +34,7 @@ const [
   soknadsveiviserproxyUrl,
 ] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
 
-server.use(basePath("/"), express.static(buildPath, { index: false }));
+server.use(basePath("/"), express.static(buildPath, {index: false}));
 
 server.get(basePath("/api/enheter"), (req, res) => {
   req.headers["x-nav-apiKey"] = enheterRSApiKey;
@@ -48,35 +48,53 @@ server.get(basePath("/config"), (req, res) =>
   })
 );
 
-server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
-        const path = req.url.split("/");
+const logRequestFailed = (requestUrl, exception, res) => {
+  logger.error(`server error while requesting ${requestUrl}`, exception);
+};
 
-        const skjemanummer = path[4];
-        const locale = path[2];
-        request(
-            {
-                uri: `${soknadsveiviserproxyUrl}/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
-                method: "GET",
-            },
-            (error, result, body) => {
-                if (error) logger.error(error);
-                try {
-                    const json = JSON.parse(body);
-                    if (json.url) {
-                        res.redirect(JSON.parse(body).url)
-                    }
-                } catch {
-                    res.sendStatus(404);
-                }
-            }
-        )
+server.get(basePath('/syver-sludder'),
+  (req, res, next) => {
+    var error = new Error("flesk\nbacon\nduppe\n")
+    // logger.error('flesk', error);
+    // next(error);
+    if (true) {
+      logRequestFailed('http://other-server.example.org/important-request', error);
+      res.sendStatus(500);
+      return;
     }
+    // res.sendStatus(500);
+    res.send('tofu tofu');
+  });
+
+server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
+    const path = req.url.split("/");
+
+    const skjemanummer = path[4];
+    const locale = path[2];
+    request(
+      {
+        uri: `${soknadsveiviserproxyUrl}/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
+        method: "GET",
+      },
+      (error, result, body) => {
+        if (error) logger.error(error);
+        try {
+          const json = JSON.parse(body);
+          if (json.url) {
+            res.redirect(JSON.parse(body).url)
+          }
+        } catch {
+          res.sendStatus(404);
+        }
+      }
+    )
+  }
 );
 
 server.post(basePath("/api/forsteside"), (req, res, next) => {
   request(
     securityTokenServiceTokenUrl +
-      "?grant_type=client_credentials&scope=openid",
+    "?grant_type=client_credentials&scope=openid",
     {
       auth: {
         user: soknadsveiviserUser,
@@ -115,20 +133,20 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
 });
 
 server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
-    getDecorator()
-        .then(fragments => {
-            res.render("index.html", fragments);
-        })
-        .catch(e => {
-            const error = `Failed to get decorator: ${e}`;
-            logger.error(error);
-            res.status(500).send(error);
-        });
+  getDecorator()
+    .then(fragments => {
+      res.render("index.html", fragments);
+    })
+    .catch(e => {
+      const error = `Failed to get decorator: ${e}`;
+      logger.error(error);
+      res.status(500).send(error);
+    });
 });
 
 // Nais functions
 server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
-    res.sendStatus(200)
+  res.sendStatus(200)
 );
 
 const port = process.env.PORT || 8080;
