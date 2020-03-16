@@ -73,7 +73,7 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
     }
 );
 
-server.post(basePath("/api/forsteside"), (req, res) => {
+server.post(basePath("/api/forsteside"), (req, res, next) => {
   request(
     securityTokenServiceTokenUrl +
       "?grant_type=client_credentials&scope=openid",
