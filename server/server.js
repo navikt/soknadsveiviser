@@ -89,7 +89,10 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
       }
     },
     error => {
-      if (error) next(error);
+      if (error) {
+          console.error(`ERROR mot ${securityTokenServiceTokenUrl}: ${error}`);
+          next(error);
+      }
     }
   ).then(result =>
     request(
@@ -107,14 +110,17 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
         }
       },
       (error, result, body) => {
-        if (error) next(error);
+        if (error) {
+            console.error(`ERROR mot ${foerstesidegeneratorServiceUrl}: ${error}`);
+            next(error);
+        }
         res.send(body);
       }
     )
   );
 });
 
-server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
+server.use(/\/(soknader)\/*(?:(?!static|internal|index.css).)*$/, (req, res) => {
     getDecorator()
         .then(fragments => {
             res.render("index.html", fragments);
