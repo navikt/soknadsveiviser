@@ -68,7 +68,7 @@ export default {
     "personalia.ikkeFodselsnummerDnummer": `Jeg har ikke fødselsnummer`,
     "personalia.oppgiFodselsnummerDnummer": `Jeg har et fødselsnummer eller D-nummer`,
     "personalia.undertekstbold.adresse": `Hvis du har en adresse du bor på i Norge, bruk den adressen. Hvis du ikke har en adresse i Norge, vennligst fyll inn din vanlige adresse.`,
-    "personalia.undertekstbold.flerepersoner": `OBS: Hvis du skal permittere arbeidstakere som bor i flere fylker skal du sende skjemaet til det fylket de de fleste bor. Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
+    "personalia.undertekstbold.flerepersoner": `OBS: Hvis du skal permittere arbeidstakere som bor i flere fylker skal du sende skjemaet til det fylket der de fleste bor. Dette valget skal ikke brukes for yrkesskademeldinger, sykepenger og arbeidsrettede tiltak.
 
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
     "personalia.undertekstbold.gdpr": `Denne informasjonen brukes for å generere en førsteside for innsending på papir.`,
