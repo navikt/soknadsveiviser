@@ -156,15 +156,15 @@ function logErrors (err, req, res, next) {
 
 function clientErrorHandler (err, req, res, next) {
   if (req.xhr) {
-    res.status(500).send({ error: 'Something failed!' })
-  } else {
-    next(err)
+    // res.status(500).send({ error: 'Something failed!' });
+    // return;
   }
+  next(err);
 }
 
 function errorHandler (err, req, res, next) {
-  res.status(500)
-  res.send({ error: err });
+  res.status(500);
+  res.send({ error: "something failed" });
 }
 
 server.use(logErrors);
