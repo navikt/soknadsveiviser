@@ -129,8 +129,7 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
   )
     .catch(error => {
         logRequestFailed(error);
-        res.status(500);
-        res.send(`server failed while ${error.message}`);
+        next(error);
     });
 });
 
