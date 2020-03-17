@@ -128,9 +128,7 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
       .then((parsedBody) => res.send(JSON.stringify(parsedBody)))
   )
     .catch(error => {
-      logRequestFailed(error);
-      // next(error);
-      res.status(500).send('Internal server error, request failed');
+      next(error);
     });
 });
 
@@ -150,6 +148,31 @@ server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
 server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
   res.sendStatus(200)
 );
+
+
+// error handlers
+function logErrors (err, req, res, next) {
+  logger.error(err);
+  next(err);
+}
+
+function clientErrorHandler (err, req, res, next) {
+  if (req.xhr) {
+    res.status(500).send({ error: 'Something failed!' })
+  } else {
+    next(err)
+  }
+}
+
+function errorHandler (err, req, res, next) {
+  res.status(500)
+  res.send({ error: err });
+}
+
+server.use(logErrors);
+server.use(clientErrorHandler);
+server.use(errorHandler);
+
 
 const port = process.env.PORT || 8080;
 server.listen(port, () => logger.info(`App listening on port: ${port}`)); // eslint-disable-line
