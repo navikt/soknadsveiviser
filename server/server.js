@@ -123,7 +123,7 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
         }
       },
     )
-      .then((parsedBody) => res.send(JSON.stringify(parsedBody)))
+      .then((parsedBody) => res.send(parsedBody))
   )
     .catch(error => {
       next(error);
@@ -150,7 +150,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error(err.message, err);
+  logger.error(err.message, {message: err.message, stack: err.stack});
   next(err);
 }
 
