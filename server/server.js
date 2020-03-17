@@ -169,7 +169,7 @@ function errorHandler (err, req, res, next) {
 
 server.use(logErrors);
 server.use(clientErrorHandler);
-server.use(errorHandler);
+// server.use(errorHandler);
 
 
 const port = process.env.PORT || 8080;
