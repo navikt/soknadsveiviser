@@ -59,9 +59,7 @@ server.get(basePath('/syver-sludder'),
     // logger.error('flesk', error);
     // next(error);
     if (true) {
-      logRequestFailed(error);
-      res.status(500).send(error.message);
-      // next(error);
+      next(error);
       return;
     }
     // res.sendStatus(500);
@@ -152,7 +150,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error(err);
+  logger.error('error', err);
   next(err);
 }
 
