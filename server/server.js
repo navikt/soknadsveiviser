@@ -50,7 +50,7 @@ server.get(basePath("/config"), (req, res) =>
 
 const logRequestFailed = (exception) => {
   const requestUrl = 'unknown request url, sorry Sissel';
-  logger.error(`server error while requesting ${requestUrl}`, exception);
+  logger.error(requestUrl, exception);
 };
 
 server.get(basePath('/syver-sludder'),
@@ -59,9 +59,9 @@ server.get(basePath('/syver-sludder'),
     // logger.error('flesk', error);
     // next(error);
     if (true) {
-      logRequestFailed('http://other-server.example.org/important-request', error);
-      res.status(500);
-      res.render('error', {error: error});
+      logRequestFailed(error);
+      res.status(500).send(error.message);
+      // next(error);
       return;
     }
     // res.sendStatus(500);
@@ -128,8 +128,9 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
       .then((parsedBody) => res.send(JSON.stringify(parsedBody)))
   )
     .catch(error => {
-        logRequestFailed(error);
-        next(error);
+      logRequestFailed(error);
+      // next(error);
+      res.status(500).send('Internal server error, request failed');
     });
 });
 
