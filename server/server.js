@@ -150,7 +150,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error('error', err);
+  logger.error(err.message, err);
   next(err);
 }
 
