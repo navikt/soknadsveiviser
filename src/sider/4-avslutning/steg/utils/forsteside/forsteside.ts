@@ -8,7 +8,7 @@ import { parseJson } from "klienter/parser";
 import { sjekkForFeil } from "klienter/felles";
 import { localeTekst } from "utils/sprak";
 import { LocaleString } from "typer/sprak";
-import { loggApiError } from "utils/logger";
+import {loggApiError, loggApiException} from "utils/logger";
 import { Klage } from "typer/store";
 import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../utils/erKlageEllerAnke";
 
@@ -101,7 +101,10 @@ export const hentForsteside = (params: Params): Promise<string> =>
       .then(parseJson)
       .then(response => response.foersteside)
       .then(resolve)
-      .catch(err => reject && loggApiError(url, err));
+      .catch(err => {
+        loggApiException(url, err);
+        reject(err);
+      });
   });
 
 const hentArkivtittel = (navn: LocaleString, ettersendelse: boolean) => {

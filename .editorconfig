@@ -7,7 +7,9 @@ indent_size = 4
 indent_style = space
 insert_final_newline = false
 max_line_length = 120
-tab_width = 4
 
-[*.js]
+[*.{js,ts,jsx,tsx,json}]
 indent_size = 2
+
+[Makefile]
+indent_style = tab
