@@ -1,4 +1,5 @@
 import {HttpException} from "./HttpException";
+const windowWithLogger = window as any;
 
 const mask = (error: string) =>
   error.replace(/(^|\W)\d{11}(?=$|\W)/, "1**********");
@@ -8,11 +9,11 @@ export const loggEvent = (
   fields?: { [key: string]: any },
   tags?: { [key: string]: any }
 ) =>
-  window.frontendlogger &&
-  window.frontendlogger.event(mask(tittel), fields || {}, tags || {});
+  windowWithLogger['frontendlogger'] &&
+  windowWithLogger['frontendlogger'].event(mask(tittel), fields || {}, tags || {});
 
 export const loggError = (error: string) =>
-  window.frontendlogger && window.frontendlogger.error(mask(error));
+  windowWithLogger['frontendlogger'] && windowWithLogger['frontendlogger'].error(mask(error));
 
 export const loggApiError = (url: string, error: string, status?: number) => {
   const errorMessage = `Feil ved henting av data: ${url} - ${error}`;
@@ -37,7 +38,6 @@ export function loggApiException(url: string, err: Error) {
   const errorMessage = `Feil ved henting av data: ${url} - ${err.message}`;
   loggError(errorMessage);
   const title = "soknadsveiviser.apiclient.error";
-  const tags = {};
   const fields = {
     errorMessage: errorMessage,
     url: mask(url)

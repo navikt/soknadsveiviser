@@ -8,7 +8,7 @@ import { parseJson } from "klienter/parser";
 import { sjekkForFeil } from "klienter/felles";
 import { localeTekst } from "utils/sprak";
 import { LocaleString } from "typer/sprak";
-import {loggApiError, loggApiException} from "utils/logger";
+import {loggApiException} from "utils/logger";
 import { Klage } from "typer/store";
 import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../utils/erKlageEllerAnke";
 
