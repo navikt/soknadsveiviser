@@ -1,6 +1,6 @@
 import {hentForsteside, Params} from "./forsteside";
 import {HttpException} from "../../../../../utils/HttpException";
-import {Personalia, PersonaliaState} from "../../../../../states/providers/Personalia";
+import {PersonaliaState} from "../../../../../states/providers/Personalia";
 import {Soknadsobjekt} from "../../../../../typer/soknad";
 
 interface MyWindow extends Window {
@@ -66,27 +66,26 @@ const exampleParams: Params = {
   skalAnke: false,
 };
 
-const statusCodeToText = {
-  '200': 'Ok',
-  '400': 'Bad Request',
-  '500': 'Internal server error'
+const statusCodeToText: {[index: number]:string} = {
+  200: 'Ok',
+  400: 'Bad Request',
+  500: 'Internal server error'
 };
 
-function createFetchResponse(param: { status: number, json: object }): Response {
+function createFetchResponse(param: { status: number, json?: object }): Response {
   const body = param.json ? new Blob([JSON.stringify(param.json)], {type: 'application/json'}) : null;
   const init = {
     statusText: statusCodeToText[param.status],
     status: param.status,
   };
-  const result = new Response(body, init);
-  return result;
+  return new Response(body, init);
 }
 
 describe('hentForsteside', () => {
   let fetchMock: jest.SpyInstance;
   beforeEach(() => {
     window.frontendlogger = {event: jest.fn(), error: jest.fn()};
-    // this will happen when the underlying server fails and the 500 response is intercepted by BIG-IP
+    // @ts-ignore insanity with string argument not being allowed, error in jest type defs???
     fetchMock = jest.spyOn(global, "fetch");
   });
 
@@ -114,6 +113,7 @@ describe('hentForsteside', () => {
     });
 
     it('should only log once on 500 internal server error', async () => {
+      // this will happen when the underlying server fails and the 500 response is intercepted by BIG-IP
       const response500 = createFetchResponse({status: 500});
       fetchMock.mockImplementation(() => Promise.resolve(response500));
       const promise = hentForsteside(exampleParams);

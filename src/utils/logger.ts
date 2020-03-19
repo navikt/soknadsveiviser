@@ -1,5 +1,9 @@
 import {HttpException} from "./HttpException";
-const windowWithLogger = window as any;
+
+interface MyWindow extends Window {
+  frontendlogger: any;
+}
+declare var window: MyWindow;
 
 const mask = (error: string) =>
   error.replace(/(^|\W)\d{11}(?=$|\W)/, "1**********");
@@ -9,11 +13,11 @@ export const loggEvent = (
   fields?: { [key: string]: any },
   tags?: { [key: string]: any }
 ) =>
-  windowWithLogger['frontendlogger'] &&
-  windowWithLogger['frontendlogger'].event(mask(tittel), fields || {}, tags || {});
+  window.frontendlogger &&
+  window.frontendlogger.event(mask(tittel), fields || {}, tags || {});
 
 export const loggError = (error: string) =>
-  windowWithLogger['frontendlogger'] && windowWithLogger['frontendlogger'].error(mask(error));
+  window.frontendlogger && window.frontendlogger.error(mask(error));
 
 export const loggApiError = (url: string, error: string, status?: number) => {
   const errorMessage = `Feil ved henting av data: ${url} - ${error}`;
