@@ -1,4 +1,4 @@
-import {Personalia, PersonaliaState} from "states/providers/Personalia";
+import {PersonaliaState} from "states/providers/Personalia";
 import { hentVedleggslisteForJoark, hentDokumentliste } from "./lister";
 import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
 import { adresseOgBrukerInfo } from "./json/brukerInfo";
