@@ -48,24 +48,6 @@ server.get(basePath("/config"), (req, res) =>
   })
 );
 
-const logRequestFailed = (exception) => {
-  const requestUrl = 'unknown request url, sorry Sissel';
-  logger.error(requestUrl, exception);
-};
-
-server.get(basePath('/syver-sludder'),
-  (req, res, next) => {
-    var error = new Error("flesk\nbacon\nduppe\n")
-    // logger.error('flesk', error);
-    // next(error);
-    if (true) {
-      next(error);
-      return;
-    }
-    // res.sendStatus(500);
-    res.send('tofu tofu');
-  });
-
 server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
     const path = req.url.split("/");
 
