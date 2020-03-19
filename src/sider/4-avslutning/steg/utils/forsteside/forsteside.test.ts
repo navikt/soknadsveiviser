@@ -1,19 +1,29 @@
-import {hentForsteside} from "./forsteside";
+import {hentForsteside, Params} from "./forsteside";
 import {HttpException} from "../../../../../utils/HttpException";
+import {Personalia} from "../../../../../states/providers/Personalia";
 
-const exampleParams = {
+interface MyWindow extends Window {
+  frontendlogger: any;
+}
+
+declare var window: MyWindow;
+
+const dummyEnhet = {
+  enhetsnummer: '',
+  enhetsnavn: '',
+  type: '',
+  postnummer: '',
+  poststed: ''
+};
+
+const exampleParams: Params = {
   globalLocale: "",
   personalia: {
     fodselsnummer: {
-      fodselsnummer: '', valgtEnhet: {
-        enhetsnummer: '',
-        enhetsnavn: '',
-        type: '',
-        postnummer: '',
-        poststed: ''
-      }
+      fodselsnummer: '',
+      valgtEnhet: dummyEnhet
     },
-    bedrift: {valgtEnhet: {}, flerePersonerEllerTiltaksbedrift: "tiltaksbedrift"}
+    bedrift: {valgtEnhet: dummyEnhet, flerePersonerEllerTiltaksbedrift: "tiltaksbedrift"}
   },
   relevanteVedlegg: [],
   valgtLocale: "nb-NO",
@@ -26,7 +36,14 @@ const exampleParams = {
   ettersendelse: null,
   skalKlage: false,
   typeKlage: null,
-  skalAnke: false
+  skalAnke: false,
+
+};
+
+const statusCodeToText = {
+  200: 'Ok',
+  400: 'Bad Request',
+  500: 'Internal server error'
 };
 
 function createFetchResponse(param: { status: number, json: object }) {
@@ -35,7 +52,7 @@ function createFetchResponse(param: { status: number, json: object }) {
     bodyUsed: false,
     redirected: false,
     url: "",
-    statusText: 'Internal server error',
+    statusText: statusCodeToText[param.status],
     json: () => Promise.resolve(param.json),
     status: param.status,
     ok: param.status < 399
@@ -81,6 +98,21 @@ describe('hentForsteside', () => {
       await expect(promise).rejects.toEqual(httpException);
       expect(fetchMock).toHaveBeenCalledTimes(1);
       expect(window.frontendlogger.error).toHaveBeenCalledWith('Feil ved henting av data: /soknader/api/forsteside - 500 Internal server error');
+    });
+
+    it('should only log once on 400 Bad Request', async () => {
+      const response400 = createFetchResponse({status: 400, json: {"timestamp":"2020-03-18T20:18:14.182+0000",
+          "status":400,
+          "error":"Bad Request",
+          "message":"Hvis Adresse oppgis, må Adresselinje1, Postnummer og Poststed være satt.",
+          "path":"/api/foerstesidegenerator/v1/foersteside/"}});
+      fetchMock.mockImplementation(() => Promise.resolve(response400));
+      const promise = hentForsteside(exampleParams);
+      const httpException = new HttpException(response400);
+      await expect(promise).rejects.toEqual(httpException);
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      expect(window.frontendlogger.error).toHaveBeenCalledWith(
+        'Feil ved henting av data: /soknader/api/forsteside - 400 Bad Request');
     });
   });
 
