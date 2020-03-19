@@ -28,7 +28,7 @@ const VelgOmBehandletAvEnhet = (props: MergedProps) => {
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
   ) => {
-    const erVideresendt = value === "ja" ? true : false;
+    const erVideresendt = value === "ja";
     if (erVideresendt !== undefined) {
       props.settVideresendtTilEnhet(erVideresendt);
     }

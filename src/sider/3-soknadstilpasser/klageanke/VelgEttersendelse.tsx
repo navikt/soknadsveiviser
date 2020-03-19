@@ -37,7 +37,7 @@ const VelgEttersendelse = (props: MergedProps) => {
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
   ) => {
-    const skalEttersende = value === "ja" ? true : false;
+    const skalEttersende = value === "ja";
     if (skalEttersende !== undefined) {
       props.settEttersendTilKlage(skalEttersende);
       if (skalEttersende) {

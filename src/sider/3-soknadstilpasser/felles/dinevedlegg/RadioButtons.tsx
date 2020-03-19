@@ -22,7 +22,7 @@ const RadioButtons = (props: MergedProps) => {
   const onChange = (event: ChangeEvent<HTMLInputElement>) =>
     props.settValgtVedleggSkalEttersendes(
       event.target.name,
-      event.target.value === "off" ? true : false
+      event.target.value === "off"
     );
   return (
     <>
