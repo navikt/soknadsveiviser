@@ -31,14 +31,14 @@ export interface IsTouched {
   valgtEnhet: boolean;
 }
 
-export interface State {
+export interface PersonaliaState {
   fodselsnummer: Fodselsnummer;
   adresse: Adresse;
   touched: IsTouched;
   bedrift: ValgtEnhet;
 }
 
-export interface Personalia extends State {
+export interface Personalia extends PersonaliaState {
   resetState(): void;
   settFodselsnummer(fodselsnummer: Fodselsnummer): void;
   settAdresse(adresse: Adresse): void;
@@ -61,7 +61,7 @@ const initState = {
 
 const { Provider, Consumer } = React.createContext<Personalia | null>(null);
 
-class MedPersonalia extends Component<{}, State> {
+class MedPersonalia extends Component<{}, PersonaliaState> {
   state = initState;
   resetState = () => this.setState(initState);
 

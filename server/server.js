@@ -132,7 +132,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error(err.message, {message: err.message, stack: err.stack});
+  logger.error({message: err.message, stack: err.stack});
   next(err);
 }
 

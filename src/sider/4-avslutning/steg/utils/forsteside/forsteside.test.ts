@@ -1,6 +1,7 @@
 import {hentForsteside, Params} from "./forsteside";
 import {HttpException} from "../../../../../utils/HttpException";
-import {Personalia} from "../../../../../states/providers/Personalia";
+import {PersonaliaState} from "../../../../../states/providers/Personalia";
+import {Soknadsobjekt} from "../../../../../typer/soknad";
 
 interface MyWindow extends Window {
   frontendlogger: any;
@@ -16,54 +17,75 @@ const dummyEnhet = {
   poststed: ''
 };
 
-const exampleParams: Params = {
-  globalLocale: "",
-  personalia: {
-    fodselsnummer: {
-      fodselsnummer: '',
-      valgtEnhet: dummyEnhet
-    },
-    bedrift: {valgtEnhet: dummyEnhet, flerePersonerEllerTiltaksbedrift: "tiltaksbedrift"}
+const dummySoknad: Soknadsobjekt = {
+  _id: '',
+  gosysid: 1,
+  brukertyper: [],
+  vedleggtilsoknad: [],
+  innsendingsmate: {},
+  urlparam: '',
+  kanKlage: false,
+  navn: {'nb-NO': 'Fisle Narrepanne'},
+  hovedskjema: {
+    skjemanummer: 'flesk', navn: {'nb-NO': 'flesk flesk'},
+    emneord: [{emneord: 'flesk'}],
+    gyldigfra: {'nb-NO': 'flesk'},
+    gyldigtil: {'nb-NO': 'flesk'},
+    pdf: {},
+    valgtSprak: 'flesk'
   },
-  relevanteVedlegg: [],
-  valgtLocale: "nb-NO",
-  klageSoknadsobjekt: undefined,
-  valgtSoknadsobjekt: {
-    navn: 'Fisle Narrepanne',
-    hovedskjema: {skjemanummer: 'flesk', navn: {'nb-NO': 'flesk flesk'}},
-    tema: {temakode: 'flesk', navn: 'flesk'}
-  },
-  ettersendelse: null,
-  skalKlage: false,
-  typeKlage: null,
-  skalAnke: false,
-
+  tema: {temakode: 'flesk', navn: 'flesk'}
 };
 
-const statusCodeToText = {
+const dummyPersonalia: PersonaliaState = {
+  adresse: {navn: '', adresse: '', sted: ''},
+  touched: {
+    navn: false,
+    kontaktetEnhet: false,
+    valgtEnhet: false,
+    fodselsnummer: false,
+    adresse: false,
+    sted: false,
+    land: false,
+  },
+  fodselsnummer: {
+    fodselsnummer: '',
+    valgtEnhet: dummyEnhet
+  },
+  bedrift: {valgtEnhet: dummyEnhet, flerePersonerEllerTiltaksbedrift: "tiltaksbedrift"}
+};
+const exampleParams: Params = {
+  globalLocale: "",
+  personalia: dummyPersonalia,
+  relevanteVedlegg: [],
+  valgtLocale: "nb-NO",
+  klageSoknadsobjekt: dummySoknad,
+  valgtSoknadsobjekt: dummySoknad,
+  ettersendelse: false,
+  skalKlage: false,
+  skalAnke: false,
+};
+
+const statusCodeToText: {[index: number]:string} = {
   200: 'Ok',
   400: 'Bad Request',
   500: 'Internal server error'
 };
 
-function createFetchResponse(param: { status: number, json: object }) {
-  return {
-    body: null,
-    bodyUsed: false,
-    redirected: false,
-    url: "",
+function createFetchResponse(param: { status: number, json?: object }): Response {
+  const body = param.json ? new Blob([JSON.stringify(param.json)], {type: 'application/json'}) : null;
+  const init = {
     statusText: statusCodeToText[param.status],
-    json: () => Promise.resolve(param.json),
     status: param.status,
-    ok: param.status < 399
-  }
+  };
+  return new Response(body, init);
 }
 
 describe('hentForsteside', () => {
   let fetchMock: jest.SpyInstance;
   beforeEach(() => {
     window.frontendlogger = {event: jest.fn(), error: jest.fn()};
-    // this will happen when the underlying server fails and the 500 response is intercepted by BIG-IP
+    // @ts-ignore insanity with string argument not being allowed, error in jest type defs???
     fetchMock = jest.spyOn(global, "fetch");
   });
 
@@ -91,6 +113,7 @@ describe('hentForsteside', () => {
     });
 
     it('should only log once on 500 internal server error', async () => {
+      // this will happen when the underlying server fails and the 500 response is intercepted by BIG-IP
       const response500 = createFetchResponse({status: 500});
       fetchMock.mockImplementation(() => Promise.resolve(response500));
       const promise = hentForsteside(exampleParams);
@@ -101,11 +124,15 @@ describe('hentForsteside', () => {
     });
 
     it('should only log once on 400 Bad Request', async () => {
-      const response400 = createFetchResponse({status: 400, json: {"timestamp":"2020-03-18T20:18:14.182+0000",
-          "status":400,
-          "error":"Bad Request",
-          "message":"Hvis Adresse oppgis, må Adresselinje1, Postnummer og Poststed være satt.",
-          "path":"/api/foerstesidegenerator/v1/foersteside/"}});
+      const response400 = createFetchResponse({
+        status: 400, json: {
+          "timestamp": "2020-03-18T20:18:14.182+0000",
+          "status": 400,
+          "error": "Bad Request",
+          "message": "Hvis Adresse oppgis, må Adresselinje1, Postnummer og Poststed være satt.",
+          "path": "/api/foerstesidegenerator/v1/foersteside/"
+        }
+      });
       fetchMock.mockImplementation(() => Promise.resolve(response400));
       const promise = hentForsteside(exampleParams);
       const httpException = new HttpException(response400);
@@ -122,12 +149,12 @@ describe('hentForsteside', () => {
       expect(window.frontendlogger.event).not.toHaveBeenCalled();
     });
 
-  it('should resolve when http is ok', async () => {
-    const responseOk = createFetchResponse({status: 200, json: {foersteside: 'flesk flesk'}});
-    fetchMock.mockImplementation(() => Promise.resolve(responseOk));
-    const promise = hentForsteside(exampleParams);
-    await expect(promise).resolves.toEqual('flesk flesk');
-    expect(fetchMock).toHaveBeenCalledTimes(1);
-  });
+    it('should resolve when http is ok', async () => {
+      const responseOk = createFetchResponse({status: 200, json: {foersteside: 'flesk flesk'}});
+      fetchMock.mockImplementation(() => Promise.resolve(responseOk));
+      const promise = hentForsteside(exampleParams);
+      await expect(promise).resolves.toEqual('flesk flesk');
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
   });
 });

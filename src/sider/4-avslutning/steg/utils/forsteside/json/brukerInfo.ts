@@ -1,11 +1,11 @@
-import { Personalia } from "states/providers/Personalia";
+import {PersonaliaState} from "states/providers/Personalia";
 import { Innsendingsmate } from "typer/soknad";
 import { mottakerAdresse, enhetAdresse } from "./mottakerAdresse";
 import { Klage } from "typer/store";
 
 export const adresseOgBrukerInfo = (
   innsendingsmate: Innsendingsmate,
-  personalia: Personalia,
+  personalia: PersonaliaState,
   skalKlage?: boolean,
   typeKlage?: Klage,
   skalAnke?: boolean

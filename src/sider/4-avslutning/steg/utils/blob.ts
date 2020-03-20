@@ -18,6 +18,5 @@ export const b64toBlob = (
     byteArrays.push(byteArray);
   }
 
-  const blob = new Blob(byteArrays, { type: contentType });
-  return blob;
+  return new Blob(byteArrays, {type: contentType});
 };
