@@ -3,7 +3,6 @@ import StegOverskrift from "./Overskrift";
 import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { RouteComponentProps } from "react-router-dom";
-import { HTTPError } from "../../../typer/errors";
 import { withRouter } from "react-router";
 import {
   medPersonalia,
@@ -17,6 +16,13 @@ import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobj
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
 import ReactGA from "react-ga";
+import AlertStripe from "nav-frontend-alertstriper";
+
+interface MyWindow extends Window {
+  hj: any;
+}
+declare var window: MyWindow;
+
 
 ReactGA.initialize("UA-9127381-16");
 ReactGA.set({ anonymizeIp: true });
@@ -55,8 +61,12 @@ type State =
   | { status: "FETCH_COVER" }
   | { status: "MERGE" }
   | { status: "DOWNLOAD" }
-  | { status: "ERROR"; error: HTTPError };
+  | { status: "ERROR"; error: Error };
 type StatusCheck = { [key in State["status"]]: any };
+
+function sendHotJarTrigger() {
+  window.hj('trigger', 'rr_trigger');
+}
 
 const ForstesideGenerator = (props: MergedProps) => {
   const [state, setState] = useState({ status: "READY" } as State);
@@ -153,6 +163,16 @@ const ForstesideGenerator = (props: MergedProps) => {
           />
         </Hovedknapp>
       </div>
+      {state.status === 'ERROR' &&
+
+        <div>
+        <br/>
+        <AlertStripe type="feil">
+          <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil" />
+          <button style={{display: 'none'}} onClick={sendHotJarTrigger}>Trigger hotjar</button>
+        </AlertStripe>
+        </div>
+      }
     </div>
   );
 };
