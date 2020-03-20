@@ -17,11 +17,8 @@ import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
 import ReactGA from "react-ga";
 import AlertStripe from "nav-frontend-alertstriper";
-
-interface MyWindow extends Window {
-  hj: any;
-}
-declare var window: MyWindow;
+import Lenke from "nav-frontend-lenker";
+import HotJarLenke from "../../../komponenter/felles/HotJarLenke";
 
 
 ReactGA.initialize("UA-9127381-16");
@@ -63,10 +60,6 @@ type State =
   | { status: "DOWNLOAD" }
   | { status: "ERROR"; error: Error };
 type StatusCheck = { [key in State["status"]]: any };
-
-function sendHotJarTrigger() {
-  window.hj('trigger', 'rr_trigger');
-}
 
 const ForstesideGenerator = (props: MergedProps) => {
   const [state, setState] = useState({ status: "READY" } as State);
@@ -169,7 +162,7 @@ const ForstesideGenerator = (props: MergedProps) => {
         <br/>
         <AlertStripe type="feil">
           <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil" />
-          <button style={{display: 'none'}} onClick={sendHotJarTrigger}>Trigger hotjar</button>
+          <HotJarLenke style={{display: 'none'}} trigger="rr_trigger">Trigger hotjar</HotJarLenke>
         </AlertStripe>
         </div>
       }
