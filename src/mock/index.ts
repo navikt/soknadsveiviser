@@ -15,7 +15,7 @@ fetchMock.config.fallbackToNetwork = true;
 // Mock spesifikke sider
 const mockKategorier = false;
 const mockSoknadsobjekter = false;
-const mockPdfFoersteside = true;
+const mockPdfFoersteside = false;
 const mockPdfMerger = false;
 
 export const setUpMock = () => {
