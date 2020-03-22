@@ -17,7 +17,6 @@ import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
 import ReactGA from "react-ga";
 import AlertStripe from "nav-frontend-alertstriper";
-import Lenke from "nav-frontend-lenker";
 import HotJarLenke from "../../../komponenter/felles/HotJarLenke";
 
 
