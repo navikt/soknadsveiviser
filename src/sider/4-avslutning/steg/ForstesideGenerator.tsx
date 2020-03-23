@@ -160,7 +160,9 @@ const ForstesideGenerator = (props: MergedProps) => {
         <div>
         <br/>
         <AlertStripe type="feil">
-          <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil" /> <HotJarLenke trigger="rr_trigger">
+          <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil" />
+          <br />
+          <HotJarLenke trigger="rr_trigger">  
             <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger" />
           </HotJarLenke>
         </AlertStripe>
