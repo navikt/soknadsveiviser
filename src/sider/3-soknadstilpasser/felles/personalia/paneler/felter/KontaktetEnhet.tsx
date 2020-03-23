@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Enhet } from "../../../../../../typer/enhet";
-import Select from "react-select";
 import { fetchEnheter } from "../../../../../../klienter/serverKlient";
 import { FieldProps } from "formik";
 import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
@@ -11,6 +10,8 @@ import {
   medPersonalia
 } from "../../../../../../states/providers/Personalia";
 import { FormattedMessage } from "react-intl";
+import { TextField } from "@material-ui/core";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 interface Props {
   kontaktetEnhet?: Enhet;
@@ -41,42 +42,21 @@ class VisEnheter extends Component<MergedProps, State> {
   hentEnheter = () =>
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
-  handleChange = (selected: any) => {
+  handleChange = (value: Enhet | null) => {
     this.props.touched.kontaktetEnhet = false;
-    if (selected) {
-      const kontaktetEnhet =
-        this.state.enheter
-          .filter(enhet => enhet.enhetsnummer === selected.value)
-          .shift() || ({} as Enhet);
-      this.props.field.value.kontaktetEnhet = kontaktetEnhet;
+    if (value) {
+      this.props.field.value.kontaktetEnhet = value;
     } else {
       this.props.field.value.kontaktetEnhet = undefined;
     }
   };
 
   render() {
-    const { label, placeholder } = this.props;
+    const { label } = this.props;
     const { enheter } = this.state;
     const touched = this.props.touched.kontaktetEnhet;
     const kontaktetEnhet = this.props.field.value.kontaktetEnhet;
     const error = touched && !kontaktetEnhet;
-
-    const customStyles = {
-      control: (base: any, state: any) => ({
-        ...base,
-        background: error ? "#F3E3E3" : base.background,
-        borderColor: error ? "#BA3A26" : base.borderColor
-      })
-    };
-
-    const defaultValue = kontaktetEnhet
-      ? enheter
-          .filter(enhet => enhet.enhetsnummer === kontaktetEnhet.enhetsnummer)
-          .map(enhet => ({
-            value: enhet.enhetsnummer,
-            label: enhet.enhetsnavn
-          }))[0]
-      : undefined;
 
     return (
       <div className="visEnheter">
@@ -84,16 +64,14 @@ class VisEnheter extends Component<MergedProps, State> {
         {!enheter.length ? (
           <NavFrontendSpinner />
         ) : (
-          <Select
-            isClearable={true}
-            styles={customStyles}
-            onChange={this.handleChange}
-            placeholder={placeholder}
-            defaultValue={defaultValue}
-            options={enheter.map(enhet => ({
-              value: enhet.enhetsnummer,
-              label: enhet.enhetsnavn
-            }))}
+          <Autocomplete
+            onChange={(event: any, value: Enhet | null) => this.handleChange(value)}
+            options={enheter}
+            getOptionLabel={option => option.enhetsnavn}
+            renderInput={params => <TextField {...params} label="NAV-kontor" variant="outlined" />}
+            autoComplete={true}
+            includeInputInList
+            disableClearable={true}
           />
         )}
         {error && (
