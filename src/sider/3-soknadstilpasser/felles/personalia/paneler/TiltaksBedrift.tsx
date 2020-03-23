@@ -39,6 +39,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
               placeholder={intl.formatMessage({
                 id: "personalia.label.navkontor"
               })}
+              handleChange={(value) => pr.field.value.valgtEnhet = value}
               {...pr}
             />
           </>

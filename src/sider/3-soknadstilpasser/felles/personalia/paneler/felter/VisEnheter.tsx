@@ -18,6 +18,7 @@ interface Props {
   label?: string;
   placeholder?: string;
   field: any;
+  handleChange: (value: Enhet | null) => void;
 }
 
 interface State {
@@ -42,15 +43,6 @@ class VisEnheter extends Component<MergedProps, State> {
   hentEnheter = () =>
     fetchEnheter().then(enheter => this.setState({ ...this.state, enheter }));
 
-  handleChange = (selected: Enhet | null) => {
-    this.props.touched.valgtEnhet = false;
-    if (selected) {
-      this.props.field.value.valgtEnhet = selected;
-    } else {
-      this.props.field.value.valgtEnhet = undefined;
-    }
-  };
-
   render() {
     const { label } = this.props;
     const { enheter } = this.state;
@@ -67,7 +59,7 @@ class VisEnheter extends Component<MergedProps, State> {
           <NavFrontendSpinner />
         ) : (
           <Autocomplete
-            onChange={(event: any, value: Enhet | null) => this.handleChange(value)}
+            onChange={(event: any, value: Enhet | null) => this.props.handleChange(value)}
             options={enheter}
             getOptionLabel={option => option.enhetsnavn}
             renderInput={params => <TextField {...params} label="NAV-kontor" variant="outlined" />}
