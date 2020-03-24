@@ -79,7 +79,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "klage.tittel.underbanner": `Klage på vedtak`,
   "klage.ettersendelse.tittel.underbanner": `Ettersende til klage på vedtak`,
   "klage.videresendt.enhet": `Har du fått brev om at klagen din er videresendt til NAV Klageinstans?`,
-  "klage.velg.behanlende.enhet": `Velg enhet som behandler klagen din (se i brevet du har fått)`,
+  "klage.velg.behandlende.enhet": `Velg enhet som behandler klagen din (se i brevet du har fått)`,
   "klage.mellomledd.tittel": `Klage på vedtak`,
   "klage.mellomledd.knapp": `Klage`,
   "klage.mellomledd.beskrivelse": `Her kan du klage på vedtak fra NAV`,

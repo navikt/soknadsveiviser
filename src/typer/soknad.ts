@@ -21,6 +21,7 @@ export interface Soknadsobjekt {
   innsendingsmate: Innsendingsmate;
   kanKlage: boolean;
   brukertyper: Brukertype[];
+  muligeEnheterForInnsending?: Enhetstype[]
 }
 
 export interface Soknadslenke {
@@ -67,6 +68,10 @@ export interface Tema {
 export interface Lenkeobjekt {
   tekst: LocaleString;
   lenke: LocaleString; // burde hete url
+}
+
+export interface Enhetstype {
+  name: string;
 }
 
 type Brukertype = "tiltaksbedrift" | "personmedfnr" | "personutenfnr" | "flerepersoner";

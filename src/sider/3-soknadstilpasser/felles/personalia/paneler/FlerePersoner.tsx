@@ -5,8 +5,8 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { medPersonalia, Personalia } from "states/providers/Personalia";
 import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
-import VisEnheter from "./felter/VisEnheter";
 import { UndertekstBold } from "nav-frontend-typografi";
+import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 
 interface Routes {
   personEllerBedrift: string;
@@ -32,14 +32,13 @@ const FlerePersonerPanel = (props: MergedProps) => {
                 id={"personalia.undertekstbold.flerepersoner"}
               />
             </UndertekstBold>
-            <VisEnheter
+            <BrukerVelgerEnhet
               label={intl.formatMessage({
                 id: "personalia.label.velgnavkontor"
               })}
               placeholder={intl.formatMessage({
                 id: "personalia.label.navkontor"
               })}
-              handleChange={(value) => pr.field.value.valgtEnhet = value}
               {...pr}
             />
           </>

@@ -4,25 +4,16 @@ import FodselsnummerFelter from "./felter/Fodselsnummer";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
-import {
-  Fodselsnummer,
-  medPersonalia,
-  Personalia
-} from "states/providers/Personalia";
-import {
-  medValgtSoknadsobjekt,
-  ValgtSoknad
-} from "states/providers/ValgtSoknadsobjekt";
+import { Fodselsnummer, medPersonalia, Personalia } from "states/providers/Personalia";
+import { medValgtSoknadsobjekt, ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
-import {
-  finnesVisEnheter,
-  finnesTilSkanning,
-  finnesSpesifisertAdresse
-} from "utils/soknadsobjekter";
+import { finnesVisEnheter, finnesTilSkanning, finnesSpesifisertAdresse } from "utils/soknadsobjekter";
 import { Klage, Store } from "typer/store";
 import { connect } from "react-redux";
-import ErVideresendtTilEnhet from "./ErVideresendtTilEnhet";
 import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../utils/erKlageEllerAnke";
+import BlockContent from "@sanity/block-content-to-react";
+import { localeBlockTekst } from "../../../../../utils/sprak";
+import { link } from "../../../../../utils/serializers";
 
 interface Routes {
   personEllerBedrift: string;
@@ -37,22 +28,16 @@ interface Props {
   skalAnke?: boolean;
 }
 
-type MergedProps = Props &
-  ValgtSoknad &
-  Personalia &
-  RouteComponentProps<Routes> &
-  InjectedIntlProps &
-  ReduxProps;
+type MergedProps = Props & ValgtSoknad & Personalia & RouteComponentProps<Routes> & InjectedIntlProps & ReduxProps;
 
 const FodselsnummerPanel = (props: MergedProps) => {
   const { intl, valgtSoknadsobjekt, klageType, skalAnke, skalKlage } = props;
   const { personEllerBedrift } = props.match.params;
-  const { innsendingsmate } = valgtSoknadsobjekt;
+  const { innsendingsmate, muligeEnheterForInnsending } = valgtSoknadsobjekt;
   const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
   const skalTilSkanning = finnesTilSkanning(innsendingsmate);
   const skalTilSpesifisertAdresse = finnesSpesifisertAdresse(innsendingsmate);
-  const skalTilValgtEnhet =
-    !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
+  const skalTilValgtEnhet = !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 
   const personHarFodselsnummerTekst = () =>
     personEllerBedrift === "bedrift"
@@ -72,13 +57,21 @@ const FodselsnummerPanel = (props: MergedProps) => {
         >
           <FodselsnummerFelter {...pr} />
           {skalTilValgtEnhet && !erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
-            <BrukerVelgerEnhet
-              beskrivelse={innsendingsmate.visenheter!}
-              {...pr}
-            />
+            <>
+              <BlockContent
+                blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
+                serializers={{ marks: { link } }}
+              />
+              <BrukerVelgerEnhet enhetstyper={muligeEnheterForInnsending} {...pr} />
+            </>
           )}
           {erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
-            <ErVideresendtTilEnhet {...pr} />
+            <BrukerVelgerEnhet
+              label={props.intl.formatMessage({
+                id: "klage.velg.behandlende.enhet"
+              })}
+              {...pr}
+            />
           )}
         </Ekspanderbartpanel>
       )}
@@ -92,12 +85,8 @@ const mapStateToProps = (store: Store) => ({
 
 export default medValgtSoknadsobjekt<Props & ValgtSoknad>(
   injectIntl<Props & ValgtSoknad & InjectedIntlProps>(
-    withRouter<
-      Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any
-    >(
-      medPersonalia<Exclude<MergedProps, ReduxProps>>(
-        connect(mapStateToProps)(FodselsnummerPanel)
-      )
+    withRouter<Props & ValgtSoknad & InjectedIntlProps & RouteComponentProps<Routes>, any>(
+      medPersonalia<Exclude<MergedProps, ReduxProps>>(connect(mapStateToProps)(FodselsnummerPanel))
     )
   )
 );

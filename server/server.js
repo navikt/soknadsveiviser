@@ -37,8 +37,9 @@ const [
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
 server.get(basePath("/api/enheter"), (req, res) => {
+  const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.muligeEnhetstyper}` : "";
   req.headers["x-nav-apiKey"] = enheterRSApiKey;
-  req.pipe(request(enheterRSURL)).pipe(res);
+  req.pipe(request(`${enheterRSURL}${queryParams}`)).pipe(res);
 });
 
 server.get(basePath("/config"), (req, res) =>

@@ -79,7 +79,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "klage.tittel.underbanner": `Complaint`,
   "klage.ettersendelse.tittel.underbanner": `Forward documentation to a previously submitted complaint`,
   "klage.videresendt.enhet": `Have you received a letter saying that your case has been transferred to another NAV-unit?`,
-  "klage.velg.behanlende.enhet": `Choose the NAV-unit that is handling your case (specified in the letter you have received)`,
+  "klage.velg.behandlende.enhet": `Choose the NAV-unit that is handling your case (specified in the letter you have received)`,
   "klage.mellomledd.knapp": "Complaint",
   "klage.mellomledd.tittel": `Complaint`,
   "klage.mellomledd.beskrivelse": `Here you can complain on a decision by NAV`,
