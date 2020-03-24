@@ -25,6 +25,16 @@ npm install
 node server.js
 ```
 
+### Test 
+```
+npm test
+```
+
+### Bygg lokalt (linter også koden)
+```
+npm run build
+```
+
 ### Bygging og deploy
 Vi bruker github actions.
 
@@ -41,7 +51,8 @@ application:frontendlogger AND x_appname:soknadsveiviser
 
 ### Tekst
 
-Ledetekster endres i src/sprak/tekster.ts på både norsk og engelsk.
+Ledetekster endres i src/sprak/tekster/<lokale-navn>. Husk å legge til for alle lokaler, 
+foreløpig en og nb.
 
 # Henvendelser
 
