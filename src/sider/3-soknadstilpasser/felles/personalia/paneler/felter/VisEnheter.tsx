@@ -16,7 +16,7 @@ import { TextField } from "@material-ui/core";
 interface Props {
   valgtEnhet?: Enhet;
   label?: string;
-  placeholder?: string;
+  placeholder: string;
   field: any;
   handleChange: (value: Enhet | null) => void;
 }
@@ -62,7 +62,7 @@ class VisEnheter extends Component<MergedProps, State> {
             onChange={(event: any, value: Enhet | null) => this.props.handleChange(value)}
             options={enheter}
             getOptionLabel={option => option.enhetsnavn}
-            renderInput={params => <TextField {...params} label="NAV-kontor" variant="outlined" />}
+            renderInput={params => <TextField {...params} label={this.props.placeholder} variant="outlined" />}
             autoComplete={true}
             includeInputInList
             disableClearable={true}
