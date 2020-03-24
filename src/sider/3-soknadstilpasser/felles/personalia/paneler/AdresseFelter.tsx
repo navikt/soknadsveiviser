@@ -5,7 +5,6 @@ import { Adresse, Personalia } from "states/providers/Personalia";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import KontaktetEnhet from "./felter/KontaktetEnhet";
 import UndertekstBold from "nav-frontend-typografi/lib/undertekst-bold";
 import InputNavn from "./felter/Navn";
 import InputGateAdresse from "./felter/GateAdresse";
@@ -17,6 +16,8 @@ import { finnesSpesifisertAdresse } from "utils/soknadsobjekter";
 import { finnesVisEnheter, finnesTilSkanning } from "utils/soknadsobjekter";
 import { ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
+import { Enhet } from "../../../../../typer/enhet";
+import VisEnheter from "./felter/VisEnheter";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
@@ -36,6 +37,15 @@ class AdresseFelter extends Component<MergedProps, State> {
     this.setState({
       tidligereKontaktMedNAV: !this.state.tidligereKontaktMedNAV
     });
+
+  handleChange = (value: Enhet | null) => {
+    this.props.touched.kontaktetEnhet = false;
+    if (value) {
+      this.props.field.value.kontaktetEnhet = value;
+    } else {
+      this.props.field.value.kontaktetEnhet = undefined;
+    }
+  };
 
   render() {
     const { intl, touched, valgtSoknadsobjekt } = this.props;
@@ -65,13 +75,14 @@ class AdresseFelter extends Component<MergedProps, State> {
                 toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
               />
               {tidligereKontaktMedNAV && (
-                <KontaktetEnhet
+                <VisEnheter
                   label={intl.formatMessage({
                     id: "personalia.label.velgnavkontor"
                   })}
                   placeholder={intl.formatMessage({
                     id: "personalia.label.navkontor"
                   })}
+                  handleChange={this.handleChange}
                   {...this.props}
                 />
               )}
