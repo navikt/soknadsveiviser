@@ -25,6 +25,16 @@ npm install
 node server.js
 ```
 
+### Test 
+```
+npm test
+```
+
+### Bygg lokalt (linter også koden)
+```
+npm run build
+```
+
 ### Bygging og deploy
 Vi bruker github actions.
 
