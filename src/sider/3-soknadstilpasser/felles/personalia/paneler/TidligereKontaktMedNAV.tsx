@@ -20,7 +20,6 @@ const TidligereKontaktMedNAV = (props: MergedProps) => {
   const [enheter, setEnheter] = useState([] as Enhet[]);
 
   const handleChange = (value: Enhet | null) => {
-    // props.touched.kontaktetEnhet = false; LEGGE INN IGJEN DETTE?
     if (value) {
       props.field.value.kontaktetEnhet = value;
     } else {

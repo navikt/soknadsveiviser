@@ -9,8 +9,8 @@ import { fetchEnheter } from "../../../../../klienter/serverKlient";
 import { useEffect, useState } from "react";
 
 interface Props {
+  placeholder: string;
   enhetstyper?: Enhetstype[];
-  placeholder?: string;
   label?: string
 }
 
@@ -33,9 +33,7 @@ const BrukerVelgerEnhet = (props: MergedProps) => {
     <VisEnheter
       label={props.label}
       handleChange={handleChange}
-      placeholder={props.intl.formatMessage({
-        id: "personalia.label.navkontor"
-      })}
+      placeholder={props.placeholder}
       enheter={enheter}
       {...props}
     />

@@ -27,11 +27,7 @@ interface State {
 
 interface Props {}
 
-type MergedProps = Props &
-  ValgtSoknad &
-  Personalia &
-  FieldProps<Adresse> &
-  InjectedIntlProps;
+type MergedProps = Props & ValgtSoknad & Personalia & FieldProps<Adresse> & InjectedIntlProps;
 
 class AdresseFelter extends Component<MergedProps, State> {
   state = { tidligereKontaktMedNAV: false };
@@ -47,8 +43,7 @@ class AdresseFelter extends Component<MergedProps, State> {
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
     const skalTilSkanning = finnesTilSkanning(innsendingsmate);
     const skalTilSpesifisertAdresse = finnesSpesifisertAdresse(innsendingsmate);
-    const skalTilValgtEnhet =
-      !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
+    const skalTilValgtEnhet = !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 
     return touched ? (
       <>
@@ -87,6 +82,9 @@ class AdresseFelter extends Component<MergedProps, State> {
                 serializers={{ marks: { link } }}
               />
               <BrukerVelgerEnhet
+                placeholder={intl.formatMessage({
+                  id: "personalia.label.navkontor"
+                })}
                 enhetstyper={muligeEnheterForInnsending}
                 {...this.props}
               />

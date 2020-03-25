@@ -7,14 +7,19 @@ import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import { UndertekstBold } from "nav-frontend-typografi";
 import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
+import { Enhetstype } from "../../../../../typer/soknad";
 
 interface Routes {
   personEllerBedrift: string;
 }
 
-type MergedProps = Personalia & RouteComponentProps<Routes> & InjectedIntlProps;
-const FlerePersonerPanel = (props: MergedProps) => {
-  const { intl } = props;
+interface TiltaksbedriftProps {
+  muligeEnheterForInnsending: Enhetstype[] | undefined;
+}
+
+type MergedProps = Personalia & RouteComponentProps<Routes> & InjectedIntlProps & TiltaksbedriftProps;
+const TiltaksbedriftPanel = (props: MergedProps) => {
+  const { intl, muligeEnheterForInnsending } = props;
 
   return (
     <Ekspanderbartpanel
@@ -39,6 +44,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
               placeholder={intl.formatMessage({
                 id: "personalia.label.navkontor"
               })}
+              enhetstyper={muligeEnheterForInnsending}
               {...pr}
             />
           </>
@@ -48,4 +54,4 @@ const FlerePersonerPanel = (props: MergedProps) => {
   );
 };
 
-export default injectIntl(withRouter(medPersonalia(FlerePersonerPanel)));
+export default injectIntl(withRouter(medPersonalia(TiltaksbedriftPanel)));

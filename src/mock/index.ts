@@ -22,7 +22,7 @@ export const setUpMock = () => {
   fetchMock.get("/soknader/config", getDefault() as any);
 
   fetchMock.get(
-    "/soknader/api/enheter",
+    "path:/soknader/api/enheter",
     delay(2000, 3000).then(() => navKontor)
   );
 

@@ -34,7 +34,7 @@ class VisEnheter extends Component<MergedProps> {
         {label && (
           <Normaltekst className="skjemaelement__label">{label}</Normaltekst>
         )}
-        {!enheter.length ? (
+        {!enheter ? (
           <NavFrontendSpinner />
         ) : (
           <Autocomplete

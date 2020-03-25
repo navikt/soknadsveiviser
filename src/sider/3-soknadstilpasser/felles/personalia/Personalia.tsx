@@ -32,11 +32,7 @@ interface Props {
   skalAnke?: boolean;
 }
 
-type MergedProps = Props &
-  ValgtSoknad &
-  Personalia &
-  RouteComponentProps<Routes> &
-  InjectedIntlProps;
+type MergedProps = Props & ValgtSoknad & Personalia & RouteComponentProps<Routes> & InjectedIntlProps;
 
 class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
   handleSubmit = (e: any) => {
@@ -64,11 +60,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
       validertFormFodselsnummerValgtEnhet;
 
     const validertFormAdresse =
-      (e.adresse.valgtEnhet || !visEnheter) &&
-      e.adresse.navn &&
-      e.adresse.adresse &&
-      e.adresse.sted &&
-      e.adresse.land;
+      (e.adresse.valgtEnhet || !visEnheter) && e.adresse.navn && e.adresse.adresse && e.adresse.sted && e.adresse.land;
 
     const validertFormFlerpersoner = e.flerepersoner.valgtEnhet;
     const validertFormTiltaksbedrift = e.tiltaksbedrift.valgtEnhet;
@@ -136,25 +128,14 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
   render() {
     const { personEllerBedrift } = this.props.match.params;
-    const {
-      nesteDisabled,
-      skalKlage,
-      skalAnke,
-      valgtSoknadsobjekt
-    } = this.props;
+    const { nesteDisabled, skalKlage, skalAnke, valgtSoknadsobjekt } = this.props;
 
     const visTiltaksbedrift =
-      personEllerBedrift === "bedrift" &&
-      valgtSoknadsobjekt.brukertyper?.includes("tiltaksbedrift");
-    const visPersonMedFnr = valgtSoknadsobjekt.brukertyper?.includes(
-      "personmedfnr"
-    );
-    const visPersonUtenFnr = valgtSoknadsobjekt.brukertyper?.includes(
-      "personutenfnr"
-    );
+      personEllerBedrift === "bedrift" && valgtSoknadsobjekt.brukertyper?.includes("tiltaksbedrift");
+    const visPersonMedFnr = valgtSoknadsobjekt.brukertyper?.includes("personmedfnr");
+    const visPersonUtenFnr = valgtSoknadsobjekt.brukertyper?.includes("personutenfnr");
     const visFlerePersoner =
-      personEllerBedrift === "bedrift" &&
-      valgtSoknadsobjekt.brukertyper?.includes("flerepersoner");
+      personEllerBedrift === "bedrift" && valgtSoknadsobjekt.brukertyper?.includes("flerepersoner");
 
     const initAdresse = this.props.adresse || {
       navn: "",
@@ -178,9 +159,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
     };
 
     const overskrift = () =>
-      personEllerBedrift === "bedrift"
-        ? "personalia.bedrift.undertittel"
-        : "personalia.undertittel";
+      personEllerBedrift === "bedrift" ? "personalia.bedrift.undertittel" : "personalia.undertittel";
 
     return (
       <Formik
@@ -200,17 +179,18 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                 )}
               </div>
               <Form className="personalia__paneler" autoComplete="off">
-                {visTiltaksbedrift && <TiltaksBedriftPanel />}
-                {visPersonMedFnr && (
-                  <FodselsnummerPanel
-                    skalKlage={skalKlage}
-                    skalAnke={skalAnke}
+                {visTiltaksbedrift && (
+                  <TiltaksBedriftPanel
+                    muligeEnheterForInnsending={this.props.valgtSoknadsobjekt.muligeEnheterForInnsending}
                   />
                 )}
-                {visPersonUtenFnr && !(skalKlage || skalAnke) && (
-                  <AdressePanel />
+                {visPersonMedFnr && <FodselsnummerPanel skalKlage={skalKlage} skalAnke={skalAnke} />}
+                {visPersonUtenFnr && !(skalKlage || skalAnke) && <AdressePanel />}
+                {visFlerePersoner && (
+                  <FlerePersonerPanel
+                    muligeEnheterForInnsending={this.props.valgtSoknadsobjekt.muligeEnheterForInnsending}
+                  />
                 )}
-                {visFlerePersoner && <FlerePersonerPanel />}
                 <NesteKnapp disabled={nesteDisabled} />
               </Form>
             </>
@@ -223,8 +203,6 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
 
 export default medPersonalia<Props & Personalia>(
   medValgtSoknadsobjekt<Props & ValgtSoknad & Personalia>(
-    injectIntl<Props & ValgtSoknad & Personalia & InjectedIntlProps>(
-      withRouter<MergedProps, any>(VisPersonalia)
-    )
+    injectIntl<Props & ValgtSoknad & Personalia & InjectedIntlProps>(withRouter<MergedProps, any>(VisPersonalia))
   )
 );

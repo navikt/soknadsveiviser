@@ -62,12 +62,21 @@ const FodselsnummerPanel = (props: MergedProps) => {
                 blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
                 serializers={{ marks: { link } }}
               />
-              <BrukerVelgerEnhet enhetstyper={muligeEnheterForInnsending} {...pr} />
+              <BrukerVelgerEnhet
+                placeholder={props.intl.formatMessage({
+                  id: "personalia.label.navkontor"
+                })}
+                enhetstyper={muligeEnheterForInnsending}
+                {...pr}
+              />
             </>
           )}
           {erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
             <BrukerVelgerEnhet
-              label={props.intl.formatMessage({
+              placeholder={props.intl.formatMessage({
+                id: "personalia.label.navkontor"
+              })}
+              label={intl.formatMessage({
                 id: "klage.velg.behandlende.enhet"
               })}
               {...pr}
