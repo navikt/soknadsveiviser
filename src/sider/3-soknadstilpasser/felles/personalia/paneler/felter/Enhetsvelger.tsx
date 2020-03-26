@@ -21,7 +21,7 @@ interface Props {
 }
 
 type MergedProps = Props & Personalia & FieldProps & InjectedIntlProps;
-class VisEnheter extends Component<MergedProps> {
+class Enhetsvelger extends Component<MergedProps> {
 
   render() {
     const { label, enheter } = this.props;
@@ -57,4 +57,4 @@ class VisEnheter extends Component<MergedProps> {
   }
 }
 
-export default medPersonalia(injectIntl(VisEnheter));
+export default medPersonalia(injectIntl(Enhetsvelger));

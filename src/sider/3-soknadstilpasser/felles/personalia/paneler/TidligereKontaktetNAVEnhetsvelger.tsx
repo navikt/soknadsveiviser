@@ -1,7 +1,7 @@
 import * as React from "react";
 import { FieldProps } from "formik";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import VisEnheter from "./felter/VisEnheter";
+import Enhetsvelger from "./felter/Enhetsvelger";
 import { Adresse } from "../../../../../states/providers/Personalia";
 import { Enhet } from "../../../../../typer/enhet";
 import { Enhetstype } from "../../../../../typer/soknad";
@@ -16,7 +16,7 @@ interface Props {
 
 type MergedProps = Props & InjectedIntlProps & FieldProps<Adresse>;
 
-const TidligereKontaktMedNAV = (props: MergedProps) => {
+const TidligereKontaktetNAVEnhetsvelger = (props: MergedProps) => {
   const [enheter, setEnheter] = useState([] as Enhet[]);
 
   const handleChange = (value: Enhet | null) => {
@@ -32,7 +32,7 @@ const TidligereKontaktMedNAV = (props: MergedProps) => {
   }, [props.enhetstyper]);
 
   return (
-    <VisEnheter
+    <Enhetsvelger
       label={props.label}
       placeholder={props.placeholder}
       handleChange={handleChange}
@@ -42,4 +42,4 @@ const TidligereKontaktMedNAV = (props: MergedProps) => {
   );
 };
 
-export default injectIntl(TidligereKontaktMedNAV);
+export default injectIntl(TidligereKontaktetNAVEnhetsvelger);

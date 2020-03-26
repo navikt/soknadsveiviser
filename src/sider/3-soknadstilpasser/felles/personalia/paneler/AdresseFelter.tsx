@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FieldProps } from "formik/dist/Field";
 import { medPersonalia } from "states/providers/Personalia";
 import { Adresse, Personalia } from "states/providers/Personalia";
-import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
+import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import UndertekstBold from "nav-frontend-typografi/lib/undertekst-bold";
@@ -19,7 +19,7 @@ import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { localeBlockTekst } from "../../../../../utils/sprak";
 import { link } from "../../../../../utils/serializers";
 import BlockContent from "@sanity/block-content-to-react";
-import TidligereKontaktMedNAV from "./TidligereKontaktMedNAV";
+import TidligereKontaktetNAVEnhetsvelger from "./TidligereKontaktetNAVEnhetsvelger";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
@@ -63,7 +63,7 @@ class AdresseFelter extends Component<MergedProps, State> {
                 toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
               />
               {tidligereKontaktMedNAV && (
-                <TidligereKontaktMedNAV
+                <TidligereKontaktetNAVEnhetsvelger
                   label={intl.formatMessage({
                     id: "personalia.label.velgnavkontor"
                   })}
@@ -81,7 +81,7 @@ class AdresseFelter extends Component<MergedProps, State> {
                 blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
                 serializers={{ marks: { link } }}
               />
-              <BrukerVelgerEnhet
+              <InnsendingsEnhetsvelger
                 placeholder={intl.formatMessage({
                   id: "personalia.label.navkontor"
                 })}

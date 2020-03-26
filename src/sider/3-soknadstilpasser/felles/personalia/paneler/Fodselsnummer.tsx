@@ -3,7 +3,7 @@ import { Field, FieldProps } from "formik";
 import FodselsnummerFelter from "./felter/Fodselsnummer";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { InjectedIntlProps, injectIntl } from "react-intl";
-import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
+import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import { Fodselsnummer, medPersonalia, Personalia } from "states/providers/Personalia";
 import { medValgtSoknadsobjekt, ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
@@ -62,7 +62,7 @@ const FodselsnummerPanel = (props: MergedProps) => {
                 blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
                 serializers={{ marks: { link } }}
               />
-              <BrukerVelgerEnhet
+              <InnsendingsEnhetsvelger
                 placeholder={props.intl.formatMessage({
                   id: "personalia.label.navkontor"
                 })}
@@ -72,7 +72,7 @@ const FodselsnummerPanel = (props: MergedProps) => {
             </>
           )}
           {erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
-            <BrukerVelgerEnhet
+            <InnsendingsEnhetsvelger
               placeholder={props.intl.formatMessage({
                 id: "personalia.label.navkontor"
               })}

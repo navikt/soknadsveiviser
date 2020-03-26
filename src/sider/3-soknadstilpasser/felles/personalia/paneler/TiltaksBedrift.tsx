@@ -6,7 +6,7 @@ import { medPersonalia, Personalia } from "states/providers/Personalia";
 import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import { UndertekstBold } from "nav-frontend-typografi";
-import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
+import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import { Enhetstype } from "../../../../../typer/soknad";
 
 interface Routes {
@@ -37,7 +37,7 @@ const TiltaksbedriftPanel = (props: MergedProps) => {
                 id={"personalia.undertekstbold.tiltaksbedrift"}
               />
             </UndertekstBold>
-            <BrukerVelgerEnhet
+            <InnsendingsEnhetsvelger
               label={intl.formatMessage({
                 id: "personalia.label.velgnavkontor"
               })}
