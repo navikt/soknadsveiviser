@@ -52,4 +52,4 @@ jobs:
       - name: Smoke test the deployed app
         env:
             CYPRESS_BASE_URL: https://www-q0.nav.no/soknader
-        run: npm cypress:ci
+        run: npm run cypress:ci
