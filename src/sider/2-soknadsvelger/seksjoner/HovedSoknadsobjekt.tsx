@@ -9,6 +9,7 @@ import { link } from "../../../utils/serializers";
 import { Normaltekst } from "nav-frontend-typografi";
 import { HashLink } from "react-router-hash-link";
 import { localeTekst, localeBlockTekst } from "../../../utils/sprak";
+import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 
 interface Props {
   underkategori: Underkategori;
@@ -19,13 +20,28 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   const { locale } = props.intl;
   const {
     beskrivelse,
+    varseltekst,
     soknadsdialogURL,
     lenker,
     ettersendelse
   } = underkategori.inngangtilsoknadsdialog;
 
   return (
+    <div className="superDuper">
+      <div className="soknadsadvarsel">
+          {varseltekst && (
+            <AlertStripeAdvarsel>
+              {/*<div className="typo-normal soknadsobjekt__varseltekst">*/}
+                <BlockContent className="span_override_p"
+                  blocks={localeBlockTekst(varseltekst, locale)}
+                  serializers={{ marks: { link } }}
+                />
+              {/*</div>*/}
+            </AlertStripeAdvarsel>
+        )}
+      </div>
     <div className="soknadsobjekt">
+
       <div className="soknadsobjekt__innhold">
         <div>
           <Undertittel>
@@ -73,8 +89,10 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           </a>
         )}
       </div>
+      </div>
     </div>
   );
 };
+
 
 export default injectIntl(HovedSoknadsobjekt);
