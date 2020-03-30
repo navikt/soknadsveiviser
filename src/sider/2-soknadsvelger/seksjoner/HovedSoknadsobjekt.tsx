@@ -27,8 +27,8 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   } = underkategori.inngangtilsoknadsdialog;
 
   return (
-    <div className="superDuper">
-      <div className="soknadsadvarsel">
+    <div className="soknadsobjekt">
+      <div className="soknadsobjekt__advarsel">
           {varseltekst && (
             <AlertStripeAdvarsel>
               {/*<div className="typo-normal soknadsobjekt__varseltekst">*/}
@@ -40,7 +40,7 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
             </AlertStripeAdvarsel>
         )}
       </div>
-    <div className="soknadsobjekt">
+    <div className="soknadsobjekt__inner">
 
       <div className="soknadsobjekt__innhold">
         <div>

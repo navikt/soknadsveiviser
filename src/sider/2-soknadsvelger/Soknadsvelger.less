@@ -8,40 +8,38 @@
     padding: 1.5rem 0 1.5rem 0;
   }
 }
-.span_override_p {
-    white-space: pre-line;
-}
-.superDuper {
-    margin-bottom: 4px;
-    background-color: white;
-}
-.soknadsadvarsel {
-    padding: 1.5rem 1.5rem 0rem 1.5rem;
-}
 
 .soknadsobjekt {
   display: flex;
-    padding: 1.5rem;
-
-
-   // flex-direction: column;
+  background-color: white;
+  padding: 1.5rem;
+  margin-bottom: 4px;
 
   @media @mobile {
     flex-direction: column;
   }
 
+   &__advarsel {
+       padding: 0 0 1.5rem 0;
+
+   }
+
+    &__inner {
+
+
+    }
   .knapper-wrapper {
     display: flex;
     flex-direction: column;
 
     @media @desktop {
-        margin-left: 25px;
+      margin-left: 25px;
     }
   }
 
   &__relevant-info {
     padding-top: 12px;
-   // border-top: 2px solid @navLysGra;
+    border-top: 2px solid @navLysGra;
   }
 
   &__lenke {
@@ -111,4 +109,3 @@
     }
   }
 }
-
