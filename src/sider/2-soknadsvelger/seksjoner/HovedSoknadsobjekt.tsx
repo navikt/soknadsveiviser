@@ -31,12 +31,12 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
       <div className="soknadsobjekt__advarsel">
           {varseltekst && (
             <AlertStripeAdvarsel>
-              {/*<div className="typo-normal soknadsobjekt__varseltekst">*/}
-                <BlockContent className="span_override_p"
+
+                <BlockContent className="varseltekst_innhold"
                   blocks={localeBlockTekst(varseltekst, locale)}
                   serializers={{ marks: { link } }}
                 />
-              {/*</div>*/}
+
             </AlertStripeAdvarsel>
         )}
       </div>
