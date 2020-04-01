@@ -16,7 +16,8 @@
     "lint:fix": "tslint ./src/**/*.ts* --fix",
     "test:coverage": "npm test -- --coverage",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "cypress:ci": "cypress run"
   },
   "dependencies": {
     "@material-ui/core": "^4.9.7",
