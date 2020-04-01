@@ -8,8 +8,8 @@ import { getTjenesteUrl } from "../../../config";
 import { link } from "../../../utils/serializers";
 import { Normaltekst } from "nav-frontend-typografi";
 import { HashLink } from "react-router-hash-link";
-import {localeTekst, localeBlockTekst, ingenTekstForBlock, localeBlockTextWithFallback} from "../../../utils/sprak";
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
+import {localeTekst, localeBlockTekst} from "../../../utils/sprak";
+import LocaleBlockTextAdvarsel from "../../../komponenter/felles/LocaleBlockTextAdvarsel";
 
 interface Props {
   underkategori: Underkategori;
@@ -25,20 +25,10 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
     lenker,
     ettersendelse
   } = underkategori.inngangtilsoknadsdialog;
-  const varseltekstBlock = localeBlockTextWithFallback(varseltekst, locale);
   return (
     <div className="soknadsobjekt">
       <div className="soknadsobjekt__advarsel">
-          {varseltekstBlock !== ingenTekstForBlock && (
-            <AlertStripeAdvarsel>
-              <div className="varseltekst_innhold">
-                <BlockContent
-                  blocks={varseltekstBlock}
-                  serializers={{ marks: { link } }}
-                />
-              </div>
-            </AlertStripeAdvarsel>
-        )}
+        <LocaleBlockTextAdvarsel blockText={varseltekst} locale={locale}/>
       </div>
     <div className="soknadsobjekt__inner">
 

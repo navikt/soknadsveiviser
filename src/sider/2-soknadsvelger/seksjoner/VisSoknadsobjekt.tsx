@@ -20,7 +20,7 @@ import {RouteComponentProps, withRouter} from "react-router";
 import {hentSkjemanummerHash} from "utils/hentSkjemanummerHash";
 import {convertNAVSkjemanummerTilHash} from "utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
+import LocaleBlockTextAdvarsel from "../../../komponenter/felles/LocaleBlockTextAdvarsel";
 
 interface Props {
   key: number;
@@ -63,16 +63,7 @@ const VisSoknadsobjekt = (
       >
         <div key={key} className={"soknadsobjekt"}>
           <div className="soknadsobjekt__advarsel">
-            {varseltekst && (
-              <AlertStripeAdvarsel>
-                <div className="varseltekst_innhold">
-                  <BlockContent
-                                blocks={localeBlockTekst(varseltekst, locale)}
-                                serializers={{ marks: { link } }}
-                  />
-                </div>
-              </AlertStripeAdvarsel>
-            )}
+            <LocaleBlockTextAdvarsel blockText={varseltekst} locale={locale}/>
           </div>
           <div className="soknadsobjekt__inner">
             <div className="soknadsobjekt__innhold">
