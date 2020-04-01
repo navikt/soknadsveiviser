@@ -21,6 +21,7 @@ export interface Soknadsobjekt {
   innsendingsmate: Innsendingsmate;
   kanKlage: boolean;
   brukertyper: Brukertype[];
+  varseltekst?: LocaleBlockText;
 }
 
 export interface Soknadslenke {
