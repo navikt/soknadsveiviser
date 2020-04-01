@@ -30,6 +30,7 @@ export interface Soknadslenke {
   lenke: Lenkeobjekt;
   beskrivelse?: LocaleBlockText;
   infoLenker?: Lenkeobjekt[];
+  varseltekst?: LocaleBlockText;
 }
 
 export interface Skjemalenke {
