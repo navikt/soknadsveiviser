@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { FieldProps } from "formik/dist/Field";
 import { medPersonalia } from "states/providers/Personalia";
 import { Adresse, Personalia } from "states/providers/Personalia";
-import BrukerVelgerEnhet from "./BrukerVelgerEnhet";
+import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
 import UndertekstBold from "nav-frontend-typografi/lib/undertekst-bold";
@@ -16,8 +16,10 @@ import { finnesSpesifisertAdresse } from "utils/soknadsobjekter";
 import { finnesVisEnheter, finnesTilSkanning } from "utils/soknadsobjekter";
 import { ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
-import { Enhet } from "../../../../../typer/enhet";
-import VisEnheter from "./felter/VisEnheter";
+import { localeBlockTekst } from "../../../../../utils/sprak";
+import { link } from "../../../../../utils/serializers";
+import BlockContent from "@sanity/block-content-to-react";
+import TidligereKontaktetNAVEnhetsvelger from "./TidligereKontaktetNAVEnhetsvelger";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
@@ -25,11 +27,7 @@ interface State {
 
 interface Props {}
 
-type MergedProps = Props &
-  ValgtSoknad &
-  Personalia &
-  FieldProps<Adresse> &
-  InjectedIntlProps;
+type MergedProps = Props & ValgtSoknad & Personalia & FieldProps<Adresse> & InjectedIntlProps;
 
 class AdresseFelter extends Component<MergedProps, State> {
   state = { tidligereKontaktMedNAV: false };
@@ -38,24 +36,14 @@ class AdresseFelter extends Component<MergedProps, State> {
       tidligereKontaktMedNAV: !this.state.tidligereKontaktMedNAV
     });
 
-  handleChange = (value: Enhet | null) => {
-    this.props.touched.kontaktetEnhet = false;
-    if (value) {
-      this.props.field.value.kontaktetEnhet = value;
-    } else {
-      this.props.field.value.kontaktetEnhet = undefined;
-    }
-  };
-
   render() {
     const { intl, touched, valgtSoknadsobjekt } = this.props;
     const { tidligereKontaktMedNAV } = this.state;
-    const { innsendingsmate } = valgtSoknadsobjekt;
+    const { innsendingsmate, muligeEnheterForInnsending } = valgtSoknadsobjekt;
     const visEnheter = finnesVisEnheter(intl.locale, innsendingsmate);
     const skalTilSkanning = finnesTilSkanning(innsendingsmate);
     const skalTilSpesifisertAdresse = finnesSpesifisertAdresse(innsendingsmate);
-    const skalTilValgtEnhet =
-      !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
+    const skalTilValgtEnhet = !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 
     return touched ? (
       <>
@@ -75,24 +63,32 @@ class AdresseFelter extends Component<MergedProps, State> {
                 toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
               />
               {tidligereKontaktMedNAV && (
-                <VisEnheter
+                <TidligereKontaktetNAVEnhetsvelger
                   label={intl.formatMessage({
                     id: "personalia.label.velgnavkontor"
                   })}
                   placeholder={intl.formatMessage({
                     id: "personalia.label.navkontor"
                   })}
-                  handleChange={this.handleChange}
                   {...this.props}
                 />
               )}
             </>
           )}
           {skalTilValgtEnhet && (
-            <BrukerVelgerEnhet
-              beskrivelse={innsendingsmate.visenheter!}
-              {...this.props}
-            />
+            <>
+              <BlockContent
+                blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
+                serializers={{ marks: { link } }}
+              />
+              <InnsendingsEnhetsvelger
+                placeholder={intl.formatMessage({
+                  id: "personalia.label.navkontor"
+                })}
+                enhetstyper={muligeEnheterForInnsending}
+                {...this.props}
+              />
+            </>
           )}
         </div>
       </>

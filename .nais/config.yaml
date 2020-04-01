@@ -20,6 +20,9 @@ spec:
   readiness:
     path: /soknader/internal/isReady
     initialDelay: 10
+  prometheus:
+    enabled: true
+    path: {{baseurl}}/internal/metrics
   vault:
     enabled: true
   replicas:
