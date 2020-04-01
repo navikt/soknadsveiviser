@@ -20,6 +20,7 @@ import {RouteComponentProps, withRouter} from "react-router";
 import {hentSkjemanummerHash} from "utils/hentSkjemanummerHash";
 import {convertNAVSkjemanummerTilHash} from "utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
+import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
 
 interface Props {
   key: number;
@@ -32,7 +33,7 @@ const VisSoknadsobjekt = (
 ) => {
   const {locale} = props.intl;
   const {soknadsobjekt, key, apen} = props;
-  const {navn, beskrivelse, lenker, hovedskjema} = soknadsobjekt;
+  const {navn, beskrivelse, lenker, hovedskjema, varseltekst} = soknadsobjekt;
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
 
@@ -61,6 +62,16 @@ const VisSoknadsobjekt = (
         }
       >
         <div key={key} className={"soknadsobjekt"}>
+          <div className="soknadsobjekt__advarsel">
+            {varseltekst && (
+              <AlertStripeAdvarsel>
+                <BlockContent className="varseltekst_innhold"
+                              blocks={localeBlockTekst(varseltekst, locale)}
+                              serializers={{ marks: { link } }}
+                />
+              </AlertStripeAdvarsel>
+            )}
+          </div>
           <div className="soknadsobjekt__inner">
             <div className="soknadsobjekt__innhold">
               <div>
