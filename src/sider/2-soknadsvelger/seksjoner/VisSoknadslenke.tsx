@@ -8,7 +8,7 @@ import { Soknadslenke } from "../../../typer/soknad";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst, localeTekst } from "../../../utils/sprak";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
-import {AlertStripeAdvarsel} from "nav-frontend-alertstriper";
+import LocaleBlockTextAdvarsel from "../../../komponenter/felles/LocaleBlockTextAdvarsel";
 
 interface Props {
   key: number;
@@ -35,16 +35,7 @@ const VisSoknadslenke = (props: Props & InjectedIntlProps) => {
       >
         <div key={key} className="soknadsobjekt">
           <div className="soknadsobjekt__advarsel">
-            {varseltekst && (
-              <AlertStripeAdvarsel>
-                <div className="varseltekst_innhold">
-                  <BlockContent
-                    blocks={localeBlockTekst(varseltekst, locale)}
-                    serializers={{ marks: { link } }}
-                  />
-                </div>
-              </AlertStripeAdvarsel>
-            )}
+            <LocaleBlockTextAdvarsel blockText={varseltekst} locale={locale}/>
           </div>
           <div className="soknadsobjekt__inner">
             <div className="soknadsobjekt__innhold">
