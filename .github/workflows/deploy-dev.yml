@@ -49,3 +49,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
           VARS: .nais/vars.yaml
+      - name: Smoke test the deployed app
+        env:
+            CYPRESS_BASE_URL: https://www.nav.no/soknader
+        run: npm run cypress:ci
