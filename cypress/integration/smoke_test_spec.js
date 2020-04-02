@@ -5,7 +5,7 @@ describe('Smoke Test', function() {
   });
 
   it('verifies css is not-empty', function() {
-    cy.visit('https://www.nav.no/soknader/index.css');
+    cy.request('https://www.nav.no/soknader/index.css');
     cy.contains('display');
   });
 });
