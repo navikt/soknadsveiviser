@@ -9,7 +9,7 @@ import { link } from "../../../utils/serializers";
 import { Normaltekst } from "nav-frontend-typografi";
 import { HashLink } from "react-router-hash-link";
 import {localeTekst, localeBlockTekst} from "../../../utils/sprak";
-import LocaleBlockTextAdvarsel from "../../../komponenter/felles/LocaleBlockTextAdvarsel";
+import LocaleBlockTextAlertStripeAdvarsel from "../../../komponenter/felles/LocaleBlockTextAlertStripeAdvarsel";
 
 interface Props {
   underkategori: Underkategori;
@@ -28,7 +28,7 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   return (
     <div className="soknadsobjekt">
       <div className="soknadsobjekt__advarsel">
-        <LocaleBlockTextAdvarsel blockText={varseltekst} locale={locale}/>
+        <LocaleBlockTextAlertStripeAdvarsel blockText={varseltekst} locale={locale}/>
       </div>
     <div className="soknadsobjekt__inner">
 

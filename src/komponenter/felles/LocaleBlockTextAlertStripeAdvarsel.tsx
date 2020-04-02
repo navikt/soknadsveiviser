@@ -5,7 +5,7 @@ import BlockContent from "@sanity/block-content-to-react";
 import {link} from "../../utils/serializers";
 import {LocaleBlockText} from "../../typer/sprak";
 
-const LocaleBlockTextAdvarsel = ({blockText, locale}: {blockText: LocaleBlockText | undefined, locale: string}) => {
+const LocaleBlockTextAlertStripeAdvarsel = ({blockText, locale}: {blockText: LocaleBlockText | undefined, locale: string}) => {
   const varseltekstBlock = localeBlockTextWithFallback(blockText, locale);
   if (varseltekstBlock === ingenTekstForBlock) {
     return null;
@@ -22,4 +22,4 @@ const LocaleBlockTextAdvarsel = ({blockText, locale}: {blockText: LocaleBlockTex
     )
 };
 
-export default LocaleBlockTextAdvarsel;
+export default LocaleBlockTextAlertStripeAdvarsel;
