@@ -12,6 +12,7 @@ import { hentSkjemanummerHash } from "utils/hentSkjemanummerHash";
 import { convertNAVSkjemanummerTilHash } from "utils/hentSkjemanummerHash";
 import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
 import { Skjemalenkeliste, Fillenke } from "./Skjemalenker";
+import LocaleBlockTextAdvarsel from "../../../komponenter/felles/LocaleBlockTextAdvarsel";
 
 interface Props {
   key: number;
@@ -24,7 +25,7 @@ const VisSkjemalenke = (
 ) => {
   const { locale } = props.intl;
   const { skjemalenke, key, apen } = props;
-  const { navn, beskrivelse, infoLenker, hovedskjema } = skjemalenke;
+  const { navn, beskrivelse, infoLenker, hovedskjema, varseltekst } = skjemalenke;
   const { pdf, skjemanummer } = hovedskjema;
 
   const markert =
@@ -52,35 +53,41 @@ const VisSkjemalenke = (
         }
       >
         <div key={key} className={"soknadsobjekt"}>
-          <div className="soknadsobjekt__innhold">
-            <div>
-              {beskrivelse && (
-                <div className="typo-normal soknadsobjekt__beskrivelse">
-                  <BlockContent
-                    blocks={localeBlockTekst(beskrivelse, locale)}
-                    serializers={{ marks: { link } }}
-                  />
-                </div>
+          <div className="soknadsobjekt__advarsel">
+            <LocaleBlockTextAdvarsel blockText={varseltekst} locale={locale}/>
+          </div>
+          <div className="soknadsobjekt__inner">
+            <div className="soknadsobjekt__innhold">
+              <div>
+                {beskrivelse && (
+                  <div className="typo-normal soknadsobjekt__beskrivelse">
+                    <BlockContent
+                      blocks={localeBlockTekst(beskrivelse, locale)}
+                      serializers={{ marks: { link } }}
+                    />
+                  </div>
+                )}
+              </div>
+              {infoLenker && infoLenker.length > 0 && (
+                <RelevantInformasjon lenker={infoLenker} locale={locale} />
               )}
             </div>
-            {infoLenker && infoLenker.length > 0 && (
-              <RelevantInformasjon lenker={infoLenker} locale={locale} />
-            )}
+            <Skjemalenkeliste pdf={pdf} skjemanummer={skjemanummer}>
+              {Object.entries(pdf)
+                .filter(([, file]) => file?.asset?.url)
+                .map(([key, file]) => (
+                  <Fillenke
+                    key={key}
+                    languageKey={key}
+                    file={file}
+                    skjemanummer={hovedskjema.skjemanummer}
+                  />
+                ))}
+            </Skjemalenkeliste>
           </div>
-          <Skjemalenkeliste pdf={pdf} skjemanummer={skjemanummer}>
-            {Object.entries(pdf)
-              .filter(([, file]) => file?.asset?.url)
-              .map(([key, file]) => (
-                <Fillenke
-                  key={key}
-                  languageKey={key}
-                  file={file}
-                  skjemanummer={hovedskjema.skjemanummer}
-                />
-              ))}
-          </Skjemalenkeliste>
         </div>
-      </EkspanderbartpanelBase>
+        </EkspanderbartpanelBase>
+
     </div>
   );
 };

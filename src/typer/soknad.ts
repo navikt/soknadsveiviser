@@ -40,6 +40,7 @@ export interface Skjemalenke {
   hovedskjema: Skjema
   beskrivelse?: LocaleBlockText;
   infoLenker?: Lenkeobjekt[];
+  varseltekst?: LocaleBlockText;
 }
 
 export interface Soknader {
