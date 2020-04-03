@@ -6,6 +6,7 @@ export interface Inngangsoknadsdialog {
   beskrivelse?: LocaleBlockText;
   lenker?: Lenkeobjekt[];
   ettersendelse?: Ettersendelse;
+  varseltekst?: LocaleBlockText;
 }
 
 export interface Underkategori {

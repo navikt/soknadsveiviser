@@ -8,7 +8,8 @@ import { getTjenesteUrl } from "../../../config";
 import { link } from "../../../utils/serializers";
 import { Normaltekst } from "nav-frontend-typografi";
 import { HashLink } from "react-router-hash-link";
-import { localeTekst, localeBlockTekst } from "../../../utils/sprak";
+import {localeTekst, localeBlockTekst} from "../../../utils/sprak";
+import LocaleBlockTextAlertStripeAdvarsel from "../../../komponenter/felles/LocaleBlockTextAlertStripeAdvarsel";
 
 interface Props {
   underkategori: Underkategori;
@@ -19,13 +20,16 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   const { locale } = props.intl;
   const {
     beskrivelse,
+    varseltekst,
     soknadsdialogURL,
     lenker,
     ettersendelse
   } = underkategori.inngangtilsoknadsdialog;
-
   return (
     <div className="soknadsobjekt">
+        <LocaleBlockTextAlertStripeAdvarsel blockText={varseltekst} locale={locale}/>
+    <div className="soknadsobjekt__inner">
+
       <div className="soknadsobjekt__innhold">
         <div>
           <Undertittel>
@@ -73,8 +77,10 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           </a>
         )}
       </div>
+      </div>
     </div>
   );
 };
+
 
 export default injectIntl(HovedSoknadsobjekt);

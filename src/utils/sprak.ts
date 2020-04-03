@@ -3,7 +3,7 @@ import { LocaleString, LocaleBlockText } from "../typer/sprak";
 const ingenTekst = "Feil, fant ikke tekst";
 const udefinertTekst = "Udefinert tekst på objektet";
 
-const ingenTekstForBlock = {
+export const ingenTekstForBlock = {
   _key: "00",
   _type: "block",
   children: [
@@ -21,6 +21,11 @@ export const localeTekst = (object: LocaleString, locale: string) =>
 
 export const localeBlockTekst = (object: LocaleBlockText, locale: string) =>
   object[locale] || object.nb || ingenTekstForBlock;
+
+export const localeBlockTextWithFallback = (blockText: LocaleBlockText | undefined, locale: string) => {
+  if (!blockText) return ingenTekstForBlock;
+  return localeBlockTekst(blockText, locale);
+};
 
 export const storForsteBokstav = (setning: string) =>
   setning.charAt(0).toUpperCase() + setning.slice(1).toLowerCase();

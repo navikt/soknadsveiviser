@@ -8,7 +8,7 @@
     "start:lint": "tslint src/**/*.ts*",
     "start:ts": "react-scripts start",
     "start:less": "less-watch-compiler",
-    "build": "npm-run-all -p build:*",
+    "build": "npm run build:less && npm run build:ts",
     "build:less": "less-watch-compiler --run-once",
     "build:ts": "react-scripts build",
     "test": "react-scripts test",

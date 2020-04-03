@@ -10,13 +10,20 @@
 }
 
 .soknadsobjekt {
-  display: flex;
-  margin-bottom: 4px;
   background-color: white;
   padding: 1.5rem;
+  margin-bottom: 4px;
 
-  @media @mobile {
-    flex-direction: column;
+  &__advarsel {
+    padding: 0 0 1.5rem 0;
+  }
+
+  &__inner {
+    display: flex;
+
+    @media @mobile {
+      flex-direction: column;
+    }
   }
 
   .knapper-wrapper {

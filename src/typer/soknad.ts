@@ -21,7 +21,8 @@ export interface Soknadsobjekt {
   innsendingsmate: Innsendingsmate;
   kanKlage: boolean;
   brukertyper: Brukertype[];
-  muligeEnheterForInnsending?: Enhetstype[]
+  varseltekst?: LocaleBlockText;
+  muligeEnheterForInnsending?: Enhetstype[];
 }
 
 export interface Soknadslenke {
@@ -30,6 +31,7 @@ export interface Soknadslenke {
   lenke: Lenkeobjekt;
   beskrivelse?: LocaleBlockText;
   infoLenker?: Lenkeobjekt[];
+  varseltekst?: LocaleBlockText;
 }
 
 export interface Skjemalenke {
@@ -38,6 +40,7 @@ export interface Skjemalenke {
   hovedskjema: Skjema
   beskrivelse?: LocaleBlockText;
   infoLenker?: Lenkeobjekt[];
+  varseltekst?: LocaleBlockText;
 }
 
 export interface Soknader {
