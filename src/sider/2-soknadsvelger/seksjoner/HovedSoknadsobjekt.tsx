@@ -27,9 +27,7 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   } = underkategori.inngangtilsoknadsdialog;
   return (
     <div className="soknadsobjekt">
-      <div className="soknadsobjekt__advarsel">
         <LocaleBlockTextAlertStripeAdvarsel blockText={varseltekst} locale={locale}/>
-      </div>
     <div className="soknadsobjekt__inner">
 
       <div className="soknadsobjekt__innhold">

@@ -62,9 +62,7 @@ const VisSoknadsobjekt = (
         }
       >
         <div key={key} className={"soknadsobjekt"}>
-          <div className="soknadsobjekt__advarsel">
             <LocaleBlockTextAlertStripeAdvarsel blockText={varseltekst} locale={locale}/>
-          </div>
           <div className="soknadsobjekt__inner">
             <div className="soknadsobjekt__innhold">
               <div>
