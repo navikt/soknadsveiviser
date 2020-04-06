@@ -10,7 +10,6 @@ export interface Props {
     [key: string]: string;
   };
   beskrivelse?: string;
-  obs?: string;
 }
 
 const Steg = (props: Props) => (
