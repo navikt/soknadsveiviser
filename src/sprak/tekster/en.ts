@@ -103,7 +103,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "ettersendelser.mellomledd.klage.beskrivelse": `Choose 'Forward to a complaint' if you have submitted a complaint and want to forward additional documentation.`,
   "ettersendelser.mellomledd.anke.knapp": `Forward to an appeal`,
   "ettersendelser.mellomledd.anke.beskrivelse": `Choose 'Forward to an appeal' if you have appealed to the National Insurance Court and want to forward additional documentation.`,
-  "kategori.beskrivelse": `Forms, Applications, Forwarding and Complaints`,
+  "sidetittel": `Forms, Applications, Forwarding and Complaints`,
   "kategori.velg": `Menu`,
   "kategorier.knapp.bedrift": `Employers`,
   "kategorier.knapp.engelsk": `English`,

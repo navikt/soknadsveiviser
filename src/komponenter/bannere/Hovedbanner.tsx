@@ -4,7 +4,7 @@ import EtikettLiten from "nav-frontend-typografi/lib/etikett-liten";
 
 interface Props {
   tittel: string;
-  undertittel: string;
+  undertittel?: string;
   backgroundColor?: string;
   borderColor?: string;
 }
@@ -19,7 +19,11 @@ const Banner = (props: Props) => {
 
   return (
     <div className="hovedbanner" style={style}>
-      <EtikettLiten className="litenEtikett">{props.undertittel}</EtikettLiten>
+      {props.undertittel ? (
+        <EtikettLiten className="litenEtikett">{props.undertittel}</EtikettLiten>
+      ) : (
+        <div style={{ padding: 12 }} />
+      )}
       <Systemtittel>{props.tittel}</Systemtittel>
     </div>
   );
