@@ -29,7 +29,7 @@ export default {
   "avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger": `Hjelp oss å forstå hva feilen er.`,
   "avslutning.steg.nedlasting.skjema.tittel": `Last ned skjema {skjemanummer}`,
   "avslutning.steg.nedlasting.skjema.beskrivelse": `Søknaden må fylles ut og undertegnes.`,
-  "avslutning.steg.nedlasting.skjema.obs": 'OBS! Det er viktig at du bruker Adobe Acrobat Reader når du skal fylle ut skjemaet.',
+  "avslutning.steg.nedlasting.skjema.obs": 'Det er viktig at du bruker Adobe Acrobat Reader når du skal fylle ut skjemaet. <br /> <a href="https://get.adobe.com/no/reader/" target="_blank" style="text-decoration:underline;">Last ned Adobe Acrobat Reader</a> (lenke åpner i et nytt vindu).',
   "avslutning.steg.nedlasting.vedlegg.tittel": `Last ned vedleggsskjema`,
   "avslutning.steg.nedlasting.vedlegg.beskrivelse": `Vedleggsskjema(ene) må fylles ut og undertegnes.`,
   "avslutning.steg.eksterne.tittel": `Disse dokumentene må du skaffe selv:`,

@@ -2,6 +2,7 @@ import * as React from "react";
 import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
 import Undertittel from "nav-frontend-typografi/lib/undertittel";
 import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
+import AlertStripe from "nav-frontend-alertstriper";
 
 export interface Props {
   steg: number;
@@ -28,9 +29,11 @@ const Steg = (props: Props) => (
     )}
     {props.obs && (
       <div className="steg__overskrift-beskrivelse">
-        <Normaltekst>
+        <AlertStripe type="advarsel" form="inline">
+          <b>
           <FormattedHTMLMessage id={props.obs} />
-        </Normaltekst>
+          </b>
+        </AlertStripe><br/>
       </div>
     )}
   </div>
