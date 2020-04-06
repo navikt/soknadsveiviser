@@ -42,7 +42,7 @@ export default {
   "personalia.knapp": `Next`,
   "personalia.velgenhet": `Choose NAV-unit`,
   "personalia.sidetittel": `Living situation`,
-  "personalia.undertittel": `My information`,
+  "personalia.undertittel": `State who the submission is for`,
   "personalia.error.fodselsnummer": `You need to fill in a valid Norwegian national identification number`,
   "personalia.error.name": `Name is required`,
   "personalia.error.adresse": `Address is required`,
