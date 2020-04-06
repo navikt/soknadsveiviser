@@ -7,21 +7,25 @@ import { Sidetittel } from "nav-frontend-typografi";
 import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
 
 interface Props {
-  visTyper?: boolean;
+  erForside: boolean;
   inngang?: string;
 }
 
-const Header = ({ visTyper, inngang }: Props & InjectedIntlProps) => (
+const Header = ({ erForside, inngang }: Props & InjectedIntlProps) => (
   <section className="header__wrapper seksjon oversikt">
     <section className="filler" />
     <section className="innhold__container">
       <SprakVelger />
-      <Sidetittel className="header__tittel">
-        <FormattedMessage id="sidetittel" />
-      </Sidetittel>
-      {inngang === "ettersendelse" && <VeilederEttersendelse />}
-      {inngang === "klage" && <VeilederKlage />}
-      {visTyper && <Typer />}
+      {erForside && (
+        <>
+          <Sidetittel className="header__tittel">
+            <FormattedMessage id="sidetittel" />
+          </Sidetittel>
+          {inngang === "ettersendelse" && <VeilederEttersendelse />}
+          {inngang === "klage" && <VeilederKlage />}
+          <Typer />
+        </>
+      )}
     </section>
     <section className="filler" />
   </section>

@@ -33,7 +33,7 @@ class Soknadsveiviser extends Component<MergedProps> {
     const { match } = this.props;
     return (
       <div className="forside__wrapper" id="maincontent">
-        <Header visTyper={true} inngang={match.params.inngang} />
+        <Header erForside={true} inngang={match.params.inngang} />
         <section className="seksjon oversikt">
           <Kategorier />
           <Kategoriinnhold />

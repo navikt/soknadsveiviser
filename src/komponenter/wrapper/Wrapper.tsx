@@ -42,7 +42,7 @@ const Wrapper = (props: MergedProps) => {
 
   return (
     <>
-      <Header />
+      <Header erForside={false} />
       <div className="side__wrapper" id="maincontent" ref={mainContent}>
         <div className="innhold__container">
           {(() => {
