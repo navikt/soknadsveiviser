@@ -43,7 +43,7 @@ export default {
   "personalia.knapp": `Neste`,
   "personalia.velgenhet": `Velg enhet`,
   "personalia.sidetittel": `Din boligsituasjon`,
-  "personalia.undertittel": `Min informasjon`,
+  "personalia.undertittel": `Oppgi hvem innsendelsen gjelder for`,
   "personalia.error.fodselsnummer": `Du må fylle inn gyldig fødselsnummer eller D-nummer`,
   "personalia.error.name": `Navn er påkrevd`,
   "personalia.error.adresse": `Adresse er påkrevd`,
