@@ -33,7 +33,7 @@ const Steg = (props: Props) => (
           <b>
           <FormattedHTMLMessage id={props.obs} />
           </b>
-        </AlertStripe><br/>
+        </AlertStripe>
       </div>
     )}
   </div>
