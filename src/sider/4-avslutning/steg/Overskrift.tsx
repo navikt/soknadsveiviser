@@ -26,6 +26,13 @@ const Steg = (props: Props) => (
         </Normaltekst>
       </div>
     )}
+    {props.obs && (
+      <div className="steg__overskrift-beskrivelse">
+        <Normaltekst>
+          <FormattedHTMLMessage id={props.obs} />
+        </Normaltekst>
+      </div>
+    )}
   </div>
 );
 

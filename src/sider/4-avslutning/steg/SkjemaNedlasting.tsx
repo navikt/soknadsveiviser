@@ -22,6 +22,7 @@ const SkjemaNedlasting = (props: MergedProps) => {
         tittel="avslutning.steg.nedlasting.skjema.tittel"
         tittelParams={{ skjemanummer }}
         beskrivelse="avslutning.steg.nedlasting.skjema.beskrivelse"
+        obs="avslutning.steg.nedlasting.skjema.obs"
       />
       <SkjemaVisning skjemaSprak={skjemaSprak} skjema={hovedskjema} />
     </div>
