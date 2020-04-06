@@ -1,8 +1,9 @@
 import * as React from "react";
 import StegOverskrift from "./Overskrift";
-import { injectIntl, InjectedIntlProps } from "react-intl";
+import {injectIntl, InjectedIntlProps, FormattedHTMLMessage} from "react-intl";
 import SkjemaVisning from "./SkjemaVisning";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
+import AlertStripe from "nav-frontend-alertstriper";
 
 interface Props {
   steg: number;
@@ -22,8 +23,14 @@ const SkjemaNedlasting = (props: MergedProps) => {
         tittel="avslutning.steg.nedlasting.skjema.tittel"
         tittelParams={{ skjemanummer }}
         beskrivelse="avslutning.steg.nedlasting.skjema.beskrivelse"
-        obs="avslutning.steg.nedlasting.skjema.obs"
       />
+      <div className="steg__overskrift-beskrivelse">
+        <AlertStripe type="advarsel" form="inline">
+          <b>
+            <FormattedHTMLMessage id="avslutning.steg.nedlasting.skjema.obs" />
+          </b>
+        </AlertStripe><br />
+      </div>
       <SkjemaVisning skjemaSprak={skjemaSprak} skjema={hovedskjema} />
     </div>
   );
