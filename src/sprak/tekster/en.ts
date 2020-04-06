@@ -29,6 +29,7 @@ export default {
   "avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger": `Help us understand what went wrong.`,
   "avslutning.steg.nedlasting.skjema.tittel": `Download the application form {skjemanummer}`,
   "avslutning.steg.nedlasting.skjema.beskrivelse": `The application must be completed and signed.`,
+  "avslutning.steg.nedlasting.skjema.obs": 'ATTENTION! It is important that you use Adobe Acrobat Reader to fill out the form.',
   "avslutning.steg.nedlasting.vedlegg.tittel": `Download attachment form`,
   "avslutning.steg.nedlasting.vedlegg.beskrivelse": `The attachment form (s) must be completed and signed.`,
   "avslutning.steg.eksterne.tittel": `You must obtain these documents yourself:`,
