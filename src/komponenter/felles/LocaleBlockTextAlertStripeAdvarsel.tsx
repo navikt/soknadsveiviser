@@ -11,7 +11,7 @@ const LocaleBlockTextAlertStripeAdvarsel = ({blockText, locale}: {blockText: Loc
     return null;
   }
   return (
-    <div className="soknadsobjekt__advarsel">
+    <div className="varselboks">
       <AlertStripeAdvarsel>
         <div className="varseltekst_innhold">
           <BlockContent
