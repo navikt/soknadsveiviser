@@ -104,7 +104,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "ettersendelser.mellomledd.anke.knapp": `Ettersend til anke`,
   "ettersendelser.mellomledd.anke.beskrivelse": `Velg ‘Ettersend til anke’ hvis du har anket til Trygderetten og ønsker å sende tilleggsdokumentasjon.`,
   "ettersendelser.mellomledd.klageanke.tittel": `Ettersende til klage eller anke`,
-  "kategori.beskrivelse": `Søknad, skjema, ettersendelse og klage`,
+  "sidetittel": `Søknad, skjema, ettersendelse og klage`,
   "kategori.velg": `Meny`,
   "kategorier.knapp.bedrift": `Bedrift`,
   "kategorier.knapp.engelsk": `English`,
