@@ -8,6 +8,12 @@ import Kategoriinnhold from "./seksjoner/kategorier/Kategoriinnhold/Kategoriinnh
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import Header from "../../komponenter/header/Header";
+import SprakVelger from "../../komponenter/header/sprak/SprakVelger";
+import { Sidetittel } from "nav-frontend-typografi";
+import { FormattedMessage } from "react-intl";
+import VeilederEttersendelse from "../../komponenter/veileder/varianter/Ettersendelse";
+import VeilederKlage from "../../komponenter/veileder/varianter/Klage";
+import Typer from "../../komponenter/header/typer/Typer";
 
 interface Routes {
   inngang: string;
@@ -33,7 +39,15 @@ class Soknadsveiviser extends Component<MergedProps> {
     const { match } = this.props;
     return (
       <div className="forside__wrapper" id="maincontent">
-        <Header erForside={true} inngang={match.params.inngang} />
+        <Header>
+          <SprakVelger />
+          <Sidetittel className="header__tittel">
+            <FormattedMessage id="sidetittel" />
+          </Sidetittel>
+          {match.params.inngang === "ettersendelse" && <VeilederEttersendelse />}
+          {match.params.inngang === "klage" && <VeilederKlage />}
+          <Typer />
+        </Header>
         <section className="seksjon oversikt">
           <Kategorier />
           <Kategoriinnhold />
@@ -48,9 +62,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   settValgtType: (type: string) => dispatch(settValgtType(type))
 });
 
-export default withRouter(
-  connect(
-    undefined,
-    mapDispatchToProps
-  )(Soknadsveiviser)
-);
+export default withRouter(connect(undefined, mapDispatchToProps)(Soknadsveiviser));

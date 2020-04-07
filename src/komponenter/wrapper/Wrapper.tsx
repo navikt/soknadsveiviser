@@ -8,6 +8,7 @@ import { Store } from "../../typer/store";
 import Header from "../header/Header";
 import { localeTekst } from "../../utils/sprak";
 import { usePrevious } from "../../utils/hooks";
+import SprakVelger from "../header/sprak/SprakVelger";
 
 interface Routes {
   sprak: string;
@@ -21,10 +22,7 @@ interface ReduxProps {
   kategorier: FetchKategorier;
 }
 
-type MergedProps = Props &
-  RouteComponentProps<Routes> &
-  InjectedIntlProps &
-  ReduxProps;
+type MergedProps = Props & RouteComponentProps<Routes> & InjectedIntlProps & ReduxProps;
 
 const Wrapper = (props: MergedProps) => {
   const { intl, children, match } = props;
@@ -42,7 +40,9 @@ const Wrapper = (props: MergedProps) => {
 
   return (
     <>
-      <Header erForside={false} />
+      <Header>
+        <SprakVelger />
+      </Header>
       <div className="side__wrapper" id="maincontent" ref={mainContent}>
         <div className="innhold__container">
           {(() => {
@@ -78,7 +78,5 @@ const mapStateToProps = (store: Store) => {
 };
 
 export default withRouter<Props & RouteComponentProps, any>(
-  injectIntl<Props & RouteComponentProps & InjectedIntlProps>(
-    connect(mapStateToProps)(Wrapper)
-  )
+  injectIntl<Props & RouteComponentProps & InjectedIntlProps>(connect(mapStateToProps)(Wrapper))
 );
