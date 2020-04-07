@@ -21,8 +21,7 @@ const Kategoriinnhold = (props: MergedProps) => {
   return (
     <div className="kategoriinnhold__container">
       <Hovedbanner
-        tittel={intl.formatMessage({ id: "kategori.beskrivelse" })}
-        undertittel={localeTekst(valgtKategori.tittel, intl.locale)}
+        tittel={localeTekst(valgtKategori.tittel, intl.locale)}
         backgroundColor={valgtKategori.domenefarge}
         borderColor={valgtKategori.kantfarge}
       />
