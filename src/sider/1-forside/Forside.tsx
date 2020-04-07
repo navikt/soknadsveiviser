@@ -11,9 +11,8 @@ import Header from "../../komponenter/header/Header";
 import SprakVelger from "../../komponenter/header/sprak/SprakVelger";
 import { Sidetittel } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
-import VeilederEttersendelse from "../../komponenter/veileder/varianter/Ettersendelse";
-import VeilederKlage from "../../komponenter/veileder/varianter/Klage";
 import Typer from "../../komponenter/header/typer/Typer";
+import { SideIngress } from "./seksjoner/SideIngress";
 
 interface Routes {
   inngang: string;
@@ -44,8 +43,7 @@ class Soknadsveiviser extends Component<MergedProps> {
           <Sidetittel className="header__tittel">
             <FormattedMessage id="sidetittel" />
           </Sidetittel>
-          {match.params.inngang === "ettersendelse" && <VeilederEttersendelse />}
-          {match.params.inngang === "klage" && <VeilederKlage />}
+          <SideIngress inngang={match.params.inngang} />
           <Typer />
         </Header>
         <section className="seksjon oversikt">

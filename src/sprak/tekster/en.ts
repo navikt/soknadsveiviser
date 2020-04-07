@@ -104,7 +104,8 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "ettersendelser.mellomledd.klage.beskrivelse": `Choose 'Forward to a complaint' if you have submitted a complaint and want to forward additional documentation.`,
   "ettersendelser.mellomledd.anke.knapp": `Forward to an appeal`,
   "ettersendelser.mellomledd.anke.beskrivelse": `Choose 'Forward to an appeal' if you have appealed to the National Insurance Court and want to forward additional documentation.`,
-  "sidetittel": `Forms, Applications, Forwarding and Complaints`,
+  "sidetittel": `Applications and Forms`,
+  "sideingress": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`,
   "kategori.velg": `Menu`,
   "kategorier.knapp.bedrift": `Employers`,
   "kategorier.knapp.engelsk": `English`,
@@ -189,8 +190,6 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "vedleggsvalg.toggle.ikkeveiledning": `No`,
   "vedleggsvalg.toggle.info.ja": `When you have answered the questions below, the documentation to submit with your application will be listed.`,
   "vedleggsvalg.toggle.info.nei": `Choose which documentation you will be submitting with you application.`,
-  "kategoriinnhold.infotekst.person": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`,
-  "kategoriinnhold.infotekst.bedrift": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`,
   "sjekkbokser.pakrevde": `Required documentation for all applications`,
   "sjekkbokser.situasjonsbestemte": `Required documentation based on the situation`
 }
