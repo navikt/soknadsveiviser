@@ -6,6 +6,7 @@ import { Kategori } from "../../../../../typer/kategori";
 import { Underkategori } from "../../../../../typer/underkategori";
 import { localeTekst } from "../../../../../utils/sprak";
 import { medKategorier } from "../../../../../states/providers/Kategorier";
+import {Helmet} from "react-helmet";
 
 interface Props {
   valgtType: "Person" | "Bedrift";
@@ -17,11 +18,14 @@ interface Props {
 type MergedProps = Props & InjectedIntlProps;
 const Kategoriinnhold = (props: MergedProps) => {
   const { intl, valgtKategori } = props;
-
+  const tittel = localeTekst(valgtKategori.tittel, intl.locale);
   return (
     <div className="kategoriinnhold__container">
+      <Helmet>
+        <meta name="description" content={`${tittel} - søknad, skjema, ettersendelse og klage`} />
+      </Helmet>
       <Hovedbanner
-        tittel={localeTekst(valgtKategori.tittel, intl.locale)}
+        tittel={tittel}
         backgroundColor={valgtKategori.domenefarge}
         borderColor={valgtKategori.kantfarge}
       />
