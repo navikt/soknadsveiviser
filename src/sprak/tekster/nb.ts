@@ -104,7 +104,8 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "ettersendelser.mellomledd.anke.knapp": `Ettersend til anke`,
   "ettersendelser.mellomledd.anke.beskrivelse": `Velg ‘Ettersend til anke’ hvis du har anket til Trygderetten og ønsker å sende tilleggsdokumentasjon.`,
   "ettersendelser.mellomledd.klageanke.tittel": `Ettersende til klage eller anke`,
-  "sidetittel": `Søknad, skjema, ettersendelse og klage`,
+  "sidetittel": `Søknad og skjema`,
+  "sideingress": `Du finner søknader og skjemaer, mulighet for ettersendelse av dokumentasjon og klageskjema når du velger emne nedenfor.`,
   "kategori.velg": `Meny`,
   "kategorier.knapp.bedrift": `Bedrift`,
   "kategorier.knapp.engelsk": `English`,
@@ -153,7 +154,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "veileder.ettersendelse.steg2": `2. Klikk på knappen «Ettersendelse» på den søknaden det gjelder og følg instruksjonene videre.`,
   "veileder.klage.tittel": "Klage på vedtak",
   "veileder.klage.steg1": `1. Velg hvilken søknad klagen gjelder i oversikten nedenfor. `,
-  "veileder.klage.steg2": `2. Klikk på knappen «Klage eller anke» på den søknaden det gjelder og følge instruksjonene videre.`,
+  "veileder.klage.steg2": `2. Klikk på knappen «Klage eller anke» på den søknaden det gjelder og følg instruksjonene videre.`,
   "errors.api.fetch": "Oisann, noe gikk galt ved henting av data!",
   "errors.api.kategori": `Vi fant dessverre ikke valgt kategori.`,
   "errors.api.underkategori": `Vi fant dessverre ikke valgt underkategori.`,
@@ -190,8 +191,6 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "vedleggsvalg.toggle.ikkeveiledning": `Nei`,
   "vedleggsvalg.toggle.info.ja": `Når du har svart på spørsmålene under, får du en liste med dokumentasjon du må legge ved.`,
   "vedleggsvalg.toggle.info.nei": `Kryss av for hvilken dokumentasjon du sender inn.`,
-  "kategoriinnhold.infotekst.person": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer når du velger emne nedenfor.`,
-  "kategoriinnhold.infotekst.bedrift": `Du finner søknadsskjemaer, ettersendelse og klageskjemaer når du velger emne nedenfor.`,
   "sjekkbokser.pakrevde": `Påkrevde vedlegg`,
   "sjekkbokser.situasjonsbestemte": `Situasjonsbestemte vedlegg`
 }

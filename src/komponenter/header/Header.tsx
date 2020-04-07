@@ -1,34 +1,15 @@
-import React from "react";
-import Typer from "./typer/Typer";
-import SprakVelger from "./sprak/SprakVelger";
-import VeilederEttersendelse from "../veileder/varianter/Ettersendelse";
-import VeilederKlage from "../veileder/varianter/Klage";
-import { Sidetittel } from "nav-frontend-typografi";
-import { injectIntl, FormattedMessage, InjectedIntlProps } from "react-intl";
+import React, { ReactNode } from "react";
 
 interface Props {
-  erForside: boolean;
-  inngang?: string;
+  children: ReactNode;
 }
 
-const Header = ({ erForside, inngang }: Props & InjectedIntlProps) => (
+const Header = ({ children }: Props) => (
   <section className="header__wrapper seksjon oversikt">
     <section className="filler" />
-    <section className="innhold__container">
-      <SprakVelger />
-      {erForside && (
-        <>
-          <Sidetittel className="header__tittel">
-            <FormattedMessage id="sidetittel" />
-          </Sidetittel>
-          {inngang === "ettersendelse" && <VeilederEttersendelse />}
-          {inngang === "klage" && <VeilederKlage />}
-          <Typer />
-        </>
-      )}
-    </section>
+    <section className="innhold__container">{children}</section>
     <section className="filler" />
   </section>
 );
 
-export default injectIntl(Header);
+export default Header;
