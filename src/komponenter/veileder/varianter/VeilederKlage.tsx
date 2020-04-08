@@ -3,8 +3,8 @@ import { Element, Normaltekst } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 import Veileder from "../Veileder";
 
-const VeilederKlage = () => (
-  <Veileder>
+const VeilederKlage = (props: {className?: string}) => (
+  <Veileder className={props.className}>
     <Element>
       <FormattedMessage id="veileder.klage.tittel" />
     </Element>

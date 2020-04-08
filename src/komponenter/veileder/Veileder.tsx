@@ -4,6 +4,7 @@ import veileder from "../../img/veileder.svg";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
+  className?: string
 }
 
 const Veileder = (props: Props) => {
@@ -21,13 +22,15 @@ const Veileder = (props: Props) => {
   });
 
   return (
-    <Veilederpanel
-      type={erMobil ? "plakat" : "normal"}
-      kompakt={erMobil}
-      svg={<img alt="Veileder" src={veileder} />}
-    >
-      {props.children}
-    </Veilederpanel>
+    <div className={props.className}>
+      <Veilederpanel
+        type={erMobil ? "plakat" : "normal"}
+        kompakt={erMobil}
+        svg={<img alt="Veileder" src={veileder} />}
+      >
+        {props.children}
+      </Veilederpanel>
+    </div>
   );
 };
 

@@ -13,6 +13,8 @@ import { Sidetittel } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 import Typer from "../../komponenter/header/typer/Typer";
 import { SideIngress } from "./seksjoner/SideIngress";
+import { Brodsmulesti, NAVSmule } from "../../komponenter/header/brodsmulesti/Brodsmulesti";
+import { TopplinjeContainer } from "../../komponenter/header/TopplinjeContainer";
 
 interface Routes {
   inngang: string;
@@ -35,11 +37,16 @@ class Soknadsveiviser extends Component<MergedProps> {
   }
 
   render() {
-    const { match } = this.props;
+    const { match, location } = this.props;
     return (
       <div className="forside__wrapper" id="maincontent">
         <Header>
-          <SprakVelger />
+          <TopplinjeContainer>
+            <Brodsmulesti
+              listeOverSmuler={[NAVSmule, { tekst: <FormattedMessage id="sidetittel" />, lenke: location.pathname }]}
+            />
+            <SprakVelger />
+          </TopplinjeContainer>
           <Sidetittel className="header__tittel">
             <FormattedMessage id="sidetittel" />
           </Sidetittel>
@@ -49,7 +56,6 @@ class Soknadsveiviser extends Component<MergedProps> {
         <section className="seksjon oversikt">
           <Kategorier />
           <Kategoriinnhold />
-          <section className="filler" />
         </section>
       </div>
     );
