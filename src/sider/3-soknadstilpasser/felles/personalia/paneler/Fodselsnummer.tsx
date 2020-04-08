@@ -14,6 +14,7 @@ import { erKlageEllerAnkeOgSkalSendesTilKlageinstans } from "../../../../../util
 import BlockContent from "@sanity/block-content-to-react";
 import { localeBlockTekst } from "../../../../../utils/sprak";
 import { link } from "../../../../../utils/serializers";
+import { Normaltekst } from "nav-frontend-typografi";
 
 interface Routes {
   personEllerBedrift: string;
@@ -50,10 +51,8 @@ const FodselsnummerPanel = (props: MergedProps) => {
       label="Fodselsnummer"
       render={(pr: FieldProps<Fodselsnummer>) => (
         <Ekspanderbartpanel
-          border={true}
-          tittelProps="normaltekst"
           apen={personEllerBedrift !== "bedrift"}
-          tittel={intl.formatMessage({ id: personHarFodselsnummerTekst() })}
+          tittel={<Normaltekst>{intl.formatMessage({ id: personHarFodselsnummerTekst() })}</Normaltekst>}
         >
           <FodselsnummerFelter {...pr} />
           {skalTilValgtEnhet && !erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (

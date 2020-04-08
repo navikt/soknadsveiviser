@@ -10,9 +10,9 @@ import { localeBlockTekst } from "utils/sprak";
 import { RouteComponentProps, withRouter } from "react-router";
 import { hentSkjemanummerHash } from "utils/hentSkjemanummerHash";
 import { convertNAVSkjemanummerTilHash } from "utils/hentSkjemanummerHash";
-import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
 import { Skjemalenkeliste, Fillenke } from "./Skjemalenker";
 import LocaleBlockTextAlertStripeAdvarsel from "../../../komponenter/felles/LocaleBlockTextAlertStripeAdvarsel";
+import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 
 interface Props {
   key: number;
@@ -39,9 +39,9 @@ const VisSkjemalenke = (
       id={convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer)}
       className={"ekspandertSoknadsPanel"}
     >
-      <EkspanderbartpanelBase
+      <Ekspanderbartpanel
         apen={apen}
-        heading={
+        tittel={
           <div className={"ekspanderbartPanel__headingInnhold"}>
             <Undertittel className={markert}>
               <LocaleTekst tekst={navn} />
@@ -84,7 +84,7 @@ const VisSkjemalenke = (
             </Skjemalenkeliste>
           </div>
         </div>
-        </EkspanderbartpanelBase>
+        </Ekspanderbartpanel>
 
     </div>
   );
