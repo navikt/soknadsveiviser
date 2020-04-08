@@ -27,7 +27,7 @@ const BrodsmulestiDesktop = (props: { listeOverSmuler: Smule[] }) => {
   const currentSmule = props.listeOverSmuler.pop();
   return (
     <>
-      <img src={ikon} alt="" />
+      <img src={ikon} alt="" style={{height: 18}} />
       {props.listeOverSmuler.map(smule => (
         <>
           <Lenke key={smule.lenke} href={smule.lenke}>
