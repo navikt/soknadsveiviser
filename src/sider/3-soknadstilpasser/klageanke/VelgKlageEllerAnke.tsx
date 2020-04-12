@@ -10,6 +10,7 @@ import { Normaltekst, Undertittel } from "nav-frontend-typografi";
 import { Link } from "react-router-dom";
 import NotFound from "../../404/404";
 import { kanKlage } from "../../../utils/kanKlage";
+import Helmet from "react-helmet";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -31,7 +32,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
     const { intl, match } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
 
-    document.title = sideTittel(
+    const title = sideTittel(
       `${localeTekst(
         valgtSoknadsobjekt.navn,
         intl.locale
@@ -39,6 +40,15 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
         id: "anke.eller.klage.sidetittel"
       })}`
     );
+
+    const metaDescription = intl.formatMessage({
+        id: "anke.eller.klage.metaDescription"
+      },
+      {soknadsnavn: localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale)}
+      );
+
 
     const {
       sprak,
@@ -51,6 +61,10 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
     if (kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)) {
       return (
         <>
+          <Helmet>
+            <title>{title}</title>
+            <meta name="description" content={metaDescription} />
+          </Helmet>
           <Underbanner
             tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
             skjemanummer={hovedskjema.skjemanummer}

@@ -92,6 +92,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "anke.mellomledd.beskrivelse": `Her kan du anke til Trygderetten hvis du ikke fikk medhold i klagen `,
   "anke.ettersende": `Skal du ettersende dokumentasjon til en tidligere innsendt anke?`,
   "anke.eller.klage.sidetittel": `Velg mellom klage eller anke`,
+  "anke.eller.klage.metaDescription": `{soknadsnavn}: Klage eller anke`,
   "ettersendelser.knapp": `Ettersendelse`,
   "ettersendelser.tittel.underbanner": `Velg hvilken dokumentasjon du skal ettersende`,
   "ettersendelser.mellomledd.tittel": `Velg ettersendelse`,
