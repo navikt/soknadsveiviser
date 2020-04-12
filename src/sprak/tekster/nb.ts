@@ -111,6 +111,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "kategorier.knapp.bedrift": `Bedrift`,
   "kategorier.knapp.engelsk": `English`,
   "kategorier.knapp.person": `Person`,
+  "underkategori.meta_desc": `{underkategorinavn} - her finner du: {utlisting}`,
   "stegindikator.steg1": `Velg søknadstype`,
   "stegindikator.steg2": `Velg vedlegg`,
   "stegindikator.steg3": `Velg ettersendelser`,

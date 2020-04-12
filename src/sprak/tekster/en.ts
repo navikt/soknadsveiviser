@@ -107,6 +107,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "sidetittel": `Applications and Forms`,
   "sideingress": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`,
   "kategori.velg": `Menu`,
+  "kategori.meta_desc": `{kategoritittel} - You will find stuff here.`,
   "kategorier.knapp.bedrift": `Employers`,
   "kategorier.knapp.engelsk": `English`,
   "kategorier.knapp.person": `Person`,
