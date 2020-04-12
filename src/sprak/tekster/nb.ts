@@ -107,6 +107,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "sidetittel": `Søknad og skjema`,
   "sideingress": `Du finner søknader og skjemaer, mulighet for ettersendelse av dokumentasjon og klageskjema når du velger emne nedenfor.`,
   "kategori.velg": `Meny`,
+  "kategori.meta_desc": `{kategoritittel} - Her finner du søknader og skjemaer, mulighet for ettersendelse av dokumentasjon og klageskjema.`,
   "kategorier.knapp.bedrift": `Bedrift`,
   "kategorier.knapp.engelsk": `English`,
   "kategorier.knapp.person": `Person`,
