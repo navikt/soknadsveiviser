@@ -24,6 +24,7 @@ import { apiHentSoknadsobjektForKlage } from "klienter/sanityKlient";
 import { sideTittel } from "utils/sprak";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { kanKlage } from "../../../utils/kanKlage";
+import Helmet from "react-helmet";
 
 interface Props {
   klageSoknadsobjekt: Soknadsobjekt;
@@ -95,8 +96,9 @@ class VisKlage extends Component<MergedProps> {
       ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
       : "";
 
+    let title;
     if (klageSoknadsobjekt) {
-      document.title = sideTittel(
+      title = sideTittel(
         `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
       );
     }
@@ -122,6 +124,10 @@ class VisKlage extends Component<MergedProps> {
     const klageskjema = klageSoknadsobjekt.hovedskjema;
     return (
       <>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, intl.locale)}
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
