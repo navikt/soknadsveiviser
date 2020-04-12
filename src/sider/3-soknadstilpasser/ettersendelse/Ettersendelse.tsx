@@ -15,6 +15,7 @@ import { sideTittel } from "../../../utils/sprak";
 import Neste from "../felles/personalia/knapper/Neste";
 import { genererDokumentinnsendingsUrl } from "../felles/dokumentinnsendingUtils";
 import { finnesDokumentinnsending } from "../../../utils/soknadsobjekter";
+import Helmet from "react-helmet";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -41,13 +42,6 @@ class Ettersendelse extends Component<
     const { valgtSoknadsobjekt, intl } = this.props;
     const { innsendingsmate } = this.props.match.params;
 
-    document.title = sideTittel(
-      `${localeTekst(
-        valgtSoknadsobjekt.navn,
-        intl.locale
-      )} - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
-    );
-
     if (
       innsendingsmate === "dokumentinnsending" &&
       finnesDokumentinnsending(valgtSoknadsobjekt)
@@ -60,6 +54,14 @@ class Ettersendelse extends Component<
     const { intl } = this.props;
     const { valgtSoknadsobjekt, valgteVedlegg } = this.props;
 
+    const title = sideTittel(
+      `${localeTekst(
+        valgtSoknadsobjekt.navn,
+        intl.locale
+      )} - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
+    );
+
+
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === valgtSoknadsobjekt!._id)
       .filter(v => v.skalSendes);
@@ -68,6 +70,10 @@ class Ettersendelse extends Component<
     const { hovedskjema } = valgtSoknadsobjekt;
     return (
       <>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <Underbanner
           tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
           skjemanummer={hovedskjema.skjemanummer}

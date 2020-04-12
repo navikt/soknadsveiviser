@@ -97,6 +97,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "ettersendelser.mellomledd.tittel": `Velg ettersendelse`,
   "ettersendelser.mellomledd.soknad.tittel": `Ettersende til en søknad`,
   "ettersendelser.mellomledd.soknad.beskrivelse": `Her kan du ettersende dokumentasjon til en tidligere innsendt søknad.`,
+  "ettersendelser.mellomledd.soknad.meta_desc": `Her kan du ettersende dokumentasjon til en søknad om {soknadsnavn}.`,
   "ettersendelser.mellomledd.soknad.knapp": `Ettersend på papir`,
   "ettersendelser.mellomledd.digital.knapp": `Ettersend digitalt`,
   "ettersendelser.mellomledd.klage.knapp": `Ettersend til klage`,
