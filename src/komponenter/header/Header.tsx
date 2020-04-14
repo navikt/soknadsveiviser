@@ -6,9 +6,7 @@ interface Props {
 
 const Header = ({ children }: Props) => (
   <section className="header__wrapper seksjon oversikt">
-    <section className="filler" />
     <section className="innhold__container">{children}</section>
-    <section className="filler" />
   </section>
 );
 

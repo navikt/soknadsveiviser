@@ -1,6 +1,6 @@
 import React, { RefObject, createRef, useEffect } from "react";
 import Hovedbanner from "../bannere/Hovedbanner";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { FetchKategorier } from "../../typer/store";
@@ -9,6 +9,8 @@ import Header from "../header/Header";
 import { localeTekst } from "../../utils/sprak";
 import { usePrevious } from "../../utils/hooks";
 import SprakVelger from "../header/sprak/SprakVelger";
+import { Brodsmulesti, NAVSmule } from "../header/brodsmulesti/Brodsmulesti";
+import { TopplinjeContainer } from "../header/TopplinjeContainer";
 
 interface Routes {
   sprak: string;
@@ -38,37 +40,46 @@ const Wrapper = (props: MergedProps) => {
     }
   });
 
-  return (
-    <>
-      <Header>
-        <SprakVelger />
-      </Header>
-      <div className="side__wrapper" id="maincontent" ref={mainContent}>
-        <div className="innhold__container">
-          {(() => {
-            switch (props.kategorier.status) {
-              case "RESULT": {
-                const { valgtKategori, valgtUnderkategori } = props.kategorier;
-                return (
-                  <Hovedbanner
-                    tittel={localeTekst(valgtUnderkategori.navn, intl.locale)}
-                    undertittel={localeTekst(valgtKategori.tittel, intl.locale)}
-                    backgroundColor={valgtKategori.domenefarge}
-                    borderColor={valgtKategori.kantfarge}
-                  />
-                );
-              }
-              default:
-              case "LOADING":
-              case "HTTP_ERROR":
-                break;
-            }
-          })()}
-          {children}
-        </div>
-      </div>
-    </>
-  );
+  switch (props.kategorier.status) {
+    case "RESULT": {
+      const { valgtKategori, valgtUnderkategori } = props.kategorier;
+      return (
+        <>
+          <Header>
+            <TopplinjeContainer>
+              <Brodsmulesti
+                listeOverSmuler={[
+                  NAVSmule,
+                  {
+                    tekst: <FormattedMessage id="sidetittel" />,
+                    lenke: props.location.pathname.split(`/${valgtUnderkategori.urlparam}`)[0]
+                  },
+                  { tekst: localeTekst(valgtUnderkategori.navn, intl.locale), lenke: match.url }
+                ]}
+              />
+              <SprakVelger />
+            </TopplinjeContainer>
+          </Header>
+          <div className="side__wrapper" id="maincontent" ref={mainContent}>
+            <div className="innhold__container">
+              <Hovedbanner
+                tittel={localeTekst(valgtUnderkategori.navn, intl.locale)}
+                undertittel={localeTekst(valgtKategori.tittel, intl.locale)}
+                backgroundColor={valgtKategori.domenefarge}
+                borderColor={valgtKategori.kantfarge}
+              />
+              {children}
+            </div>
+          </div>
+        </>
+      );
+    }
+    case "LOADING":
+    case "HTTP_ERROR":
+    default: {
+      return <div />;
+    }
+  }
 };
 
 const mapStateToProps = (store: Store) => {

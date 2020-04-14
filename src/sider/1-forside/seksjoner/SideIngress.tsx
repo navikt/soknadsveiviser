@@ -5,14 +5,14 @@ import { Ingress } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 
 export const SideIngress = (props: { inngang: string }) => (
-  <>{ingressElement[props.inngang] || ingressElement.default}</>
+  <div className="header__ingress">{ingressElement[props.inngang] || ingressElement.default}</div>
 );
 
 const ingressElement: { [index: string]: ReactNode } = {
-  ettersendelse: <VeilederEttersendelse />,
-  klage: <VeilederKlage />,
+  ettersendelse: <VeilederEttersendelse className="header__ingress--veileder" />,
+  klage: <VeilederKlage className="header__ingress--veileder"/>,
   default: (
-    <Ingress>
+    <Ingress className="header__ingress--tekst">
       <FormattedMessage id="sideingress" />
     </Ingress>
   )

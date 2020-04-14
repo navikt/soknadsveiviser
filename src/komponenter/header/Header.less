@@ -4,6 +4,26 @@
   }
 
   &__tittel {
+    @media @desktop {
+      text-align: center;
+    }
     padding: 1.5rem 0 0.5rem 0;
+  }
+
+  &__ingress {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &--veileder {
+      width: fit-content;
+      margin: 1rem 0;
+    }
+
+    &--tekst {
+      @media @desktop {
+        max-width: 55%;
+      }
+      margin-bottom: 1rem;
+    }
   }
 }
