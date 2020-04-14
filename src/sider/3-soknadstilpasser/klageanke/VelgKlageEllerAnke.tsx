@@ -42,7 +42,7 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
     );
 
     const metaDescription = intl.formatMessage({
-        id: "anke.eller.klage.metaDescription"
+        id: "anke.eller.klage.meta_desc"
       },
       {soknadsnavn: localeTekst(
         valgtSoknadsobjekt.navn,
