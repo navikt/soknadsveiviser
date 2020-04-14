@@ -125,7 +125,7 @@ class VisKlage extends Component<MergedProps> {
       <>
         <Helmet>
           <title>{title}</title>
-          <meta name="robots" description="noindex" />
+          <meta name="robots" content="noindex" />
         </Helmet>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, intl.locale)}

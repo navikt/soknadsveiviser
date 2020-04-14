@@ -39,7 +39,7 @@ class Ettersendelse extends Component<
   { tilDokumentinnsending: boolean }
 > {
   componentDidMount() {
-    const { valgtSoknadsobjekt, intl } = this.props;
+    const { valgtSoknadsobjekt} = this.props;
     const { innsendingsmate } = this.props.match.params;
 
     if (

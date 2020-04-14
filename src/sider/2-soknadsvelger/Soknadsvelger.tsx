@@ -8,7 +8,7 @@ import Wrapper from "../../komponenter/wrapper/Wrapper";
 import HttpError from "../../komponenter/errors/HttpError";
 import DataError from "../../komponenter/errors/DataError";
 import {apiHentSoknader} from "../../klienter/sanityKlient";
-import {injectIntl, InjectedIntlProps, FormattedMessage} from "react-intl";
+import {injectIntl, InjectedIntlProps} from "react-intl";
 import VisSoknadsobjekt from "./seksjoner/VisSoknadsobjekt";
 import VisSoknadslenke from "./seksjoner/VisSoknadslenke";
 import {FetchSoknader} from "../../typer/store";
@@ -21,8 +21,6 @@ import hashLinkScroll from "../../utils/hashScroll";
 import {localeTekst, sideTittel} from "../../utils/sprak";
 import VisSkjemalenke from "./seksjoner/VisSkjemalenke";
 import Helmet from "react-helmet";
-import {utlistingAvPDFerBasertPaSprak} from "../interne/skjemautlisting/tabeller/innslagITabell";
-import Undertittel from "nav-frontend-typografi/lib/undertittel";
 
 interface Routes {
   kategori: string;
