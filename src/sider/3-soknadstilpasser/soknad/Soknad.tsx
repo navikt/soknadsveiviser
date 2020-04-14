@@ -20,6 +20,7 @@ import infoIkon from "../../../img/info-ikon.svg";
 import Neste from "../felles/personalia/knapper/Neste";
 import { genererDokumentinnsendingsUrl } from "../felles/dokumentinnsendingUtils";
 import { finnesDokumentinnsending } from "../../../utils/soknadsobjekter";
+import Helmet from "react-helmet";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -78,15 +79,6 @@ const Soknad = (props: MergedProps) => {
   };
 
   useEffect(() => {
-    document.title = sideTittel(
-      `${localeTekst(
-        valgtSoknadsobjekt.navn,
-        intl.locale
-      )}  - ${intl.formatMessage({ id: "tittel.soknader" })}`
-    );
-  }, [valgtSoknadsobjekt.navn, intl]);
-
-  useEffect(() => {
     valgtSoknadsobjekt.vedleggtilsoknad?.filter(v => !v.pakrevd).length <= 1 && setVisVeiledendeSporsmal(true);
   }, [valgtSoknadsobjekt.vedleggtilsoknad]);
 
@@ -99,8 +91,18 @@ const Soknad = (props: MergedProps) => {
     }
   }, [innsendingsmate, valgtSoknadsobjekt]);
 
+  const title = sideTittel(
+    `${localeTekst(
+      valgtSoknadsobjekt.navn,
+      intl.locale
+    )}  - ${intl.formatMessage({ id: "tittel.soknader" })}`
+  );
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
       <Underbanner
         tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
         skjemanummer={hovedskjema.skjemanummer}

@@ -17,11 +17,11 @@ interface Props {
 type MergedProps = Props & InjectedIntlProps;
 const Kategoriinnhold = (props: MergedProps) => {
   const { intl, valgtKategori } = props;
-
+  const tittel = localeTekst(valgtKategori.tittel, intl.locale);
   return (
     <div className="kategoriinnhold__container">
       <Hovedbanner
-        tittel={localeTekst(valgtKategori.tittel, intl.locale)}
+        tittel={tittel}
         backgroundColor={valgtKategori.domenefarge}
         borderColor={valgtKategori.kantfarge}
       />

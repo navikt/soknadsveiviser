@@ -1,27 +1,25 @@
 import React, { Component } from "react";
 import { InjectedIntlProps, injectIntl } from "react-intl";
 import { RouteComponentProps, withRouter } from "react-router";
-import { Store } from "typer/store";
+import { Klage, Store } from "typer/store";
 import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
-import { Klage } from "typer/store";
 import { Soknadsobjekt } from "typer/soknad";
 import { settEttersendTilKlage } from "states/reducers/klage";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
-import { settAlleVedleggSkalSendesForSoknadsobjekt } from "states/reducers/vedlegg";
-import { toggleValgtVedlegg } from "states/reducers/vedlegg";
+import { settAlleVedleggSkalSendesForSoknadsobjekt, toggleValgtVedlegg } from "states/reducers/vedlegg";
 import VelgOmBehandletAvEnhet from "./VelgOmBehandletAvEnhet";
 import VelgVedlegg from "../felles/velgvedlegg/VeiledendeVedleggsvalg";
 import Underbanner from "komponenter/bannere/Underbanner";
 import VelgEttersendelse from "./VelgEttersendelse";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "komponenter/bannere/Steg";
-import { localeTekst } from "utils/sprak";
+import { localeTekst, sideTittel } from "utils/sprak";
 import { apiHentSoknadsobjektForKlage } from "klienter/sanityKlient";
-import { sideTittel } from "utils/sprak";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { kanKlage } from "../../../utils/kanKlage";
+import Helmet from "react-helmet";
 
 interface Props {
   klageSoknadsobjekt: Soknadsobjekt;
@@ -71,6 +69,18 @@ class VisKlage extends Component<MergedProps> {
     }
   };
 
+  private kalkulerTitleTag() {
+    const { valgtSoknadsobjekt, klageSoknadsobjekt, klage, intl } = this.props;
+    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
+    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
+    const tittelEttersendelse = klage.skalEttersende
+      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
+      : "";
+    return sideTittel(
+      `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
+    );
+  }
+
   render() {
     const { intl, klage, match } = this.props;
     const { valgtSoknadsobjekt, klageSoknadsobjekt } = this.props;
@@ -85,19 +95,6 @@ class VisKlage extends Component<MergedProps> {
 
     const urlSkalEttersende = !!match.params.ettersendelse;
     const valgtSkalEttersende = klage.skalEttersende;
-
-    const tittelKlage = localeTekst(klageSoknadsobjekt.navn, intl.locale);
-    const tittelSoknad = localeTekst(valgtSoknadsobjekt.navn, intl.locale);
-    const tittelEttersendelse = klage.skalEttersende
-      ? ` - ${intl.formatMessage({ id: "ettersendelser.knapp" })}`
-      : "";
-
-    if (klageSoknadsobjekt) {
-      document.title = sideTittel(
-        `${tittelSoknad} - ${tittelKlage} ${tittelEttersendelse}`
-      );
-    }
-
     const vedleggTilInnsending = valgteVedlegg
       .filter(v => v.soknadsobjektId === klageSoknadsobjekt._id)
       .filter(v => v.skalSendes);
@@ -118,25 +115,29 @@ class VisKlage extends Component<MergedProps> {
       (valgtSkalEttersende && klage.erVideresendt === undefined) ||
       (!valgtSkalEttersende &&
         ikkePakrevdeVedlegg.length !== vedleggSvart.length);
-
+    const title = this.kalkulerTitleTag();
     return (
       <>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="robots" content="noindex"/>
+        </Helmet>
         <Underbanner
           tittel={localeTekst(klageSoknadsobjekt.navn, intl.locale)}
           undertittel={localeTekst(hovedskjema.navn, intl.locale)}
           skjemanummer={klageskjema.skjemanummer}
         />
         {urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende) ? (
-          <Steg tittel="klage.ettersendelse.tittel.underbanner" />
+          <Steg tittel="klage.ettersendelse.tittel.underbanner"/>
         ) : (
-          <Steg tittel="klage.tittel.underbanner" />
+          <Steg tittel="klage.tittel.underbanner"/>
         )}
-        {!urlSkalEttersende && <VelgEttersendelse />}
+        {!urlSkalEttersende && <VelgEttersendelse/>}
         {(urlSkalEttersende || (!urlSkalEttersende && valgtSkalEttersende)) && (
-          <VelgOmBehandletAvEnhet />
+          <VelgOmBehandletAvEnhet/>
         )}
         {klage.skalEttersende !== undefined && !valgtSkalEttersende && (
-          <VelgVedlegg soknadsobjekt={klageSoknadsobjekt} />
+          <VelgVedlegg soknadsobjekt={klageSoknadsobjekt}/>
         )}
         <DineVedlegg
           visRadioButtons={!urlSkalEttersende && !valgtSkalEttersende}

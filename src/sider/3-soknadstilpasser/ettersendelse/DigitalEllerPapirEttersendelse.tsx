@@ -15,6 +15,7 @@ import { sideTittel } from "../../../utils/sprak";
 import { getTjenesteUrl } from "../../../config";
 import { Redirect } from "react-router-dom";
 import { kanKlage } from "../../../utils/kanKlage";
+import Helmet from "react-helmet";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -64,7 +65,7 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
       );
     }
 
-    document.title = sideTittel(
+    const title = sideTittel(
       `${localeTekst(
         valgtSoknadsobjekt.navn,
         intl.locale
@@ -72,26 +73,29 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
         id: "ettersendelser.mellomledd.tittel"
       })}`
     );
+    const metaDescription = intl.formatMessage(
+      {id: "ettersendelser.mellomledd.soknad.meta_desc"},
+      {soknadsnavn: localeTekst(valgtSoknadsobjekt.navn, intl.locale).toLowerCase()});
 
-    return (
-      <>
-        <Underbanner
-          tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-          skjemanummer={hovedskjema.skjemanummer}
-        />
-        <SoknadEttersendelse
-          digitalEttersendelse={erDigitalEttersendelse}
-          url={urlTilDokumentinnsendingEllerSoknadsdialog(
-            this.props.match.url,
-            valgtSoknadsobjekt,
-            intl.locale
-          )}
-        />
-        {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && (
-          <KlageAnkeEttersendelse />
+    return (<>
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={metaDescription} />
+      </Helmet>
+      <Underbanner
+        tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
+        skjemanummer={hovedskjema.skjemanummer}
+      />
+      <SoknadEttersendelse
+        digitalEttersendelse={erDigitalEttersendelse}
+        url={urlTilDokumentinnsendingEllerSoknadsdialog(
+          this.props.match.url,
+          valgtSoknadsobjekt,
+          intl.locale
         )}
-      </>
-    );
+      />
+      {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && <KlageAnkeEttersendelse />}
+    </>);
   }
 }
 
