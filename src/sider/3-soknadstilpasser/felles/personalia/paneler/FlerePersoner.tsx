@@ -5,7 +5,7 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { medPersonalia, Personalia } from "states/providers/Personalia";
 import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
-import { UndertekstBold } from "nav-frontend-typografi";
+import { Normaltekst, UndertekstBold } from "nav-frontend-typografi";
 import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import { Enhetstype } from "../../../../../typer/soknad";
 
@@ -23,9 +23,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
 
   return (
     <Ekspanderbartpanel
-      border={true}
-      tittelProps="normaltekst"
-      tittel={intl.formatMessage({ id: "personalia.bedrift.flerepersoner" })}
+      tittel={<Normaltekst>{intl.formatMessage({ id: "personalia.bedrift.flerepersoner" })}</Normaltekst>}
     >
       <Field
         name="flerepersoner"
@@ -33,9 +31,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
         render={(pr: FieldProps<ValgtEnhet>) => (
           <>
             <UndertekstBold>
-              <FormattedMessage
-                id={"personalia.undertekstbold.flerepersoner"}
-              />
+              <FormattedMessage id={"personalia.undertekstbold.flerepersoner"} />
             </UndertekstBold>
             <InnsendingsEnhetsvelger
               label={intl.formatMessage({
