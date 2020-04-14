@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Veilederpanel from "nav-frontend-veilederpanel";
 import veileder from "../../img/veileder.svg";
+import { useErMobil } from "../../utils/useErMobil";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
@@ -8,18 +9,7 @@ interface Props {
 }
 
 const Veileder = (props: Props) => {
-  const [erMobil, setErMobil] = useState(window.innerWidth <= 420);
-
-  useEffect(() => {
-    window.addEventListener("resize", () =>
-      setErMobil(window.innerWidth <= 420)
-    );
-    return () => {
-      window.removeEventListener("resize", () =>
-        setErMobil(window.innerWidth <= 420)
-      );
-    };
-  });
+  const erMobil = useErMobil();
 
   return (
     <div className={props.className}>

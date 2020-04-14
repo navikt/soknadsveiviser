@@ -3,6 +3,7 @@ import ikon from "../../../img/home.svg";
 import { Normaltekst, Element } from "nav-frontend-typografi";
 import Lenke from "nav-frontend-lenker";
 import { HoyreChevron, VenstreChevron } from "nav-frontend-chevron";
+import { useErMobil } from "../../../utils/useErMobil";
 
 interface Smule {
   tekst: ReactNode;
@@ -10,7 +11,7 @@ interface Smule {
 }
 
 export const Brodsmulesti = (props: { listeOverSmuler: Smule[] }) => {
-  const erMobil = window.innerWidth <= 420;
+  const erMobil = useErMobil();
 
   return (
     <div className="brodsmulesti__container">
@@ -24,17 +25,17 @@ export const Brodsmulesti = (props: { listeOverSmuler: Smule[] }) => {
 };
 
 const BrodsmulestiDesktop = (props: { listeOverSmuler: Smule[] }) => {
-  const currentSmule = props.listeOverSmuler.pop();
+  const currentSmule = props.listeOverSmuler[props.listeOverSmuler.length-1];
   return (
     <>
       <img src={ikon} alt="" style={{height: 18}} />
-      {props.listeOverSmuler.map(smule => (
-        <>
-          <Lenke key={smule.lenke} href={smule.lenke}>
+      {props.listeOverSmuler.slice(0, -1).map(smule => (
+        <React.Fragment key={smule.lenke}>
+          <Lenke href={smule.lenke}>
             <Normaltekst>{smule.tekst}</Normaltekst>
           </Lenke>
           <HoyreChevron />
-        </>
+        </React.Fragment>
       ))}
       <Element>{currentSmule?.tekst}</Element>
     </>
