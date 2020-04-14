@@ -8,6 +8,7 @@ import { withRouter, RouteComponentProps } from "react-router";
 import { filtrerKategorier } from "../../../../../utils/kategorier";
 import { medKategorier } from "../../../../../states/providers/Kategorier";
 import { localeTekst, sideTittel } from "../../../../../utils/sprak";
+import {Helmet} from "react-helmet";
 
 type State = {
   windowSize: number;
@@ -33,22 +34,11 @@ class Kategorimeny extends Component<MergedProps, State> {
 
   componentDidMount = () => {
     window.addEventListener("resize", this.handleWindowSize);
-    this.settTittel();
   };
 
-  componentDidUpdate = () => this.settTittel();
   componentWillUnmount = () =>
     window.removeEventListener("resize", this.handleWindowSize);
 
-  settTittel = () => {
-    const { valgtKategori, intl } = this.props;
-    const { locale } = intl;
-    document.title = sideTittel(
-      `${localeTekst(valgtKategori.tittel, locale)} - ${intl.formatMessage({
-        id: "tittel.soknader"
-      })}`
-    );
-  };
   render = () => {
     const { windowSize } = this.state;
     const { alleKategorier, valgtType } = this.props;
@@ -56,8 +46,10 @@ class Kategorimeny extends Component<MergedProps, State> {
     const erTablet = windowSize > 650;
     const erDesktop = windowSize > 1032;
     const aktiveKategorier = filtrerKategorier(alleKategorier, valgtType);
+    const { valgtKategori, intl } = this.props;
+    const { locale } = intl;
 
-    return erDesktop ? (
+    const content = erDesktop ? (
       <Desktop
         valgtKategori={this.props.valgtKategori}
         aktiveKategorier={aktiveKategorier}
@@ -69,6 +61,21 @@ class Kategorimeny extends Component<MergedProps, State> {
         aktiveKategorier={aktiveKategorier}
       />
     );
+    return <>
+      <Helmet>
+        <title>
+          {sideTittel(
+          `${localeTekst(valgtKategori.tittel, locale)} - ${intl.formatMessage({
+          id: "tittel.soknader"
+        })}`)}
+        </title>
+        <meta name="description"
+              content={intl.formatMessage(
+                {id: 'kategori.meta_desc'},
+                {kategoritittel: localeTekst(valgtKategori.tittel, locale)})} />
+      </Helmet>
+      {content}
+    </>
   };
 }
 
