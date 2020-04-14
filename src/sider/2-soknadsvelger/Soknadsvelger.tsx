@@ -50,7 +50,7 @@ class Soknadsobjekter extends Component<MergedProps> {
     });
   }
 
-  hasSoknadsDialog() {
+  harSoknadsDialog() {
     if (!this.props.valgtUnderkategori) {
       return false;
     }
@@ -65,7 +65,7 @@ class Soknadsobjekter extends Component<MergedProps> {
     switch (soknader.status) {
       default:
       case "LOADING":
-        return <Spinner style={{ backgroundColor: "white" }} />;
+        return <Spinner style={{ backgroundColor: "white" }}/>;
       case "RESULT":
         let ettApentObjekt =
           soknader.soknadsobjekter.length + soknader.soknadslenker.length + soknader.skjemalenker.length === 1;
@@ -73,7 +73,7 @@ class Soknadsobjekter extends Component<MergedProps> {
         let apenSkjemalenke = ettApentObjekt && soknader.skjemalenker.length === 1;
         let apenSoknadslenke = ettApentObjekt && soknader.soknadslenker.length === 1;
         let utlisting: string[] = [];
-        if (this.hasSoknadsDialog()) {
+        if (this.harSoknadsDialog()) {
           utlisting.push(
             `${intl.formatMessage({ id: "vissoknadsobjekter.tittel" })} ${localeTekst(
               valgtUnderkategori.navn,
@@ -98,6 +98,13 @@ class Soknadsobjekter extends Component<MergedProps> {
         return (
           <>
             <Helmet>
+              <title>
+                {sideTittel(
+                  `${localeTekst(valgtUnderkategori.navn, intl.locale)} - ${intl.formatMessage({
+                    id: "tittel.soknader"
+                  })}`
+                )}
+              </title>
               <meta
                 name="description"
                 content={intl.formatMessage(
@@ -109,42 +116,27 @@ class Soknadsobjekter extends Component<MergedProps> {
                 )}
               />
             </Helmet>
-            {this.hasSoknadsDialog() && <Soknadsdialog valgtUnderkategori={valgtUnderkategori} />}
+            {this.harSoknadsDialog() && <Soknadsdialog valgtUnderkategori={valgtUnderkategori}/>}
             {soknader.soknadsobjekter?.map((soknadsobjekt, id) => (
-              <VisSoknadsobjekt key={id} soknadsobjekt={soknadsobjekt} apen={apentSoknadsobjekt} />
+              <VisSoknadsobjekt key={id} soknadsobjekt={soknadsobjekt} apen={apentSoknadsobjekt}/>
             ))}
             {soknader.skjemalenker?.map((skjemalenke, id) => (
-              <VisSkjemalenke key={id} skjemalenke={skjemalenke} apen={apenSkjemalenke} />
+              <VisSkjemalenke key={id} skjemalenke={skjemalenke} apen={apenSkjemalenke}/>
             ))}
             {soknader.soknadslenker?.map((soknadslenke, id) => (
-              <VisSoknadslenke key={id} soknadslenke={soknadslenke} apen={apenSoknadslenke} />
+              <VisSoknadslenke key={id} soknadslenke={soknadslenke} apen={apenSoknadslenke}/>
             ))}
           </>
         );
       case "DATA_ERROR":
-        return <DataError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error} />;
+        return <DataError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error}/>;
       case "HTTP_ERROR":
-        return <HttpError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error} />;
+        return <HttpError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error}/>;
     }
   }
 
   render() {
-    const { valgtUnderkategori, intl } = this.props;
-    const { locale } = intl;
-    return (
-      <Wrapper>
-        <Helmet>
-          <title>
-            {sideTittel(
-              `${localeTekst(valgtUnderkategori.navn, locale)} - ${intl.formatMessage({
-                id: "tittel.soknader"
-              })}`
-            )}
-          </title>
-        </Helmet>
-        {this.renderSoknader()}
-      </Wrapper>
-    );
+    return <Wrapper>{this.renderSoknader()}</Wrapper>;
   }
 }
 
