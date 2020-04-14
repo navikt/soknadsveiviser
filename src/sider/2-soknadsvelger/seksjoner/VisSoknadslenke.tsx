@@ -7,8 +7,8 @@ import { link } from "../../../utils/serializers";
 import { Soknadslenke } from "../../../typer/soknad";
 import LocaleTekst from "../../../komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst, localeTekst } from "../../../utils/sprak";
-import EkspanderbartpanelBase from "nav-frontend-ekspanderbartpanel/lib/ekspanderbartpanel-base";
 import LocaleBlockTextAlertStripeAdvarsel from "../../../komponenter/felles/LocaleBlockTextAlertStripeAdvarsel";
+import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 
 interface Props {
   key: number;
@@ -23,9 +23,9 @@ const VisSoknadslenke = (props: Props & InjectedIntlProps) => {
 
   return (
     <div className={"ekspandertSoknadsPanel"}>
-      <EkspanderbartpanelBase
+      <Ekspanderbartpanel
         apen={apen}
-        heading={
+        tittel={
           <div className={"ekspanderbartPanel__headingInnhold"}>
             <Undertittel>
               <LocaleTekst tekst={soknadslenke.navn} />
@@ -61,7 +61,7 @@ const VisSoknadslenke = (props: Props & InjectedIntlProps) => {
             </div>
           </div>
         </div>
-      </EkspanderbartpanelBase>
+      </Ekspanderbartpanel>
     </div>
   );
 };

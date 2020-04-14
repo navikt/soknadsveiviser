@@ -5,7 +5,7 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { medPersonalia, Personalia } from "states/providers/Personalia";
 import { ValgtEnhet } from "states/providers/Personalia";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
-import { UndertekstBold } from "nav-frontend-typografi";
+import { Normaltekst, UndertekstBold } from "nav-frontend-typografi";
 import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import { Enhetstype } from "../../../../../typer/soknad";
 
@@ -23,9 +23,7 @@ const TiltaksbedriftPanel = (props: MergedProps) => {
 
   return (
     <Ekspanderbartpanel
-      border={true}
-      tittel={intl.formatMessage({ id: "personalia.bedrift.tiltaksbedrift" })}
-      tittelProps="normaltekst"
+      tittel={<Normaltekst>{intl.formatMessage({ id: "personalia.bedrift.tiltaksbedrift" })}</Normaltekst>}
     >
       <Field
         name="tiltaksbedrift"
@@ -33,9 +31,7 @@ const TiltaksbedriftPanel = (props: MergedProps) => {
         render={(pr: FieldProps<ValgtEnhet>) => (
           <>
             <UndertekstBold>
-              <FormattedMessage
-                id={"personalia.undertekstbold.tiltaksbedrift"}
-              />
+              <FormattedMessage id={"personalia.undertekstbold.tiltaksbedrift"} />
             </UndertekstBold>
             <InnsendingsEnhetsvelger
               label={intl.formatMessage({
