@@ -105,7 +105,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "ettersendelser.mellomledd.anke.knapp": `Forward to an appeal`,
   "ettersendelser.mellomledd.anke.beskrivelse": `Choose 'Forward to an appeal' if you have appealed to the National Insurance Court and want to forward additional documentation.`,
   "sidetittel": `Applications and Forms`,
-  "sideingress": `You will find options for application forms, forwarding additional documentation, and complaint forms by choosing a topic below.`,
+  "sideingress": `You will find options for application forms, submitting additional documentation, and complaint forms by choosing a topic below.`,
   "kategori.velg": `Menu`,
   "kategori.meta_desc": `{kategoritittel} - You will find stuff here.`,
   "kategorier.knapp.bedrift": `Employers`,
