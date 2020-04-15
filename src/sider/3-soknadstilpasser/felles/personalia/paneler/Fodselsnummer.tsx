@@ -46,10 +46,8 @@ const FodselsnummerPanel = (props: MergedProps) => {
       : "personalia.oppgiFodselsnummerDnummer";
 
   return (
-    <Field
-      name="fodselsnummer"
-      label="Fodselsnummer"
-      render={(pr: FieldProps<Fodselsnummer>) => (
+    <Field name="fodselsnummer" label="Fodselsnummer">
+      {(pr: FieldProps<Fodselsnummer>) => (
         <Ekspanderbartpanel
           apen={personEllerBedrift !== "bedrift"}
           tittel={<Normaltekst>{intl.formatMessage({ id: personHarFodselsnummerTekst() })}</Normaltekst>}
@@ -83,7 +81,7 @@ const FodselsnummerPanel = (props: MergedProps) => {
           )}
         </Ekspanderbartpanel>
       )}
-    />
+    </Field>
   );
 };
 

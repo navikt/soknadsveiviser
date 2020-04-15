@@ -9,7 +9,7 @@ import {
 import { InjectedIntlProps } from "react-intl";
 
 interface Fields {
-  postnummer?: string;
+  sted?: string;
 }
 
 type MergedProps = FieldProps<Fields> & Personalia & InjectedIntlProps;
