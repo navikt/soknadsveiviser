@@ -25,10 +25,8 @@ const FlerePersonerPanel = (props: MergedProps) => {
     <Ekspanderbartpanel
       tittel={<Normaltekst>{intl.formatMessage({ id: "personalia.bedrift.flerepersoner" })}</Normaltekst>}
     >
-      <Field
-        name="flerepersoner"
-        label="Flere personer"
-        render={(pr: FieldProps<ValgtEnhet>) => (
+      <Field name="flerepersoner" label="Flere personer">
+        {(pr: FieldProps<ValgtEnhet>) => (
           <>
             <UndertekstBold>
               <FormattedMessage id={"personalia.undertekstbold.flerepersoner"} />
@@ -45,7 +43,7 @@ const FlerePersonerPanel = (props: MergedProps) => {
             />
           </>
         )}
-      />
+      </Field>
     </Ekspanderbartpanel>
   );
 };

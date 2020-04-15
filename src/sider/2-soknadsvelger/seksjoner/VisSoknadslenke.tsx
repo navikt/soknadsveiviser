@@ -25,6 +25,7 @@ const VisSoknadslenke = (props: Props & InjectedIntlProps) => {
     <div className={"ekspandertSoknadsPanel"}>
       <Ekspanderbartpanel
         apen={apen}
+        border={false}
         tittel={
           <div className={"ekspanderbartPanel__headingInnhold"}>
             <Undertittel>

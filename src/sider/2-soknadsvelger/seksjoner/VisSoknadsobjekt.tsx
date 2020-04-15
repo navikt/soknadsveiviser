@@ -50,6 +50,7 @@ const VisSoknadsobjekt = (
     >
       <Ekspanderbartpanel
         apen={apen}
+        border={false}
         tittel={
           <div className={"ekspanderbartPanel__headingInnhold"}>
             <Undertittel className={markert}>

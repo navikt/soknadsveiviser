@@ -25,10 +25,8 @@ const TiltaksbedriftPanel = (props: MergedProps) => {
     <Ekspanderbartpanel
       tittel={<Normaltekst>{intl.formatMessage({ id: "personalia.bedrift.tiltaksbedrift" })}</Normaltekst>}
     >
-      <Field
-        name="tiltaksbedrift"
-        label="Tiltaksbedrift"
-        render={(pr: FieldProps<ValgtEnhet>) => (
+      <Field name="tiltaksbedrift" label="Tiltaksbedrift">
+        {(pr: FieldProps<ValgtEnhet>) => (
           <>
             <UndertekstBold>
               <FormattedMessage id={"personalia.undertekstbold.tiltaksbedrift"} />
@@ -45,7 +43,7 @@ const TiltaksbedriftPanel = (props: MergedProps) => {
             />
           </>
         )}
-      />
+      </Field>
     </Ekspanderbartpanel>
   );
 };

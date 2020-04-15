@@ -162,10 +162,8 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
       personEllerBedrift === "bedrift" ? "personalia.bedrift.undertittel" : "personalia.undertittel";
 
     return (
-      <Formik
-        initialValues={initValues}
-        onSubmit={this.handleSubmit}
-        render={() => {
+      <Formik initialValues={initValues} onSubmit={this.handleSubmit}>
+        {() => {
           return (
             <>
               <div className="personalia__tittel seksjon__avstand">
@@ -196,7 +194,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
             </>
           );
         }}
-      />
+      </Formik>
     );
   }
 }
