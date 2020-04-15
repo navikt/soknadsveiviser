@@ -30,10 +30,12 @@
       };
       window.frontendlogger.appname = "soknadsveiviser";
     </script>
+      <% if (process.env.NODE_ENV !== 'development') { %>
     <script
       type="application/javascript"
       src="/frontendlogger/logger.js"
     ></script>
+      <% } %>
     <!-- Konfig for appdynamics -->
     <script type="application/javascript" src="%PUBLIC_URL%/appdynamics.js" charset='UTF-8'></script>
     <script type="application/javascript" src='https://jsagent.nav.no/adrum/adrum.js'></script>
