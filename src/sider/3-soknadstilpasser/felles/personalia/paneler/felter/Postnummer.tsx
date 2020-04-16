@@ -19,6 +19,7 @@ const Postnummer = (props: MergedProps) => {
       name="adresse.postnummer"
       value={field.value.postnummer || ""}
       onChange={field.onChange}
+      autoComplete="postal-code"
     />
   );
 };

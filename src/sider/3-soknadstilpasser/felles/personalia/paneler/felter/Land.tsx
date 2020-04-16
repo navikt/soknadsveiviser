@@ -1,11 +1,8 @@
 import * as React from "react";
 import { Input } from "nav-frontend-skjema";
-import { injectIntl } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
 import { FieldProps } from "formik";
-import {
-  Personalia,
-  medPersonalia
-} from "../../../../../../states/providers/Personalia";
+import { Personalia, medPersonalia } from "../../../../../../states/providers/Personalia";
 import { InjectedIntlProps } from "react-intl";
 
 interface Fields {
@@ -24,17 +21,8 @@ const Land = (props: MergedProps) => {
       value={field.value.land || ""}
       onChange={field.onChange}
       onBlur={() => settTouched({ ...touched, land: true })}
-      feil={
-        !field.value.land
-          ? touched.land
-            ? {
-                feilmelding: intl.formatMessage({
-                  id: "personalia.error.land"
-                })
-              }
-            : undefined
-          : undefined
-      }
+      feil={!field.value.land ? touched.land ? <FormattedMessage id="personalia.error.land" /> : undefined : undefined}
+      autoComplete="country-name"
     />
   );
 };

@@ -2,7 +2,7 @@ import * as React from "react";
 import { Field, FieldProps } from "formik";
 import FodselsnummerFelter from "./felter/Fodselsnummer";
 import { RouteComponentProps, withRouter } from "react-router-dom";
-import { InjectedIntlProps, injectIntl } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import { Fodselsnummer, medPersonalia, Personalia } from "states/providers/Personalia";
 import { medValgtSoknadsobjekt, ValgtSoknad } from "states/providers/ValgtSoknadsobjekt";
@@ -15,6 +15,7 @@ import BlockContent from "@sanity/block-content-to-react";
 import { localeBlockTekst } from "../../../../../utils/sprak";
 import { link } from "../../../../../utils/serializers";
 import { Normaltekst } from "nav-frontend-typografi";
+import { SkjemaGruppe } from "nav-frontend-skjema";
 
 interface Routes {
   personEllerBedrift: string;
@@ -52,33 +53,35 @@ const FodselsnummerPanel = (props: MergedProps) => {
           apen={personEllerBedrift !== "bedrift"}
           tittel={<Normaltekst>{intl.formatMessage({ id: personHarFodselsnummerTekst() })}</Normaltekst>}
         >
-          <FodselsnummerFelter {...pr} />
-          {skalTilValgtEnhet && !erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
-            <>
-              <BlockContent
-                blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
-                serializers={{ marks: { link } }}
-              />
+          <SkjemaGruppe description={<FormattedMessage id={"personalia.undertekstbold.gdpr"} />}>
+            <FodselsnummerFelter {...pr} />
+            {skalTilValgtEnhet && !erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
+              <>
+                <BlockContent
+                  blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
+                  serializers={{ marks: { link } }}
+                />
+                <InnsendingsEnhetsvelger
+                  placeholder={props.intl.formatMessage({
+                    id: "personalia.label.navkontor"
+                  })}
+                  enhetstyper={muligeEnheterForInnsending}
+                  {...pr}
+                />
+              </>
+            )}
+            {erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
               <InnsendingsEnhetsvelger
                 placeholder={props.intl.formatMessage({
                   id: "personalia.label.navkontor"
                 })}
-                enhetstyper={muligeEnheterForInnsending}
+                label={intl.formatMessage({
+                  id: "klage.velg.behandlende.enhet"
+                })}
                 {...pr}
               />
-            </>
-          )}
-          {erKlageEllerAnkeOgSkalSendesTilKlageinstans(skalKlage, klageType, skalAnke) && (
-            <InnsendingsEnhetsvelger
-              placeholder={props.intl.formatMessage({
-                id: "personalia.label.navkontor"
-              })}
-              label={intl.formatMessage({
-                id: "klage.velg.behandlende.enhet"
-              })}
-              {...pr}
-            />
-          )}
+            )}
+          </SkjemaGruppe>
         </Ekspanderbartpanel>
       )}
     </Field>

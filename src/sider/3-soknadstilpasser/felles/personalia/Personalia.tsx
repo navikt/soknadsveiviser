@@ -171,7 +171,7 @@ class VisPersonalia extends Component<MergedProps, { visError?: boolean }> {
                   <FormattedMessage id={overskrift()} />
                 </Undertittel>
                 {this.state && this.state.visError && (
-                  <div className="skjemaelement__feilmelding">
+                  <div className="skjemaelement__feilmelding typo-feilmelding">
                     <FormattedMessage id="personalia.error.velgsituasjon" />
                   </div>
                 )}

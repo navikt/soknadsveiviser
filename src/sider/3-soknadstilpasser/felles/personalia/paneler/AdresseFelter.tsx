@@ -5,7 +5,6 @@ import { Adresse, Personalia } from "states/providers/Personalia";
 import InnsendingsEnhetsvelger from "./InnsendingsEnhetsvelger";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import { InjectedIntlProps, injectIntl, FormattedMessage } from "react-intl";
-import UndertekstBold from "nav-frontend-typografi/lib/undertekst-bold";
 import InputNavn from "./felter/Navn";
 import InputGateAdresse from "./felter/GateAdresse";
 import InputPostnummer from "./felter/Postnummer";
@@ -20,6 +19,7 @@ import { localeBlockTekst } from "../../../../../utils/sprak";
 import { link } from "../../../../../utils/serializers";
 import BlockContent from "@sanity/block-content-to-react";
 import TidligereKontaktetNAVEnhetsvelger from "./TidligereKontaktetNAVEnhetsvelger";
+import { SkjemaGruppe } from "nav-frontend-skjema";
 
 interface State {
   tidligereKontaktMedNAV: boolean;
@@ -46,52 +46,48 @@ class AdresseFelter extends Component<MergedProps, State> {
     const skalTilValgtEnhet = !skalTilSkanning && !skalTilSpesifisertAdresse && visEnheter;
 
     return touched ? (
-      <>
-        <UndertekstBold className="litenavstand">
-          <FormattedMessage id="personalia.undertekstbold.adresse" />
-        </UndertekstBold>
-        <div className="litenavstand">
-          <InputNavn {...this.props} />
-          <InputGateAdresse {...this.props} />
-          <InputPostnummer {...this.props} />
-          <InputPoststed {...this.props} />
-          <InputLand {...this.props} />
-          {!skalTilValgtEnhet && (
-            <>
-              <CheckboxTidligereKontaktMedNAV
-                tidligereKontaktMedNAV={tidligereKontaktMedNAV}
-                toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
-              />
-              {tidligereKontaktMedNAV && (
-                <TidligereKontaktetNAVEnhetsvelger
-                  label={intl.formatMessage({
-                    id: "personalia.label.velgnavkontor"
-                  })}
-                  placeholder={intl.formatMessage({
-                    id: "personalia.label.navkontor"
-                  })}
-                  {...this.props}
-                />
-              )}
-            </>
-          )}
-          {skalTilValgtEnhet && (
-            <>
-              <BlockContent
-                blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
-                serializers={{ marks: { link } }}
-              />
-              <InnsendingsEnhetsvelger
+      <SkjemaGruppe description={<FormattedMessage id="personalia.undertekstbold.adresse" />}>
+        <InputNavn {...this.props} />
+        <InputGateAdresse {...this.props} />
+        <InputPostnummer {...this.props} />
+        <InputPoststed {...this.props} />
+        <InputLand {...this.props} />
+        {!skalTilValgtEnhet && (
+          <>
+            <CheckboxTidligereKontaktMedNAV
+              tidligereKontaktMedNAV={tidligereKontaktMedNAV}
+              toggleTidligereKontaktMedNav={this.toggleTidligereKontaktMedNav}
+            />
+            {tidligereKontaktMedNAV && (
+              <TidligereKontaktetNAVEnhetsvelger
+                label={intl.formatMessage({
+                  id: "personalia.label.velgnavkontor"
+                })}
                 placeholder={intl.formatMessage({
                   id: "personalia.label.navkontor"
                 })}
-                enhetstyper={muligeEnheterForInnsending}
                 {...this.props}
               />
-            </>
-          )}
-        </div>
-      </>
+            )}
+          </>
+        )}
+        {skalTilValgtEnhet && (
+          <>
+            <BlockContent
+              className="skjemelement__label"
+              blocks={localeBlockTekst(innsendingsmate.visenheter!, intl.locale)}
+              serializers={{ marks: { link } }}
+            />
+            <InnsendingsEnhetsvelger
+              placeholder={intl.formatMessage({
+                id: "personalia.label.navkontor"
+              })}
+              enhetstyper={muligeEnheterForInnsending}
+              {...this.props}
+            />
+          </>
+        )}
+      </SkjemaGruppe>
     ) : (
       <NavFrontendSpinner type="XL" />
     );

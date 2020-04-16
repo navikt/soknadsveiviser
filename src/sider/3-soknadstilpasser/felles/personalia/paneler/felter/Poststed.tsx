@@ -1,11 +1,8 @@
 import * as React from "react";
 import { Input } from "nav-frontend-skjema";
-import { injectIntl } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
 import { FieldProps } from "formik";
-import {
-  Personalia,
-  medPersonalia
-} from "../../../../../../states/providers/Personalia";
+import { Personalia, medPersonalia } from "../../../../../../states/providers/Personalia";
 import { InjectedIntlProps } from "react-intl";
 
 interface Fields {
@@ -27,14 +24,11 @@ const Poststed = (props: MergedProps) => {
       feil={
         !field.value.sted
           ? touched.sted
-            ? {
-                feilmelding: intl.formatMessage({
-                  id: "personalia.error.sted"
-                })
-              }
+            ? <FormattedMessage id="personalia.error.sted" />
             : undefined
           : undefined
       }
+      autoComplete="address-level2"
     />
   );
 };
