@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Input } from "nav-frontend-skjema";
-import { injectIntl } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
 import { FieldProps } from "formik";
 import {
   Personalia,
@@ -27,12 +27,11 @@ const Navn = (props: MergedProps) => {
       feil={
         !field.value.navn
           ? touched.navn
-            ? {
-                feilmelding: intl.formatMessage({ id: "personalia.error.name" })
-              }
+            ? <FormattedMessage id="personalia.error.name" />
             : undefined
           : undefined
       }
+      autoComplete="name"
     />
   );
 };

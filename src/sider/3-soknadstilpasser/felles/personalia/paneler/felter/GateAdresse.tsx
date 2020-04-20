@@ -1,11 +1,8 @@
 import * as React from "react";
 import { Input } from "nav-frontend-skjema";
-import { injectIntl } from "react-intl";
+import { injectIntl, FormattedMessage } from "react-intl";
 import { FieldProps } from "formik";
-import {
-  Personalia,
-  medPersonalia
-} from "../../../../../../states/providers/Personalia";
+import { Personalia, medPersonalia } from "../../../../../../states/providers/Personalia";
 import { InjectedIntlProps } from "react-intl";
 
 interface Fields {
@@ -25,16 +22,13 @@ const GateAdresse = (props: MergedProps) => {
       onChange={field.onChange}
       onBlur={() => settTouched({ ...touched, adresse: true })}
       feil={
-        !field.value.adresse
-          ? touched.adresse
-            ? {
-                feilmelding: intl.formatMessage({
-                  id: "personalia.error.adresse"
-                })
-              }
-            : undefined
-          : undefined
+        !field.value.adresse ? (
+          touched.adresse ? (
+            <FormattedMessage id="personalia.error.adresse" />
+          ) : undefined
+        ) : undefined
       }
+      autoComplete="street-address"
     />
   );
 };
