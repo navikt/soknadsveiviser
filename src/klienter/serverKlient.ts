@@ -5,8 +5,7 @@ import { Enhetstype } from "../typer/soknad";
 
 export const fetchConfig = (): Promise<Config> =>
   fetch("/soknader/config")
-    // Denne sjekken er for proxy-polyfill for IE11 støtte, usikker på det er nødvendig i prod
-    .then(res => (Object.isExtensible(res) ? res.json() : res.clone().json()))
+    .then(parseJson)
     .catch(console.error);
 
 export const fetchEnheter = (enhetstyper?: Enhetstype[]): Promise<Enhet[]> => {
