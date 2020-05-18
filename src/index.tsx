@@ -12,11 +12,9 @@ import {
 } from "react-router-dom";
 import App from "./app";
 import { store, persistor } from "./states/store";
-import withMenu from "./mock/decorator/decorator-header-withmenu";
-import megamenu from "./mock/decorator/decorator-megamenu";
+import withMenu from "./mock/decorator/decorator-header";
 import footer from "./mock/decorator/decorator-footer";
 import scripts from "./mock/decorator/decorator-scripts";
-import skiplinks from "./mock/decorator/decorator-skiplinks";
 import styles from "./mock/decorator/decorator-styles";
 import * as serviceWorker from "./service-worker";
 import { fetchConfig } from "./klienter/serverKlient";
@@ -44,14 +42,11 @@ const init = async () => {
       "{{{NAV_SCRIPTS}}}",
       scripts
     );
-    document.body.innerHTML = document.body.innerHTML.replace(
-      "{{{NAV_SKIPLINKS}}}",
-      skiplinks
-    );
-    document.body.innerHTML = document.body.innerHTML.replace(
-      "{{{MEGAMENU_RESOURCES}}}",
-      megamenu
-    );
+
+    // Execute client.js in decorator
+    var script = document.createElement("script");
+    script.src = "https://www.nav.no/dekoratoren/client.js";
+    document.body.appendChild(script);
   }
   const config = await fetchConfig();
   setConfig(config);
