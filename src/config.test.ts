@@ -25,7 +25,7 @@ describe('missing decorator cookies', () => {
   it('resolves to privat person norsk if the cookie is empty', () => {
     const result = decoratorContextFromCookie('');
     expect(result.context).toEqual('PRIVATPERSON');
-    expect(result.nav_no_url).toEqual('https://nav.no/no/person');
+    expect(result.nav_no_url).toEqual('https://www.nav.no/no/person');
   });
 });
 
@@ -34,13 +34,13 @@ describe('decorator-context', () => {
     const cookie = 'decorator-context=PRIVATPERSON'
     const result = decoratorContextFromCookie(cookie);
     expect(result.context).toEqual('PRIVATPERSON');
-    expect(result.nav_no_url).toEqual('https://nav.no/no/person');
+    expect(result.nav_no_url).toEqual('https://www.nav.no/no/person');
   });
   it('resolves to arbeidsgiver when decorator-context === "ARBEIDSGIVER"', () => {
     const cookie = 'decorator-context=ARBEIDSGIVER';
     const result = decoratorContextFromCookie(cookie);
     expect(result.context).toEqual('ARBEIDSGIVER');
-    expect(result.nav_no_url).toEqual('https://nav.no/no/bedrift');
+    expect(result.nav_no_url).toEqual('https://www.nav.no/no/bedrift');
   });
 
   it('resolves to samarbeidspartner when decorator-context === "SAMARBEIDSPARTNER"', () => {
@@ -56,7 +56,7 @@ describe('decorator-language', () => {
     const cookie = 'decorator-language=SWAHILI; decorator-context=SAMARBEIDSPARTNER';
     const result = decoratorContextFromCookie(cookie);
     expect(result.context).toEqual('PRIVATPERSON');
-    expect(result.nav_no_url).toEqual('https://nav.no/no/person');
+    expect(result.nav_no_url).toEqual('https://www.nav.no/no/person');
   });
 
   it('there is no page for SAMARBEIDSPARTNER in english, so set context to PRIVATPERSON', () => {
