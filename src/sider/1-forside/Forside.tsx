@@ -13,8 +13,9 @@ import { Sidetittel } from "nav-frontend-typografi";
 import { FormattedMessage } from "react-intl";
 import Typer from "../../komponenter/header/typer/Typer";
 import { SideIngress } from "./seksjoner/SideIngress";
-import { Brodsmulesti, NAVSmule } from "../../komponenter/header/brodsmulesti/Brodsmulesti";
+import {Brodsmulesti, gumleNAV, Smule} from "../../komponenter/header/brodsmulesti/Brodsmulesti";
 import { TopplinjeContainer } from "../../komponenter/header/TopplinjeContainer";
+import {decoratorContextFromCookie} from "../../config";
 
 interface Routes {
   inngang: string;
@@ -29,11 +30,15 @@ interface ReduxProps {
 type MergedProps = RouteComponentProps<Routes> & ReduxProps;
 
 class Soknadsveiviser extends Component<MergedProps> {
+  navSmule: Smule | null = null;
+
   componentDidMount() {
     const { match, settValgtType } = this.props;
     const { personEllerBedrift } = match.params;
     const type = typeTilNorsk(personEllerBedrift);
     settValgtType(type);
+    const decoratorContext = decoratorContextFromCookie(document.cookie);
+    this.navSmule = gumleNAV(decoratorContext);
   }
 
   render() {
@@ -43,7 +48,7 @@ class Soknadsveiviser extends Component<MergedProps> {
         <Header>
           <TopplinjeContainer>
             <Brodsmulesti
-              listeOverSmuler={[NAVSmule, { tekst: <FormattedMessage id="sidetittel" />, lenke: location.pathname }]}
+              listeOverSmuler={[navSmule, { tekst: <FormattedMessage id="sidetittel" />, lenke: location.pathname }]}
             />
             <SprakVelger />
           </TopplinjeContainer>
