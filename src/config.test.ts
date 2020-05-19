@@ -34,6 +34,14 @@ describe('decorator-context', () => {
 });
 
 describe('decorator-language', () => {
+  it('if the language is unsupported, set norwegian url and privatperson', () => {
+    const cookie = 'kpi=0; decorator-language=SWAHILI; _gid=GA1.2.550779374.1589791679; utvalg=0;' +
+      ' decorator-context=SAMARBEIDSPARTNER; psCurrentState=Ready'
+    const result = decoratorContextFromCookie(cookie);
+    expect(result.context).toEqual('PRIVATPERSON');
+    expect(result.nav_no_url).toEqual('https://nav.no/no/person');
+  });
+
   it('there is no page for SAMARBEIDSPARTNER in english, so set context to PRIVATPERSON', () => {
     const cookie = 'kpi=0; decorator-language=ENGELSK; _gid=GA1.2.550779374.1589791679; utvalg=0;' +
       ' decorator-context=SAMARBEIDSPARTNER; psCurrentState=Ready'
