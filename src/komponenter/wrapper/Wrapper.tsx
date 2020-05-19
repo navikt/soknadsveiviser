@@ -9,8 +9,9 @@ import Header from "../header/Header";
 import { localeTekst } from "../../utils/sprak";
 import { usePrevious } from "../../utils/hooks";
 import SprakVelger from "../header/sprak/SprakVelger";
-import { Brodsmulesti, NAVSmule } from "../header/brodsmulesti/Brodsmulesti";
+import {Brodsmulesti, gumleNAV} from "../header/brodsmulesti/Brodsmulesti";
 import { TopplinjeContainer } from "../header/TopplinjeContainer";
+import {decoratorContextFromCookie} from "../../config";
 
 interface Routes {
   sprak: string;
@@ -33,7 +34,8 @@ const Wrapper = (props: MergedProps) => {
   const lastState = usePrevious({ sprak });
   const hasHash = props.location.hash;
   const localeChanged = lastState && sprak !== lastState.sprak;
-
+  const decoratorContext = decoratorContextFromCookie(document.cookie);
+  const navSmule = gumleNAV(decoratorContext);
   useEffect(() => {
     if (!hasHash && !localeChanged) {
       window.scrollTo(0, 0);
@@ -43,19 +45,18 @@ const Wrapper = (props: MergedProps) => {
   switch (props.kategorier.status) {
     case "RESULT": {
       const { valgtKategori, valgtUnderkategori } = props.kategorier;
+      const smuler = [navSmule,{
+        tekst: <FormattedMessage id="sidetittel" />,
+        lenke: props.location.pathname.split(`/${valgtUnderkategori.urlparam}`)[0]
+      },
+        { tekst: localeTekst(valgtUnderkategori.navn, intl.locale), lenke: match.url }
+      ];
       return (
         <>
           <Header>
             <TopplinjeContainer>
               <Brodsmulesti
-                listeOverSmuler={[
-                  NAVSmule,
-                  {
-                    tekst: <FormattedMessage id="sidetittel" />,
-                    lenke: props.location.pathname.split(`/${valgtUnderkategori.urlparam}`)[0]
-                  },
-                  { tekst: localeTekst(valgtUnderkategori.navn, intl.locale), lenke: match.url }
-                ]}
+                listeOverSmuler={smuler}
               />
               <SprakVelger />
             </TopplinjeContainer>

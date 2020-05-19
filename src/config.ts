@@ -23,7 +23,43 @@ export const getTjenesteUrl = (): string => {
   }
 };
 
+function spraakToNavNoUrl(language: string) {
+  switch (language) {
+    case 'SAMISK':
+      return 'https://www.nav.no/se/samegiella';
+    case 'ENGELSK':
+      return 'https://www.nav.no/en/home';
+  }
+  return 'https://nav.no/no/person';
+}
+
+export function cookieStringToDictionary(cookie: string) {
+  const cookies = cookie.split(';');
+  const keyValue: { [key: string]: string } = {};
+  cookies.forEach((cookieString) => {
+    const [key, value] = cookieString.trim().split('=');
+    keyValue[key] = value;
+  });
+  return keyValue;
+}
+
+export const decoratorContextFromCookie = (cookie: string) => {
+  const keyValue = cookieStringToDictionary(cookie);
+  const language = keyValue['decorator-language'];
+  if (language && language !== 'NORSK') {
+    return {context: 'PRIVATPERSON', nav_no_url: spraakToNavNoUrl(language)}
+  }
+  switch (keyValue['decorator-context']) {
+    case 'ARBEIDSGIVER':
+      return {context: 'ARBEIDSGIVER', nav_no_url: 'https://nav.no/no/bedrift'}
+    case 'SAMARBEIDSPARTNER':
+      return {context: 'SAMARBEIDSPARTNER', nav_no_url: 'https://www.nav.no/no/samarbeidspartner'}
+  }
+  return {context: 'PRIVATPERSON', nav_no_url: 'https://nav.no/no/person'}
+}
+
 export const getConfig = (): Config => config;
+
 export const getDefault = (): Config => ({
   proxyUrl: "http://localhost:8080/soknadsveiviserproxy",
   tjenesteUrl: "https://tjenester-q0.nav.no",
