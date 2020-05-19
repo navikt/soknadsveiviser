@@ -33,7 +33,7 @@ function spraakToNavNoUrl(language: string) {
   return 'https://nav.no/no/person';
 }
 
-function cookieStringToDictionary(cookie: string) {
+export function cookieStringToDictionary(cookie: string) {
   const cookies = cookie.split(';');
   const keyValue: { [key: string]: string } = {};
   cookies.forEach((cookieString) => {
@@ -59,6 +59,7 @@ export const decoratorContextFromCookie = (cookie: string) => {
 }
 
 export const getConfig = (): Config => config;
+
 export const getDefault = (): Config => ({
   proxyUrl: "http://localhost:8080/soknadsveiviserproxy",
   tjenesteUrl: "https://tjenester-q0.nav.no",
