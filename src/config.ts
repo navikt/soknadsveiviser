@@ -30,7 +30,7 @@ function spraakToNavNoUrl(language: string) {
     case 'ENGELSK':
       return 'https://www.nav.no/en/home';
   }
-  return 'https://nav.no/no/person';
+  return 'https://www.nav.no/no/person';
 }
 
 export function cookieStringToDictionary(cookie: string) {
@@ -51,11 +51,11 @@ export const decoratorContextFromCookie = (cookie: string) => {
   }
   switch (keyValue['decorator-context']) {
     case 'ARBEIDSGIVER':
-      return {context: 'ARBEIDSGIVER', nav_no_url: 'https://nav.no/no/bedrift'}
+      return {context: 'ARBEIDSGIVER', nav_no_url: 'https://www.nav.no/no/bedrift'}
     case 'SAMARBEIDSPARTNER':
       return {context: 'SAMARBEIDSPARTNER', nav_no_url: 'https://www.nav.no/no/samarbeidspartner'}
   }
-  return {context: 'PRIVATPERSON', nav_no_url: 'https://nav.no/no/person'}
+  return {context: 'PRIVATPERSON', nav_no_url: 'https://www.nav.no/no/person'}
 }
 
 export const getConfig = (): Config => config;
