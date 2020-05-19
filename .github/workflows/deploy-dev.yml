@@ -3,7 +3,7 @@ on:
   pull_request:
   push:
     branches:
-      - master
+      - bytte-dekorator-url
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
           docker push $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION
       - name: Generate nais variables
         run: |
-          cat > .nais/vars.yaml <<EOF
+          cat > .nais/vars-dev.yaml <<EOF
           namespace: default
           ingresses:
             - https://soknadsveiviser.nais.oera-q.no
