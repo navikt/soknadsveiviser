@@ -16,14 +16,7 @@ const cache = new NodeCache({
 });
 
 
-let getUrl = () => `${fs.readFileSync(
-            "/var/run/secrets/nais.io/vault/appres.cms.url",
-            "utf8"
-        )}/common-html/v4/navno?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true&skiplinks=true&megamenu-resources=true`;
-
-if (process.env.NODE_ENV === 'development') {
-  getUrl = () => process.env.DECORATOR_URL || 'https://www.nav.no/dekoratoren/?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true&skiplinks=true&megamenu-resources=true'
-}
+const dekoratorURL = process.env.DECORATOR_URL;
 
 
 const getDecorator = () =>
@@ -32,7 +25,7 @@ const getDecorator = () =>
         if (decorator) {
             resolve(decorator);
         } else {
-            request(getUrl(), (error, response, body) => {
+            request(dekoratorURL, (error, response, body) => {
                 if (!error && response.statusCode >= 200 && response.statusCode < 400) {
                     const { document } = new JSDOM(body).window;
                     const prop = "innerHTML";
@@ -46,7 +39,7 @@ const getDecorator = () =>
                     logger.info(`Creating cache for decorator`);
                     resolve(data);
                 } else {
-                    reject(logger.error(`${error.message} ${getUrl()}`));
+                    reject(logger.error(`${error.message} ${dekoratorURL}`));
                 }
             });
         }
