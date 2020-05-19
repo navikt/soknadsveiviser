@@ -5,7 +5,7 @@ import Lenke from "nav-frontend-lenker";
 import { HoyreChevron, VenstreChevron } from "nav-frontend-chevron";
 import { useErMobil } from "../../../utils/useErMobil";
 
-interface Smule {
+export interface Smule {
   tekst: ReactNode;
   lenke: string;
 }
@@ -51,7 +51,6 @@ const BrodsmulestiMobil = (props: { forrigeSmule: Smule }) => (
   </>
 );
 
-export const NAVSmule = {
-  lenke: "https://www.nav.no",
-  tekst: <span>nav.no</span>
-};
+export const gumleNAV = (decoratorContext: {nav_no_url: string, context: string}) => {
+  return {tekst: <span>nav.no</span>, lenke: decoratorContext.nav_no_url}
+}
