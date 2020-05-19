@@ -42,6 +42,7 @@ jobs:
             - https://www-q1.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
+          decoratorurl: https://www-q1.nav.no/dekoratoren/
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
