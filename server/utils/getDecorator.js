@@ -15,10 +15,15 @@ const cache = new NodeCache({
     checkperiod: SECONDS_PER_MINUTE
 });
 
-const getUrl = () => `${fs.readFileSync(
+
+let getUrl = () => `${fs.readFileSync(
             "/var/run/secrets/nais.io/vault/appres.cms.url",
             "utf8"
         )}/common-html/v4/navno?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true&skiplinks=true&megamenu-resources=true`;
+
+if (process.env.NODE_ENV === 'development') {
+  getUrl = () => process.env.DECORATOR_URL || 'https://www.nav.no/dekoratoren/?header-withmenu=true&styles=true&scripts=true&footer-withmenu=true&skiplinks=true&megamenu-resources=true'
+}
 
 
 const getDecorator = () =>
