@@ -33,13 +33,18 @@ function spraakToNavNoUrl(language: string) {
   return 'https://nav.no/no/person';
 }
 
-export const decoratorContextFromCookie = (cookie: string) => {
+function cookieStringToDictionary(cookie: string) {
   const cookies = cookie.split(';');
   const keyValue: { [key: string]: string } = {};
   cookies.forEach((cookieString) => {
     const [key, value] = cookieString.trim().split('=');
     keyValue[key] = value;
   });
+  return keyValue;
+}
+
+export const decoratorContextFromCookie = (cookie: string) => {
+  const keyValue = cookieStringToDictionary(cookie);
   const language = keyValue['decorator-language'];
   if (language && language !== 'NORSK') {
     return {context: 'PRIVATPERSON', nav_no_url: spraakToNavNoUrl(language)}
