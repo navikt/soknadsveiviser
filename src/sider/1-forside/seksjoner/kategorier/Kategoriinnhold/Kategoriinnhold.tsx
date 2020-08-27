@@ -25,7 +25,7 @@ const Kategoriinnhold = (props: MergedProps) => {
         backgroundColor={valgtKategori.domenefarge}
         borderColor={valgtKategori.kantfarge}
       />
-      <Underkategorier valgtKategori={valgtKategori} {...props} />
+      <Underkategorier {...props} />
     </div>
   );
 };

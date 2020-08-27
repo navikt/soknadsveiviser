@@ -33,7 +33,6 @@ const InnsendingsEnhetsvelger = (props: MergedProps) => {
     <Enhetsvelger
       label={props.label}
       handleChange={handleChange}
-      placeholder={props.placeholder}
       enheter={enheter}
       {...props}
     />
