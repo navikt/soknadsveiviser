@@ -67,7 +67,7 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps) => {
           </HashLink>
         </div>
       </div>
-      {vedleggsskjemaliste.length > 1 && (
+      {vedleggsskjemaliste.length > 0 && (
         <div className="skjemautlisting__vedlegg">
           <Normaltekst>
             <FormattedMessage id="skjemautlisting.vedleggsskjema" />
