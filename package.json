@@ -109,7 +109,7 @@
     "@types/react-select": "^3.0.19",
     "@types/react-table": "^6.8.7",
     "@types/smoothscroll-polyfill": "^0.3.1",
-    "cypress": "^4.12.1",
+    "cypress": "^5.0.0",
     "fetch-mock": "^9.10.7",
     "less": "^3.12.2",
     "less-watch-compiler": "^1.14.6",
