@@ -20,9 +20,6 @@ spec:
   readiness:
     path: /soknader/internal/isReady
     initialDelay: 10
-  prometheus:
-    enabled: true
-    path: {{baseurl}}/internal/metrics
   vault:
     enabled: true
   replicas:
@@ -34,6 +31,7 @@ spec:
       cpu: '3'
       memory: 768Mi
     requests:
+      cpu: 200m
       memory: 512Mi
   env:
   -   name: DECORATOR_URL
