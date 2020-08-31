@@ -15,6 +15,7 @@ import { hentSkjemanummerHash } from "../../../utils/hentSkjemanummerHash";
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
 import Ingress from "nav-frontend-typografi/lib/ingress";
 import { VisSoknadslenke } from "./seksjoner/VisSoknadslenke";
+import Helmet from "react-helmet";
 
 interface State {
   data: Kategori[];
@@ -41,13 +42,17 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
 
     return (
       <div className="side__wrapper">
+        <Helmet>
+          <title>{intl.formatMessage({ id: "skjemautlisting.lenketil.detaljert" })}</title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="innhold__container">
           <Hovedbanner
             tittel={intl.formatMessage({
-              id: "skjemautlisting.lenketil.detaljert"
+              id: "skjemautlisting.lenketil.detaljert",
             })}
             undertittel={intl.formatMessage({
-              id: "skjemautlisting"
+              id: "skjemautlisting",
             })}
           />
           <PanelBase>
@@ -55,12 +60,7 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
               <Lenkepanel tittelProps="element" href="skjema" border={true}>
                 <FormattedMessage id="skjemautlisting.lenketil.skjema" />
               </Lenkepanel>
-              <Lenkepanel
-                className="skjemautlisting__lenkepanel"
-                tittelProps="element"
-                href="sed"
-                border={true}
-              >
+              <Lenkepanel className="skjemautlisting__lenkepanel" tittelProps="element" href="sed" border={true}>
                 <FormattedMessage id="skjemautlisting.lenketil.sed" />
               </Lenkepanel>
             </div>
@@ -74,13 +74,13 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
                   <span>{" – " + kategori.domene}</span>
                 </Innholdstittel>
                 <hr />
-                {kategori.underkategorier.map(underkategori => (
+                {kategori.underkategorier.map((underkategori) => (
                   <div key={localeTekst(underkategori.navn, intl.locale)}>
                     <Systemtittel>
                       <LocaleTekst tekst={underkategori.navn} />
                     </Systemtittel>
                     {underkategori.soknadsobjekter &&
-                      underkategori.soknadsobjekter.map(soknadsobjekt => (
+                      underkategori.soknadsobjekter.map((soknadsobjekt) => (
                         <VisSoknadsobjekt
                           key={soknadsobjekt._id}
                           kategori={kategori}
@@ -90,9 +90,9 @@ class SkjemautlistingDetaljert extends Component<MergedProps, State> {
                         />
                       ))}
                     {underkategori.soknadslenker &&
-                    underkategori.soknadslenker.map(soknadslenke => (
-                      <VisSoknadslenke key={soknadslenke._id} soknadslenke={soknadslenke}/>
-                    ))}
+                      underkategori.soknadslenker.map((soknadslenke) => (
+                        <VisSoknadslenke key={soknadslenke._id} soknadslenke={soknadslenke} />
+                      ))}
                   </div>
                 ))}
               </div>

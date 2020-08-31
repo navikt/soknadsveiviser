@@ -1,8 +1,5 @@
 import * as React from "react";
-import {
-  apiKallAlleSEDSkjemaer,
-  apiKallAlleSkjemaer
-} from "../../../klienter/sanityKlient";
+import { apiKallAlleSEDSkjemaer, apiKallAlleSkjemaer } from "../../../klienter/sanityKlient";
 import Hovedbanner from "../../../komponenter/bannere/Hovedbanner";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
 import PanelBase from "nav-frontend-paneler";
@@ -11,7 +8,9 @@ import { injectIntl, InjectedIntlProps, FormattedMessage, FormattedHTMLMessage }
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
 import Oversiktstabell from "./tabeller/Oversiktstabell";
 import Spinner from "../../../komponenter/spinner/Spinner";
-import Ingress from "nav-frontend-typografi/lib/ingress";
+import { Element, Ingress } from "nav-frontend-typografi";
+import Helmet from "react-helmet";
+import Lenke from "nav-frontend-lenker";
 
 interface State {
   skjemaer: Skjema[];
@@ -25,9 +24,7 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
   }
 
   componentDidUpdate(prevProps: RouteComponentProps<{ skjematype?: string }>) {
-    if (
-      this.props.match.params.skjematype !== prevProps.match.params.skjematype
-    ) {
+    if (this.props.match.params.skjematype !== prevProps.match.params.skjematype) {
       this.hentSkjemaer();
     }
   }
@@ -50,13 +47,21 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
     const lenketil = skjematype === "skjema" ? "sed" : "skjema";
     return (
       <div className="side__wrapper">
+        <Helmet>
+          <title>
+            {intl.formatMessage({
+              id: "skjemautlisting.lenketil." + skjematype,
+            })}
+          </title>
+          <meta name="robots" content="noindex" />
+        </Helmet>
         <div className="skjemautlisting__container">
           <Hovedbanner
             tittel={intl.formatMessage({
-              id: "skjemautlisting.lenketil." + skjematype
+              id: "skjemautlisting.lenketil." + skjematype,
             })}
             undertittel={intl.formatMessage({
-              id: "skjemautlisting"
+              id: "skjemautlisting",
             })}
           />
           <PanelBase>
@@ -64,23 +69,21 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
               <Lenkepanel tittelProps="element" href={lenketil} border={true}>
                 <FormattedMessage id={"skjemautlisting.lenketil." + lenketil} />
               </Lenkepanel>
-              <Lenkepanel
-                className="skjemautlisting__lenkepanel"
-                tittelProps="element"
-                href="detaljert"
-                border={true}
-              >
+              <Lenkepanel className="skjemautlisting__lenkepanel" tittelProps="element" href="detaljert" border={true}>
                 <FormattedMessage id="skjemautlisting.lenketil.detaljert" />
               </Lenkepanel>
             </div>
-            {skjematype === "sed" &&
+            {skjematype === "sed" && (
               <Ingress className="skjemautlisting__litenmargin-overunder">
                 <FormattedHTMLMessage id="skjemautlisting.sed.forklaring" />
               </Ingress>
-            }
-            {this.state
-              ? <Oversiktstabell skjemaer={this.state.skjemaer}/>
-              : <Spinner />}
+            )}
+            <Lenke href="https://navno.sharepoint.com/sites/fag-og-ytelser-skjema-og-maler/SitePages/Skjema.aspx">
+              <Element className="skjemautlisting__litenmargin-overunder">
+                Prøv det nye skjemasøket på Navet
+              </Element>
+            </Lenke>
+            {this.state ? <Oversiktstabell skjemaer={this.state.skjemaer} /> : <Spinner />}
           </PanelBase>
         </div>
       </div>
