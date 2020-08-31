@@ -33,8 +33,6 @@ const TidligereKontaktetNAVEnhetsvelger = (props: MergedProps) => {
 
   return (
     <Enhetsvelger
-      label={props.label}
-      placeholder={props.placeholder}
       handleChange={handleChange}
       enheter={enheter}
       {...props}
