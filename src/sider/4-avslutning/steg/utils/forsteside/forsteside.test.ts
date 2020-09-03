@@ -24,7 +24,9 @@ const dummySoknad: Soknadsobjekt = {
   vedleggtilsoknad: [],
   innsendingsmate: {},
   urlparam: '',
-  kanKlage: false,
+  klageAnke: {
+    kanKlage: false
+  },
   navn: {'nb-NO': 'Fisle Narrepanne'},
   hovedskjema: {
     skjemanummer: 'flesk', navn: {'nb-NO': 'flesk flesk'},

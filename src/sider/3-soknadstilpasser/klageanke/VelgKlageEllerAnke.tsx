@@ -7,10 +7,10 @@ import { localeTekst } from "utils/sprak";
 import { medValgtSoknadsobjekt } from "states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "utils/sprak";
 import { Normaltekst, Undertittel } from "nav-frontend-typografi";
-import { Link } from "react-router-dom";
 import NotFound from "../../404/404";
 import { kanKlage } from "../../../utils/kanKlage";
 import Helmet from "react-helmet";
+import Lenke from "nav-frontend-lenker";
 
 interface Props {
   valgtSoknadsobjekt: Soknadsobjekt;
@@ -33,32 +33,25 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
     const { hovedskjema } = valgtSoknadsobjekt;
 
     const title = sideTittel(
-      `${localeTekst(
-        valgtSoknadsobjekt.navn,
-        intl.locale
-      )} - ${intl.formatMessage({
-        id: "anke.eller.klage.sidetittel"
+      `${localeTekst(valgtSoknadsobjekt.navn, intl.locale)} - ${intl.formatMessage({
+        id: "anke.eller.klage.sidetittel",
       })}`
     );
 
-    const metaDescription = intl.formatMessage({
-        id: "anke.eller.klage.meta_desc"
+    const metaDescription = intl.formatMessage(
+      {
+        id: "anke.eller.klage.meta_desc",
       },
-      {soknadsnavn: localeTekst(
-        valgtSoknadsobjekt.navn,
-        intl.locale)}
-      );
+      { soknadsnavn: localeTekst(valgtSoknadsobjekt.navn, intl.locale) }
+    );
 
+    const { sprak, skjemanummer, kategori, underkategori, personEllerBedrift } = match.params;
 
-    const {
-      sprak,
-      skjemanummer,
-      kategori,
-      underkategori,
-      personEllerBedrift
-    } = match.params;
+    const klageAnkeBrevPath = `/soknader/${sprak}/${personEllerBedrift}/${kategori}/${underkategori}/${skjemanummer}`;
+    const klageUrl = valgtSoknadsobjekt.klageAnke?.klageUrl || `${klageAnkeBrevPath}/klage/brev`;
+    const ankeUrl = `${klageAnkeBrevPath}/anke/brev`;
 
-    if (kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)) {
+    if (kanKlage(valgtSoknadsobjekt.klageAnke, personEllerBedrift)) {
       return (
         <>
           <Helmet>
@@ -79,20 +72,9 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
               </Normaltekst>
             </div>
             <div className="klageanke__knapper">
-              <Link
-                to={
-                  `/soknader` +
-                  `/${sprak}` +
-                  `/${personEllerBedrift}` +
-                  `/${kategori}` +
-                  `/${underkategori}` +
-                  `/${skjemanummer}` +
-                  `/klage/brev`
-                }
-                className="knapp knapp-hoved"
-              >
+              <Lenke href={klageUrl} className="knapp knapp-hoved">
                 <FormattedMessage id="klage.mellomledd.knapp" />
-              </Link>
+              </Lenke>
             </div>
           </div>
           <div className="klageanke__container">
@@ -105,20 +87,9 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
               </Normaltekst>
             </div>
             <div className="klageanke__knapper">
-              <Link
-                to={
-                  `/soknader` +
-                  `/${sprak}` +
-                  `/${personEllerBedrift}` +
-                  `/${kategori}` +
-                  `/${underkategori}` +
-                  `/${skjemanummer}` +
-                  `/anke/brev`
-                }
-                className="knapp knapp-hoved"
-              >
+              <Lenke href={ankeUrl} className="knapp knapp-hoved">
                 <FormattedMessage id="anke.mellomledd.knapp" />
-              </Link>
+              </Lenke>
             </div>
           </div>
         </>
@@ -130,8 +101,6 @@ class VelgKlageEllerAnke extends Component<MergedProps> {
 
 export default medValgtSoknadsobjekt(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
-      VelgKlageEllerAnke
-    )
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(VelgKlageEllerAnke)
   )
 );

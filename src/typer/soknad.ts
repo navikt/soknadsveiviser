@@ -19,7 +19,7 @@ export interface Soknadsobjekt {
   tema: Tema;
   urlparam: string;
   innsendingsmate: Innsendingsmate;
-  kanKlage: boolean;
+  klageAnke?: KlageAnke;
   brukertyper: Brukertype[];
   varseltekst?: LocaleBlockText;
   muligeEnheterForInnsending?: Enhetstype[];
@@ -37,7 +37,7 @@ export interface Soknadslenke {
 export interface Skjemalenke {
   _id: string;
   navn: LocaleString;
-  hovedskjema: Skjema
+  hovedskjema: Skjema;
   beskrivelse?: LocaleBlockText;
   infoLenker?: Lenkeobjekt[];
   varseltekst?: LocaleBlockText;
@@ -75,6 +75,11 @@ export interface Lenkeobjekt {
 
 export interface Enhetstype {
   name: string;
+}
+
+export interface KlageAnke {
+  kanKlage: boolean;
+  klageUrl?: string;
 }
 
 type Brukertype = "tiltaksbedrift" | "personmedfnr" | "personutenfnr" | "flerepersoner";

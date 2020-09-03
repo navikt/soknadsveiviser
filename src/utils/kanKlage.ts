@@ -1,1 +1,4 @@
-export const kanKlage = (kanKlage: boolean, type: string) => kanKlage && type !== "bedrift";
+import { KlageAnke } from "../typer/soknad";
+
+export const kanKlage = (klageAnke: KlageAnke | undefined, type: string) =>
+  klageAnke && klageAnke.kanKlage && type !== "bedrift";

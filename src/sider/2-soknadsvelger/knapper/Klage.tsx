@@ -19,7 +19,7 @@ const Soknad = (props: MergedProps) => {
   const { skjemanummer } = soknadsobjekt.hovedskjema;
   const { personEllerBedrift } = match.params;
 
-  return kanKlage(soknadsobjekt.kanKlage, personEllerBedrift) ? (
+  return kanKlage(soknadsobjekt.klageAnke, personEllerBedrift) ? (
     <SettValgtSoknadsobjekt
       to={`${hentUrl(match.url)}/${skjemanummer}/klage-eller-anke/brev`}
       title="klageanke.knapp"

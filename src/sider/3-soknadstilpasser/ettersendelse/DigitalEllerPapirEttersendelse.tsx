@@ -6,10 +6,7 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import SoknadEttersendelse from "./seksjoner/Soknad";
 import KlageAnkeEttersendelse from "./seksjoner/KlageAnke";
 import { localeTekst } from "../../../utils/sprak";
-import {
-  finnesDigitalEttersendelse,
-  finnesDokumentinnsending
-} from "../../../utils/soknadsobjekter";
+import { finnesDigitalEttersendelse, finnesDokumentinnsending } from "../../../utils/soknadsobjekter";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "../../../utils/sprak";
 import { getTjenesteUrl } from "../../../config";
@@ -34,22 +31,10 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
   render() {
     const { intl, valgtSoknadsobjekt, match } = this.props;
     const { hovedskjema } = valgtSoknadsobjekt;
-    const erDigitalEttersendelse = finnesDigitalEttersendelse(
-      valgtSoknadsobjekt,
-      intl.locale
-    );
-    const {
-      sprak,
-      personEllerBedrift,
-      kategori,
-      underkategori,
-      skjemanummer
-    } = match.params;
+    const erDigitalEttersendelse = finnesDigitalEttersendelse(valgtSoknadsobjekt, intl.locale);
+    const { sprak, personEllerBedrift, kategori, underkategori, skjemanummer } = match.params;
 
-    if (
-      !erDigitalEttersendelse &&
-      !kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift)
-    ) {
+    if (!erDigitalEttersendelse && !kanKlage(valgtSoknadsobjekt.klageAnke, personEllerBedrift)) {
       return (
         <Redirect
           to={
@@ -66,71 +51,52 @@ class DigitalEllerPapirEttersendelse extends Component<MergedProps> {
     }
 
     const title = sideTittel(
-      `${localeTekst(
-        valgtSoknadsobjekt.navn,
-        intl.locale
-      )} - ${intl.formatMessage({
-        id: "ettersendelser.mellomledd.tittel"
+      `${localeTekst(valgtSoknadsobjekt.navn, intl.locale)} - ${intl.formatMessage({
+        id: "ettersendelser.mellomledd.tittel",
       })}`
     );
     const metaDescription = intl.formatMessage(
-      {id: "ettersendelser.mellomledd.soknad.meta_desc"},
-      {soknadsnavn: localeTekst(valgtSoknadsobjekt.navn, intl.locale).toLowerCase()});
+      { id: "ettersendelser.mellomledd.soknad.meta_desc" },
+      { soknadsnavn: localeTekst(valgtSoknadsobjekt.navn, intl.locale).toLowerCase() }
+    );
 
-    return (<>
-      <Helmet>
-        <title>{title}</title>
-        <meta name="description" content={metaDescription} />
-      </Helmet>
-      <Underbanner
-        tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
-        skjemanummer={hovedskjema.skjemanummer}
-      />
-      <SoknadEttersendelse
-        digitalEttersendelse={erDigitalEttersendelse}
-        url={urlTilDokumentinnsendingEllerSoknadsdialog(
-          this.props.match.url,
-          valgtSoknadsobjekt,
-          intl.locale
-        )}
-      />
-      {kanKlage(valgtSoknadsobjekt.kanKlage, personEllerBedrift) && <KlageAnkeEttersendelse />}
-    </>);
+    return (
+      <>
+        <Helmet>
+          <title>{title}</title>
+          <meta name="description" content={metaDescription} />
+        </Helmet>
+        <Underbanner
+          tittel={localeTekst(valgtSoknadsobjekt.navn, intl.locale)}
+          skjemanummer={hovedskjema.skjemanummer}
+        />
+        <SoknadEttersendelse
+          digitalEttersendelse={erDigitalEttersendelse}
+          url={urlTilDokumentinnsendingEllerSoknadsdialog(this.props.match.url, valgtSoknadsobjekt, intl.locale)}
+        />
+        {kanKlage(valgtSoknadsobjekt.klageAnke, personEllerBedrift) && <KlageAnkeEttersendelse />}
+      </>
+    );
   }
 }
 
 export default medValgtSoknadsobjekt(
   injectIntl<Props & InjectedIntlProps>(
-    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(
-      DigitalEllerPapirEttersendelse
-    )
+    withRouter<Props & InjectedIntlProps & RouteComponentProps<Routes>, any>(DigitalEllerPapirEttersendelse)
   )
 );
 
-const urlTilDokumentinnsendingEllerSoknadsdialog = (
-  path: string,
-  valgtSoknadsobjekt: Soknadsobjekt,
-  locale: string
-) =>
+const urlTilDokumentinnsendingEllerSoknadsdialog = (path: string, valgtSoknadsobjekt: Soknadsobjekt, locale: string) =>
   finnesDokumentinnsending(valgtSoknadsobjekt)
     ? `${path}/dokumentinnsending`
     : hentDigitalEttersendelsesURL(valgtSoknadsobjekt, locale);
 
-const hentDigitalEttersendelsesURL = (
-  soknadsobjekt: Soknadsobjekt,
-  locale: string
-) => {
+const hentDigitalEttersendelsesURL = (soknadsobjekt: Soknadsobjekt, locale: string) => {
   return soknadsobjekt.digitalinnsending &&
     soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
     soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse &&
-    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
-      .ettersendelsesURL &&
-    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
-      .ettersendelsesURL.nb
-    ? localeTekst(
-        soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse
-          .ettersendelsesURL,
-        locale
-      )
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL &&
+    soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL.nb
+    ? localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL, locale)
     : `${getTjenesteUrl()}/saksoversikt/ettersending`;
 };
