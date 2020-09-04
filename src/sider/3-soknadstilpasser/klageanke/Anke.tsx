@@ -82,7 +82,7 @@ class VisKlage extends Component<MergedProps> {
 
     if (
       !this.props.klageSoknadsobjekt ||
-      !kanKlage(valgtSoknadsobjekt.kanKlage, match.params.personEllerBedrift)
+      !kanKlage(valgtSoknadsobjekt.klageAnke, match.params.personEllerBedrift)
     ) {
       return null;
     }
