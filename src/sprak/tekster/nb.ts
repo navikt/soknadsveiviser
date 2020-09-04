@@ -108,7 +108,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "ettersendelser.mellomledd.klageanke.tittel": `Ettersende til klage eller anke`,
   "sidetittel": `Søknad og skjema`,
   "sideingress": `Du finner søknader og skjemaer, mulighet for ettersendelse av dokumentasjon og klageskjema når du velger emne nedenfor.`,
-  "kategori.velg": `Meny`,
+  "kategori.velg": `Søknadskategorier`,
   "kategori.meta_desc": `{kategoritittel}: Send inn søknad / skjema, tilleggsdokumentasjon  eller klage-/ankeskjema.`,
   "kategorier.knapp.bedrift": `Bedrift`,
   "kategorier.knapp.engelsk": `English`,
