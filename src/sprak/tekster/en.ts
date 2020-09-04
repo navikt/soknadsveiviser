@@ -23,7 +23,7 @@ export default {
   "avslutning.steg.lastned.knapp.merge": `Merging files`,
   "avslutning.steg.lastned.knapp.download": `Downloading`,
   "avslutning.steg.forsteside.tittel": `Download the cover sheet for your application`,
-  "avslutning.steg.forsteside.pdf.tittel": `Cover sheet`,
+  "avslutning.steg.forsteside.pdf.tittel": `Cover sheet / Førstesideark`,
   "avslutning.steg.forsteside.beskrivelse": `The cover sheet contains important information about the <b>NAV unit</b> that will receive the documents. It also contains the address to which the documents should be sent.`,
   "avslutning.steg.forsteside.nedlastingsfeil": `Something went wrong. Try again later. We are working to correct the error.`,
   "avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger": `Help us understand what went wrong.`,
