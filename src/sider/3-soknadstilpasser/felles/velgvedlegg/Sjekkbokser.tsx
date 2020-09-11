@@ -1,20 +1,19 @@
-import React, { SyntheticEvent } from "react";
-import { injectIntl, InjectedIntlProps } from "react-intl";
-import { Vedleggsobjekt } from "typer/skjemaogvedlegg";
-import { Dispatch } from "redux";
-import { toggleInnsendingVedlegg } from "states/reducers/vedlegg";
-import { toggleValgtVedleggForSjekkbokser } from "states/reducers/vedlegg";
-import { Store } from "typer/store";
-import { Soknadsobjekt } from "typer/soknad";
-import { withRouter, RouteComponentProps } from "react-router";
-import { connect } from "react-redux";
+import React, {SyntheticEvent} from "react";
+import {injectIntl, InjectedIntlProps} from "react-intl";
+import {Vedleggsobjekt} from "typer/skjemaogvedlegg";
+import {Dispatch} from "redux";
+import {toggleInnsendingVedlegg} from "states/reducers/vedlegg";
+import {toggleValgtVedleggForSjekkbokser} from "states/reducers/vedlegg";
+import {Store} from "typer/store";
+import {Soknadsobjekt} from "typer/soknad";
+import {withRouter, RouteComponentProps} from "react-router";
+import {connect} from "react-redux";
 import PanelBase from "nav-frontend-paneler";
 import CheckboksPanelGruppe from "nav-frontend-skjema/lib/checkboks-panel-gruppe";
-import { localeTekst } from "utils/sprak";
-import { localeVedleggstittel } from "utils/soknadsobjekter";
+import {localeVedleggstittel} from "utils/soknadsobjekter";
 
 interface Props {
-  soknadsobjekt?: Soknadsobjekt;
+  soknadsobjekt: Soknadsobjekt;
   skillUtPakrevde?: boolean;
 }
 
@@ -27,41 +26,28 @@ interface ReduxProps {
   toggleInnsendingVedlegg: (_key: string, soknadsobjektId: string) => void;
 }
 
+const sjekkboksPanelPropsForVedlegg = (vedleggsobjekt: Vedleggsobjekt, locale: string, markert: boolean) => {
+  return {
+    key: vedleggsobjekt._key,
+    label: localeVedleggstittel(vedleggsobjekt, locale),
+    value: vedleggsobjekt._key,
+    checked: markert
+  };
+}
+
 type MergedProps = Props & InjectedIntlProps & RouteComponentProps & ReduxProps;
-const Sjekkbokser = (props: MergedProps) => {
-  const {
-    intl,
-    soknadsobjekt,
-    valgteVedlegg,
-    toggleValgtVedleggForSjekkbokser,
-    toggleInnsendingVedlegg
-  } = props;
-
-  if (!soknadsobjekt) {
-    return null;
-  }
-
+const Sjekkbokser = ({
+                       intl,
+                       soknadsobjekt,
+                       valgteVedlegg,
+                       toggleValgtVedleggForSjekkbokser,
+                       toggleInnsendingVedlegg,
+                       skillUtPakrevde
+                     }: MergedProps) => {
   const handleOnChange = (
     event: SyntheticEvent<EventTarget, Event>,
     value?: string
   ) => value && toggleValgtVedleggForSjekkbokser(value, soknadsobjekt._id);
-
-  const lagCheckboks = (vedleggsobjekt: Vedleggsobjekt) => {
-    const { _key } = vedleggsobjekt;
-
-    const markert = valgteVedlegg
-      .filter(v => v._key === _key)
-      .filter(v => v.soknadsobjektId === soknadsobjekt._id)
-      .filter(v => v.skalSendes)
-      .shift();
-
-    return {
-      key: _key,
-      label: localeVedleggstittel(vedleggsobjekt, intl.locale),
-      value: _key,
-      checked: !!markert
-    };
-  };
 
   // Dersom påkrevde vedlegg er i egen bolk
   const handleOnChangePakrevdeVedlegg = (
@@ -75,33 +61,33 @@ const Sjekkbokser = (props: MergedProps) => {
   const lagEgenCheckboksForPakrevdeVedlegg = (
     vedleggsobjekt: Vedleggsobjekt
   ) => {
-    const { vedlegg, _key } = vedleggsobjekt;
-    const { navn } = vedlegg;
-    const label = navn;
-
     const markert = valgteVedlegg
-      .filter(v => v._key === _key)
+      .filter(v => v._key === vedleggsobjekt._key)
       .filter(v => v.soknadsobjektId === soknadsobjekt._id)
       .filter(v => !v.skalEttersendes)
       .shift();
-
-    return {
-      key: _key,
-      label: localeTekst(label, intl.locale),
-      value: _key,
-      checked: !!markert
-    };
+    return sjekkboksPanelPropsForVedlegg(vedleggsobjekt, intl.locale, !!markert);
   };
+
+  const lagCheckboks = (vedleggsobjekt: Vedleggsobjekt) => {
+    const markert = valgteVedlegg
+      .filter(v => v._key === vedleggsobjekt._key)
+      .filter(v => v.soknadsobjektId === soknadsobjekt._id)
+      .filter(v => v.skalSendes)
+      .shift();
+    return sjekkboksPanelPropsForVedlegg(vedleggsobjekt, intl.locale, !!markert);
+  };
+
 
   const vedleggTilSoknad = soknadsobjekt.vedleggtilsoknad || [];
   const pakrevde = vedleggTilSoknad.filter(v => v.pakrevd);
   return vedleggTilSoknad.length > 0 ? (
     <PanelBase className="seksjon">
-      {props.skillUtPakrevde && pakrevde.length > 0 ? (
+      {skillUtPakrevde && pakrevde.length > 0 ? (
         <>
           <CheckboksPanelGruppe
             className="sjekkbokser__panelgruppe"
-            legend={intl.formatMessage({ id: "sjekkbokser.pakrevde" })}
+            legend={intl.formatMessage({id: "sjekkbokser.pakrevde"})}
             checkboxes={vedleggTilSoknad
               .filter(v => v.pakrevd)
               .map(vedlegg => lagEgenCheckboksForPakrevdeVedlegg(vedlegg))}
