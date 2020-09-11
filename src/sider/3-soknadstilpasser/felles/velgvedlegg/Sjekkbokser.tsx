@@ -20,7 +20,7 @@ type ToggleFunc = (_key: string, soknadsobjektId: string) => void;
 interface ReduxProps {
   valgteVedlegg: Vedleggsobjekt[];
   toggleValgtVedleggForSjekkbokser: ToggleFunc;
-  toggleInnsendingVedlegg: (_key: string, soknadsobjektId: string) => void;
+  toggleInnsendingVedlegg: ToggleFunc;
 }
 
 const sjekkboksPanelPropsForVedlegg = (vedleggsobjekt: Vedleggsobjekt, locale: string, markert: boolean) => {
