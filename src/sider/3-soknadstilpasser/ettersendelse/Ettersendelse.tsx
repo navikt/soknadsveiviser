@@ -5,7 +5,7 @@ import { Store } from "../../../typer/store";
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
 import { connect } from "react-redux";
-import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
+import {Sjekkbokser} from "../felles/velgvedlegg/Sjekkbokser";
 import Underbanner from "../../../komponenter/bannere/Underbanner";
 import Personalia from "../felles/personalia/Personalia";
 import Steg from "../../../komponenter/bannere/Steg";

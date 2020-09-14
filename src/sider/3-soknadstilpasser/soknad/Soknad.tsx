@@ -10,7 +10,7 @@ import { Element, Normaltekst } from "nav-frontend-typografi";
 import { ToggleGruppe, ToggleKnappPureProps } from "nav-frontend-toggle";
 import VeiledendeVedleggsvalg from "../felles/velgvedlegg/VeiledendeVedleggsvalg";
 import DineVedlegg from "../felles/dinevedlegg/DineVedlegg";
-import Sjekkbokser from "../felles/velgvedlegg/Sjekkbokser";
+import {SjekkbokserMedUtskiltePaakrevde} from "../felles/velgvedlegg/Sjekkbokser";
 import Personalia from "../felles/personalia/Personalia";
 import { Store } from "../../../typer/store";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
@@ -185,9 +185,8 @@ const Soknad = (props: MergedProps) => {
                 </>
               ) : (
                 <>
-                  <Sjekkbokser
+                  <SjekkbokserMedUtskiltePaakrevde
                     soknadsobjekt={valgtSoknadsobjekt}
-                    skillUtPakrevde={true}
                   />
                   {tilDokumentinnsending ? (
                     <Neste
