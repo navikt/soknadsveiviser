@@ -14,7 +14,6 @@ import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import Typer from "../../komponenter/header/typer/Typer";
 import { SideIngress } from "./seksjoner/SideIngress";
 import { Brodsmulesti } from "../../komponenter/header/brodsmulesti/Brodsmulesti";
-import { TopplinjeContainer } from "../../komponenter/header/TopplinjeContainer";
 
 interface Routes {
   inngang: string;
@@ -42,10 +41,8 @@ class Soknadsveiviser extends Component<MergedProps> {
     return (
       <div className="forside__wrapper" id="maincontent">
         <Header>
-          <TopplinjeContainer>
-            <Brodsmulesti listeOverSmuler={smuler} />
-            <SprakVelger />
-          </TopplinjeContainer>
+          <Brodsmulesti listeOverSmuler={smuler} />
+          <SprakVelger />
           <Sidetittel className="header__tittel">
             <FormattedMessage id="sidetittel" />
           </Sidetittel>

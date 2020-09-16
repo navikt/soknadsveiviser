@@ -10,7 +10,6 @@ import { localeTekst } from "../../utils/sprak";
 import { usePrevious } from "../../utils/hooks";
 import SprakVelger from "../header/sprak/SprakVelger";
 import { Brodsmulesti } from "../header/brodsmulesti/Brodsmulesti";
-import { TopplinjeContainer } from "../header/TopplinjeContainer";
 
 interface Routes {
   sprak: string;
@@ -53,10 +52,8 @@ const Wrapper = (props: MergedProps) => {
       return (
         <>
           <Header>
-            <TopplinjeContainer>
-              <Brodsmulesti listeOverSmuler={smuler} />
-              <SprakVelger />
-            </TopplinjeContainer>
+            <Brodsmulesti listeOverSmuler={smuler} />
+            <SprakVelger />
           </Header>
           <div className="side__wrapper" id="maincontent" ref={mainContent}>
             <div className="innhold__container">
