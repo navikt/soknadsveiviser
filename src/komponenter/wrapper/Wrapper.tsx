@@ -1,6 +1,6 @@
 import React, { RefObject, createRef, useEffect } from "react";
 import Hovedbanner from "../bannere/Hovedbanner";
-import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
+import { InjectedIntlProps, injectIntl } from "react-intl";
 import { connect } from "react-redux";
 import { RouteComponentProps, withRouter } from "react-router";
 import { FetchKategorier } from "../../typer/store";
@@ -9,9 +9,8 @@ import Header from "../header/Header";
 import { localeTekst } from "../../utils/sprak";
 import { usePrevious } from "../../utils/hooks";
 import SprakVelger from "../header/sprak/SprakVelger";
-import {Brodsmulesti, gumleNAV} from "../header/brodsmulesti/Brodsmulesti";
+import { Brodsmulesti } from "../header/brodsmulesti/Brodsmulesti";
 import { TopplinjeContainer } from "../header/TopplinjeContainer";
-import {decoratorContextFromCookie} from "../../config";
 
 interface Routes {
   sprak: string;
@@ -34,8 +33,7 @@ const Wrapper = (props: MergedProps) => {
   const lastState = usePrevious({ sprak });
   const hasHash = props.location.hash;
   const localeChanged = lastState && sprak !== lastState.sprak;
-  const decoratorContext = decoratorContextFromCookie(document.cookie);
-  const navSmule = gumleNAV(decoratorContext);
+
   useEffect(() => {
     if (!hasHash && !localeChanged) {
       window.scrollTo(0, 0);
@@ -45,19 +43,18 @@ const Wrapper = (props: MergedProps) => {
   switch (props.kategorier.status) {
     case "RESULT": {
       const { valgtKategori, valgtUnderkategori } = props.kategorier;
-      const smuler = [navSmule,{
-        tekst: <FormattedMessage id="sidetittel" />,
-        lenke: props.location.pathname.split(`/${valgtUnderkategori.urlparam}`)[0]
-      },
-        { tekst: localeTekst(valgtUnderkategori.navn, intl.locale), lenke: match.url }
+      const smuler = [
+        {
+          tekst: intl.formatMessage({ id: "sidetittel" }),
+          lenke: props.location.pathname.split(`/${valgtUnderkategori.urlparam}`)[0],
+        },
+        { tekst: localeTekst(valgtUnderkategori.navn, intl.locale), lenke: match.url },
       ];
       return (
         <>
           <Header>
             <TopplinjeContainer>
-              <Brodsmulesti
-                listeOverSmuler={smuler}
-              />
+              <Brodsmulesti listeOverSmuler={smuler} />
               <SprakVelger />
             </TopplinjeContainer>
           </Header>
@@ -85,7 +82,7 @@ const Wrapper = (props: MergedProps) => {
 
 const mapStateToProps = (store: Store) => {
   return {
-    kategorier: store.kategorier
+    kategorier: store.kategorier,
   };
 };
 

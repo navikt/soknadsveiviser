@@ -1,11 +1,11 @@
 import * as React from "react";
 import languages from "./SprakVelgerData";
-import sprakIcon from "../../../img/sprak.svg";
 import { Kategori } from "../../../typer/kategori";
 import { Underkategori } from "../../../typer/underkategori";
-import { withRouter, RouteComponentProps } from "react-router";
+import { withRouter, RouteComponentProps, useLocation, useHistory } from "react-router";
 import { IntlProviderWrapperContextType, IntlProviderWrapperHOC } from "../../../sprak/IntlProviderWrapper";
-import { Link } from "react-router-dom";
+import { useEffect } from "react";
+import { onLanguageSelect, setAvailableLanguages } from "@navikt/nav-dekoratoren-moduler/dist";
 
 interface Props {
   valgtKategori?: Kategori;
@@ -22,26 +22,27 @@ interface Routes {
 
 type MergedProps = Props & Context & RouteComponentProps<Routes>;
 const SprakVelger = (props: MergedProps) => {
+  const location = useLocation();
+  const { context } = props;
   const { sprak } = props.match.params;
-  const onClick = (code: string) => props.context.settLocale(code);
-  return (
-    <>
-      {languages.map(
-        language =>
-          language.code !== sprak && (
-            <Link
-              to={window.location.pathname.replace(sprak, language.code)}
-              onClick={() => onClick(language.code)}
-              className="lenke sprakvelger__lenke"
-              key={language.code}
-            >
-              {language.language}
-              <img alt="Ikon til språkvelger" className="sprakvelger__ikon" src={sprakIcon} />
-            </Link>
-          )
-      )}
-    </>
-  );
+  const history = useHistory();
+
+  onLanguageSelect((language) => {
+    context.settLocale(language.locale);
+    history.push(language.url);
+  });
+
+  useEffect(() => {
+    setAvailableLanguages(
+      languages.map((lang) => ({
+        locale: lang.code,
+        url: window.location.pathname.replace(sprak, lang.code),
+        handleInApp: true,
+      }))
+    );
+  }, [location.pathname, sprak]);
+
+  return <></>;
 };
 
 // @ts-ignore
