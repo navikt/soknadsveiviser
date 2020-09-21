@@ -1,9 +1,7 @@
-import React, { ReactNode } from "react";
-import ikon from "../../../img/home.svg";
-import { Normaltekst, Element } from "nav-frontend-typografi";
-import Lenke from "nav-frontend-lenker";
-import { HoyreChevron, VenstreChevron } from "nav-frontend-chevron";
-import { useErMobil } from "../../../utils/useErMobil";
+import React, { ReactNode, useEffect } from "react";
+import { useHistory, useLocation } from "react-router";
+import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
+import { onBreadcrumbClick } from "@navikt/nav-dekoratoren-moduler/dist";
 
 export interface Smule {
   tekst: ReactNode;
@@ -11,46 +9,23 @@ export interface Smule {
 }
 
 export const Brodsmulesti = (props: { listeOverSmuler: Smule[] }) => {
-  const erMobil = useErMobil();
+  const location = useLocation();
+  const history = useHistory();
+  const { listeOverSmuler } = props;
 
-  return (
-    <div className="brodsmulesti__container">
-      {erMobil ? (
-        <BrodsmulestiMobil forrigeSmule={props.listeOverSmuler[props.listeOverSmuler.length - 2]} />
-      ) : (
-        <BrodsmulestiDesktop listeOverSmuler={props.listeOverSmuler} />
-      )}
-    </div>
-  );
+  onBreadcrumbClick((breadcrumb) => {
+    history.push(breadcrumb.url);
+  });
+
+  useEffect(() => {
+    setBreadcrumbs(
+      listeOverSmuler.map((smule) => ({
+        title: smule.tekst as string,
+        url: smule.lenke,
+        handleInApp: true,
+      }))
+    );
+  }, [location, listeOverSmuler]);
+
+  return <></>;
 };
-
-const BrodsmulestiDesktop = (props: { listeOverSmuler: Smule[] }) => {
-  const currentSmule = props.listeOverSmuler[props.listeOverSmuler.length-1];
-  return (
-    <>
-      <img src={ikon} alt="" style={{height: 18}} />
-      {props.listeOverSmuler.slice(0, -1).map(smule => (
-        <React.Fragment key={smule.lenke}>
-          <Lenke href={smule.lenke}>
-            <Normaltekst>{smule.tekst}</Normaltekst>
-          </Lenke>
-          <HoyreChevron />
-        </React.Fragment>
-      ))}
-      <Element>{currentSmule?.tekst}</Element>
-    </>
-  );
-};
-
-const BrodsmulestiMobil = (props: { forrigeSmule: Smule }) => (
-  <>
-    <VenstreChevron />
-    <Lenke href={props.forrigeSmule.lenke}>
-      <Normaltekst>{props.forrigeSmule.tekst}</Normaltekst>
-    </Lenke>
-  </>
-);
-
-export const gumleNAV = (decoratorContext: {nav_no_url: string, context: string}) => {
-  return {tekst: <span>nav.no</span>, lenke: decoratorContext.nav_no_url}
-}

@@ -46,7 +46,7 @@ class Soknadsobjekter extends Component<MergedProps> {
     const { kategori, underkategori } = this.props.match.params;
     this.props.hentSoknader(kategori, underkategori);
     loggEvent("soknadsveiviser.underkategori.navn", undefined, {
-      underkategoriType: underkategori
+      underkategoriType: underkategori,
     });
   }
 
@@ -65,7 +65,7 @@ class Soknadsobjekter extends Component<MergedProps> {
     switch (soknader.status) {
       default:
       case "LOADING":
-        return <Spinner style={{ backgroundColor: "white" }}/>;
+        return <Spinner style={{ backgroundColor: "white" }} />;
       case "RESULT":
         let ettApentObjekt =
           soknader.soknadsobjekter.length + soknader.soknadslenker.length + soknader.skjemalenker.length === 1;
@@ -83,17 +83,17 @@ class Soknadsobjekter extends Component<MergedProps> {
         }
         utlisting = utlisting.concat(
           soknader.soknadsobjekter.map(
-            soknadsobjekt =>
+            (soknadsobjekt) =>
               `${localeTekst(soknadsobjekt.navn, intl.locale)} - ${soknadsobjekt.hovedskjema.skjemanummer}`
           )
         );
         utlisting = utlisting.concat(
           soknader.skjemalenker.map(
-            skjemalenke => `${localeTekst(skjemalenke.navn, intl.locale)} - ${skjemalenke.hovedskjema.skjemanummer}`
+            (skjemalenke) => `${localeTekst(skjemalenke.navn, intl.locale)} - ${skjemalenke.hovedskjema.skjemanummer}`
           )
         );
         utlisting = utlisting.concat(
-          soknader.soknadslenker.map(soknadslenke => `${localeTekst(soknadslenke.navn, intl.locale)}`)
+          soknader.soknadslenker.map((soknadslenke) => `${localeTekst(soknadslenke.navn, intl.locale)}`)
         );
         return (
           <>
@@ -101,7 +101,7 @@ class Soknadsobjekter extends Component<MergedProps> {
               <title>
                 {sideTittel(
                   `${localeTekst(valgtUnderkategori.navn, intl.locale)} - ${intl.formatMessage({
-                    id: "tittel.soknader"
+                    id: "tittel.soknader",
                   })}`
                 )}
               </title>
@@ -111,27 +111,27 @@ class Soknadsobjekter extends Component<MergedProps> {
                   { id: "underkategori.meta_desc" },
                   {
                     underkategorinavn: localeTekst(valgtUnderkategori.navn, intl.locale),
-                    utlisting: utlisting.join("; ")
+                    utlisting: utlisting.join("; "),
                   }
                 )}
               />
             </Helmet>
-            {this.harSoknadsDialog() && <Soknadsdialog valgtUnderkategori={valgtUnderkategori}/>}
+            {this.harSoknadsDialog() && <Soknadsdialog valgtUnderkategori={valgtUnderkategori} />}
             {soknader.soknadsobjekter?.map((soknadsobjekt, id) => (
-              <VisSoknadsobjekt key={id} soknadsobjekt={soknadsobjekt} apen={apentSoknadsobjekt}/>
+              <VisSoknadsobjekt key={id} soknadsobjekt={soknadsobjekt} apen={apentSoknadsobjekt} />
             ))}
             {soknader.skjemalenker?.map((skjemalenke, id) => (
-              <VisSkjemalenke key={id} skjemalenke={skjemalenke} apen={apenSkjemalenke}/>
+              <VisSkjemalenke key={id} skjemalenke={skjemalenke} apen={apenSkjemalenke} />
             ))}
             {soknader.soknadslenker?.map((soknadslenke, id) => (
-              <VisSoknadslenke key={id} soknadslenke={soknadslenke} apen={apenSoknadslenke}/>
+              <VisSoknadslenke key={id} soknadslenke={soknadslenke} apen={apenSoknadslenke} />
             ))}
           </>
         );
       case "DATA_ERROR":
-        return <DataError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error}/>;
+        return <DataError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error} />;
       case "HTTP_ERROR":
-        return <HttpError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error}/>;
+        return <HttpError style={{ backgroundColor: "white", padding: 10 }} error={soknader.error} />;
     }
   }
 
@@ -141,14 +141,14 @@ class Soknadsobjekter extends Component<MergedProps> {
 }
 
 const mapStateToProps = (store: Store) => ({
-  soknader: store.soknader
+  soknader: store.soknader,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   hentSoknader: async (kategori: string, underkategori: string) => {
     apiHentSoknader(kategori, underkategori)(dispatch);
     hashLinkScroll(window.location.hash);
-  }
+  },
 });
 
 export default medKategorier<Props>(
