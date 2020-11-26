@@ -5,18 +5,15 @@ on:
       - master
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    env:
+      CI: "true"
+      IMAGE_REGISTRY: docker.pkg.github.com/${{ github.repository }}
+      IMAGE_VERSION: ${{ github.workflow)-${{ github.sha }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      IMAGE_NAME: soknadsveiviser
+      runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
-      - name: Define build environment
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo ::set-env name=CI::true
-          echo ::set-env name=IMAGE_REGISTRY::docker.pkg.github.com/$(echo ${GITHUB_REPOSITORY})
-          echo ::set-env name=IMAGE_NAME::$(echo ${GITHUB_REPOSITORY##*/})
-          echo ::set-env name=IMAGE_VERSION::$(echo ${GITHUB_WORKFLOW})-$(echo ${GITHUB_SHA})
-          echo ::set-env name=GITHUB_TOKEN::$(echo ${GITHUB_TOKEN})
       - uses: actions/cache@v1
         with:
           path: ~/.npm
