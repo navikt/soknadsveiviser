@@ -5,13 +5,13 @@ on:
       - master
 jobs:
   deploy:
+    runs-on: ubuntu-latest
     env:
-      CI: "true"
-      IMAGE_REGISTRY: docker.pkg.github.com/${{ github.repository }}
-      IMAGE_VERSION: ${{ github.workflow)-${{ github.sha }}
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      IMAGE_NAME: soknadsveiviser
-      runs-on: ubuntu-latest
+        CI: "true"
+        IMAGE_REGISTRY: docker.pkg.github.com/${{ github.repository }}
+        IMAGE_VERSION: ${{ github.workflow }}-${{ github.sha }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        IMAGE_NAME: soknadsveiviser
     steps:
       - uses: actions/checkout@v1
       - uses: actions/cache@v1
