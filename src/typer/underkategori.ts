@@ -4,6 +4,7 @@ import { LocaleBlockText, LocaleString } from "./sprak";
 export interface Inngangsoknadsdialog {
   soknadsdialogURL?: LocaleString;
   beskrivelse?: LocaleBlockText;
+  isFyllUt?: boolean | undefined;
   lenker?: Lenkeobjekt[];
   ettersendelse?: Ettersendelse;
   varseltekst?: LocaleBlockText;
@@ -11,7 +12,7 @@ export interface Inngangsoknadsdialog {
 
 export interface Underkategori {
   soknadsobjekter: Soknadsobjekt[];
-  soknadslenker?: {navn: LocaleString, lenke: Lenkeobjekt, _id: string}[];
+  soknadslenker?: { navn: LocaleString; lenke: Lenkeobjekt; _id: string }[];
   navn: LocaleString;
   urlparam: string;
   lenketilhorlighet: string;

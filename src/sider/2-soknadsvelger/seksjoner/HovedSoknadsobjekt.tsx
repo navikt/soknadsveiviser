@@ -19,6 +19,7 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
   const { underkategori } = props;
   const { locale } = props.intl;
   const {
+    isFyllUt,
     beskrivelse,
     varseltekst,
     soknadsdialogURL,
@@ -50,18 +51,25 @@ const HovedSoknadsobjekt = (props: Props & InjectedIntlProps) => {
         )}
       </div>
       <div className="knapper-wrapper litenavstand">
-        <a href={soknadsdialogURL![locale]} className="knapp knapp--hoved">
-          <FormattedMessage id="vissoknadsobjekter.knapp.soknadsdialog" />
-        </a>
-        <HashLink
-          smooth={true}
-          to="#papirsoknader"
-          className="soknadsobjekt__lenke lenke"
-        >
-          <Normaltekst>
-            <FormattedMessage id="vissoknadsobjekter.ikkeelektroniskID" />
-          </Normaltekst>
-        </HashLink>
+        {isFyllUt === true && (
+          <div>Render fyllut</div>
+        )}
+        {isFyllUt !== true && (
+          <>
+            <a href={soknadsdialogURL[locale]} className="knapp knapp--hoved">
+              Tester om det funker
+            </a>
+            <HashLink
+              smooth={true}
+              to="#papirsoknader"
+              className="soknadsobjekt__lenke lenke"
+            >
+              <Normaltekst>
+                <FormattedMessage id="vissoknadsobjekter.ikkeelektroniskID" />
+              </Normaltekst>
+            </HashLink>
+          </>
+        )}
         {!(ettersendelse && ettersendelse.ikkeVisEttersendelse) && (
           <a
             href={

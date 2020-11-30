@@ -5,6 +5,7 @@ import { LocaleBlockText, LocaleString } from "./sprak";
 export interface DigitalInnsending {
   dokumentinnsending?: boolean;
   inngangtilsoknadsdialog?: Inngangsoknadsdialog;
+  isFyllUt?: boolean;
 }
 
 export interface Soknadsobjekt {

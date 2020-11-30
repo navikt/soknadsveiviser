@@ -29,7 +29,8 @@ export default {
   "avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger": `Hjelp oss å forstå hva feilen er.`,
   "avslutning.steg.nedlasting.skjema.tittel": `Last ned skjema {skjemanummer}`,
   "avslutning.steg.nedlasting.skjema.beskrivelse": `Søknaden må fylles ut og undertegnes.`,
-  "avslutning.steg.nedlasting.skjema.obs": 'Det er viktig at du bruker Adobe Acrobat Reader når du skal fylle ut skjemaet. <br /> <a href="https://get.adobe.com/no/reader/" target="_blank" rel="noopener noreferrer" class="lenke">Last ned Adobe Acrobat Reader</a> (lenke åpner i et nytt vindu).',
+  "avslutning.steg.nedlasting.skjema.obs":
+    'Det er viktig at du bruker Adobe Acrobat Reader når du skal fylle ut skjemaet. <br /> <a href="https://get.adobe.com/no/reader/" target="_blank" rel="noopener noreferrer" class="lenke">Last ned Adobe Acrobat Reader</a> (lenke åpner i et nytt vindu).',
   "avslutning.steg.nedlasting.vedlegg.tittel": `Last ned vedleggsskjema`,
   "avslutning.steg.nedlasting.vedlegg.beskrivelse": `Vedleggsskjema(ene) må fylles ut og undertegnes.`,
   "avslutning.steg.eksterne.tittel": `Disse dokumentene må du skaffe selv:`,
@@ -106,8 +107,8 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "ettersendelser.mellomledd.anke.knapp": `Ettersend til anke`,
   "ettersendelser.mellomledd.anke.beskrivelse": `Velg ‘Ettersend til anke’ hvis du har anket til Trygderetten og ønsker å sende tilleggsdokumentasjon.`,
   "ettersendelser.mellomledd.klageanke.tittel": `Ettersende til klage eller anke`,
-  "sidetittel": `Søknad og skjema`,
-  "sideingress": `Du finner søknader og skjemaer, mulighet for ettersendelse av dokumentasjon og klageskjema når du velger emne nedenfor.`,
+  sidetittel: `Søknad og skjema`,
+  sideingress: `Du finner søknader og skjemaer, mulighet for ettersendelse av dokumentasjon og klageskjema når du velger emne nedenfor.`,
   "kategori.velg": `Søknadskategorier`,
   "kategori.meta_desc": `{kategoritittel}: Send inn søknad / skjema, tilleggsdokumentasjon  eller klage-/ankeskjema.`,
   "kategorier.knapp.bedrift": `Bedrift`,
@@ -148,6 +149,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "vissoknadsobjekter.relevantinformasjon": `Relatert informasjon`,
   "vissoknadsobjekter.knapp.soknadpapapir": `Send på papir`,
   "vissoknadsobjekter.knapp.soknadsdialog": `Send digitalt`,
+  "vissoknadsobjekter.knapp.fyllut": `Søk her`,
   "vissoknadsobjekter.knapp.dokumentinnsending": `Send digitalt`,
   "vissoknadsobjekter.tittel": `Digital søknad om`,
   "vissoknadsobjekter.ikkeelektroniskID": `Send på papir`,
@@ -196,5 +198,5 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "vedleggsvalg.toggle.info.ja": `Når du har svart på spørsmålene under, får du en liste med dokumentasjon du må legge ved.`,
   "vedleggsvalg.toggle.info.nei": `Kryss av for hvilken dokumentasjon du sender inn.`,
   "sjekkbokser.pakrevde": `Påkrevde vedlegg`,
-  "sjekkbokser.situasjonsbestemte": `Situasjonsbestemte vedlegg`
-}
+  "sjekkbokser.situasjonsbestemte": `Situasjonsbestemte vedlegg`,
+};
