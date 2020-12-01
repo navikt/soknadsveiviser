@@ -1,6 +1,7 @@
-import { Soknadsobjekt, Soknader, Innsendingsmate } from "../typer/soknad";
-import { blockToPlainText, localeTekst } from "./sprak";
-import { Vedleggsobjekt } from "../typer/skjemaogvedlegg";
+import {Soknadsobjekt, Soknader, Innsendingsmate} from "../typer/soknad";
+import {blockToPlainText, localeTekst} from "./sprak";
+import {Vedleggsobjekt} from "../typer/skjemaogvedlegg";
+import {LocaleString} from "../typer/sprak";
 
 export const filtrerSoknadsojekt = (soknader: Soknader, skjemanummer: string) =>
   soknader.soknadsobjekter
@@ -38,7 +39,15 @@ export const finnesInngangTilSoknadsdialog = (
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[
     locale
-  ];
+    ];
+
+export const finnesFyllUtUrl = (soknadsobjekt: Soknadsobjekt,
+                                locale: string) =>
+  soknadsobjekt.digitalinnsending &&
+  soknadsobjekt.digitalinnsending.fyllUt &&
+  soknadsobjekt.digitalinnsending.fyllUt.lenker &&
+  soknadsobjekt.digitalinnsending.fyllUt.lenker[locale];
+
 
 export const finnesEttersendelseTilSoknadsdialog = (
   soknadsobjekt: Soknadsobjekt
