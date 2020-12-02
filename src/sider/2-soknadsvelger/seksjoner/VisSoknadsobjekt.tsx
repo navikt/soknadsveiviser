@@ -8,6 +8,7 @@ import KnappPapirSoknad from "../knapper/PapirSoknad";
 import KnappEttersendelse from "../knapper/Ettersendelse";
 import KnappKlage from "../knapper/Klage";
 import KnappFyllUt from "../knapper/FyllUt";
+import KnappFyllUtPapir from "../knapper/FyllUtPapir";
 import RelevantInformasjon from "./RelevantInformasjon";
 import {link} from "utils/serializers";
 import {
@@ -37,7 +38,7 @@ const VisSoknadsobjekt = (
   const {navn, beskrivelse, lenker, hovedskjema, varseltekst} = soknadsobjekt;
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
-  const fyllut = finnesFyllUtUrl(soknadsobjekt, locale);
+  const fyllUt = finnesFyllUtUrl(soknadsobjekt, locale);
 
   const markert =
     hentSkjemanummerHash(props.location.hash) ===
@@ -83,7 +84,14 @@ const VisSoknadsobjekt = (
               )}
             </div>
             <div className="knapper-wrapper litenavstand">
-              {tilsoknadsdialog && (
+              {tilsoknadsdialog && fyllUt && (
+                <>
+                  <KnappSoknadsdialog soknadsobjekt={soknadsobjekt}/>
+                  <KnappFyllUtPapir soknadsobjekt={soknadsobjekt}/>
+                </>
+              )}
+
+              {tilsoknadsdialog && !fyllUt && (
                 <>
                   <KnappSoknadsdialog soknadsobjekt={soknadsobjekt}/>
                   <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>
@@ -91,7 +99,7 @@ const VisSoknadsobjekt = (
               )}
 
               {
-                !tilsoknadsdialog && !fyllut && dokumentinnsending &&
+                !tilsoknadsdialog && !fyllUt && dokumentinnsending &&
                 <>
                   <KnappDokumentinnsending soknadsobjekt={soknadsobjekt}/>
                   <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>
@@ -99,11 +107,11 @@ const VisSoknadsobjekt = (
               }
 
               {
-                !tilsoknadsdialog && !fyllut && !dokumentinnsending &&
+                !tilsoknadsdialog && !fyllUt && !dokumentinnsending &&
                 <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>
               }
 
-              {!tilsoknadsdialog && fyllut && fyllut.length > 0 && (
+              {!tilsoknadsdialog && fyllUt && fyllUt.length > 0 && (
                 <KnappFyllUt soknadsobjekt={soknadsobjekt}/>
               )}
 
