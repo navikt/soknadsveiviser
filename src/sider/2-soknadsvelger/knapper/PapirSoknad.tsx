@@ -3,7 +3,7 @@ import {Soknadsobjekt} from "../../../typer/soknad";
 import SettValgtSoknadsobjekt from "./SettValgtSoknadsobjekt";
 import {withRouter, RouteComponentProps} from "react-router";
 import {InjectedIntlProps, injectIntl} from "react-intl";
-import {finnesDigitalInnsending, finnesFyllUtUrl} from "../../../utils/soknadsobjekter";
+import {finnesDigitalInnsending} from "../../../utils/soknadsobjekter";
 import {hentUrl} from "../../../utils/hentUrl";
 
 interface Props {
