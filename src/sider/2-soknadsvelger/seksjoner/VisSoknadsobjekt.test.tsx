@@ -33,7 +33,7 @@ const createDummySoknadsobjekt = (soknadsdialogURL: string, dokumentInnsending: 
         nb: fyllUtURL,
       },
     },
-    fyllut: {
+    fyllUt: {
       lenker: {
         nb: soknadsdialogURL,
       },
@@ -73,8 +73,10 @@ describe("Soknadsinnganger", () => {
 
   it("WITHOUT soknadsdialogURL OR fyllut, but WITH dokumentinnsending should render button to dokumentinnsending AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(null, true, null);
-    render(<Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />);
-    const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
+    render(<TestWrapper>
+      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />
+    </TestWrapper>);
+    const buttonToDokumentInnsending = screen.getByText("Send digitalt");
     expect(buttonToDokumentInnsending).toBeDefined();
     const linkToPapirInnsending = screen.getByText("Send på papir");
     expect(linkToPapirInnsending).toBeDefined();
@@ -82,14 +84,16 @@ describe("Soknadsinnganger", () => {
 
   it("WITHOUT soknadsdialogURL, but WITH dokumentinnsending AND fyllUtURL should ONLY render button to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(null, true, URL_TIL_FYLLUT);
-    render(<Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />);
+    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
     const buttonToFyllUt = screen.getByText("Søk");
     expect(buttonToFyllUt).toBeDefined();
   });
 
   it("WITH soknadsdialogURL, but WITHOUT dokumentinnsending AND fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, false, null);
-    render(<Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />);
+    render(<TestWrapper>
+      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />
+    </TestWrapper>);
     const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
     expect(buttonToDokumentInnsending).toBeDefined();
     expect(buttonToDokumentInnsending.classList).toContain("knapp");
@@ -102,9 +106,9 @@ describe("Soknadsinnganger", () => {
   });
   it("WITH soknadsdialogURL AND fyllUtURL, but WITHOUT dokumentinnsending should render button to soknadsdialog AND link to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, false, URL_TIL_FYLLUT);
-    render(<Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />);
+    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
 
-    const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
+    const buttonToDokumentInnsending = screen.getByText("Send digitalt");
     expect(buttonToDokumentInnsending).toBeDefined();
     expect(buttonToDokumentInnsending.classList).toContain("knapp");
     expect(buttonToDokumentInnsending).toHaveAttribute("href", URL_TIL_SOKNADSDIALOG);
@@ -116,7 +120,9 @@ describe("Soknadsinnganger", () => {
   });
   it("WITH soknadsdialogURL AND dokumentinnsending, but WITHOUT fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, null);
-    render(<Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />);
+    render(<TestWrapper>
+      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />
+    </TestWrapper>);
 
     const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
     expect(buttonToDokumentInnsending).toBeDefined();
@@ -130,9 +136,9 @@ describe("Soknadsinnganger", () => {
   });
   it("WITH soknadsdialogURL AND dokumentinnsending AND fyllUtURL should render button to soknadsdialog AND link to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, URL_TIL_FYLLUT);
-    render(<Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />);
+    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
 
-    const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
+    const buttonToDokumentInnsending = screen.getByRole("link", {name: "Send digitalt"});
     expect(buttonToDokumentInnsending).toBeDefined();
     expect(buttonToDokumentInnsending.classList).toContain("knapp");
     expect(buttonToDokumentInnsending).toHaveAttribute("href", URL_TIL_SOKNADSDIALOG);
