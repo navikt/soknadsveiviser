@@ -95,6 +95,8 @@
     "unorm": "^1.6.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
     "@types/classnames": "^2.2.10",
     "@types/fetch-mock": "^7.3.2",
     "@types/file-saver": "^2.0.1",
