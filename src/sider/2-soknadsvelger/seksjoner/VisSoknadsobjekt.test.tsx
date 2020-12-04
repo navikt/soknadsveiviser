@@ -5,7 +5,6 @@ import configureStore from 'redux-mock-store';
 
 import { Soknadsinnganger } from "./Soknadsinnganger";
 import { MemoryRouter } from "react-router";
-import IntlProvider from "../../../sprak/IntlProvider";
 import { Provider } from "react-redux";
 import IntlProviderWrapper from "../../../sprak/IntlProviderWrapper";
 
