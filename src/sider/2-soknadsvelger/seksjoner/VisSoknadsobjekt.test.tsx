@@ -1,150 +1,126 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-import "@testing-library/jest-dom/extend-expect";
-import configureStore from 'redux-mock-store';
-
-import { Soknadsinnganger } from "./Soknadsinnganger";
 import { MemoryRouter } from "react-router";
 import { Provider } from "react-redux";
-import IntlProviderWrapper from "../../../sprak/IntlProviderWrapper";
+import { render, screen } from "@testing-library/react";
+import configureStore from "redux-mock-store";
+import "@testing-library/jest-dom/extend-expect";
 
+import IntlProviderWrapper from "../../../sprak/IntlProviderWrapper";
+import { createDummySoknadsobjekt } from "../../../test-utils/dummy-soknadsobjekt";
+import { Soknadsinnganger } from "./Soknadsinnganger";
+
+const LOCALE = "nb";
+const TYPE_BUTTON = "knapp";
+const TYPE_LINK = "lenke";
+const TEXT_TIL_DIGITAL_INNSENDING = "Send digitalt";
+const TEXT_TIL_PAPIR_INNSENDING = "Send på papir";
+const TEXT_TIL_FYLL_UT = "Fyll ut";
 const URL_TIL_SOKNADSDIALOG = "url-til-soknadsdialog";
 const URL_TIL_FYLLUT = "url-til-fyllut";
-const URL_TIL_DOKUMENT_INNSENDING = "";
-const URL_TIL_PAPIRINNSENDING = "";
+const URL_TIL_DOKUMENT_INNSENDING = "/skjema-nummer/dokumentinnsending";
+const URL_TIL_PAPIRINNSENDING = "/skjema-nummer/brev";
 
-const createDummySoknadsobjekt = (soknadsdialogURL: string, dokumentInnsending: boolean, fyllUtURL: string) => ({
-  _id: "",
-  navn: {
-    nb: "",
-  },
-  gosysid: "",
-  tema: "",
-  urlparam: "",
-  vedleggtilsoknad: [],
-  innsendingsmate: "",
-  brukertyper: [],
-  hovedskjema: [],
-  digitalinnsending: {
-    dokumentinnsending: dokumentInnsending,
-    inngangtilsoknadsdialog: {
-      soknadsdialogURL: {
-        nb: fyllUtURL,
-      },
-    },
-    fyllUt: {
-      lenker: {
-        nb: soknadsdialogURL,
-      },
-    },
-  },
-});
-
-function TestWrapper({children}) {
+function TestWrapper({ children }) {
   const middlewares = [];
   const mockStore = configureStore(middlewares);
   const initialState = {};
   const reduxStore = mockStore(initialState);
-  return <MemoryRouter initialEntries={['flesk']}>
-    <Provider store={reduxStore}>
-      <IntlProviderWrapper>{children}
-      </IntlProviderWrapper>
-    </Provider>
-  </MemoryRouter>
+  return (
+    <MemoryRouter initialEntries={["flesk"]}>
+      <Provider store={reduxStore}>
+        <IntlProviderWrapper>{children}</IntlProviderWrapper>
+      </Provider>
+    </MemoryRouter>
+  );
+}
+
+function expectToFindLink(text: string, url: string, type: string) {
+  const link = screen.getByRole("link", { name: text });
+  expect(link).toBeDefined();
+  expect(link).toHaveAttribute("href", url);
+  expect(link.classList).toContain(type);
 }
 
 describe("Soknadsinnganger", () => {
   it("WITHOUT soknadsdialogURL, dokumentinnsending AND fyllUtURL should ONLY render knapp to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(null, false, null);
-    render(<TestWrapper>
-      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} />
-    </TestWrapper>);
-    const buttonToPapirInnsending = screen.getByText("Send på papir");
-    expect(buttonToPapirInnsending).toBeDefined();
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_PAPIRINNSENDING, TYPE_BUTTON);
   });
 
   it("WITHOUT soknadsdialogURL OR dokumentinnsending, but WITH fyllUtURL should ONLY render button to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(null, false, URL_TIL_FYLLUT);
-    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
-    const buttonToFyllUt = screen.getByText("Søk");
-    expect(buttonToFyllUt).toBeDefined();
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_FYLL_UT, URL_TIL_FYLLUT, TYPE_BUTTON);
   });
 
   it("WITHOUT soknadsdialogURL OR fyllut, but WITH dokumentinnsending should render button to dokumentinnsending AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(null, true, null);
-    render(<TestWrapper>
-      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />
-    </TestWrapper>);
-    const buttonToDokumentInnsending = screen.getByText("Send digitalt");
-    expect(buttonToDokumentInnsending).toBeDefined();
-    const linkToPapirInnsending = screen.getByText("Send på papir");
-    expect(linkToPapirInnsending).toBeDefined();
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_DOKUMENT_INNSENDING, TYPE_BUTTON);
+    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_PAPIRINNSENDING, TYPE_LINK);
   });
 
   it("WITHOUT soknadsdialogURL, but WITH dokumentinnsending AND fyllUtURL should ONLY render button to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(null, true, URL_TIL_FYLLUT);
-    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
-    const buttonToFyllUt = screen.getByText("Søk");
-    expect(buttonToFyllUt).toBeDefined();
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_FYLL_UT, URL_TIL_FYLLUT, TYPE_BUTTON);
   });
 
   it("WITH soknadsdialogURL, but WITHOUT dokumentinnsending AND fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, false, null);
-    render(<TestWrapper>
-      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />
-    </TestWrapper>);
-    const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
-    expect(buttonToDokumentInnsending).toBeDefined();
-    expect(buttonToDokumentInnsending.classList).toContain("knapp");
-    expect(buttonToDokumentInnsending).toHaveAttribute("href", URL_TIL_SOKNADSDIALOG);
-
-    const linkToPapirInnsending = screen.getByText("Send på papir");
-    expect(linkToPapirInnsending).toBeDefined();
-    expect(linkToPapirInnsending.classList).toContain("lenke");
-    expect(linkToPapirInnsending).toHaveAttribute("href", URL_TIL_PAPIRINNSENDING);
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_SOKNADSDIALOG, TYPE_BUTTON);
+    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_PAPIRINNSENDING, TYPE_LINK);
   });
   it("WITH soknadsdialogURL AND fyllUtURL, but WITHOUT dokumentinnsending should render button to soknadsdialog AND link to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, false, URL_TIL_FYLLUT);
-    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
-
-    const buttonToDokumentInnsending = screen.getByText("Send digitalt");
-    expect(buttonToDokumentInnsending).toBeDefined();
-    expect(buttonToDokumentInnsending.classList).toContain("knapp");
-    expect(buttonToDokumentInnsending).toHaveAttribute("href", URL_TIL_SOKNADSDIALOG);
-
-    const linkToPapirInnsending = screen.getByText("Send på papir");
-    expect(linkToPapirInnsending).toBeDefined();
-    expect(linkToPapirInnsending.classList).toContain("lenke");
-    expect(linkToPapirInnsending).toHaveAttribute("href", URL_TIL_FYLLUT);
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_SOKNADSDIALOG, TYPE_BUTTON);
+    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
   });
   it("WITH soknadsdialogURL AND dokumentinnsending, but WITHOUT fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, null);
-    render(<TestWrapper>
-      <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" />
-    </TestWrapper>);
-
-    const buttonToDokumentInnsending = screen.getByText("Søk digitalt");
-    expect(buttonToDokumentInnsending).toBeDefined();
-    expect(buttonToDokumentInnsending.classList).toContain("knapp");
-    expect(buttonToDokumentInnsending).toHaveAttribute("href", URL_TIL_SOKNADSDIALOG);
-
-    const linkToPapirInnsending = screen.getByText("Send på papir");
-    expect(linkToPapirInnsending).toBeDefined();
-    expect(linkToPapirInnsending.classList).toContain("lenke");
-    expect(linkToPapirInnsending).toHaveAttribute("href", URL_TIL_DOKUMENT_INNSENDING);
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_SOKNADSDIALOG, TYPE_BUTTON);
+    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_PAPIRINNSENDING, TYPE_LINK);
   });
   it("WITH soknadsdialogURL AND dokumentinnsending AND fyllUtURL should render button to soknadsdialog AND link to fyllut", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, URL_TIL_FYLLUT);
-    render(<TestWrapper><Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale="nb" /></TestWrapper>);
-
-    const buttonToDokumentInnsending = screen.getByRole("link", {name: "Send digitalt"});
-    expect(buttonToDokumentInnsending).toBeDefined();
-    expect(buttonToDokumentInnsending.classList).toContain("knapp");
-    expect(buttonToDokumentInnsending).toHaveAttribute("href", URL_TIL_SOKNADSDIALOG);
-
-    const linkToPapirInnsending = screen.getByText("Send på papir");
-    expect(linkToPapirInnsending).toBeDefined();
-    expect(linkToPapirInnsending.classList).toContain("lenke");
-    expect(linkToPapirInnsending).toHaveAttribute("href", URL_TIL_FYLLUT);
+    render(
+      <TestWrapper>
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
+      </TestWrapper>
+    );
+    expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_SOKNADSDIALOG, TYPE_BUTTON);
+    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
   });
 });

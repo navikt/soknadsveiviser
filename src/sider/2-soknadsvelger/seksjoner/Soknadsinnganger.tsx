@@ -23,7 +23,6 @@ export const Soknadsinnganger = (props: SoknadsinngangerProps) => {
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
   const fyllUt = finnesFyllUtUrl(soknadsobjekt, locale);
-  console.log(fyllUt);
   return (
     <div className="knapper-wrapper litenavstand">
       {tilsoknadsdialog && fyllUt && (
