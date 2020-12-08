@@ -16,7 +16,9 @@ const Soknad = (props: MergedProps) => {
   const { skjemanummer } = soknadsobjekt.hovedskjema;
   const digitalInnsending = finnesDigitalInnsending(soknadsobjekt, intl.locale);
 
-  const tittel = digitalInnsending ? "vissoknadsobjekter.ikkeelektroniskID" : "vissoknadsobjekter.knapp.soknadpapapir";
+  const tittel = digitalInnsending
+    ? "vissoknadsobjekter.ikkeelektroniskID"
+    : "vissoknadsobjekter.knapp.soknadpapapir";
 
   const lenkeEllerKnapp = digitalInnsending
     ? "lenke soknadsobjekt__lenke typo-normal"
