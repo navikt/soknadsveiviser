@@ -2,7 +2,7 @@ import { Soknadsobjekt } from "../../../typer/soknad";
 import {
   finnesDokumentinnsending,
   finnesFyllUtUrl,
-  finnesInngangTilSoknadsdialog
+  finnesInngangTilSoknadsdialog,
 } from "../../../utils/soknadsobjekter";
 import KnappSoknadsdialog from "../knapper/Soknadsdialog";
 import KnappFyllUtPapir from "../knapper/FyllUtPapir";
@@ -23,36 +23,21 @@ export const Soknadsinnganger = (props: SoknadsinngangerProps) => {
   const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
   const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
   const fyllUt = finnesFyllUtUrl(soknadsobjekt, locale);
-  return (
-    <div className="knapper-wrapper litenavstand">
-      {tilsoknadsdialog && fyllUt && (
-        <>
-          <KnappSoknadsdialog soknadsobjekt={soknadsobjekt}/>
-          <KnappFyllUtPapir soknadsobjekt={soknadsobjekt}/>
-        </>
-      )}
-
-      {tilsoknadsdialog && !fyllUt && (
-        <>
-          <KnappSoknadsdialog soknadsobjekt={soknadsobjekt}/>
-          <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>
-        </>
-      )}
-
-      {!tilsoknadsdialog && !fyllUt && dokumentinnsending && (
-        <>
-          <KnappDokumentinnsending soknadsobjekt={soknadsobjekt}/>
-          <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>
-        </>
-      )}
-
-      {!tilsoknadsdialog && !fyllUt && !dokumentinnsending && <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>}
-
-      {!tilsoknadsdialog && fyllUt && <KnappFyllUt soknadsobjekt={soknadsobjekt}/>}
-
-      {soknadsobjekt.vedleggtilsoknad?.length > 0 && <KnappEttersendelse soknadsobjekt={soknadsobjekt}/>}
-
-      <KnappKlage soknadsobjekt={soknadsobjekt}/>
-    </div>
-  );
+  if (tilsoknadsdialog) {
+    return <>
+      <KnappSoknadsdialog soknadsobjekt={soknadsobjekt} />
+      {fyllUt ? <KnappFyllUtPapir soknadsobjekt={soknadsobjekt} /> : <KnappPapirSoknad soknadsobjekt={soknadsobjekt} />}
+      </>
+  } else {
+    if (fyllUt) {
+      return <KnappFyllUt soknadsobjekt={soknadsobjekt} />;
+    } else {
+        return (
+          <>
+            {dokumentinnsending && <KnappDokumentinnsending soknadsobjekt={soknadsobjekt} /> }
+            <KnappPapirSoknad soknadsobjekt={soknadsobjekt} />
+          </>
+        );
+    }
+  }
 };

@@ -12,6 +12,8 @@ import { convertNAVSkjemanummerTilHash, hentSkjemanummerHash } from "utils/hentS
 import LocaleBlockTextAlertStripeAdvarsel from "../../../komponenter/felles/LocaleBlockTextAlertStripeAdvarsel";
 import Ekspanderbartpanel from "nav-frontend-ekspanderbartpanel";
 import { Soknadsinnganger } from "./Soknadsinnganger";
+import KnappKlage from "../knapper/Klage";
+import KnappEttersendelse from "../knapper/Ettersendelse";
 
 interface Props {
   key: number;
@@ -56,7 +58,11 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps & RouteComponentProps
               </div>
               {lenker && lenker.length > 0 && <RelevantInformasjon lenker={lenker} locale={locale} />}
             </div>
-            <Soknadsinnganger soknadsobjekt={soknadsobjekt} locale={locale} />
+            <div className="knapper-wrapper litenavstand">
+              <Soknadsinnganger soknadsobjekt={soknadsobjekt} locale={locale} />
+              {soknadsobjekt.vedleggtilsoknad?.length > 0 && <KnappEttersendelse soknadsobjekt={soknadsobjekt}/>}
+              <KnappKlage soknadsobjekt={soknadsobjekt} />
+            </div>
           </div>
         </div>
       </Ekspanderbartpanel>
