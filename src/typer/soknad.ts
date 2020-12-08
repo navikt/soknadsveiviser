@@ -1,6 +1,6 @@
-import {Skjema, Vedleggsobjekt} from "./skjemaogvedlegg";
-import {Inngangsoknadsdialog} from "./underkategori";
-import {LocaleBlockText, LocaleString} from "./sprak";
+import { Skjema, Vedleggsobjekt } from "./skjemaogvedlegg";
+import { Inngangsoknadsdialog } from "./underkategori";
+import { LocaleBlockText, LocaleString } from "./sprak";
 
 export interface DigitalInnsending {
   dokumentinnsending?: boolean;

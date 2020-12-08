@@ -1,6 +1,6 @@
-import {Soknadsobjekt, Soknader, Innsendingsmate} from "../typer/soknad";
-import {blockToPlainText, localeTekst} from "./sprak";
-import {Vedleggsobjekt} from "../typer/skjemaogvedlegg";
+import { Soknadsobjekt, Soknader, Innsendingsmate } from "../typer/soknad";
+import { blockToPlainText, localeTekst } from "./sprak";
+import { Vedleggsobjekt } from "../typer/skjemaogvedlegg";
 
 export const filtrerSoknadsojekt = (soknader: Soknader, skjemanummer: string) =>
   soknader.soknadsobjekter
