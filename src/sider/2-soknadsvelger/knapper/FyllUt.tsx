@@ -8,23 +8,14 @@ interface Props {
 
 const FyllUt = (props: Props & InjectedIntlProps) => {
   const { soknadsobjekt, intl } = props;
-  const { digitalinnsending } = soknadsobjekt;
+  const fyllUtUrl = soknadsobjekt.digitalinnsending?.fyllUt?.lenker[intl.locale] || undefined;
+  const tittel = "vissoknadsobjekter.knapp.fyllut";
   const { hovedskjema } = soknadsobjekt;
 
-  const fyllUtUrl = (((digitalinnsending || {}).fyllUt || {})
-      .lenker || {})[intl.locale] || null;
-
-
   return fyllUtUrl ? (
-    <>
-      <a
-        id={hovedskjema.skjemanummer}
-        href={fyllUtUrl}
-        className="knapp knapp--hoved"
-      >
-        <FormattedMessage id="vissoknadsobjekter.knapp.fyllut" />
-      </a>
-    </>
+    <a id={hovedskjema.skjemanummer} href={fyllUtUrl} className="knapp knapp--hoved">
+      <FormattedMessage id={tittel} />
+    </a>
   ) : null;
 };
 
