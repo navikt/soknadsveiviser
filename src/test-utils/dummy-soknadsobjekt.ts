@@ -1,11 +1,13 @@
-import { Adresse, Innsendingsmate, Soknadsobjekt, Tema } from "../typer/soknad";
-import { LocaleBlockText, LocalePDFObjekt } from "../typer/sprak";
+import { Adresse, DigitalInnsending, Fyllut, Innsendingsmate, Soknadsobjekt, Tema } from "../typer/soknad";
+import { LocaleBlockText, LocalePDFObjekt, LocaleString } from "../typer/sprak";
 import { createDummyLocalePDFObject } from "./dummy-pdf";
+import { Inngangsoknadsdialog } from "../typer/underkategori";
+import FyllUt from "../sider/2-soknadsvelger/knapper/FyllUt";
 
 const DEFAULT_LOCALE = "nb";
 
 export function createDummyInnsendingsmate(
-  skanning?: boolean = true,
+  skanning: boolean = true,
   spesifisertadresse?: Adresse,
   visenheter?: LocaleBlockText
 ): Innsendingsmate {
@@ -45,7 +47,8 @@ export function createDummyHovedskjema(skjemanummer: string = "skjema-nummer", l
   };
 }
 
-export function createDummyInngangtilsoknadsdialog(soknadsdialogURL?: string | null, locale: string = DEFAULT_LOCALE) {
+export function createDummyInngangtilsoknadsdialog(soknadsdialogURL?: string, locale: string = DEFAULT_LOCALE)
+: Inngangsoknadsdialog {
   return {
     soknadsdialogURL: {
       [locale]: soknadsdialogURL,
@@ -53,7 +56,7 @@ export function createDummyInngangtilsoknadsdialog(soknadsdialogURL?: string | n
   };
 }
 
-export function createDummyFyllUt(fyllUtURL?: string | null, locale: string = DEFAULT_LOCALE) {
+export function createDummyFyllUt(fyllUtURL?: string, locale: string = DEFAULT_LOCALE) : Fyllut {
   return {
     lenker: {
       [locale]: fyllUtURL,
@@ -66,7 +69,7 @@ export function createDummyDigitalinnsending(
   dokumentInnsending?: boolean,
   fyllUtURL?: string,
   locale: string = DEFAULT_LOCALE
-) {
+) : DigitalInnsending {
   return {
     dokumentinnsending: dokumentInnsending,
     inngangtilsoknadsdialog: createDummyInngangtilsoknadsdialog(soknadsdialogURL, locale),
@@ -75,11 +78,11 @@ export function createDummyDigitalinnsending(
 }
 
 export function createDummySoknadsobjekt(
-  soknadsdialogURL?: string | null,
+  soknadsdialogURL?: string,
   dokumentInnsending?: boolean,
-  fyllUtURL?: string | null,
+  fyllUtURL?: string,
   locale: string = DEFAULT_LOCALE
-): Soknadsobjekt {
+) : Soknadsobjekt {
   return {
     _id: "",
     navn: {

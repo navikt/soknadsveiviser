@@ -4,7 +4,6 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import BlockContent from "@sanity/block-content-to-react";
 import RelevantInformasjon from "./RelevantInformasjon";
 import { link } from "utils/serializers";
-import { finnesDokumentinnsending, finnesFyllUtUrl, finnesInngangTilSoknadsdialog } from "utils/soknadsobjekter";
 import { Soknadsobjekt } from "typer/soknad";
 import LocaleTekst from "komponenter/localetekst/LocaleTekst";
 import { localeBlockTekst } from "utils/sprak";
@@ -24,9 +23,6 @@ const VisSoknadsobjekt = (props: Props & InjectedIntlProps & RouteComponentProps
   const { locale } = props.intl;
   const { soknadsobjekt, key, apen } = props;
   const { navn, beskrivelse, lenker, hovedskjema, varseltekst } = soknadsobjekt;
-  const tilsoknadsdialog = finnesInngangTilSoknadsdialog(soknadsobjekt, locale);
-  const dokumentinnsending = finnesDokumentinnsending(soknadsobjekt);
-  const fyllUt = finnesFyllUtUrl(soknadsobjekt, locale);
 
   const markert =
     hentSkjemanummerHash(props.location.hash) === convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer)
