@@ -4,8 +4,8 @@ import Undertittel from "nav-frontend-typografi/lib/undertittel";
 
 interface Props {
   tittel: string;
-  undertittel?: string;
   skjemanummer?: string;
+  undertittel?: string;
 }
 
 const Underbanner = (props: Props) => {
