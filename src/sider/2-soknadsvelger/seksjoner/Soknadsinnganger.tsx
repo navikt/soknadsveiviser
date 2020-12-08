@@ -48,7 +48,7 @@ export const Soknadsinnganger = (props: SoknadsinngangerProps) => {
 
       {!tilsoknadsdialog && !fyllUt && !dokumentinnsending && <KnappPapirSoknad soknadsobjekt={soknadsobjekt}/>}
 
-      {!tilsoknadsdialog && fyllUt && fyllUt.length > 0 && <KnappFyllUt soknadsobjekt={soknadsobjekt}/>}
+      {!tilsoknadsdialog && fyllUt && <KnappFyllUt soknadsobjekt={soknadsobjekt}/>}
 
       {soknadsobjekt.vedleggtilsoknad?.length > 0 && <KnappEttersendelse soknadsobjekt={soknadsobjekt}/>}
 
