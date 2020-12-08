@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { MemoryRouter } from "react-router";
 import { Provider } from "react-redux";
 import { render, screen } from "@testing-library/react";
@@ -20,8 +20,12 @@ const URL_TIL_FYLLUT = "url-til-fyllut";
 const URL_TIL_DOKUMENT_INNSENDING = "/skjema-nummer/dokumentinnsending";
 const URL_TIL_PAPIRINNSENDING = "/skjema-nummer/brev";
 
-function TestWrapper({ children }) {
   const middlewares = [];
+interface TestWrapperProps {
+  children: ReactNode;
+}
+
+function TestWrapper({ children }: TestWrapperProps) {
   const mockStore = configureStore(middlewares);
   const initialState = {};
   const reduxStore = mockStore(initialState);
