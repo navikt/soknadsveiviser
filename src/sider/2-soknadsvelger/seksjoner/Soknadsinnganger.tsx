@@ -5,12 +5,9 @@ import {
   finnesInngangTilSoknadsdialog,
 } from "../../../utils/soknadsobjekter";
 import KnappSoknadsdialog from "../knapper/Soknadsdialog";
-import KnappFyllUtPapir from "../knapper/FyllUtPapir";
 import KnappPapirSoknad from "../knapper/PapirSoknad";
 import KnappDokumentinnsending from "../knapper/Dokumentinnsending";
-import KnappFyllUt from "../knapper/FyllUt";
-import KnappEttersendelse from "../knapper/Ettersendelse";
-import KnappKlage from "../knapper/Klage";
+import {KnappFyllUt, KnappFyllUtPapir} from "../knapper/FyllUt";
 import * as React from "react";
 
 interface SoknadsinngangerProps {

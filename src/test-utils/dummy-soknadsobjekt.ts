@@ -2,7 +2,6 @@ import { Adresse, DigitalInnsending, Fyllut, Innsendingsmate, Soknadsobjekt, Tem
 import { LocaleBlockText, LocalePDFObjekt, LocaleString } from "../typer/sprak";
 import { createDummyLocalePDFObject } from "./dummy-pdf";
 import { Inngangsoknadsdialog } from "../typer/underkategori";
-import FyllUt from "../sider/2-soknadsvelger/knapper/FyllUt";
 
 const DEFAULT_LOCALE = "nb";
 
