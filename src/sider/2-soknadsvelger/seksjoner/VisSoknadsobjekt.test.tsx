@@ -20,7 +20,8 @@ const URL_TIL_FYLLUT = "url-til-fyllut";
 const URL_TIL_DOKUMENT_INNSENDING = "/skjema-nummer/dokumentinnsending";
 const URL_TIL_PAPIRINNSENDING = "/skjema-nummer/brev";
 
-  const middlewares = [];
+const middlewares: any[] = [];
+
 interface TestWrapperProps {
   children: ReactNode;
 }
@@ -47,17 +48,17 @@ function expectToFindLink(text: string, url: string, type: string) {
 
 describe("Soknadsinnganger", () => {
   it("WITHOUT soknadsdialogURL, dokumentinnsending AND fyllUtURL should ONLY render knapp to papirinnsending (pdf)", () => {
-    const dummySoknadsobjekt = createDummySoknadsobjekt(null, false, null);
+    const dummySoknadsobjekt = createDummySoknadsobjekt("", false, "");
     render(
       <TestWrapper>
-        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} />
+        <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE}/>
       </TestWrapper>
     );
     expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_PAPIRINNSENDING, TYPE_BUTTON);
   });
 
   it("WITHOUT soknadsdialogURL OR dokumentinnsending, but WITH fyllUtURL should ONLY render button to fyllut", () => {
-    const dummySoknadsobjekt = createDummySoknadsobjekt(null, false, URL_TIL_FYLLUT);
+    const dummySoknadsobjekt = createDummySoknadsobjekt("", false, URL_TIL_FYLLUT);
     render(
       <TestWrapper>
         <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
@@ -67,7 +68,7 @@ describe("Soknadsinnganger", () => {
   });
 
   it("WITHOUT soknadsdialogURL OR fyllut, but WITH dokumentinnsending should render button to dokumentinnsending AND link to papirinnsending (pdf)", () => {
-    const dummySoknadsobjekt = createDummySoknadsobjekt(null, true, null);
+    const dummySoknadsobjekt = createDummySoknadsobjekt("", true, "");
     render(
       <TestWrapper>
         <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
@@ -78,7 +79,7 @@ describe("Soknadsinnganger", () => {
   });
 
   it("WITHOUT soknadsdialogURL, but WITH dokumentinnsending AND fyllUtURL should ONLY render button to fyllut", () => {
-    const dummySoknadsobjekt = createDummySoknadsobjekt(null, true, URL_TIL_FYLLUT);
+    const dummySoknadsobjekt = createDummySoknadsobjekt("", true, URL_TIL_FYLLUT);
     render(
       <TestWrapper>
         <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
@@ -88,7 +89,7 @@ describe("Soknadsinnganger", () => {
   });
 
   it("WITH soknadsdialogURL, but WITHOUT dokumentinnsending AND fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
-    const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, false, null);
+    const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, false, "");
     render(
       <TestWrapper>
         <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
@@ -108,7 +109,7 @@ describe("Soknadsinnganger", () => {
     expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
   });
   it("WITH soknadsdialogURL AND dokumentinnsending, but WITHOUT fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
-    const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, null);
+    const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, "");
     render(
       <TestWrapper>
         <Soknadsinnganger soknadsobjekt={dummySoknadsobjekt} locale={LOCALE} />
