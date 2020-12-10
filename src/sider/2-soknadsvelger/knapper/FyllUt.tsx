@@ -9,7 +9,7 @@ interface BasicProps {
   className: string;
 }
 
-export const BasicFyllUt = (props: BasicProps & InjectedIntlProps) => {
+const NakenBasicFyllUt = (props: BasicProps & InjectedIntlProps) => {
   const { soknadsobjekt, intl } = props;
   // fyllUtUrl skal alltid finnes her
   const fyllUtUrl = soknadsobjekt.digitalinnsending?.fyllUt?.lenker[intl.locale];
@@ -20,26 +20,23 @@ export const BasicFyllUt = (props: BasicProps & InjectedIntlProps) => {
   );
 };
 
+const BasicFyllUt = injectIntl(NakenBasicFyllUt);
+
 interface Props {
   soknadsobjekt: Soknadsobjekt;
 }
 
-const NakenKnappFyllUt = (props: Props & InjectedIntlProps) => (
+export const KnappFyllUt = (props: Props) => (
   <BasicFyllUt
-    {...props}
+    soknadsobjekt={props.soknadsobjekt}
     linkId={props.soknadsobjekt.hovedskjema.skjemanummer}
-    messageId={"vissoknadsobjekter.knapp.fyllut"}
+    messageId="vissoknadsobjekter.knapp.fyllut"
     className="knapp knapp--hoved"
   />
 );
-const WrappedFyllUt = injectIntl(NakenKnappFyllUt);
 
-const NakenKnappFyllUtPapir = (props: Props & InjectedIntlProps) => <BasicFyllUt
-  {...props}
-  messageId={"vissoknadsobjekter.fyllUt"}
+export const KnappFyllUtPapir = (props: Props) => <BasicFyllUt
+  soknadsobjekt={props.soknadsobjekt}
+  messageId="vissoknadsobjekter.fyllUt"
   className="lenke soknadsobjekt__lenke typo-normal"
 />;
-
-
-const WrappedFyllUtPapir = injectIntl(NakenKnappFyllUtPapir);
-export {WrappedFyllUtPapir as KnappFyllUtPapir, WrappedFyllUt as KnappFyllUt};
