@@ -33,12 +33,20 @@ export const finnesInngangTilSoknadsdialog = (
   soknadsobjekt: Soknadsobjekt,
   locale: string
 ) =>
-  soknadsobjekt.digitalinnsending &&
+  !!(soknadsobjekt.digitalinnsending &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL &&
   soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.soknadsdialogURL[
     locale
-  ];
+    ]);
+
+export const finnesFyllUtUrl = (soknadsobjekt: Soknadsobjekt,
+                                locale: string) =>
+  !!(soknadsobjekt.digitalinnsending &&
+  soknadsobjekt.digitalinnsending.fyllUt &&
+  soknadsobjekt.digitalinnsending.fyllUt.lenker &&
+  soknadsobjekt.digitalinnsending.fyllUt.lenker[locale]);
+
 
 export const finnesEttersendelseTilSoknadsdialog = (
   soknadsobjekt: Soknadsobjekt

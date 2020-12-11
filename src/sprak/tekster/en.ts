@@ -149,6 +149,8 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "vissoknadsobjekter.knapp.soknadpapapir": `Submit on paper`,
   "vissoknadsobjekter.knapp.soknadsdialog": `Submit digitally`,
   "vissoknadsobjekter.knapp.dokumentinnsending": `Submit digitally`,
+  "vissoknadsobjekter.knapp.fyllut": `Apply`,
+  "vissoknadsobjekter.fyllUt": `Submit on paper`,
   "vissoknadsobjekter.tittel": `Digital application for`,
   "vissoknadsobjekter.ikkeelektroniskID": `Submit on paper`,
   "feil.ingentekst": "Error, did not find text.",

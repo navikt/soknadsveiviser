@@ -5,6 +5,7 @@ import { LocaleBlockText, LocaleString } from "./sprak";
 export interface DigitalInnsending {
   dokumentinnsending?: boolean;
   inngangtilsoknadsdialog?: Inngangsoknadsdialog;
+  fyllUt?: Fyllut;
 }
 
 export interface Soknadsobjekt {
@@ -80,6 +81,10 @@ export interface Enhetstype {
 export interface KlageAnke {
   kanKlage: boolean;
   klageUrl?: string;
+}
+
+export interface Fyllut {
+  lenker: LocaleString;
 }
 
 type Brukertype = "tiltaksbedrift" | "personmedfnr" | "personutenfnr" | "flerepersoner";
