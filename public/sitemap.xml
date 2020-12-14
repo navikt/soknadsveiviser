@@ -7,12 +7,52 @@
     </url>
 
     <url>
-        <loc>https://www.nav.no/soknader/nb/bedrift/covid-19</loc>
+        <loc>https://www.nav.no/soknader/nb/person/arbeid</loc>
         <changefreq>hourly</changefreq>
     </url>
 
     <url>
-        <loc>https://www.nav.no/soknader/nb/person/arbeid</loc>
+        <loc>https://www.nav.no/soknader/nb/person/helse</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/familie</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/pensjon</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/hjelpemidler-og-tilrettelegging</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/sosiale-tjenester</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/stonader-ved-dodsfall</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/til-eller-fra-norge</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/person/diverse</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/covid-19</loc>
         <changefreq>hourly</changefreq>
     </url>
 
@@ -20,4 +60,45 @@
         <loc>https://www.nav.no/soknader/nb/bedrift/for-tiltaksarrangor</loc>
         <changefreq>hourly</changefreq>
     </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/inntekt-og-trekk</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/permitteringer-oppsigelser-og-konkurs</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/refusjoner</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/sykemelding-lege</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/sykepenger</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/tilskudd-og-tiltak</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/yrkessakde</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
+    <url>
+        <loc>https://www.nav.no/soknader/nb/bedrift/diverse-bedrift</loc>
+        <changefreq>hourly</changefreq>
+    </url>
+
 </urlset>
