@@ -78,11 +78,6 @@ class SkjemautlistingOversikt extends React.Component<Props, State> {
                 <FormattedHTMLMessage id="skjemautlisting.sed.forklaring" />
               </Ingress>
             )}
-            <Lenke href="https://navno.sharepoint.com/sites/fag-og-ytelser-skjema-og-maler/SitePages/Skjema.aspx">
-              <Element className="skjemautlisting__litenmargin-overunder">
-                Prøv det nye skjemasøket på Navet
-              </Element>
-            </Lenke>
             {this.state ? <Oversiktstabell skjemaer={this.state.skjemaer} /> : <Spinner />}
           </PanelBase>
         </div>
