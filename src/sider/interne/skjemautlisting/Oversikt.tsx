@@ -8,9 +8,8 @@ import { injectIntl, InjectedIntlProps, FormattedMessage, FormattedHTMLMessage }
 import Lenkepanel from "nav-frontend-lenkepanel/lib";
 import Oversiktstabell from "./tabeller/Oversiktstabell";
 import Spinner from "../../../komponenter/spinner/Spinner";
-import { Element, Ingress } from "nav-frontend-typografi";
+import { Ingress } from "nav-frontend-typografi";
 import Helmet from "react-helmet";
-import Lenke from "nav-frontend-lenker";
 
 interface State {
   skjemaer: Skjema[];
