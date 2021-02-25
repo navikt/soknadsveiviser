@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import {Redirect, Route, Switch} from "react-router-dom";
 import Forside from "./sider/1-forside/Forside";
-import SkjemautlistingOversikt from "./sider/interne/skjemautlisting/Oversikt";
-import SkjemautlistingDetaljert from "./sider/interne/skjemautlisting/Detaljert";
 import Soknadstilpasser from "./sider/3-soknadstilpasser/Routes";
 import Soknadsvelger from "./sider/2-soknadsvelger/Soknadsvelger";
 import NotFound from "./sider/404/404";
@@ -72,16 +70,6 @@ class App extends Component<MergedProps> {
             />
           </MedKategorier>
         </Route>
-        <Route
-          exact
-          path={`${path}/skjemautlisting/:skjematype(skjema|sed)`}
-          component={SkjemautlistingOversikt}
-        />
-        <Route
-          exact
-          path={`${path}/skjemautlisting/detaljert`}
-          component={SkjemautlistingDetaljert}
-        />
         <Route component={NotFound} />
       </Switch>
     );
