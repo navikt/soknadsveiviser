@@ -73,9 +73,7 @@ export default {
 
 For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
   "personalia.undertekstbold.gdpr": `Denne informasjonen brukes for å generere en førsteside for innsending på papir.`,
-  "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak
-
-For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilken enhet som skal behandle saken din. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 36.`,
+  "personalia.undertekstbold.tiltaksbedrift": `Eksempel: Søknader, faktura, deltakerliste, eller annet som gjelder arbeidsrettede tiltak. For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn hvilket NAV-kontor du tilhører i feltet nedenfor. Vet du at personene tilhører ulike NAV-kontor, gjentar du prosedyren for hvert kontor du sender til. Hvilket NAV-kontor du tilhører finner du på <a href="https://www.nav.no/person/personopplysninger#ditt-nav-kontor">Ditt NAV</a>. Her kan du <a href="https://www.nav.no/person/kontakt-oss/nb/finnkontor">søke opp NAV-kontor på vegne av andre</a>. Er du i tvil, kan du kontakte NAV på telefon 55 55 33 33.`,
   "klageanke.knapp": `Klage eller anke`,
   "klage.tittel.underbanner": `Klage på vedtak`,
   "klage.ettersendelse.tittel.underbanner": `Ettersende til klage på vedtak`,
