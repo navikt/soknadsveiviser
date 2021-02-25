@@ -34,12 +34,13 @@ jobs:
           cat > .nais/vars.yaml <<EOF
           namespace: default
           ingresses:
+            - https://www.dev.nav.no/soknader
             - https://www-q0.nav.no/soknader
             - https://www-q1.nav.no/soknader
             - https://soknadsveiviser.dev.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
-          decoratorurl: https://www-q1.nav.no/dekoratoren/
+          decoratorurl: https://dekoratoren.dev.nav.no/
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
