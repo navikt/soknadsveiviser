@@ -73,9 +73,7 @@ export default {
 
 In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
   "personalia.undertekstbold.gdpr": `This information is used to generate a front page for your application.`,
-  "personalia.undertekstbold.tiltaksbedrift": `Example: Applications, invoice, list of participants, or other things that concern work-oriented measures
-
-In order for your papers to arrive quickly at the right place in NAV, enter which office will handle your case. Do you know that the persons belong to different NAV offices, repeat the procedure for each office you send to. If you are in doubt, you can contact NAV at telephone 55 55 33 36.`,
+  "personalia.undertekstbold.tiltaksbedrift": `Example: Applications, invoices, list of participants, or anything else that applies to work-oriented measures. In order for your papers to arrive quickly at the correct place in NAV, enter which NAV office you belong to in the field below. If you know that the people belong to different NAV offices, repeat the procedure for each office you send to. You can find which NAV office you belong to at <a href="https://www.nav.no/person/personoppstilling#ditt-nav-kontor"> Ditt NAV </a>. Here you can <a href="https://www.nav.no/person/kontakt-oss/nb/finnkontor"> apply for a NAV office on behalf of others </a>. If you are in doubt, you can contact NAV on telephone 55 55 33 36.`,
   "klageanke.knapp": `Complaint or Appeal`,
   "klage.tittel.underbanner": `Complaint`,
   "klage.ettersendelse.tittel.underbanner": `Forward documentation to a previously submitted complaint`,
