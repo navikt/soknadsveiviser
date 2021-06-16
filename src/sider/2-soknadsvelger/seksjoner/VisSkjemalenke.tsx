@@ -1,4 +1,5 @@
 import * as React from "react";
+import classNames from "classnames";
 import { Undertittel, Normaltekst } from "nav-frontend-typografi";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import BlockContent from "@sanity/block-content-to-react";
@@ -28,11 +29,7 @@ const VisSkjemalenke = (
   const { navn, beskrivelse, infoLenker, hovedskjema, varseltekst } = skjemalenke;
   const { pdf, skjemanummer } = hovedskjema;
 
-  const markert =
-    hentSkjemanummerHash(props.location.hash) ===
-    convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer)
-      ? "marker"
-      : "";
+  const markert = hentSkjemanummerHash(props.location.hash) === convertNAVSkjemanummerTilHash(hovedskjema.skjemanummer);
 
   return (
     <div
@@ -40,11 +37,11 @@ const VisSkjemalenke = (
       className={"ekspandertSoknadsPanel"}
     >
       <Ekspanderbartpanel
-        apen={apen}
+        apen={markert || apen}
         border={false}
         tittel={
           <div className={"ekspanderbartPanel__headingInnhold"}>
-            <Undertittel className={markert}>
+            <Undertittel className={classNames({'undertittel--markert': markert})}>
               <LocaleTekst tekst={navn} />
             </Undertittel>
             {hovedskjema.skjemanummer ? (
