@@ -5,7 +5,7 @@ Appen kjører på NAIS (kubernetes).
 
 # Komme i gang
 
-Installer NPM pakker
+Installer NPM pakker.
 
 ```
 cd app
