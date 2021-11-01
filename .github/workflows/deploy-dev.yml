@@ -32,7 +32,7 @@ jobs:
       - name: Generate nais variables
         run: |
           cat > .nais/vars.yaml <<EOF
-          namespace: default
+          namespace: skjemadigitalisering
           ingresses:
             - https://www.dev.nav.no/soknader
             - https://www-q0.nav.no/soknader
