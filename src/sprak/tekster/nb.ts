@@ -25,7 +25,7 @@ export default {
   "avslutning.steg.forsteside.tittel": `Last ned "Førsteside til saken din"`,
   "avslutning.steg.forsteside.pdf.tittel": `Førsteside`,
   "avslutning.steg.forsteside.beskrivelse": `Dette førstesidearket inneholder viktig informasjon om hvilken <b>enhet</b> i NAV som skal motta dokumentasjonen. Den inneholder også adressen du skal sende dokumentene til.`,
-  "avslutning.steg.forsteside.nedlastingsfeil": `Noe gikk feil. Prøv igjen senere. Vi arbeider med å rette feilen.`,
+  "avslutning.steg.forsteside.nedlastingsfeil": `Noe gikk feil. Kontroller at du har tastet inn korrekt fødselsnummer / D-nummer og prøv igjen.`,
   "avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger": `Hjelp oss å forstå hva feilen er.`,
   "avslutning.steg.nedlasting.skjema.tittel": `Last ned skjema {skjemanummer}`,
   "avslutning.steg.nedlasting.skjema.beskrivelse": `Søknaden må fylles ut og undertegnes.`,
