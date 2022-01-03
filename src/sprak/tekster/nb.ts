@@ -26,7 +26,6 @@ export default {
   "avslutning.steg.forsteside.pdf.tittel": `Førsteside`,
   "avslutning.steg.forsteside.beskrivelse": `Dette førstesidearket inneholder viktig informasjon om hvilken <b>enhet</b> i NAV som skal motta dokumentasjonen. Den inneholder også adressen du skal sende dokumentene til.`,
   "avslutning.steg.forsteside.nedlastingsfeil": `Noe gikk feil. Kontroller at du har tastet inn korrekt fødselsnummer / D-nummer og prøv igjen.`,
-  "avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger": `Hjelp oss å forstå hva feilen er.`,
   "avslutning.steg.nedlasting.skjema.tittel": `Last ned skjema {skjemanummer}`,
   "avslutning.steg.nedlasting.skjema.beskrivelse": `Søknaden må fylles ut og undertegnes.`,
   "avslutning.steg.nedlasting.skjema.obs": 'Det er viktig at du bruker Adobe Acrobat Reader når du skal fylle ut skjemaet. <br /> <a href="https://get.adobe.com/no/reader/" target="_blank" rel="noopener noreferrer" class="lenke">Last ned Adobe Acrobat Reader</a> (lenke åpner i et nytt vindu).',
