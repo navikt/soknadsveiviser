@@ -17,8 +17,6 @@ import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
 import ReactGA from "react-ga";
 import AlertStripe from "nav-frontend-alertstriper";
-import HotJarLenke from "../../../komponenter/felles/HotJarLenke";
-
 
 ReactGA.initialize("UA-9127381-16");
 ReactGA.set({ anonymizeIp: true });
@@ -161,10 +159,6 @@ const ForstesideGenerator = (props: MergedProps) => {
         <br/>
         <AlertStripe type="feil">
           <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil" />
-          <br />
-          <HotJarLenke trigger="rr_trigger">  
-            <FormattedMessage id="avslutning.steg.forsteside.nedlastingsfeil.hotjartrigger" />
-          </HotJarLenke>
         </AlertStripe>
         </div>
       }
