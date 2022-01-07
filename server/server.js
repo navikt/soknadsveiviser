@@ -8,6 +8,7 @@ const getDecorator = require("./utils/getDecorator");
 const {getSecrets, getMockSecrets} = require("./utils/getSecrets");
 const basePath = require("./utils/basePath");
 const logger = require("./utils/logger");
+const morganMiddleware = require("./utils/morganMiddleware");
 
 const buildPath = path.join(__dirname, "../build");
 
@@ -19,6 +20,7 @@ server.set("views", `${__dirname}/../build`);
 
 // parse application/json
 server.use(express.json());
+server.use(morganMiddleware);
 server.disable("X-Powered-By");
 
 const [
