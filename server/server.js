@@ -48,19 +48,19 @@ server.get(basePath("/api/enheter"), (req, res) => {
   req.pipe(request(`${enheterRSURL}${queryParams}`)).pipe(res);
 });
 
-const PROXY_PATH = "/api/sanity";
-server.use(basePath(`${PROXY_PATH}`), createProxyMiddleware({
+const SOKNADSVEIVISERPROXY_PATH = basePath("/api/sanity");
+server.use(SOKNADSVEIVISERPROXY_PATH, createProxyMiddleware({
   target: soknadsveiviserproxyUrl,
   changeOrigin: true,
   logLevel: 'warn',
   pathRewrite: {
-    [`^/(.*)${PROXY_PATH}`]: '', // remove path prefix
+    [`^${SOKNADSVEIVISERPROXY_PATH}`]: '', // remove path prefix
   }
 }));
 
 server.get(basePath("/config"), (req, res) =>
   res.send({
-    proxyUrl: PROXY_PATH,
+    proxyUrl: SOKNADSVEIVISERPROXY_PATH,
     sanityDataset: sanityDataset
   })
 );
