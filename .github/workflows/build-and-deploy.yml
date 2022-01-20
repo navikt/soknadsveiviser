@@ -1,0 +1,81 @@
+name: Build and deploy
+on:
+  pull_request:
+    branches: [ master ]
+  push:
+env:
+  CI: "true"
+  IMAGE_REGISTRY: docker.pkg.github.com/${{ github.repository }}
+  IMAGE_VERSION: ${{ github.sha }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  IMAGE_NAME: soknadsveiviser
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - run: npm ci
+      - run: npm test
+      - run: npm run build
+      - name: Docker build and push
+        if: github.ref == 'refs/heads/master' || github.event_name == 'pull_request'
+        run: |
+          echo $GITHUB_TOKEN | docker login $IMAGE_REGISTRY -u ${GITHUB_REPOSITORY} --password-stdin
+          docker build --pull -t $IMAGE_REGISTRY/$IMAGE_NAME:$IMAGE_VERSION -t $IMAGE_REGISTRY/$IMAGE_NAME:latest .
+          docker push $IMAGE_REGISTRY/$IMAGE_NAME --all-tags
+
+  deploy-to-dev:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/master' || github.event_name == 'pull_request'
+    steps:
+      - name: Generate nais variables
+        run: |
+          cat > .nais/vars.yaml <<EOF
+          namespace: skjemadigitalisering
+          ingresses:
+            - https://soknadsveiviser.ekstern.dev.nav.no/soknader
+            - https://soknadsveiviser-test.dev.nav.no/soknader
+          image: $IMAGE_REGISTRY/$IMAGE_NAME
+          version: $IMAGE_VERSION
+          decoratorurl: https://dekoratoren.dev.nav.no/
+          EOF
+      - uses: nais/deploy/actions/deploy@master
+        env:
+          CLUSTER: dev-gcp
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: .nais/config.yaml
+          VARS: .nais/vars.yaml
+
+  deploy-to-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-to-dev
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Generate nais variables
+        run: |
+          cat > .nais/vars.yaml <<EOF
+          namespace: skjemadigitalisering
+          ingresses:
+            - https://www.nav.no/soknader
+          image: $IMAGE_REGISTRY/$IMAGE_NAME
+          version: $IMAGE_VERSION
+          decoratorurl: https://www.nav.no/dekoratoren/
+          EOF
+      - uses: nais/deploy/actions/deploy@master
+        env:
+          CLUSTER: prod-gcp
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          RESOURCE: .nais/config.yaml
+          VARS: .nais/vars.yaml
+      - name: Smoke test the deployed app
+        env:
+          CYPRESS_BASE_URL: https://www.nav.no/soknader
+        run: npm run cypress:ci
