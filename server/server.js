@@ -40,21 +40,7 @@ const [
   soknadsveiviserproxyUrl,
 ] = isProduction ? getSecrets() : getMockSecrets();
 
-if (isProduction) {
-  // serve built app in production (served by weback dev server in development)
-  server.use(basePath("/"), express.static(buildPath, {index: false}));
-  server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
-    getDecorator()
-      .then(fragments => {
-        res.render("index.html", fragments);
-      })
-      .catch(e => {
-        const error = `Failed to get decorator: ${e}`;
-        logger.error(error);
-        res.status(500).send(error);
-      });
-  });
-}
+server.use(basePath("/"), express.static(buildPath, {index: false}));
 
 server.get(basePath("/api/enheter"), (req, res) => {
   const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.enhetstyper}` : "";
@@ -140,6 +126,18 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
   )
     .catch(error => {
       next(error);
+    });
+});
+
+server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
+  getDecorator()
+    .then(fragments => {
+      res.render("index.html", fragments);
+    })
+    .catch(e => {
+      const error = `Failed to get decorator: ${e}`;
+      logger.error(error);
+      res.status(500).send(error);
     });
 });
 
