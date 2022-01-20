@@ -26,7 +26,7 @@ function getSecrets() {
 }
 
 function getMockSecrets() {
-  return ["", "", "", "", "", "", "", "", "", "https://tjenester-q0.nav.no/soknadsveiviserproxy"];
+  return ["", "", "", "", "", "", "", "", "", "http://localhost:8081/soknadsveiviserproxy"];
 }
 
 module.exports = { getSecrets, getMockSecrets };

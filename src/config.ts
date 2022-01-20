@@ -61,7 +61,7 @@ export const decoratorContextFromCookie = (cookie: string) => {
 export const getConfig = (): Config => config;
 
 export const getDefault = (): Config => ({
-  proxyUrl: "http://localhost:8080/soknadsveiviserproxy",
+  proxyUrl: "/soknader/api/sanity",
   tjenesteUrl: "https://tjenester-q0.nav.no",
   sanityDataset: "local-testset"
 });

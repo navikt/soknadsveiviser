@@ -4,10 +4,12 @@ const express = require("express");
 const path = require("path");
 const request = require("request-promise");
 const mustacheExpress = require("mustache-express");
+const { createProxyMiddleware } = require('http-proxy-middleware');
 const getDecorator = require("./utils/getDecorator");
 const {getSecrets, getMockSecrets} = require("./utils/getSecrets");
 const basePath = require("./utils/basePath");
 const logger = require("./utils/logger");
+const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
 
 const buildPath = path.join(__dirname, "../build");
 
@@ -21,6 +23,10 @@ server.set("views", `${__dirname}/../build`);
 server.use(express.json());
 server.disable("X-Powered-By");
 
+server.use(httpLoggingMiddleware);
+
+const isProduction = process.env.NODE_ENV === "production";
+
 const [
   enheterRSURL,
   enheterRSApiKey,
@@ -32,9 +38,23 @@ const [
   foerstesidegeneratorServiceUrl,
   foerstesidegeneratorServiceApiKey,
   soknadsveiviserproxyUrl,
-] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
+] = isProduction ? getSecrets() : getMockSecrets();
 
-server.use(basePath("/"), express.static(buildPath, {index: false}));
+if (isProduction) {
+  // serve built app in production (served by weback dev server in development)
+  server.use(basePath("/"), express.static(buildPath, {index: false}));
+  server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
+    getDecorator()
+      .then(fragments => {
+        res.render("index.html", fragments);
+      })
+      .catch(e => {
+        const error = `Failed to get decorator: ${e}`;
+        logger.error(error);
+        res.status(500).send(error);
+      });
+  });
+}
 
 server.get(basePath("/api/enheter"), (req, res) => {
   const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.enhetstyper}` : "";
@@ -42,9 +62,19 @@ server.get(basePath("/api/enheter"), (req, res) => {
   req.pipe(request(`${enheterRSURL}${queryParams}`)).pipe(res);
 });
 
+const PROXY_PATH = "/api/sanity";
+server.use(basePath(`${PROXY_PATH}`), createProxyMiddleware({
+  target: soknadsveiviserproxyUrl,
+  changeOrigin: true,
+  logLevel: 'warn',
+  pathRewrite: {
+    [`^/(.*)${PROXY_PATH}`]: '', // remove path prefix
+  }
+}));
+
 server.get(basePath("/config"), (req, res) =>
   res.send({
-    proxyUrl: soknadsveiviserproxyUrl,
+    proxyUrl: PROXY_PATH,
     sanityDataset: sanityDataset
   })
 );
@@ -110,18 +140,6 @@ server.post(basePath("/api/forsteside"), (req, res, next) => {
   )
     .catch(error => {
       next(error);
-    });
-});
-
-server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
-  getDecorator()
-    .then(fragments => {
-      res.render("index.html", fragments);
-    })
-    .catch(e => {
-      const error = `Failed to get decorator: ${e}`;
-      logger.error(error);
-      res.status(500).send(error);
     });
 });
 

@@ -5,24 +5,18 @@ Appen kjører på NAIS (kubernetes).
 
 # Komme i gang
 
-Installer NPM pakker.
-
-```
-cd app
-npm install
-```
-
-Kjør prosjektet
-
-```
-npm start
-```
-
-Kjør opp server, hvis nødvendig
+Start backend:
 ```
 cd server
 npm install
-node server.js
+npm start
+```
+
+Start frontend:
+
+```
+npm install
+npm start
 ```
 
 ### Test 
@@ -39,7 +33,7 @@ npm run build
 Vi bruker github actions.
 
 ### Nais-cluster
-Applikasjonen ligger i default namespace i dev-sbs.
+Applikasjonen ligger i namespace skjemadigitalisering i dev-gcp.
 
 ### Logging
 
