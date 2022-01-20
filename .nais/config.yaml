@@ -34,5 +34,7 @@ spec:
       cpu: 200m
       memory: 512Mi
   env:
-  -   name: DECORATOR_URL
+    - name: DECORATOR_URL
       value: {{decoratorurl}}
+  envFrom:
+    - secret: soknadsveiviser
