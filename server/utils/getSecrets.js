@@ -9,7 +9,7 @@ function getSecrets() {
   const soknadsveiviserPass = "";
   const foerstesidegeneratorServiceUrl = "";
   const foerstesidegeneratorServiceApiKey = "";
-  const soknadsveiviserproxyUrl = process.env.SOKNADSVEIVISERPROXY_URL
+  const soknadsveiviserproxyHost = process.env.SOKNADSVEIVISERPROXY_HOST;
 
   return [
     enheterRSURL,
@@ -21,12 +21,12 @@ function getSecrets() {
     soknadsveiviserPass,
     foerstesidegeneratorServiceUrl,
     foerstesidegeneratorServiceApiKey,
-    soknadsveiviserproxyUrl,
+    soknadsveiviserproxyHost,
   ];
 }
 
 function getMockSecrets() {
-  return ["", "", "", "", "", "", "", "", "", "http://localhost:8081/soknadsveiviserproxy"];
+  return ["", "", "", "", "", "", "", "", "", "http://localhost:8081"];
 }
 
 module.exports = { getSecrets, getMockSecrets };

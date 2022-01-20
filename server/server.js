@@ -37,7 +37,7 @@ const [
   soknadsveiviserPass,
   foerstesidegeneratorServiceUrl,
   foerstesidegeneratorServiceApiKey,
-  soknadsveiviserproxyUrl,
+  soknadsveiviserproxyHost,
 ] = isProduction ? getSecrets() : getMockSecrets();
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
@@ -50,11 +50,11 @@ server.get(basePath("/api/enheter"), (req, res) => {
 
 const SOKNADSVEIVISERPROXY_PATH = basePath("/api/sanity");
 server.use(SOKNADSVEIVISERPROXY_PATH, createProxyMiddleware({
-  target: soknadsveiviserproxyUrl,
+  target: soknadsveiviserproxyHost,
   changeOrigin: true,
   logLevel: 'warn',
   pathRewrite: {
-    [`^${SOKNADSVEIVISERPROXY_PATH}`]: '', // remove path prefix
+    [`^${SOKNADSVEIVISERPROXY_PATH}`]: '/soknadsveiviserproxy',
   }
 }));
 
@@ -72,7 +72,7 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
     const locale = path[2];
     request(
       {
-        uri: `${soknadsveiviserproxyUrl}/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
+        uri: `${soknadsveiviserproxyHost}/soknadsveiviserproxy/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
         method: "GET",
       },
       (error, result, body) => {
