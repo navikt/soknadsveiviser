@@ -14,6 +14,13 @@ spec:
   {{#each ingresses as |url|}}
      - {{url}}
   {{/each}}
+  azure:
+    application:
+      enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: soknadsveiviserproxy
   liveness:
     path: /soknader/internal/isAlive
     initialDelay: 10
