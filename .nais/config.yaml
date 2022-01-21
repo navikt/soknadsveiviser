@@ -43,5 +43,9 @@ spec:
   env:
     - name: DECORATOR_URL
       value: {{decoratorurl}}
+    - name: SKJEMABYGGING_PROXY_URL
+      value: {{skjemabygging-proxy-url}}
+    - name: SKJEMABYGGING_PROXY_CLIENT_ID
+      value: {{skjemabygging-proxy-client-id}}
   envFrom:
     - secret: soknadsveiviser

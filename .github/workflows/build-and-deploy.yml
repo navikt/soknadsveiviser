@@ -49,6 +49,8 @@ jobs:
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           decoratorurl: https://dekoratoren.dev.nav.no/
+          skjemabygging-proxy-url: https://skjemabygging-proxy.dev-fss-pub.nais.io
+          skjemabygging-proxy-client-id: 95170319-b4d7-4190-8271-118ed19bafbf
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:
@@ -72,6 +74,8 @@ jobs:
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           decoratorurl: https://www.nav.no/dekoratoren/
+          skjemabygging-proxy-url: https://skjemabygging-proxy.prod-fss-pub.nais.io
+          skjemabygging-proxy-client-id: 031863f2-9881-44af-ace5-6b5ab52afeb1
           EOF
       - uses: nais/deploy/actions/deploy@master
         env:

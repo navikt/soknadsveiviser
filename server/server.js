@@ -3,13 +3,18 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const request = require("request-promise");
+const fetch = require("node-fetch");
 const mustacheExpress = require("mustache-express");
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const correlator = require("express-correlation-id");
 const getDecorator = require("./utils/getDecorator");
-const {getSecrets, getMockSecrets} = require("./utils/getSecrets");
+const {getSecrets, getMockSecrets, getConfig} = require("./utils/getSecrets");
 const basePath = require("./utils/basePath");
 const logger = require("./utils/logger");
 const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
+const azureAccessTokenHandler = require("./security/azureAccessTokenHandler");
+const {toJsonOrThrowError} = require("./utils/errorHandling");
+require("./utils/errorToJson.js");
 
 const buildPath = path.join(__dirname, "../build");
 
@@ -21,6 +26,7 @@ server.set("views", `${__dirname}/../build`);
 
 // parse application/json
 server.use(express.json());
+server.use(correlator());
 server.disable("X-Powered-By");
 
 server.use(httpLoggingMiddleware);
@@ -30,15 +36,12 @@ const isProduction = process.env.NODE_ENV === "production";
 const [
   enheterRSURL,
   enheterRSApiKey,
-  sanityDataset,
-  securityTokenServiceTokenUrl,
-  securityTokenServiceTokenApiKey,
-  soknadsveiviserUser,
-  soknadsveiviserPass,
-  foerstesidegeneratorServiceUrl,
-  foerstesidegeneratorServiceApiKey,
-  soknadsveiviserproxyHost,
 ] = isProduction ? getSecrets() : getMockSecrets();
+const {
+  skjemabyggingProxyUrl,
+  soknadsveiviserproxyHost,
+  sanityDataset,
+} = getConfig();
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
@@ -90,41 +93,23 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
   }
 );
 
-server.post(basePath("/api/forsteside"), (req, res, next) => {
-  const requestUrl = securityTokenServiceTokenUrl +
-    "?grant_type=client_credentials&scope=openid";
-  request(
-    requestUrl,
-    {
-      auth: {
-        user: soknadsveiviserUser,
-        pass: soknadsveiviserPass
-      },
-      method: "GET",
-      json: true,
-      headers: {
-        "x-nav-apiKey": securityTokenServiceTokenApiKey
-      }
-    }
-  ).then(result =>
-    request(
-      foerstesidegeneratorServiceUrl,
-      {
-        method: "POST",
-        json: true,
-        body: req.body,
-        auth: {
-          bearer: result.access_token
-        },
-        headers: {
-          "x-nav-apiKey": foerstesidegeneratorServiceApiKey,
-          "Nav-Consumer-Id": soknadsveiviserUser
-        }
-      },
-    )
-      .then((parsedBody) => res.send(parsedBody))
-  )
-    .catch(error => {
+server.post(basePath("/api/forsteside"), azureAccessTokenHandler, (req, res, next) => {
+  const foerstesideData = JSON.stringify(req.body);
+  fetch(`${skjemabyggingProxyUrl}/foersteside`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${req.getAzureAccessToken()}`,
+      "x-correlation-id": correlator.getId(),
+    },
+    body: foerstesideData,
+  })
+    .then(toJsonOrThrowError("Feil ved generering av førsteside", true))
+    .then(foersteside => {
+      res.contentType("application/json");
+      res.send(foersteside);
+    })
+    .catch((error) => {
       next(error);
     });
 });
@@ -149,7 +134,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error({message: err.message, stack: err.stack});
+  logger.error({message: err.message, error: err.toJSON()});
   next(err);
 }
 
@@ -163,7 +148,7 @@ function clientErrorHandler (err, req, res, next) {
 
 function errorHandler (err, req, res, next) {
   res.status(500);
-  res.send({ error: "something failed" });
+  res.send({ error: err.functional ? err.message : "something failed" });
 }
 
 server.use(logErrors);
