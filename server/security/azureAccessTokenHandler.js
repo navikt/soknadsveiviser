@@ -1,6 +1,6 @@
 const fetch = require("node-fetch");
 const qs = require("qs");
-const { getConfig } = require("../utils/getSecrets");
+const { getConfig } = require("../utils/config");
 const { toJsonOrThrowError } = require("../utils/errorHandling");
 
 const { skjemabyggingProxyClientId, clientId, clientSecret, azureOpenidTokenEndpoint } = getConfig();

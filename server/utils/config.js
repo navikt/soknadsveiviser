@@ -1,14 +1,3 @@
-function getSecrets() {
-
-  const enheterRSURL = "";
-  const enheterRSApiKey = "";
-
-  return [
-    enheterRSURL,
-    enheterRSApiKey,
-  ];
-}
-
 function getConfig() {
   return {
     skjemabyggingProxyClientId: process.env.SKJEMABYGGING_PROXY_CLIENT_ID,
@@ -21,8 +10,4 @@ function getConfig() {
   };
 }
 
-function getMockSecrets() {
-  return ["", "", "", "", "", "", "", "", "", "http://localhost:8081"];
-}
-
-module.exports = { getSecrets, getMockSecrets, getConfig };
+module.exports = { getConfig };

@@ -8,12 +8,12 @@ const mustacheExpress = require("mustache-express");
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const correlator = require("express-correlation-id");
 const getDecorator = require("./utils/getDecorator");
-const {getSecrets, getMockSecrets, getConfig} = require("./utils/getSecrets");
+const { getConfig } = require("./utils/config");
 const basePath = require("./utils/basePath");
 const logger = require("./utils/logger");
 const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
 const azureAccessTokenHandler = require("./security/azureAccessTokenHandler");
-const {toJsonOrThrowError} = require("./utils/errorHandling");
+const { toJsonOrThrowError } = require("./utils/errorHandling");
 require("./utils/errorToJson.js");
 
 const buildPath = path.join(__dirname, "../build");
@@ -31,12 +31,6 @@ server.disable("X-Powered-By");
 
 server.use(httpLoggingMiddleware);
 
-const isProduction = process.env.NODE_ENV === "production";
-
-const [
-  enheterRSURL,
-  enheterRSApiKey,
-] = isProduction ? getSecrets() : getMockSecrets();
 const {
   skjemabyggingProxyUrl,
   soknadsveiviserproxyHost,
@@ -45,10 +39,24 @@ const {
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
-server.get(basePath("/api/enheter"), (req, res) => {
+server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res) => {
   const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.enhetstyper}` : "";
-  req.headers["x-nav-apiKey"] = enheterRSApiKey;
-  req.pipe(request(`${enheterRSURL}${queryParams}`)).pipe(res);
+  fetch(`${skjemabyggingProxyUrl}/oppdaterenhetsinfo/api/hentenheter/${queryParams}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${req.getAzureAccessToken()}`,
+      "x-correlation-id": correlator.getId(),
+    },
+  })
+    .then(toJsonOrThrowError("Feil ved henting av enheter", true))
+    .then(enheter => {
+      res.contentType("application/json");
+      res.send(enheter);
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
 
 const SOKNADSVEIVISERPROXY_PATH = basePath("/api/sanity");
