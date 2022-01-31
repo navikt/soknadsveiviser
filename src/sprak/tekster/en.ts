@@ -194,7 +194,7 @@ In order for your papers to arrive quickly at the right place in NAV, enter whic
   "vedleggsvalg.toggle.veiledning": `Yes`,
   "vedleggsvalg.toggle.ikkeveiledning": `No`,
   "vedleggsvalg.toggle.info.ja": `When you have answered the questions below, the documentation to submit with your application will be listed.`,
-  "vedleggsvalg.toggle.info.nei": `Choose which documentation you will be submitting with you application.`,
+  "vedleggsvalg.toggle.info.nei": `Choose which documentation you will be submitting with you application. If you do not want to submit documentation, you can proceed to the next step; "Specify who the submission is for"`,
   "sjekkbokser.pakrevde": `Required documentation for all applications`,
   "sjekkbokser.situasjonsbestemte": `Required documentation based on the situation`
 }
