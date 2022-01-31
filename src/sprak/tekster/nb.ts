@@ -195,7 +195,7 @@ For at papirene dine skal komme raskt fram til riktig sted i NAV, skriver du inn
   "vedleggsvalg.toggle.veiledning": `Ja`,
   "vedleggsvalg.toggle.ikkeveiledning": `Nei`,
   "vedleggsvalg.toggle.info.ja": `Når du har svart på spørsmålene under, får du en liste med dokumentasjon du må legge ved.`,
-  "vedleggsvalg.toggle.info.nei": `Kryss av for hvilken dokumentasjon du sender inn.`,
+  "vedleggsvalg.toggle.info.nei": `Kryss av for hvilken dokumentasjon du sender inn. Dersom du ikke skal sende inn dokumentasjon kan du gå videre til punktet; "Oppgi hvem innsendelsen gjelder for"`,
   "sjekkbokser.pakrevde": `Påkrevde vedlegg`,
   "sjekkbokser.situasjonsbestemte": `Situasjonsbestemte vedlegg`
 }
