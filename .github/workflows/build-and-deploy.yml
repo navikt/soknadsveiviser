@@ -87,6 +87,13 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
           VARS: .nais/vars.yaml
+
+  smoke-test-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-to-prod
+    steps:
+      - uses: actions/checkout@v2
+      - run: npm ci
       - name: Smoke test the deployed app
         env:
           CYPRESS_BASE_URL: https://www.nav.no/soknader
