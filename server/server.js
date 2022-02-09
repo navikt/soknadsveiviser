@@ -142,7 +142,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error({message: err.message, error: err.toJSON()});
+  logger.error({message: err.message, error: err.toJSON(), correlation_id: correlator.getId()});
   next(err);
 }
 
