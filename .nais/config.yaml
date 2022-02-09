@@ -14,6 +14,13 @@ spec:
   {{#each ingresses as |url|}}
      - {{url}}
   {{/each}}
+  azure:
+    application:
+      enabled: true
+  accessPolicy:
+    outbound:
+      rules:
+        - application: soknadsveiviserproxy
   liveness:
     path: /soknader/internal/isAlive
     initialDelay: 10
@@ -34,5 +41,11 @@ spec:
       cpu: 200m
       memory: 512Mi
   env:
-  -   name: DECORATOR_URL
+    - name: DECORATOR_URL
       value: {{decoratorurl}}
+    - name: SKJEMABYGGING_PROXY_URL
+      value: {{skjemabygging-proxy-url}}
+    - name: SKJEMABYGGING_PROXY_CLIENT_ID
+      value: {{skjemabygging-proxy-client-id}}
+  envFrom:
+    - secret: soknadsveiviser

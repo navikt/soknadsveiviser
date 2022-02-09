@@ -3,11 +3,18 @@ require("dotenv").config();
 const express = require("express");
 const path = require("path");
 const request = require("request-promise");
+const fetch = require("node-fetch");
 const mustacheExpress = require("mustache-express");
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const correlator = require("express-correlation-id");
 const getDecorator = require("./utils/getDecorator");
-const {getSecrets, getMockSecrets} = require("./utils/getSecrets");
+const { getConfig } = require("./utils/config");
 const basePath = require("./utils/basePath");
 const logger = require("./utils/logger");
+const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
+const azureAccessTokenHandler = require("./security/azureAccessTokenHandler");
+const { toJsonOrThrowError } = require("./utils/errorHandling");
+require("./utils/errorToJson.js");
 
 const buildPath = path.join(__dirname, "../build");
 
@@ -19,32 +26,52 @@ server.set("views", `${__dirname}/../build`);
 
 // parse application/json
 server.use(express.json());
+server.use(correlator());
 server.disable("X-Powered-By");
 
-const [
-  enheterRSURL,
-  enheterRSApiKey,
+server.use(httpLoggingMiddleware);
+
+const {
+  skjemabyggingProxyUrl,
+  soknadsveiviserproxyHost,
   sanityDataset,
-  securityTokenServiceTokenUrl,
-  securityTokenServiceTokenApiKey,
-  soknadsveiviserUser,
-  soknadsveiviserPass,
-  foerstesidegeneratorServiceUrl,
-  foerstesidegeneratorServiceApiKey,
-  soknadsveiviserproxyUrl,
-] = process.env.NODE_ENV === "production" ? getSecrets() : getMockSecrets();
+} = getConfig();
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
-server.get(basePath("/api/enheter"), (req, res) => {
+server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res) => {
   const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.enhetstyper}` : "";
-  req.headers["x-nav-apiKey"] = enheterRSApiKey;
-  req.pipe(request(`${enheterRSURL}${queryParams}`)).pipe(res);
+  fetch(`${skjemabyggingProxyUrl}/oppdaterenhetsinfo/api/hentenheter/${queryParams}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${req.getAzureAccessToken()}`,
+      "x-correlation-id": correlator.getId(),
+    },
+  })
+    .then(toJsonOrThrowError("Feil ved henting av enheter", true))
+    .then(enheter => {
+      res.contentType("application/json");
+      res.send(enheter);
+    })
+    .catch((error) => {
+      next(error);
+    });
 });
+
+const SOKNADSVEIVISERPROXY_PATH = basePath("/api/sanity");
+server.use(SOKNADSVEIVISERPROXY_PATH, createProxyMiddleware({
+  target: soknadsveiviserproxyHost,
+  changeOrigin: true,
+  logLevel: 'warn',
+  pathRewrite: {
+    [`^${SOKNADSVEIVISERPROXY_PATH}`]: '/soknadsveiviserproxy',
+  }
+}));
 
 server.get(basePath("/config"), (req, res) =>
   res.send({
-    proxyUrl: soknadsveiviserproxyUrl,
+    proxyUrl: SOKNADSVEIVISERPROXY_PATH,
     sanityDataset: sanityDataset
   })
 );
@@ -56,7 +83,7 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
     const locale = path[2];
     request(
       {
-        uri: `${soknadsveiviserproxyUrl}/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
+        uri: `${soknadsveiviserproxyHost}/soknadsveiviserproxy/skjemafil?skjemanummer=${skjemanummer}&locale=${locale}`,
         method: "GET",
       },
       (error, result, body) => {
@@ -74,41 +101,23 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
   }
 );
 
-server.post(basePath("/api/forsteside"), (req, res, next) => {
-  const requestUrl = securityTokenServiceTokenUrl +
-    "?grant_type=client_credentials&scope=openid";
-  request(
-    requestUrl,
-    {
-      auth: {
-        user: soknadsveiviserUser,
-        pass: soknadsveiviserPass
-      },
-      method: "GET",
-      json: true,
-      headers: {
-        "x-nav-apiKey": securityTokenServiceTokenApiKey
-      }
-    }
-  ).then(result =>
-    request(
-      foerstesidegeneratorServiceUrl,
-      {
-        method: "POST",
-        json: true,
-        body: req.body,
-        auth: {
-          bearer: result.access_token
-        },
-        headers: {
-          "x-nav-apiKey": foerstesidegeneratorServiceApiKey,
-          "Nav-Consumer-Id": soknadsveiviserUser
-        }
-      },
-    )
-      .then((parsedBody) => res.send(parsedBody))
-  )
-    .catch(error => {
+server.post(basePath("/api/forsteside"), azureAccessTokenHandler, (req, res, next) => {
+  const foerstesideData = JSON.stringify(req.body);
+  fetch(`${skjemabyggingProxyUrl}/foersteside`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${req.getAzureAccessToken()}`,
+      "x-correlation-id": correlator.getId(),
+    },
+    body: foerstesideData,
+  })
+    .then(toJsonOrThrowError("Feil ved generering av førsteside", true))
+    .then(foersteside => {
+      res.contentType("application/json");
+      res.send(foersteside);
+    })
+    .catch((error) => {
       next(error);
     });
 });
@@ -133,7 +142,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
 
 // error handlers
 function logErrors (err, req, res, next) {
-  logger.error({message: err.message, stack: err.stack});
+  logger.error({message: err.message, error: err.toJSON(), correlation_id: correlator.getId()});
   next(err);
 }
 
@@ -147,7 +156,7 @@ function clientErrorHandler (err, req, res, next) {
 
 function errorHandler (err, req, res, next) {
   res.status(500);
-  res.send({ error: "something failed" });
+  res.send({ error: err.functional ? err.message : "something failed" });
 }
 
 server.use(logErrors);

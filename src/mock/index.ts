@@ -28,13 +28,13 @@ export const setUpMock = () => {
 
   mockKategorier &&
     fetchMock.get(
-      `http://localhost:8080/soknadsveiviserproxy/allekategorier`,
+      `http://localhost:3000/soknader/api/sanity/allekategorier`,
       delay(500, 1000).then(() => 500)
     );
 
   mockSoknadsobjekter &&
     fetchMock.get(
-      `begin:http://localhost:8080/soknadsveiviserproxy/soknadsobjekter-og-soknadslenker`,
+      `begin:http://localhost:3000/soknader/api/sanity/soknadsobjekter-og-soknadslenker`,
       delay(500, 1000).then(() => 500)
     );
 
@@ -46,7 +46,7 @@ export const setUpMock = () => {
 
   mockPdfMerger &&
     fetchMock.post(
-      `http://localhost:8080/soknadsveiviserproxy/merge-pdf`,
+      `http://localhost:3000/soknader/api/sanity/merge-pdf`,
       delay(500, 1000).then(() => 500)
     );
 };
