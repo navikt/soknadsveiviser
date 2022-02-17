@@ -46,9 +46,10 @@ jobs:
           namespace: skjemadigitalisering
           ingresses:
             - https://soknadsveiviser.ekstern.dev.nav.no/soknader
-            - https://soknadsveiviser-test.dev.nav.no/soknader
+            - https://soknadsveiviser.dev.nav.no/soknader
             - https://soknadsveiviser-q0.dev.nav.no/soknader
             - https://soknadsveiviser-q1.dev.nav.no/soknader
+            - https://www.dev.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           decoratorurl: https://dekoratoren.dev.nav.no/
