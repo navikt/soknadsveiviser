@@ -122,6 +122,24 @@ server.post(basePath("/api/forsteside"), azureAccessTokenHandler, (req, res, nex
     });
 });
 
+server.post(basePath("/api/logger/:level"), (req, res) => {
+  const eventData = req.body;
+  const { level } = req.params || "";
+  switch (level) {
+    case "info":
+      logger.info({source: "frontend", eventData});
+      break;
+    case "error":
+      logger.error({source: "frontend", eventData});
+      break;
+    default:
+      res.status(400);
+      res.send(`Unknown log level: '${level}'`);
+      return;
+  }
+  res.sendStatus(201);
+});
+
 server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
   getDecorator()
     .then(fragments => {
