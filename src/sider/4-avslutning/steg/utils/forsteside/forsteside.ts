@@ -25,8 +25,8 @@ export interface Params {
   skalAnke?: boolean;
 }
 
-export const hentForsteside = (params: Params): Promise<string> =>
-  new Promise(async (resolve, reject) => {
+export const hentForsteside = async (params: Params): Promise<string> =>
+  new Promise<string>(async (resolve, reject) => {
     const url = "/soknader/api/forsteside";
     const {
       klageSoknadsobjekt,
@@ -92,7 +92,7 @@ export const hentForsteside = (params: Params): Promise<string> =>
     }
     console.groupEnd();
 
-    fetch(url, {
+    return fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(json)
@@ -101,8 +101,8 @@ export const hentForsteside = (params: Params): Promise<string> =>
       .then(parseJson)
       .then(response => response.foersteside)
       .then(resolve)
-      .catch(err => {
-        loggApiException(url, err);
+      .catch(async (err) => {
+        await loggApiException(url, err);
         reject(err);
       });
   });

@@ -37,10 +37,11 @@ Applikasjonen ligger i namespace skjemadigitalisering i dev-gcp.
 
 ### Logging
 
-Vi bruker fo-frontendlogger for logging. For oppslag i kibana:
+For oppslag på logs.adeo.no:
 
 ```
-application:frontendlogger AND x_appname:soknadsveiviser
+application: soknadsveiviser AND cluster: dev-gcp
+application: soknadsveiviser AND cluster: prod-gcp
 ```
 
 ### Tekst

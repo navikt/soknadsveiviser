@@ -1,25 +1,33 @@
 import {HttpException} from "./HttpException";
 
-interface MyWindow extends Window {
-  frontendlogger: any;
-}
-declare var window: MyWindow;
-
 const mask = (error: string) =>
   error.replace(/(^|\W)\d{11}(?=$|\W)/, "1**********");
 
 export const loggEvent = (
   tittel: string,
-  fields?: { [key: string]: any },
-  tags?: { [key: string]: any }
-) =>
-  window.frontendlogger &&
-  window.frontendlogger.event(mask(tittel), fields || {}, tags || {});
+  fields: { [key: string]: any } = {},
+  tags: { [key: string]: any } = {},
+) => {
+  return fetch("/soknader/api/logger/info", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: mask(tittel),
+      fields,
+      tags,
+    })
+  }).catch((err) => console.log(err));
+}
 
-export const loggError = (error: string) =>
-  window.frontendlogger && window.frontendlogger.error(mask(error));
+export const loggError = (error: string) => {
+  return fetch("/soknader/api/logger/error", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({message: mask(error)})
+  }).catch((err) => console.log(err));
+}
 
-export const loggApiError = (url: string, error: string, status?: number) => {
+export const loggApiError = async (url: string, error: string, status?: number) => {
   const errorMessage = `Feil ved henting av data: ${url} - ${error}`;
 
   const title = "soknadsveiviser.apiclient.error";
@@ -30,27 +38,29 @@ export const loggApiError = (url: string, error: string, status?: number) => {
     url: mask(url)
   };
 
-  loggError(errorMessage);
-  loggEvent(title, fields, tags);
+  return Promise.all([
+    loggError(errorMessage),
+    loggEvent(title, fields, tags)
+  ])
 };
 
-export function loggApiException(url: string, err: Error) {
+export async function loggApiException(url: string, err: Error) {
   if (err instanceof HttpException) {
-    loggResponseAndApiError(url, err.response);
+    await loggResponseAndApiError(url, err.response);
     return;
   }
   const errorMessage = `Feil ved henting av data: ${url} - ${err.message}`;
-  loggError(errorMessage);
+  await loggError(errorMessage);
   const title = "soknadsveiviser.apiclient.error";
   const fields = {
     errorMessage: errorMessage,
     url: mask(url)
   };
-  loggEvent(title, fields, {})
+  await loggEvent(title, fields, {})
 }
 
-export const loggResponseAndApiError = (url: string, response: Response) => {
-  loggApiError(
+export const loggResponseAndApiError = async (url: string, response: Response) => {
+  await loggApiError(
     url,
     `${response.status} ${response.statusText}`,
     response.status

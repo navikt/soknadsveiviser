@@ -20,22 +20,6 @@
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="stylesheet" href="%PUBLIC_URL%/index.css" />
-
-    <script type="application/javascript">
-      window.frontendlogger = {
-        info: function() {},
-        warn: function() {},
-        error: function() {},
-        event: function() {}
-      };
-      window.frontendlogger.appname = "soknadsveiviser";
-    </script>
-      <% if (process.env.NODE_ENV !== 'development') { %>
-    <script
-      type="application/javascript"
-      src="/frontendlogger/logger.js"
-    ></script>
-      <% } %>
     <!-- Konfig for appdynamics -->
     <script type="application/javascript" src="%PUBLIC_URL%/appdynamics.js" charset='UTF-8'></script>
     <script type="application/javascript" src='https://jsagent.nav.no/adrum/adrum.js'></script>
