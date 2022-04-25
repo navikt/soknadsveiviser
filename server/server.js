@@ -123,14 +123,15 @@ server.post(basePath("/api/forsteside"), azureAccessTokenHandler, (req, res, nex
 });
 
 server.post(basePath("/api/logger/:level"), (req, res) => {
-  const eventData = req.body;
+  const eventData = req.body || {};
   const { level } = req.params || "";
+  const { message } = eventData;
   switch (level) {
     case "info":
-      logger.info({source: "frontend", eventData});
+      logger.info({source: "frontend", message, eventData});
       break;
     case "error":
-      logger.error({source: "frontend", eventData});
+      logger.info({source: "frontend", message, hiddenLevel: "Error", eventData});
       break;
     default:
       res.status(400);
