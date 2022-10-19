@@ -23,7 +23,7 @@ export const genererDokumentinnsendingsUrl = (
 
   return encodeURI(
     getTjenesteUrl() +
-    "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
+    "/sendinn/opprettSoknadResource?skjemanummer=" +
     hovedskjema.skjemanummer +
     "&erEttersendelse=" +
     (ettersendelse ? "true" : "false") +
