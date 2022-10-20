@@ -18,6 +18,8 @@ export const getTjenesteUrl = (): string => {
     return "https://tjenester-q0.nav.no";
   } else if (window.location.href.indexOf("soknadsveiviser-q1") !== -1) {
     return "https://tjenester-q1.nav.no";
+  } else if (window.location.href.indexOf("www.dev.nav.no") !== -1) {
+    return "https://www.dev.nav.no";
   } else {
     return "https://tjenester.nav.no";
   }
