@@ -1,6 +1,6 @@
 import { Soknadsobjekt } from "../../../typer/soknad";
 import { Vedlegg, Vedleggsobjekt } from "../../../typer/skjemaogvedlegg";
-import { getSendInnHost } from "../../../config";
+import { getTjenesteUrl } from "../../../config";
 
 export const genererDokumentinnsendingsUrl = (
   valgtSoknadsobjekt: Soknadsobjekt,
@@ -22,8 +22,8 @@ export const genererDokumentinnsendingsUrl = (
     .join();
 
   return encodeURI(
-    getSendInnHost() +
-    "/sendinn/opprettSoknadResource?skjemanummer=" +
+    getTjenesteUrl() +
+    "/dokumentinnsending/opprettSoknadResource?skjemanummer=" +
     hovedskjema.skjemanummer +
     "&erEttersendelse=" +
     (ettersendelse ? "true" : "false") +
