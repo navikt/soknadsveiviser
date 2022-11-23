@@ -14,6 +14,7 @@ const logger = require("./utils/logger");
 const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
 const azureAccessTokenHandler = require("./security/azureAccessTokenHandler");
 const { toJsonOrThrowError } = require("./utils/errorHandling");
+const { filterEnheter, toSoknadsveiviserFormat } = require("./utils/enhetUtil");
 require("./utils/errorToJson.js");
 
 const buildPath = path.join(__dirname, "../build");
@@ -39,9 +40,8 @@ const {
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
-server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res) => {
-  const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.enhetstyper}` : "";
-  fetch(`${skjemabyggingProxyUrl}/oppdaterenhetsinfo/api/hentenheter/${queryParams}`, {
+server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res, next) => {
+  fetch(`${skjemabyggingProxyUrl}/norg2/api/v1/enhet/kontaktinformasjon/organisering/AKTIV`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -50,9 +50,12 @@ server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res) => {
     },
   })
     .then(toJsonOrThrowError("Feil ved henting av enheter", true))
-    .then(enheter => {
+    .then(enhetObjects => {
+      const { enhetstyper } = req.query;
+      const typer = enhetstyper ? enhetstyper.split(",") : undefined;
+      const visibleEnhetObjects = filterEnheter(enhetObjects, typer);
       res.contentType("application/json");
-      res.send(enheter);
+      res.send(visibleEnhetObjects.map(toSoknadsveiviserFormat));
     })
     .catch((error) => {
       next(error);
