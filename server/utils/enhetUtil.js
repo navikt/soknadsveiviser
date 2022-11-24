@@ -15,10 +15,12 @@ const visibleEnhetstyper = [
   "OPPFUTLAND",
 ];
 
-const filterEnheter = (enhetObjects, typer) => {
-  return enhetObjects
-    .filter(object => object.enhet && object.enhet.enhetNr !== "0000" && visibleEnhetstyper.includes(object.enhet.type))
-    .filter(object => !typer || typer.length === 0 || typer.includes(object.enhet.type));
+const isValidEnhetObject = object => {
+  return object.enhet && object.enhet.enhetNr !== "0000" && visibleEnhetstyper.includes(object.enhet.type);
+}
+
+const filterEnheter = (enheter, typer) => {
+  return enheter.filter(enhet => typer.includes(enhet.type));
 }
 
 const toSoknadsveiviserFormat = enhetObject => {
@@ -60,6 +62,7 @@ const toSoknadsveiviserFormat = enhetObject => {
 }
 
 const util = {
+  isValidEnhetObject,
   filterEnheter,
   toSoknadsveiviserFormat,
 }
