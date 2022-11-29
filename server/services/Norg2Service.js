@@ -4,7 +4,7 @@ const {toJsonOrThrowError} = require("../utils/errorHandling");
 const {getConfig} = require("../utils/config");
 const logger = require("../utils/logger");
 const { ArrayCache } = require("../utils/cache");
-const { isValidEnhetObject, toSoknadsveiviserFormat } = require("../utils/enhetUtil");
+const { isValidEnhetObject, toSoknadsveiviserFormat, filterEnheter } = require("../utils/enhetUtil");
 const {
   skjemabyggingProxyUrl,
 } = getConfig();
@@ -15,7 +15,7 @@ class Norg2Service {
 
   cache = new ArrayCache("Norg2", ONE_HOUR_IN_MS);
 
-  async getEnheter(accessToken) {
+  async getEnheter(accessToken, typer) {
     if (!this.cache.isValid()) {
       logger.info("Fetching data from Norg2...");
       const enhetObjects = await fetch(`${skjemabyggingProxyUrl}/norg2/api/v1/enhet/kontaktinformasjon/organisering/AKTIV`, {
@@ -28,7 +28,7 @@ class Norg2Service {
       }).then(toJsonOrThrowError("Feil ved henting av enheter", true));
       this.cache.put(enhetObjects.filter(isValidEnhetObject).map(toSoknadsveiviserFormat));
     }
-    return Promise.resolve(this.cache.get());
+    return Promise.resolve(filterEnheter(this.cache.get(), typer));
   }
 
 }

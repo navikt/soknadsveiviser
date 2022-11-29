@@ -14,7 +14,6 @@ const logger = require("./utils/logger");
 const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
 const azureAccessTokenHandler = require("./security/azureAccessTokenHandler");
 const { toJsonOrThrowError } = require("./utils/errorHandling");
-const { filterEnheter } = require("./utils/enhetUtil");
 const norg2Service = require("./services/Norg2Service");
 require("./utils/errorToJson.js");
 
@@ -42,13 +41,13 @@ const {
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
 server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res, next) => {
+  const { enhetstyper } = req.query;
+  const typer = enhetstyper ? enhetstyper.split(",") : undefined;
   norg2Service
-    .getEnheter(req.getAzureAccessToken())
+    .getEnheter(req.getAzureAccessToken(), typer)
     .then(enhetsliste => {
-      const { enhetstyper } = req.query;
-      const typer = enhetstyper ? enhetstyper.split(",") : undefined;
       res.contentType("application/json");
-      res.send(filterEnheter(enhetsliste, typer));
+      res.send(enhetsliste);
     })
     .catch((error) => {
       next(error);
