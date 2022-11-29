@@ -20,7 +20,7 @@ const isValidEnhetObject = object => {
 }
 
 const filterEnheter = (enheter, typer) => {
-  return enheter.filter(enhet => typer.includes(enhet.type));
+  return typer && typer.length > 0 ? enheter.filter(enhet => typer.includes(enhet.type)) : enheter;
 }
 
 const toSoknadsveiviserFormat = enhetObject => {

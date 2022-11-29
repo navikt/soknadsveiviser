@@ -48,7 +48,7 @@ server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res, next) =
       const { enhetstyper } = req.query;
       const typer = enhetstyper ? enhetstyper.split(",") : undefined;
       res.contentType("application/json");
-      res.send(typer && typer.length > 0 ? filterEnheter(enhetsliste, typer) : enhetsliste);
+      res.send(filterEnheter(enhetsliste, typer));
     })
     .catch((error) => {
       next(error);
