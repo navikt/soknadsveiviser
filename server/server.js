@@ -45,9 +45,9 @@ server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res, next) =
   const typer = enhetstyper ? enhetstyper.split(",") : undefined;
   norg2Service
     .getEnheter(req.getAzureAccessToken(), typer)
-    .then(enhetsliste => {
+    .then(enheter => {
       res.contentType("application/json");
-      res.send(enhetsliste);
+      res.send(enheter);
     })
     .catch((error) => {
       next(error);
