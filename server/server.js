@@ -14,6 +14,7 @@ const logger = require("./utils/logger");
 const httpLoggingMiddleware = require("./utils/httpLoggingMiddleware");
 const azureAccessTokenHandler = require("./security/azureAccessTokenHandler");
 const { toJsonOrThrowError } = require("./utils/errorHandling");
+const norg2Service = require("./services/Norg2Service");
 require("./utils/errorToJson.js");
 
 const buildPath = path.join(__dirname, "../build");
@@ -39,17 +40,11 @@ const {
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
-server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res) => {
-  const queryParams = req.query.enhetstyper ? `?enhetstyper=${req.query.enhetstyper}` : "";
-  fetch(`${skjemabyggingProxyUrl}/oppdaterenhetsinfo/api/hentenheter/${queryParams}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${req.getAzureAccessToken()}`,
-      "x-correlation-id": correlator.getId(),
-    },
-  })
-    .then(toJsonOrThrowError("Feil ved henting av enheter", true))
+server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res, next) => {
+  const { enhetstyper } = req.query;
+  const typer = enhetstyper ? enhetstyper.split(",") : undefined;
+  norg2Service
+    .getEnheter(req.getAzureAccessToken(), typer)
     .then(enheter => {
       res.contentType("application/json");
       res.send(enheter);
