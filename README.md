@@ -5,6 +5,11 @@ Appen kjører på NAIS (kubernetes).
 
 # Komme i gang
 
+Man må enten kjøre opp [soknadsveiviserproxy](https://github.com/navikt/soknadsveiviserproxy) lokalt for at data skal
+lastes fra Sanity, eller man kan peke på proxyen i dev-gcp ved hjelp av en .env-fil i server-mappa:
+
+    SOKNADSVEIVISERPROXY_HOST=https://soknadsveiviserproxy-test.dev.nav.no
+
 Start backend:
 ```
 cd server
