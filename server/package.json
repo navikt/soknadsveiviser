@@ -10,7 +10,7 @@
   "dependencies": {
     "@elastic/ecs-morgan-format": "^1.1.0",
     "dotenv": "^8.6.0",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-correlation-id": "^2.0.1",
     "file-system": "^2.2.2",
     "http-proxy-middleware": "^2.0.1",
