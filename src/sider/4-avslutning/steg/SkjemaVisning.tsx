@@ -7,11 +7,6 @@ import { InjectedIntlProps, injectIntl } from "react-intl";
 import LocaleTekst from "komponenter/localetekst/LocaleTekst";
 import { hentPDFurl } from "./utils/pdf";
 import { Skjema } from "typer/skjemaogvedlegg";
-import { useParams } from "react-router";
-import ReactGA from "react-ga";
-
-ReactGA.initialize("UA-9127381-16");
-ReactGA.set({ anonymizeIp: true });
 
 interface Props {
   skjema: Skjema;
@@ -22,7 +17,6 @@ interface Props {
 type MergedProps = Props & InjectedIntlProps;
 const Skjemavisning = (props: MergedProps) => {
   const { skjemaSprak, intl, visEtikett, skjema } = props;
-  const { personEllerBedrift, kategori, underkategori } = useParams();
 
   // Definer url og filnavn
   const url = hentPDFurl(skjema.pdf, skjemaSprak, intl.locale);
@@ -30,14 +24,6 @@ const Skjemavisning = (props: MergedProps) => {
   const filtype = url.split(".").pop() || "pdf";
   const filnavn = encodeURI(`${tittel}.${filtype}`);
   const filUrl = `${url}?dl=${filnavn}`;
-
-  // Logg
-  const loggGA = () =>
-    ReactGA.event({
-      category: "Søknadsveiviser",
-      action: "Last ned skjema",
-      label: `/${personEllerBedrift}/${kategori}/${underkategori}/${skjema.skjemanummer}/nedlasting/skjema`
-    });
 
   return (
     <div className="skjema__container">
@@ -50,7 +36,7 @@ const Skjemavisning = (props: MergedProps) => {
         </div>
       )}
       <div className="skjema__knapp">
-        <a href={filUrl} className={"knapp knapp--hoved"} onClick={loggGA}>
+        <a href={filUrl} className={"knapp knapp--hoved"}>
           <FormattedMessage id="avslutning.steg.lastned.knapp.ready" />
         </a>
       </div>

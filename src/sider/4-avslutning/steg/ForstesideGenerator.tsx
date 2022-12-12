@@ -15,11 +15,7 @@ import { lastNedFilBase64 } from "./utils/pdf";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { Hovedknapp } from "nav-frontend-knapper";
 import { Klage } from "../../../typer/store";
-import ReactGA from "react-ga";
 import AlertStripe from "nav-frontend-alertstriper";
-
-ReactGA.initialize("UA-9127381-16");
-ReactGA.set({ anonymizeIp: true });
 
 interface Routes {
   ettersendelse?: string;
@@ -74,14 +70,6 @@ const ForstesideGenerator = (props: MergedProps) => {
       params.ettersendelse ||
       ((skalAnke || skalKlage) && typeKlage && typeKlage.skalEttersende)
     );
-
-    const { kategori, underkategori, personEllerBedrift } = params;
-
-    ReactGA.event({
-      category: "Søknadsveiviser",
-      action: "Last ned førsteside",
-      label: `/${personEllerBedrift}/${kategori}/${underkategori}/${valgtSoknadsobjekt.hovedskjema.skjemanummer}/nedlasting/forsteside`
-    });
 
     const personalia = {
       fodselsnummer: props.fodselsnummer,
