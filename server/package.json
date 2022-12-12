@@ -14,7 +14,7 @@
     "express-correlation-id": "^2.0.1",
     "file-system": "^2.2.2",
     "http-proxy-middleware": "^2.0.1",
-    "jsdom": "^15.1.1",
+    "jsdom": "^16.5.0",
     "morgan": "^1.10.0",
     "mustache-express": "^1.2.8",
     "node-cache": "^5.1.0",
