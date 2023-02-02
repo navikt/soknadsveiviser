@@ -14,6 +14,7 @@ const TYPE_BUTTON = "knapp";
 const TYPE_LINK = "lenke";
 const TEXT_TIL_DIGITAL_INNSENDING = "Send digitalt";
 const TEXT_TIL_PAPIR_INNSENDING = "Send på papir";
+const TEXT_TIL_FYLLUT_PAPIR_INNSENDING = "Send i posten";
 const TEXT_TIL_FYLL_UT = "Fyll ut";
 const URL_TIL_SOKNADSDIALOG = "url-til-soknadsdialog";
 const URL_TIL_FYLLUT = "url-til-fyllut";
@@ -106,7 +107,7 @@ describe("Soknadsinnganger", () => {
       </TestWrapper>
     );
     expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_SOKNADSDIALOG, TYPE_BUTTON);
-    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
+    expectToFindLink(TEXT_TIL_FYLLUT_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
   });
   it("WITH soknadsdialogURL AND dokumentinnsending, but WITHOUT fyllUtURL should render button to soknadsdialog AND link to papirinnsending (pdf)", () => {
     const dummySoknadsobjekt = createDummySoknadsobjekt(URL_TIL_SOKNADSDIALOG, true, "");
@@ -126,6 +127,6 @@ describe("Soknadsinnganger", () => {
       </TestWrapper>
     );
     expectToFindLink(TEXT_TIL_DIGITAL_INNSENDING, URL_TIL_SOKNADSDIALOG, TYPE_BUTTON);
-    expectToFindLink(TEXT_TIL_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
+    expectToFindLink(TEXT_TIL_FYLLUT_PAPIR_INNSENDING, URL_TIL_FYLLUT, TYPE_LINK);
   });
 });
