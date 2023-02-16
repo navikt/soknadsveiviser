@@ -5,7 +5,7 @@ interface RefObject<T> {
 }
 
 interface Props {
-  [s: string]: string;
+  [s: string]: string|undefined;
 }
 
 export const usePrevious = (props: Props) => {
