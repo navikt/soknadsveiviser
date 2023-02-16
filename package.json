@@ -13,7 +13,6 @@
     "build:less": "less-watch-compiler --run-once",
     "build:ts": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
     "lint:fix": "tslint ./src/**/*.ts* --fix",
     "test:coverage": "npm test -- --coverage",
     "tslint-check": "tslint-config-prettier-check ./tslint.json",
