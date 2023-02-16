@@ -32,7 +32,7 @@ class Kategorimeny extends Component<MergedProps, State> {
       windowSize: window.innerWidth
     });
 
-  componentDidMount = () => {
+  UNSAFE_componentWillMount = () => {
     window.addEventListener("resize", this.handleWindowSize);
   };
 

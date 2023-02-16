@@ -53,7 +53,7 @@ class Avslutning extends Component<MergedProps, State> {
   byttSprak = (valgtSprak: string) =>
     this.setState({ skjemaSprak: valgtSprak });
 
-  componentDidMount = () => {
+  UNSAFE_componentWillMount = () => {
     const { skjemanummer } = this.props.match.params;
     loggEvent("soknadsveiviser.valgt.skjemanummer", undefined, {
       skjemanummer

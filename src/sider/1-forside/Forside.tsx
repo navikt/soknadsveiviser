@@ -28,7 +28,7 @@ interface ReduxProps {
 type MergedProps = InjectedIntlProps & RouteComponentProps<Routes> & ReduxProps;
 
 class Soknadsveiviser extends Component<MergedProps> {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     const { match, settValgtType } = this.props;
     const { personEllerBedrift } = match.params;
     const type = typeTilNorsk(personEllerBedrift);

@@ -35,7 +35,7 @@ type MergedProps = Props &
 const { Provider, Consumer } = React.createContext({});
 
 class MedKategorier extends Component<MergedProps> {
-  componentDidMount() {
+  UNSAFE_componentWillMount() {
     const { kategorier, hentKategorier } = this.props;
     kategorier.status !== "RESULT" && hentKategorier();
   }

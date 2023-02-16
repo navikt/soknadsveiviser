@@ -58,7 +58,7 @@ type MergedProps = Props &
   InjectedIntlProps;
 
 class VisKlage extends Component<MergedProps> {
-  componentDidMount = () => {
+  UNSAFE_componentWillMount = () => {
     const { klageSoknadsobjekt, match, klage } = this.props;
     const urlSkalEttersende = !!match.params.ettersendelse;
 
