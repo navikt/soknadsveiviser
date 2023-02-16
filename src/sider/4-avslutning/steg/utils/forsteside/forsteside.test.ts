@@ -66,8 +66,8 @@ const exampleParams: Params = {
 describe('hentForsteside', () => {
 
   describe('fetch failures', () => {
-    let errorScope;
-    let infoScope;
+    let errorScope: any;
+    let infoScope: any;
 
     beforeEach(() => {
       errorScope = nock("http://localhost")
