@@ -5,7 +5,7 @@ import { Underkategori } from "../../../typer/underkategori";
 import { withRouter, RouteComponentProps, useLocation, useHistory } from "react-router";
 import { IntlProviderWrapperContextType, IntlProviderWrapperHOC } from "../../../sprak/IntlProviderWrapper";
 import { useEffect } from "react";
-import { onLanguageSelect, setAvailableLanguages } from "@navikt/nav-dekoratoren-moduler/dist";
+import { onLanguageSelect, setAvailableLanguages } from "@navikt/nav-dekoratoren-moduler";
 
 interface Props {
   valgtKategori?: Kategori;
@@ -29,11 +29,12 @@ const SprakVelger = (props: MergedProps) => {
 
   onLanguageSelect((language) => {
     context.settLocale(language.locale);
-    history.push(language.url);
+    history.push(language.url!);
   });
 
   useEffect(() => {
     setAvailableLanguages(
+      // @ts-ignore
       languages.map((lang) => ({
         locale: lang.code,
         url: window.location.pathname.replace(sprak, lang.code),

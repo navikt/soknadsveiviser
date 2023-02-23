@@ -1,6 +1,6 @@
 import * as React from "react";
 import Systemtittel from "nav-frontend-typografi/lib/systemtittel";
-import EtikettLiten from "nav-frontend-typografi/lib/etikett-liten";
+import { Undertekst } from "nav-frontend-typografi";
 
 interface Props {
   tittel: string;
@@ -20,7 +20,7 @@ const Banner = (props: Props) => {
   return (
     <div className="hovedbanner" style={style}>
       {props.undertittel ? (
-        <EtikettLiten className="litenEtikett">{props.undertittel}</EtikettLiten>
+        <Undertekst className="litenEtikett">{props.undertittel}</Undertekst>
       ) : (
         <div style={{ padding: 12 }} />
       )}

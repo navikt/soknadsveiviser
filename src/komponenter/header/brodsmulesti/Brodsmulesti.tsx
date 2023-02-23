@@ -1,7 +1,7 @@
 import React, { ReactNode, useEffect } from "react";
 import { useHistory, useLocation } from "react-router";
-import { setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
-import { onBreadcrumbClick } from "@navikt/nav-dekoratoren-moduler/dist";
+import { onBreadcrumbClick, setBreadcrumbs } from "@navikt/nav-dekoratoren-moduler";
+
 
 export interface Smule {
   tekst: ReactNode;
