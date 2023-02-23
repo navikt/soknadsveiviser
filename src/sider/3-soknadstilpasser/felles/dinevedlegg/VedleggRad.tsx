@@ -4,7 +4,7 @@ import { Element } from "nav-frontend-typografi";
 import { LocaleBlockText } from "typer/sprak";
 import RadioButtons from "./RadioButtons";
 import { injectIntl, InjectedIntlProps } from "react-intl";
-import { FormattedMessage, FormattedHTMLMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 import { blockToPlainText } from "utils/sprak";
 import { localeVedleggstittel } from "utils/soknadsobjekter";
 
@@ -29,7 +29,7 @@ const VedleggRad = (props: Props & InjectedIntlProps) => {
         <div className="dinevedlegg__tittel">
           {pakrevd && visErVedleggPakrevd && (
             <Element>
-              <FormattedHTMLMessage id="dinevedlegg.pakrevd" />{" "}
+              <FormattedMessage id="dinevedlegg.pakrevd" />{" "}
             </Element>
           )}
           <div className="dinevedlegg__beskrivelse-container">
