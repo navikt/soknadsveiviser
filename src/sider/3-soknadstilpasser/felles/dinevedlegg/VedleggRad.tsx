@@ -29,7 +29,9 @@ const VedleggRad = (props: Props & InjectedIntlProps) => {
         <div className="dinevedlegg__tittel">
           {pakrevd && visErVedleggPakrevd && (
             <Element>
-              <FormattedMessage id="dinevedlegg.pakrevd" />{" "}
+              <span dangerouslySetInnerHTML={{__html: intl.formatMessage(
+                  { id: 'dinevedlegg.pakrevd' },
+                )} }/>{" "}
             </Element>
           )}
           <div className="dinevedlegg__beskrivelse-container">
