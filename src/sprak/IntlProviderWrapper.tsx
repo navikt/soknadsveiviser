@@ -2,9 +2,6 @@ import React, { Component, ComponentType } from "react";
 import IntlProvider from "./IntlProvider";
 import NavFrontendSpinner from "nav-frontend-spinner";
 import alleTekster from "./tekster";
-import { addLocaleData } from "react-intl";
-import * as en from "react-intl/locale-data/en";
-import * as nb from "react-intl/locale-data/nb";
 
 const { Provider, Consumer } = React.createContext({
   locale: "" as string,
@@ -26,10 +23,8 @@ class IntlProviderWrapper extends Component<{}, IntlProviderWrapperState> {
   settLocale = (localeString: string) => {
     let tekster;
     if (localeString === "en") {
-      addLocaleData(en);
       tekster = alleTekster.en;
     } else {
-      addLocaleData(nb);
       tekster = alleTekster.nb;
     }
     this.setState({ locale: localeString, tekster: tekster });

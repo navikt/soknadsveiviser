@@ -16,14 +16,12 @@ import withMenu from "./mock/decorator/decorator-header";
 import footer from "./mock/decorator/decorator-footer";
 import scripts from "./mock/decorator/decorator-scripts";
 import styles from "./mock/decorator/decorator-styles";
-import * as serviceWorker from "./service-worker";
 import { fetchConfig } from "./klienter/serverKlient";
 import { setConfig } from "./config";
 import Modal from "nav-frontend-modal";
 Modal.setAppElement(".app");
 
 const init = async () => {
-  serviceWorker.unregister();
   if (process.env.NODE_ENV === "development") {
     await import("./mock").then(({ setUpMock }) => setUpMock());
     document.body.innerHTML = document.body.innerHTML.replace(

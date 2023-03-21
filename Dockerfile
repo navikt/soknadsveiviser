@@ -1,4 +1,4 @@
-FROM node:14.17.0-alpine
+FROM node:18.12.1-alpine
 # RUN apk add --no-cache bash
 ENV NODE_ENV production
 

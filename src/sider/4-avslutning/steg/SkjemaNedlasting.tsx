@@ -1,6 +1,6 @@
 import * as React from "react";
 import StegOverskrift from "./Overskrift";
-import {injectIntl, InjectedIntlProps, FormattedHTMLMessage} from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import SkjemaVisning from "./SkjemaVisning";
 import { Skjema } from "../../../typer/skjemaogvedlegg";
 import AlertStripe from "nav-frontend-alertstriper";
@@ -13,7 +13,7 @@ interface Props {
 
 type MergedProps = Props & InjectedIntlProps;
 const SkjemaNedlasting = (props: MergedProps) => {
-  const { steg, skjemaSprak, hovedskjema } = props;
+  const { steg, skjemaSprak, hovedskjema, intl } = props;
   const { skjemanummer } = hovedskjema;
 
   return (
@@ -27,7 +27,9 @@ const SkjemaNedlasting = (props: MergedProps) => {
       <div className="steg__overskrift-beskrivelse">
         <AlertStripe type="advarsel" form="inline">
           <b>
-            <FormattedHTMLMessage id="avslutning.steg.nedlasting.skjema.obs" />
+            <span dangerouslySetInnerHTML={{__html: intl.formatMessage(
+              { id: 'avslutning.steg.nedlasting.skjema.obs' },
+              )} }/>
           </b>
         </AlertStripe><br />
       </div>

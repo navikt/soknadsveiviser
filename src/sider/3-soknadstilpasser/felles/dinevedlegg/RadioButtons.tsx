@@ -7,7 +7,7 @@ import { Radio } from "nav-frontend-skjema";
 
 interface Props {
   _key: string;
-  skalEttersendes: boolean;
+  skalEttersendes?: boolean;
 }
 
 interface ReduxProps {

@@ -2,7 +2,6 @@ require("dotenv").config();
 const jsdom = require("jsdom");
 const request = require("request-promise");
 const NodeCache = require("node-cache");
-const fs = require("file-system");
 const logger = require("./logger");
 const { JSDOM } = jsdom;
 

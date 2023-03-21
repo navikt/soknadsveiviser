@@ -1,12 +1,11 @@
 import * as React from "react";
 import Element from "nav-frontend-typografi/lib/element";
-import EtikettLiten from "nav-frontend-typografi/lib/etikett-liten";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, InjectedIntlProps, injectIntl } from "react-intl";
 import { localeTekst } from "utils/sprak";
-import { InjectedIntlProps, injectIntl } from "react-intl";
 import LocaleTekst from "komponenter/localetekst/LocaleTekst";
 import { hentPDFurl } from "./utils/pdf";
 import { Skjema } from "typer/skjemaogvedlegg";
+import { Undertekst } from "nav-frontend-typografi";
 
 interface Props {
   skjema: Skjema;
@@ -32,7 +31,7 @@ const Skjemavisning = (props: MergedProps) => {
           <Element>
             <LocaleTekst tekst={skjema.navn} />
           </Element>
-          <EtikettLiten>{skjema.skjemanummer}</EtikettLiten>
+          <Undertekst>{skjema.skjemanummer}</Undertekst>
         </div>
       )}
       <div className="skjema__knapp">

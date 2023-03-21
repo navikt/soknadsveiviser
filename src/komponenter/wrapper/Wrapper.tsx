@@ -12,7 +12,7 @@ import SprakVelger from "../header/sprak/SprakVelger";
 import { Brodsmulesti } from "../header/brodsmulesti/Brodsmulesti";
 
 interface Routes {
-  sprak: string;
+  sprak?: string;
 }
 
 interface Props {

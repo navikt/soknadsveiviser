@@ -1,7 +1,7 @@
 import * as React from "react";
 import Normaltekst from "nav-frontend-typografi/lib/normaltekst";
 import Undertittel from "nav-frontend-typografi/lib/undertittel";
-import { FormattedHTMLMessage, FormattedMessage } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 export interface Props {
   steg: number;
@@ -21,7 +21,7 @@ const Steg = (props: Props) => (
     {props.beskrivelse && (
       <div className="steg__overskrift-beskrivelse">
         <Normaltekst>
-          <FormattedHTMLMessage id={props.beskrivelse} />
+          <FormattedMessage id={props.beskrivelse} />
         </Normaltekst>
       </div>
     )}

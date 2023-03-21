@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Kategori } from "../../../../../typer/kategori";
-import EtikettLiten from "nav-frontend-typografi/lib/etikett-liten";
 import { FormattedMessage } from "react-intl";
 import { erKategoriValgt } from "../../../../../utils/kategorier";
 import VelgKategoriKnapp from "../knapper/VelgKategori";
+import { Undertekst } from "nav-frontend-typografi";
 
 interface Props {
   valgtKategori: Kategori;
@@ -21,9 +21,9 @@ const Desktop = (props: Props) => {
     <nav className="tabs desktop">
       <ul>
         <li className="element">
-          <EtikettLiten>
+          <Undertekst>
             <FormattedMessage id="kategori.velg" />
-          </EtikettLiten>
+          </Undertekst>
         </li>
         {aktiveKategorier.map((kategori, id) => {
           const { kantfarge } = valgtKategori;
