@@ -42,7 +42,7 @@ type MergedProps = Props &
 
 const { Provider, Consumer } = React.createContext<ValgtSoknad | null>(null);
 class MedValgtSoknadsobjekt extends Component<MergedProps> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const { hentSoknadsobjekt, valgtSoknad } = this.props;
     const { kategori, underkategori, skjemanummer } = this.props.match.params;
     valgtSoknad.status !== "RESULT" &&

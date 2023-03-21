@@ -38,7 +38,7 @@ class Ettersendelse extends Component<
   MergedProps,
   { tilDokumentinnsending: boolean }
 > {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const { valgtSoknadsobjekt} = this.props;
     const { innsendingsmate } = this.props.match.params;
 

@@ -30,7 +30,7 @@ class IntlProviderWrapper extends Component<{}, IntlProviderWrapperState> {
     this.setState({ locale: localeString, tekster: tekster });
   };
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const pathname = window.location.pathname;
     pathname.includes("/english/")
       ? this.settLocale("en")

@@ -23,7 +23,7 @@ interface Context {
 
 type MergedProps = RouteComponentProps<Routes> & Context;
 class App extends Component<MergedProps> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const { match, context } = this.props;
     const { sprak } = match.params;
     const { settLocale } = context;

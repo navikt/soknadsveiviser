@@ -42,7 +42,7 @@ interface ReduxProps {
 type MergedProps = Props & ReduxProps & RouteComponentProps<Routes> & InjectedIntlProps;
 
 class Soknadsobjekter extends Component<MergedProps> {
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const { kategori, underkategori } = this.props.match.params;
     this.props.hentSoknader(kategori, underkategori);
     loggEvent("soknadsveiviser.underkategori.navn", undefined, {
