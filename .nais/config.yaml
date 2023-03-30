@@ -23,6 +23,8 @@ spec:
         - application: soknadsveiviserproxy
         - application: nav-dekoratoren
           namespace: personbruker
+      external:
+        - host: dekoratoren.dev.nav.no
   liveness:
     path: /soknader/internal/isAlive
     initialDelay: 10
