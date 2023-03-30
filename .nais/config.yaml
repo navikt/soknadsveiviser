@@ -25,6 +25,7 @@ spec:
           namespace: personbruker
       external:
         - host: dekoratoren.dev.nav.no
+        - host: skjemabygging-proxy.dev-fss-pub.nais.io
   liveness:
     path: /soknader/internal/isAlive
     initialDelay: 10
