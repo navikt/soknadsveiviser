@@ -42,6 +42,7 @@ jobs:
           namespace: skjemadigitalisering
           ingresses:
             - https://www.intern.dev.nav.no/soknader
+            - https://soknadsveiviser.ekstern.dev.nav.no/soknader
             - https://soknadsveiviser.intern.dev.nav.no/soknader
             - https://soknadsveiviser-q0.intern.dev.nav.no/soknader
             - https://soknadsveiviser-q1.intern.dev.nav.no/soknader
