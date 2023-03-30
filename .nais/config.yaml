@@ -24,8 +24,9 @@ spec:
         - application: nav-dekoratoren
           namespace: personbruker
       external:
-        - host: dekoratoren.dev.nav.no
-        - host: skjemabygging-proxy.dev-fss-pub.nais.io
+        {{#each externalHosts as |url|}}
+          - host: {{url}}
+        {{/each}}
   liveness:
     path: /soknader/internal/isAlive
     initialDelay: 10

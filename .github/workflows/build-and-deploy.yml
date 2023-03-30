@@ -40,6 +40,9 @@ jobs:
         run: |
           cat > .nais/vars.yaml <<EOF
           namespace: skjemadigitalisering
+          externalHosts:
+            - dekoratoren.dev.nav.no
+            - skjemabygging-proxy.dev-fss-pub.nais.io
           ingresses:
             - https://www.intern.dev.nav.no/soknader
             - https://soknadsveiviser.ekstern.dev.nav.no/soknader
@@ -69,6 +72,9 @@ jobs:
         run: |
           cat > .nais/vars.yaml <<EOF
           namespace: skjemadigitalisering
+          externalHosts:
+            - nav.no
+            - skjemabygging-proxy.prod-fss-pub.nais.io
           ingresses:
             - https://www.nav.no/soknader
             - https://soknadsveiviser.intern.nav.no/soknader
