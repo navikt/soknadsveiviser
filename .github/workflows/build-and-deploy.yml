@@ -40,12 +40,15 @@ jobs:
         run: |
           cat > .nais/vars.yaml <<EOF
           namespace: skjemadigitalisering
+          externalHosts:
+            - dekoratoren.dev.nav.no
+            - skjemabygging-proxy.dev-fss-pub.nais.io
           ingresses:
-            - https://www.dev.nav.no/soknader
+            - https://www.intern.dev.nav.no/soknader
             - https://soknadsveiviser.ekstern.dev.nav.no/soknader
-            - https://soknadsveiviser.dev.nav.no/soknader
-            - https://soknadsveiviser-q0.dev.nav.no/soknader
-            - https://soknadsveiviser-q1.dev.nav.no/soknader
+            - https://soknadsveiviser.intern.dev.nav.no/soknader
+            - https://soknadsveiviser-q0.intern.dev.nav.no/soknader
+            - https://soknadsveiviser-q1.intern.dev.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
           decoratorurl: https://dekoratoren.dev.nav.no/
@@ -69,6 +72,9 @@ jobs:
         run: |
           cat > .nais/vars.yaml <<EOF
           namespace: skjemadigitalisering
+          externalHosts:
+            - nav.no
+            - skjemabygging-proxy.prod-fss-pub.nais.io
           ingresses:
             - https://www.nav.no/soknader
             - https://soknadsveiviser.intern.nav.no/soknader

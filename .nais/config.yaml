@@ -21,6 +21,12 @@ spec:
     outbound:
       rules:
         - application: soknadsveiviserproxy
+        - application: nav-dekoratoren
+          namespace: personbruker
+      external:
+        {{#each externalHosts as |url|}}
+          - host: {{url}}
+        {{/each}}
   liveness:
     path: /soknader/internal/isAlive
     initialDelay: 10
