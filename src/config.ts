@@ -29,7 +29,7 @@ export const getEttersendingUrl = (): string => {
   } else if (window.location.href.indexOf("soknadsveiviser-q1") !== -1) {
     return "https://www.intern.dev.nav.no/person/ettersende";
   } else {
-    return "https://www.nav.no/person/ettersende/";
+    return "https://www.nav.no/person/ettersende";
   }
 };
 
