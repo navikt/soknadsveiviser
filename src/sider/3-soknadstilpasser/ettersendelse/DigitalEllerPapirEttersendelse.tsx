@@ -9,7 +9,7 @@ import { localeTekst } from "../../../utils/sprak";
 import { finnesDigitalEttersendelse, finnesDokumentinnsending } from "../../../utils/soknadsobjekter";
 import { medValgtSoknadsobjekt } from "../../../states/providers/ValgtSoknadsobjekt";
 import { sideTittel } from "../../../utils/sprak";
-import { getTjenesteUrl } from "../../../config";
+import { getEttersendingUrl } from "../../../config";
 import { Redirect } from "react-router-dom";
 import { kanKlage } from "../../../utils/kanKlage";
 import Helmet from "react-helmet";
@@ -98,5 +98,5 @@ const hentDigitalEttersendelsesURL = (soknadsobjekt: Soknadsobjekt, locale: stri
     soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL &&
     soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL.nb
     ? localeTekst(soknadsobjekt.digitalinnsending.inngangtilsoknadsdialog.ettersendelse.ettersendelsesURL, locale)
-    : `${getTjenesteUrl()}/saksoversikt/ettersending`;
+    : getEttersendingUrl();
 };
