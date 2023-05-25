@@ -51,7 +51,7 @@ jobs:
             - https://soknadsveiviser-q1.intern.dev.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
-          decoratorurl: https://dekoratoren.dev.nav.no/
+          decoratorurl: https://dekoratoren.ekstern.dev.nav.no/
           skjemabygging-proxy-url: https://skjemabygging-proxy.dev-fss-pub.nais.io
           skjemabygging-proxy-client-id: 95170319-b4d7-4190-8271-118ed19bafbf
           EOF
