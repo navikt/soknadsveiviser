@@ -23,6 +23,16 @@ export const getTjenesteUrl = (): string => {
   }
 };
 
+export const getEttersendingUrl = (): string => {
+  if (window.location.href.indexOf("soknadsveiviser-q0") !== -1) {
+    return "https://www.intern.dev.nav.no/person/ettersending";
+  } else if (window.location.href.indexOf("soknadsveiviser-q1") !== -1) {
+    return "https://www.intern.dev.nav.no/person/ettersending";
+  } else {
+    return "https://www.nav.no/person/ettersende/";
+  }
+};
+
 export const getSendInnHost = (): string => {
   if (window.location.href.indexOf("soknadsveiviser-q0") !== -1) {
     return "https://www.dev.nav.no";
