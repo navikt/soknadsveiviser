@@ -1,0 +1,25 @@
+name: Deploy alerts
+run-name: Deploy alerts for Soknadsveiviser to prod
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".nais/alerts.yaml"
+      - ".nais/alert-vars.yaml"
+      - ".github/workflows/alert-deploy.yaml"
+jobs:
+  apply-alerts:
+    name: Apply alerts to cluster
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy to prod
+        uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: ".nais/alerts.yaml"
+          VARS: ".nais/alert-vars.yaml"
