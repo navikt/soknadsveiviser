@@ -16,6 +16,11 @@ const NotFound = (props: Props & InjectedIntlProps) => {
     storForsteBokstav(`${props.intl.formatMessage({ id: "notFound.tittel" })}`)
   );
 
+  if (props.intl.locale !== 'en') {
+    window.location.replace('https://www.nav.no/soknad');
+    return null;
+  }
+
   return (
     <div className="notFound__container" style={props.style}>
       <Helmet>
