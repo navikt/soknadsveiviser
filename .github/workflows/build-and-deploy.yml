@@ -47,6 +47,7 @@ jobs:
             - https://www.intern.dev.nav.no/soknader/en
             - https://www.intern.dev.nav.no/soknader/nb
             - https://www.intern.dev.nav.no/soknader/api
+            - https://www.intern.dev.nav.no/soknader/config
             - https://www.intern.dev.nav.no/soknader/static
             - https://www.intern.dev.nav.no/soknader/internal
             - https://soknadsveiviser.ekstern.dev.nav.no/soknader
@@ -83,6 +84,7 @@ jobs:
             - https://www.nav.no/soknader/en
             - https://www.nav.no/soknader/nb
             - https://www.nav.no/soknader/api
+            - https://www.nav.no/soknader/config
             - https://www.nav.no/soknader/static
             - https://www.nav.no/soknader/internal
             - https://soknadsveiviser.intern.nav.no/soknader
