@@ -1,3 +1,5 @@
+import { AllRoutes } from "./NySkjemaoversiktRedirects";
+
 type SkjemaoversiktType = keyof typeof skjemaoversikterProd;
 
 const skjemaoversikterProd = {
@@ -16,5 +18,27 @@ const skjemaoversikterDev: typeof skjemaoversikterProd = {
   samarbeidspartner: "https://www.nav.no/skjemaoversikt-test/samarbeidspartner",
 };
 
-export const getSkjemaoversiktUrl = (type: SkjemaoversiktType) =>
+const getSkjemaoversiktUrl = (type: SkjemaoversiktType) =>
   window.location.host.endsWith("dev.nav.no") ? skjemaoversikterDev[type] : skjemaoversikterProd[type];
+
+export const getApplicableSkjemaoversiktRedirect = (matchParams?: AllRoutes) => {
+  if (!matchParams) {
+    return getSkjemaoversiktUrl("personSkjema");
+  }
+
+  const { personEllerBedrift, inngang } = matchParams;
+
+  if (personEllerBedrift === "bedrift") {
+    return getSkjemaoversiktUrl("arbeidsgiver");
+  }
+
+  if (inngang === "klage") {
+    return getSkjemaoversiktUrl("personKlage");
+  }
+
+  if (inngang === "ettersendelse") {
+    return getSkjemaoversiktUrl("personEttersendelse");
+  }
+
+  return getSkjemaoversiktUrl("personSkjema");
+};
