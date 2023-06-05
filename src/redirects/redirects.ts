@@ -3,11 +3,11 @@ import { AllRoutes } from "./NySkjemaoversiktRedirects";
 type SkjemaoversiktType = keyof typeof skjemaoversikterProd;
 
 const skjemaoversikterProd = {
-  personSkjema: "https://www.nav.no/skjemaoversikt-test/privatperson",
-  personKlage: "https://www.nav.no/skjemaoversikt-test/privatperson-klage",
-  personEttersendelse: "https://www.nav.no/skjemaoversikt-test/privatperson-ettersendelse",
-  arbeidsgiver: "https://www.nav.no/skjemaoversikt-test/arbeidsgiver",
-  samarbeidspartner: "https://www.nav.no/skjemaoversikt-test/samarbeidspartner",
+  personSkjema: "https://www.nav.no/soknader",
+  personKlage: "https://www.nav.no/soknader/klage",
+  personEttersendelse: "https://www.nav.no/soknader/ettersendelse",
+  arbeidsgiver: "https://www.nav.no/soknader/arbeidsgiver",
+  samarbeidspartner: "https://www.nav.no/soknader/samarbeidspartner",
 };
 
 const skjemaoversikterDev: typeof skjemaoversikterProd = {
