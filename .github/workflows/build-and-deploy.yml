@@ -78,8 +78,7 @@ jobs:
             - skjemabygging-proxy.prod-fss-pub.nais.io
           ingresses:
             - https://www.nav.no/soknader/en
-            - https://www.nav.no/soknader/nb/person/(.+)
-            - https://www.nav.no/soknader/nb/bedrift/(.+)
+            - https://www.nav.no/soknader/nb
             - https://soknadsveiviser.intern.nav.no/soknader
           image: $IMAGE_REGISTRY/$IMAGE_NAME
           version: $IMAGE_VERSION
