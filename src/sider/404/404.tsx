@@ -24,7 +24,6 @@ class NotFound extends Component<Props> {
     if (intl.locale !== "en") {
       const redirectUrl = getApplicableSkjemaoversiktRedirect(match.params);
 
-      console.log(`Redirecting to ${redirectUrl}`);
       window.location.replace(redirectUrl);
 
       return <Spinner />;

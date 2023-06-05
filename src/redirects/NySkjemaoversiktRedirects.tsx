@@ -26,7 +26,6 @@ class NySkjemaoversiktRedirects extends Component<Props> {
     }
 
     const redirectUrl = getApplicableSkjemaoversiktRedirect(params);
-    console.log(`Redirecting to ${redirectUrl}`);
 
     window.location.replace(redirectUrl);
 
