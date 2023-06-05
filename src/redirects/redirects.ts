@@ -11,11 +11,11 @@ const skjemaoversikterProd = {
 };
 
 const skjemaoversikterDev: typeof skjemaoversikterProd = {
-  personSkjema: "https://www.nav.no/skjemaoversikt-test/privatperson",
-  personKlage: "https://www.nav.no/skjemaoversikt-test/privatperson-klage",
-  personEttersendelse: "https://www.nav.no/skjemaoversikt-test/privatperson-ettersendelse",
-  arbeidsgiver: "https://www.nav.no/skjemaoversikt-test/arbeidsgiver",
-  samarbeidspartner: "https://www.nav.no/skjemaoversikt-test/samarbeidspartner",
+  personSkjema: "https://www.intern.dev.nav.no/soknader",
+  personKlage: "https://www.intern.dev.nav.no/soknader/klage",
+  personEttersendelse: "https://www.intern.dev.nav.no/soknader/ettersendelse",
+  arbeidsgiver: "https://www.intern.dev.nav.no/soknader/arbeidsgiver",
+  samarbeidspartner: "https://www.intern.dev.nav.no/soknader/samarbeidspartner",
 };
 
 const getSkjemaoversiktUrl = (type: SkjemaoversiktType) =>
@@ -26,17 +26,19 @@ export const getApplicableSkjemaoversiktRedirect = (matchParams?: AllRoutes) => 
     return getSkjemaoversiktUrl("personSkjema");
   }
 
-  const { personEllerBedrift, inngang } = matchParams;
+  const { personEllerBedrift, inngang, skjemanummer } = matchParams;
 
   if (personEllerBedrift === "bedrift") {
     return getSkjemaoversiktUrl("arbeidsgiver");
   }
 
-  if (inngang === "klage") {
+  const skjemaType = skjemanummer && decodeURI(window.location.pathname).split(skjemanummer)[1]?.split("/")[1];
+
+  if (inngang === "klage" || skjemaType === "anke" || skjemaType === "klage" || skjemaType === "klage-eller-anke") {
     return getSkjemaoversiktUrl("personKlage");
   }
 
-  if (inngang === "ettersendelse") {
+  if (inngang === "ettersendelse" || skjemaType === "ettersendelse") {
     return getSkjemaoversiktUrl("personEttersendelse");
   }
 

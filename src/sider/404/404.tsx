@@ -9,6 +9,7 @@ import Helmet from "react-helmet";
 import { getApplicableSkjemaoversiktRedirect } from "../../redirects/redirects";
 import { RouteComponentProps, withRouter } from "react-router";
 import { AllRoutes } from "../../redirects/NySkjemaoversiktRedirects";
+import Spinner from "../../komponenter/spinner/Spinner";
 
 type Props = {
   style?: CSSProperties;
@@ -21,12 +22,12 @@ class NotFound extends Component<Props> {
     const { intl, match, style, message } = this.props;
 
     if (intl.locale !== "en") {
-      const redirectUrl = getApplicableSkjemaoversiktRedirect(match?.params);
+      const redirectUrl = getApplicableSkjemaoversiktRedirect(match.params);
 
       console.log(`Redirecting to ${redirectUrl}`);
-
       window.location.replace(redirectUrl);
-      return null;
+
+      return <Spinner />;
     }
 
     const title = sideTittel(storForsteBokstav(`${intl.formatMessage({ id: "notFound.tittel" })}`));

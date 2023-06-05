@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router";
 import { getApplicableSkjemaoversiktRedirect } from "./redirects";
+import Spinner from "../komponenter/spinner/Spinner";
 
 export type AllRoutes = Partial<{
   sprak: string;
@@ -18,7 +19,6 @@ type Props = {
 class NySkjemaoversiktRedirects extends Component<Props> {
   render() {
     const { params } = this.props.match;
-
     const { sprak, skjemanummer } = params;
 
     if (sprak === "en" || !!skjemanummer) {
@@ -30,7 +30,7 @@ class NySkjemaoversiktRedirects extends Component<Props> {
 
     window.location.replace(redirectUrl);
 
-    return null;
+    return <Spinner />;
   }
 }
 
