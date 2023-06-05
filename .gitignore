@@ -2,6 +2,6 @@
 .idea/
 build/
 node_modules/
-public/index.css
+/public/static/index.css
 cypress/videos/
 .env
