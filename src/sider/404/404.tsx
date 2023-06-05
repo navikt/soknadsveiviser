@@ -6,20 +6,19 @@ import errorIcon from "../../img/error.png";
 import { injectIntl, InjectedIntlProps } from "react-intl";
 import { sideTittel, storForsteBokstav } from "../../utils/sprak";
 import Helmet from "react-helmet";
+import { getSkjemaoversiktUrl } from "../../redirects/redirects";
 
 interface Props {
   style?: CSSProperties;
   message?: string;
 }
 const NotFound = (props: Props & InjectedIntlProps) => {
-  const title = sideTittel(
-    storForsteBokstav(`${props.intl.formatMessage({ id: "notFound.tittel" })}`)
-  );
-
-  if (props.intl.locale !== 'en') {
-    window.location.replace('https://www.nav.no/soknad');
+  if (props.intl.locale !== "en") {
+    window.location.replace(getSkjemaoversiktUrl("personSkjema"));
     return null;
   }
+
+  const title = sideTittel(storForsteBokstav(`${props.intl.formatMessage({ id: "notFound.tittel" })}`));
 
   return (
     <div className="notFound__container" style={props.style}>
