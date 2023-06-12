@@ -10,10 +10,10 @@ const skjemaoversikterProd = {
 };
 
 const skjemaoversikterDev: typeof skjemaoversikterProd = {
-  personSkjema: "https://www.intern.dev.nav.no/soknader",
-  personKlage: "https://www.intern.dev.nav.no/klage",
-  personEttersendelse: "https://www.intern.dev.nav.no/ettersende",
-  arbeidsgiver: "https://www.intern.dev.nav.no/arbeidsgiver/soknader",
+  personSkjema: "https://www.ekstern.dev.nav.no/soknader",
+  personKlage: "https://www.ekstern.dev.nav.no/klage",
+  personEttersendelse: "https://www.ekstern.dev.nav.no/ettersende",
+  arbeidsgiver: "https://www.ekstern.dev.nav.no/arbeidsgiver/soknader",
 };
 
 const getSkjemaoversiktUrl = (type: SkjemaoversiktType) =>
