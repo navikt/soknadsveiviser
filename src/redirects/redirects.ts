@@ -4,18 +4,16 @@ type SkjemaoversiktType = keyof typeof skjemaoversikterProd;
 
 const skjemaoversikterProd = {
   personSkjema: "https://www.nav.no/soknader",
-  personKlage: "https://www.nav.no/soknader/klage",
-  personEttersendelse: "https://www.nav.no/soknader/ettersendelse",
-  arbeidsgiver: "https://www.nav.no/soknader/arbeidsgiver",
-  samarbeidspartner: "https://www.nav.no/soknader/samarbeidspartner",
+  personKlage: "https://www.nav.no/klage",
+  personEttersendelse: "https://www.nav.no/ettersende",
+  arbeidsgiver: "https://www.nav.no/arbeidsgiver/soknader",
 };
 
 const skjemaoversikterDev: typeof skjemaoversikterProd = {
   personSkjema: "https://www.intern.dev.nav.no/soknader",
-  personKlage: "https://www.intern.dev.nav.no/soknader/klage",
-  personEttersendelse: "https://www.intern.dev.nav.no/soknader/ettersendelse",
-  arbeidsgiver: "https://www.intern.dev.nav.no/soknader/arbeidsgiver",
-  samarbeidspartner: "https://www.intern.dev.nav.no/soknader/samarbeidspartner",
+  personKlage: "https://www.intern.dev.nav.no/klage",
+  personEttersendelse: "https://www.intern.dev.nav.no/ettersende",
+  arbeidsgiver: "https://www.intern.dev.nav.no/arbeidsgiver/soknader",
 };
 
 const getSkjemaoversiktUrl = (type: SkjemaoversiktType) =>
