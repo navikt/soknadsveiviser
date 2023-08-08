@@ -1,6 +1,17 @@
 name: Manually triggered deployment
 run-name: Manual deploy to ${{ inputs.environment }} [${{ github.ref_name }}]
-on: push
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Environment to deploy"
+        required: true
+        default: "preprod"
+        type: choice
+        options:
+          - none
+          - preprod
+          - prod
 
 jobs:
   build-and-push:
