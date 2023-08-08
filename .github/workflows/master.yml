@@ -49,7 +49,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           RESOURCE: .nais/config.yaml
           VARS: .nais/prod-config.json
-          VAR: image=${{needs.build-and-push.outputs.image}}
+          VAR: image=${{ needs.build-and-push.outputs.image }}
 
   smoke-test-prod:
     runs-on: ubuntu-latest

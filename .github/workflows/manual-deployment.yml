@@ -57,7 +57,7 @@ jobs:
           CLUSTER: dev-gcp
           RESOURCE: .nais/config.yaml
           VARS: .nais/preprod-config.json
-          VAR: image=${{needs.build-and-push.outputs.image}}
+          VAR: image=${{ needs.build-and-push.outputs.image }}
 
   deploy-prod:
     name: Deploy to prod
@@ -73,4 +73,4 @@ jobs:
           CLUSTER: prod-gcp
           RESOURCE: .nais/config.yaml
           VARS: .nais/prod-config.json
-          VAR: image=${{needs.build-and-push.outputs.image}}
+          VAR: image=${{ needs.build-and-push.outputs.image }}
