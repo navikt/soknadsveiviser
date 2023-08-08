@@ -55,7 +55,7 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           DRY_RUN: false
           CLUSTER: dev-gcp
-          RESOURCE: .nais/nais.yml
+          RESOURCE: .nais/config.yaml
           VARS: .nais/preprod-config.json
           VAR: image=${{needs.build-and-push.outputs.image}}
 
@@ -71,6 +71,6 @@ jobs:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           DRY_RUN: false
           CLUSTER: prod-gcp
-          RESOURCE: .nais/nais.yml
+          RESOURCE: .nais/config.yaml
           VARS: .nais/prod-config.json
           VAR: image=${{needs.build-and-push.outputs.image}}
