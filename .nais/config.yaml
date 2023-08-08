@@ -3,15 +3,15 @@ apiVersion: nais.io/v1alpha1
 kind: Application
 metadata:
   name: soknadsveiviser
-  namespace: {{namespace}}
+  namespace: {{NAMESPACE}}
   labels:
-    team: skjemadigitalisering
+    team: {{NAMESPACE}}
 spec:
-  image: {{image}}:{{version}}
-  team: skjemadigitalisering
+  image: {{image}}
+  team: {{NAMESPACE}}
   port: 8080
   ingresses:
-  {{#each ingresses as |url|}}
+  {{#each INGRESSES as |url|}}
      - {{url}}
   {{/each}}
   azure:
@@ -24,7 +24,7 @@ spec:
         - application: nav-dekoratoren
           namespace: personbruker
       external:
-        {{#each externalHosts as |url|}}
+        {{#each EXTERNAL_HOSTS as |url|}}
           - host: {{url}}
         {{/each}}
   liveness:
@@ -48,10 +48,10 @@ spec:
       memory: 512Mi
   env:
     - name: DECORATOR_URL
-      value: {{decoratorurl}}
+      value: {{DECORATOR_URL}}
     - name: SKJEMABYGGING_PROXY_URL
-      value: {{skjemabygging-proxy-url}}
+      value: {{SKJEMABYGGING_PROXY_URL}}
     - name: SKJEMABYGGING_PROXY_CLIENT_ID
-      value: {{skjemabygging-proxy-client-id}}
+      value: {{SKJEMABYGGING_PROXY_CLIENT_ID}}
   envFrom:
     - secret: soknadsveiviser
