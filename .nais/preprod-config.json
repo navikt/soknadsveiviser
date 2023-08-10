@@ -1,0 +1,20 @@
+{
+  "NAMESPACE": "skjemadigitalisering",
+  "EXTERNAL_HOSTS": ["dekoratoren.ekstern.dev.nav.no", "skjemabygging-proxy.dev-fss-pub.nais.io"],
+  "INGRESSES": [
+    "https://www.intern.dev.nav.no/soknader/en",
+    "https://www.intern.dev.nav.no/soknader/nb",
+    "https://www.intern.dev.nav.no/soknader/nn",
+    "https://www.intern.dev.nav.no/soknader/api",
+    "https://www.intern.dev.nav.no/soknader/config",
+    "https://www.intern.dev.nav.no/soknader/static",
+    "https://www.intern.dev.nav.no/soknader/internal",
+    "https://soknadsveiviser.ekstern.dev.nav.no/soknader",
+    "https://soknadsveiviser.intern.dev.nav.no/soknader",
+    "https://soknadsveiviser-q0.intern.dev.nav.no/soknader",
+    "https://soknadsveiviser-q1.intern.dev.nav.no/soknader"
+  ],
+  "DECORATOR_URL": "https://dekoratoren.ekstern.dev.nav.no/",
+  "SKJEMABYGGING_PROXY_URL": "https://skjemabygging-proxy.dev-fss-pub.nais.io",
+  "SKJEMABYGGING_PROXY_CLIENT_ID": "95170319-b4d7-4190-8271-118ed19bafbf"
+}

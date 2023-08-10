@@ -1,0 +1,17 @@
+{
+  "NAMESPACE": "skjemadigitalisering",
+  "EXTERNAL_HOSTS": ["www.nav.no", "skjemabygging-proxy.prod-fss-pub.nais.io"],
+  "INGRESSES": [
+    "https://www.nav.no/soknader/en",
+    "https://www.nav.no/soknader/nb",
+    "https://www.nav.no/soknader/nn",
+    "https://www.nav.no/soknader/api",
+    "https://www.nav.no/soknader/config",
+    "https://www.nav.no/soknader/static",
+    "https://www.nav.no/soknader/internal",
+    "https://soknadsveiviser.intern.nav.no/soknader"
+  ],
+  "DECORATOR_URL": "https://www.nav.no/dekoratoren/",
+  "SKJEMABYGGING_PROXY_URL": "https://skjemabygging-proxy.prod-fss-pub.nais.io",
+  "SKJEMABYGGING_PROXY_CLIENT_ID": "031863f2-9881-44af-ace5-6b5ab52afeb1"
+}
