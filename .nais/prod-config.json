@@ -9,6 +9,7 @@
     "https://www.nav.no/soknader/config",
     "https://www.nav.no/soknader/static",
     "https://www.nav.no/soknader/internal",
+    "https://www.nav.no/soknader/internal/health",
     "https://soknadsveiviser.intern.nav.no/soknader"
   ],
   "DECORATOR_URL": "https://www.nav.no/dekoratoren/",
