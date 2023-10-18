@@ -153,7 +153,7 @@ server.get(basePath("/internal/isAlive|isReady"), (req, res) =>
   res.sendStatus(200)
 );
 
-server.get(basePath("/health/status"), (req, res) => {
+server.get(basePath("/api/health/status"), (req, res) => {
   const response = { status: "OK", description: "OK" };
   res.status(200).json(response);
 });
