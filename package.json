@@ -88,7 +88,7 @@
     "@testing-library/react": "12.1.5",
     "@types/classnames": "^2.3.1",
     "@types/fetch-mock": "^7.3.5",
-    "@types/file-saver": "^2.0.5",
+    "@types/file-saver": "^2.0.6",
     "@types/jest": "^29.4.0",
     "@types/node": "^20.8.2",
     "@types/react": "^17.0.53",
