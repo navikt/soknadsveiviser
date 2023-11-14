@@ -44,11 +44,9 @@ class App extends Component<MergedProps> {
   }
 
   render() {
-    const { path, params } = this.props.match;
-    const { sprak } = params;
+    const { path } = this.props.match;
     return (
       <Switch>
-        <Redirect exact from={`/soknader/${sprak}`} to={`/soknader/${sprak}/person`} />
         <Redirect
           exact
           from={`${path}/:inngang(ettersendelse|klage)`}

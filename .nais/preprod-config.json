@@ -2,9 +2,9 @@
   "NAMESPACE": "skjemadigitalisering",
   "EXTERNAL_HOSTS": ["dekoratoren.ekstern.dev.nav.no", "skjemabygging-proxy.dev-fss-pub.nais.io"],
   "INGRESSES": [
-    "https://www.intern.dev.nav.no/soknader/en",
+    "https://www.intern.dev.nav.no/soknader/en/(.+)",
     "https://www.intern.dev.nav.no/soknader/nb",
-    "https://www.intern.dev.nav.no/soknader/nn",
+    "https://www.intern.dev.nav.no/soknader/nn/(.+)",
     "https://www.intern.dev.nav.no/soknader/api",
     "https://www.intern.dev.nav.no/soknader/config",
     "https://www.intern.dev.nav.no/soknader/static",

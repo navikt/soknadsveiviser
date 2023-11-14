@@ -19,9 +19,9 @@ type Props = {
 class NySkjemaoversiktRedirects extends Component<Props> {
   render() {
     const { params } = this.props.match;
-    const { sprak, skjemanummer } = params;
+    const { skjemanummer } = params;
 
-    if (sprak === "en" || !!skjemanummer) {
+    if (!!skjemanummer) {
       return this.props.children;
     }
 
