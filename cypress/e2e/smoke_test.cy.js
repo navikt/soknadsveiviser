@@ -1,6 +1,6 @@
 describe("Smoke Test", function () {
   it("verifies content from sanity is present", function () {
-    cy.visit("https://www.nav.no/soknader/en/person/arbeid/Meldekort");
+    cy.visit("https://www.nav.no/soknader/en/person/arbeid/Meldekort/NAV%2000-10.01/brev");
     cy.contains("Meldekort");
   });
 
