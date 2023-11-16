@@ -9,7 +9,7 @@ import { createBrowserHistory } from "history";
 import hashLinkScroll from "./utils/hashScroll";
 import MedKategorier from "./states/providers/Kategorier";
 import { IntlProviderWrapperContextType, IntlProviderWrapperHOC } from "./sprak/IntlProviderWrapper";
-import NySkjemaoversiktRedirects from "./redirects/NySkjemaoversiktRedirects";
+import MedSkjemaoversiktRedirects from "./redirects/MedSkjemaoversiktRedirects";
 
 interface Routes {
   sprak: string;
@@ -44,11 +44,9 @@ class App extends Component<MergedProps> {
   }
 
   render() {
-    const { path, params } = this.props.match;
-    const { sprak } = params;
+    const { path } = this.props.match;
     return (
       <Switch>
-        <Redirect exact from={`/soknader/${sprak}`} to={`/soknader/${sprak}/person`} />
         <Redirect
           exact
           from={`${path}/:inngang(ettersendelse|klage)`}
@@ -57,7 +55,7 @@ class App extends Component<MergedProps> {
         <Route
           path={`${path}/:inngang(ettersendelse|klage)?/:personEllerBedrift(person|bedrift)/:kategori?/:underkategori?/:skjemanummer?`}
         >
-          <NySkjemaoversiktRedirects>
+          <MedSkjemaoversiktRedirects>
             <MedKategorier>
               <Route
                 exact
@@ -74,7 +72,7 @@ class App extends Component<MergedProps> {
                 component={Soknadstilpasser}
               />
             </MedKategorier>
-          </NySkjemaoversiktRedirects>
+          </MedSkjemaoversiktRedirects>
         </Route>
         <Route component={NotFound} />
       </Switch>

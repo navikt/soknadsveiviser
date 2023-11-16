@@ -1,4 +1,4 @@
-import { AllRoutes } from "./NySkjemaoversiktRedirects";
+import { AllRoutes } from "./MedSkjemaoversiktRedirects";
 
 type SkjemaoversiktType = keyof typeof skjemaoversikterProd;
 
@@ -16,29 +16,37 @@ const skjemaoversikterDev: typeof skjemaoversikterProd = {
   arbeidsgiver: "https://www.ekstern.dev.nav.no/arbeidsgiver/soknader",
 };
 
-const getSkjemaoversiktUrl = (type: SkjemaoversiktType) =>
-  window.location.host.endsWith("dev.nav.no") ? skjemaoversikterDev[type] : skjemaoversikterProd[type];
+const urlsForSprak = (sprak?: string) => {
+  const urls = window.location.host.endsWith("dev.nav.no") ? skjemaoversikterDev : skjemaoversikterProd;
+
+  return (type: SkjemaoversiktType) => {
+    const baseUrl = urls[type];
+    return sprak === "en" ? `${baseUrl}/en` : baseUrl;
+  };
+};
 
 export const getApplicableSkjemaoversiktRedirect = (matchParams?: AllRoutes) => {
+  const getUrlForType = urlsForSprak(matchParams?.sprak);
+
   if (!matchParams) {
-    return getSkjemaoversiktUrl("personSkjema");
+    return getUrlForType("personSkjema");
   }
 
   const { personEllerBedrift, inngang, skjemanummer } = matchParams;
 
   if (personEllerBedrift === "bedrift") {
-    return getSkjemaoversiktUrl("arbeidsgiver");
+    return getUrlForType("arbeidsgiver");
   }
 
   const skjemaType = skjemanummer && decodeURI(window.location.pathname).split(skjemanummer)[1]?.split("/")[1];
 
   if (inngang === "klage" || skjemaType === "anke" || skjemaType === "klage" || skjemaType === "klage-eller-anke") {
-    return getSkjemaoversiktUrl("personKlage");
+    return getUrlForType("personKlage");
   }
 
   if (inngang === "ettersendelse" || skjemaType === "ettersendelse") {
-    return getSkjemaoversiktUrl("personEttersendelse");
+    return getUrlForType("personEttersendelse");
   }
 
-  return getSkjemaoversiktUrl("personSkjema");
+  return getUrlForType("personSkjema");
 };
