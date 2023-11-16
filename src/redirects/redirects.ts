@@ -1,4 +1,4 @@
-import { AllRoutes } from "./NySkjemaoversiktRedirects";
+import { AllRoutes } from "./MedSkjemaoversiktRedirects";
 
 type SkjemaoversiktType = keyof typeof skjemaoversikterProd;
 

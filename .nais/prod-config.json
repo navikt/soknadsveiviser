@@ -3,7 +3,7 @@
   "EXTERNAL_HOSTS": ["www.nav.no", "skjemabygging-proxy.prod-fss-pub.nais.io"],
   "INGRESSES": [
     "https://www.nav.no/soknader/en/(.+)",
-    "https://www.nav.no/soknader/nb",
+    "https://www.nav.no/soknader/nb/(.+)",
     "https://www.nav.no/soknader/nn/(.+)",
     "https://www.nav.no/soknader/api",
     "https://www.nav.no/soknader/config",
