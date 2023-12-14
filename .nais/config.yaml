@@ -8,7 +8,6 @@ metadata:
     team: {{NAMESPACE}}
 spec:
   image: {{image}}
-  team: {{NAMESPACE}}
   port: 8080
   ingresses:
   {{#each INGRESSES as |url|}}
