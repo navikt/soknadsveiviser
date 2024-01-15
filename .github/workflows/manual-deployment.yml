@@ -46,11 +46,12 @@ jobs:
     if: github.event.inputs.environment == 'preprod'
     needs: build-and-push
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v3
-      - uses: nais/deploy/actions/deploy@v1
+      - uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           DRY_RUN: false
           CLUSTER: dev-gcp
           RESOURCE: .nais/config.yaml
@@ -62,11 +63,12 @@ jobs:
     if: github.event.inputs.environment == 'prod'
     needs: build-and-push
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write
     steps:
       - uses: actions/checkout@v3
-      - uses: nais/deploy/actions/deploy@v1
+      - uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           DRY_RUN: false
           CLUSTER: prod-gcp
           RESOURCE: .nais/config.yaml
