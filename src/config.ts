@@ -35,11 +35,11 @@ export const getEttersendingUrl = (): string => {
 
 export const getSendInnHost = (): string => {
   if (window.location.href.indexOf("soknadsveiviser-q0") !== -1) {
-    return "https://www.dev.nav.no";
+    return "https://www.intern.dev.nav.no";
   } else if (window.location.href.indexOf("soknadsveiviser-q1") !== -1) {
-    return "https://www.dev.nav.no";
-  } else if (window.location.href.indexOf("www.dev.nav.no") !== -1) {
-    return "https://www.dev.nav.no";
+    return "https://www.intern.dev.nav.no";
+  } else if (window.location.href.indexOf("www.intern.dev.nav.no") !== -1) {
+    return "https://www.intern.dev.nav.no";
   } else {
     return "https://www.nav.no";
   }
