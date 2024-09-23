@@ -40,11 +40,11 @@ const {
 
 server.use(basePath("/"), express.static(buildPath, {index: false}));
 
-server.get(basePath("/api/enheter"), azureAccessTokenHandler, (req, res, next) => {
+server.get(basePath("/api/enheter"), (req, res, next) => {
   const { enhetstyper } = req.query;
   const typer = enhetstyper ? enhetstyper.split(",") : undefined;
   norg2Service
-    .getEnheter(req.getAzureAccessToken(), typer)
+    .getEnheter(typer)
     .then(enheter => {
       res.contentType("application/json");
       res.send(enheter);
