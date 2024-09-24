@@ -2,7 +2,7 @@ FROM node:20-alpine
 # RUN apk add --no-cache bash
 ENV NODE_ENV=production
 
-WORKDIR usr/src/app
+WORKDIR /usr/src/app
 COPY server server/
 COPY build build/
 
