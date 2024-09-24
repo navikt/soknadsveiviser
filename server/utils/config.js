@@ -2,6 +2,7 @@ function getConfig() {
   return {
     skjemabyggingProxyClientId: process.env.SKJEMABYGGING_PROXY_CLIENT_ID,
     skjemabyggingProxyUrl: process.env.SKJEMABYGGING_PROXY_URL,
+    norg2Url: process.env.NORG2_URL,
     clientId: process.env.AZURE_APP_CLIENT_ID,
     clientSecret: process.env.AZURE_APP_CLIENT_SECRET,
     azureOpenidTokenEndpoint: process.env.AZURE_OPENID_CONFIG_TOKEN_ENDPOINT,

@@ -21,15 +21,13 @@ spec:
     application:
       enabled: true
   accessPolicy:
-    inbound:
-      rules:
-        - application: statuspoll
-          namespace: navdig
     outbound:
       rules:
         - application: soknadsveiviserproxy
         - application: nav-dekoratoren
           namespace: personbruker
+        - application: norg2
+          namespace: org
       external:
         {{#each EXTERNAL_HOSTS as |url|}}
           - host: {{url}}
@@ -60,5 +58,7 @@ spec:
       value: {{SKJEMABYGGING_PROXY_URL}}
     - name: SKJEMABYGGING_PROXY_CLIENT_ID
       value: {{SKJEMABYGGING_PROXY_CLIENT_ID}}
+    - name: NORG2_URL
+      value: "http://norg2.org"
   envFrom:
     - secret: soknadsveiviser
