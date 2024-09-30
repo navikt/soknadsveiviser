@@ -24,7 +24,7 @@ export default {
   "avslutning.steg.lastned.knapp.download": `Downloading`,
   "avslutning.steg.forsteside.tittel": `Download the cover sheet for your application`,
   "avslutning.steg.forsteside.pdf.tittel": `Cover sheet`,
-  "avslutning.steg.forsteside.beskrivelse": `The cover sheet contains important information about the <b>NAV unit</b> that will receive the documents. It also contains the address to which the documents should be sent.`,
+  "avslutning.steg.forsteside.beskrivelse": `The cover sheet contains important information about the NAV unit that will receive the documents. It also contains the address to which the documents should be sent.`,
   "avslutning.steg.forsteside.nedlastingsfeil": `Something went wrong. Make sure you have entered the correct Norwegian national identity number / D-number and try again.`,
   "avslutning.steg.nedlasting.skjema.tittel": `Download the application form {skjemanummer}`,
   "avslutning.steg.nedlasting.skjema.beskrivelse": `The application form must be filled out and signed.`,
