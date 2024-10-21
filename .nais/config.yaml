@@ -52,8 +52,6 @@ spec:
       cpu: 200m
       memory: 512Mi
   env:
-    - name: DECORATOR_URL
-      value: {{DECORATOR_URL}}
     - name: SKJEMABYGGING_PROXY_URL
       value: {{SKJEMABYGGING_PROXY_URL}}
     - name: SKJEMABYGGING_PROXY_CLIENT_ID

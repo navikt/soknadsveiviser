@@ -136,16 +136,15 @@ server.post(basePath("/api/logger/:level"), (req, res) => {
   res.sendStatus(201);
 });
 
-server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, (req, res) => {
-  getDecorator()
-    .then(fragments => {
-      res.render("index.html", fragments);
-    })
-    .catch(e => {
-      const error = `Failed to get decorator: ${e}`;
-      logger.error(error);
-      res.status(500).send(error);
-    });
+server.use(/\/(soknader)\/*(?:(?!static|internal).)*$/, async (req, res) => {
+  try {
+    const fragments = await getDecorator();
+    res.render("index.html", fragments);
+  } catch (e) {
+    const error = `Failed to get decorator: ${e}`;
+    logger.error(error);
+    res.status(500).send(error);
+  }
 });
 
 // Nais functions

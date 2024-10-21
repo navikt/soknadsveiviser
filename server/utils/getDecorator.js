@@ -1,9 +1,7 @@
 require("dotenv").config();
-const jsdom = require("jsdom");
-const request = require("request-promise");
+const { fetchDecoratorHtml } = require("@navikt/nav-dekoratoren-moduler/ssr");
 const NodeCache = require("node-cache");
 const logger = require("./logger");
-const { JSDOM } = jsdom;
 
 const SECONDS_PER_MINUTE = 60;
 const SECONDS_PER_HOUR = SECONDS_PER_MINUTE * 60;
@@ -14,34 +12,33 @@ const cache = new NodeCache({
     checkperiod: SECONDS_PER_MINUTE
 });
 
+const naisClusterName = process.env.NAIS_CLUSTER_NAME;
 
-const dekoratorURL = process.env.DECORATOR_URL;
-
-
-const getDecorator = () =>
-    new Promise((resolve, reject) => {
-        const decorator = cache.get("dekorator");
-        if (decorator) {
-            resolve(decorator);
-        } else {
-            request(dekoratorURL, (error, response, body) => {
-                if (!error && response.statusCode >= 200 && response.statusCode < 400) {
-                    const { document } = new JSDOM(body).window;
-                    const prop = "innerHTML";
-                    const data = {
-                        NAV_SCRIPTS: document.getElementById("scripts")[prop],
-                        NAV_STYLES: document.getElementById("styles")[prop],
-                        NAV_HEADING: document.getElementById("header-withmenu")[prop],
-                        NAV_FOOTER: document.getElementById("footer-withmenu")[prop]
-                    };
-                    cache.set("dekorator", data);
-                    logger.info(`Creating cache for decorator`);
-                    resolve(data);
-                } else {
-                    reject(logger.error(`${error.message} ${dekoratorURL}`));
-                }
-            });
-        }
-    });
+const getDecorator = () => {
+  const decoratorFragments = cache.get("dekorator");
+  if (decoratorFragments) {
+    logger.info("Returning decorator from cache")
+    return Promise.resolve(decoratorFragments)
+  }
+  logger.info("Fetching decorator...")
+  return fetchDecoratorHtml({
+    env: naisClusterName === "prod-gcp" ? "prod" : "dev",
+    params: {
+      level: 'Level4',
+      logoutWarning: true,
+    }
+  })
+    .then(fragments => {
+      const data = {
+        NAV_SCRIPTS: fragments.DECORATOR_SCRIPTS,
+        NAV_STYLES: fragments.DECORATOR_HEAD_ASSETS,
+        NAV_HEADING: fragments.DECORATOR_HEADER,
+        NAV_FOOTER: fragments.DECORATOR_FOOTER,
+      }
+      cache.set("dekorator", data);
+      logger.info("Decorator fetched and cached")
+      return data;
+    })
+}
 
 module.exports = getDecorator;

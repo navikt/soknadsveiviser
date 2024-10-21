@@ -12,7 +12,6 @@
     "https://www.nav.no/soknader/internal/health",
     "https://soknadsveiviser.intern.nav.no/soknader"
   ],
-  "DECORATOR_URL": "https://www.nav.no/dekoratoren/",
   "SKJEMABYGGING_PROXY_URL": "https://skjemabygging-proxy.prod-fss-pub.nais.io",
   "SKJEMABYGGING_PROXY_CLIENT_ID": "031863f2-9881-44af-ace5-6b5ab52afeb1"
 }
