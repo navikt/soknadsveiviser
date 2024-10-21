@@ -26,13 +26,12 @@ const getDecorator = () => {
     params: {
       level: 'Level4',
       logoutWarning: true,
-      urlLookupTable: false,
     }
   })
     .then(fragments => {
       const data = {
         NAV_SCRIPTS: fragments.DECORATOR_SCRIPTS,
-        NAV_STYLES: fragments.DECORATOR_STYLES,
+        NAV_STYLES: fragments.DECORATOR_HEAD_ASSETS,
         NAV_HEADING: fragments.DECORATOR_HEADER,
         NAV_FOOTER: fragments.DECORATOR_FOOTER,
       }

@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@elastic/ecs-morgan-format": "^1.1.0",
-    "@navikt/nav-dekoratoren-moduler": "^2.1.6",
+    "@navikt/nav-dekoratoren-moduler": "^3.1.1",
     "dotenv": "^16.0.3",
     "express": "^4.21.0",
     "express-correlation-id": "^2.0.1",
