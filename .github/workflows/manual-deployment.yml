@@ -26,10 +26,18 @@ jobs:
         with:
           node-version: 20
           cache: "npm"
+          registry-url: "https://npm.pkg.github.com"
       - name: Install dependencies
         run: npm ci
-      - name: Build
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
+      - name: Build frontend application
         run: npm run build
+      - name: Build server
+        working-directory: ./server
+        run: npm ci
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.READER_TOKEN }}
       - name: Build and push Docker image
         uses: nais/docker-build-push@v0
         id: docker-build-push
