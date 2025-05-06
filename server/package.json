@@ -11,7 +11,7 @@
     "@elastic/ecs-morgan-format": "^1.1.0",
     "@navikt/nav-dekoratoren-moduler": "^3.1.1",
     "dotenv": "^16.0.3",
-    "express": "^4.21.1",
+    "express": "^4.21.2",
     "express-correlation-id": "^2.0.1",
     "http-proxy-middleware": "^2.0.6",
     "jsdom": "^21.1.0",
