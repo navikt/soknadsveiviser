@@ -60,4 +60,4 @@ Spørsmål knyttet til koden eller prosjektet kan rettes som issues.
 
 ## For NAV-ansatte
 
-Interne henvendelser kan sendes via Slack i kanalen #team-skjemadigitalisering
+Interne henvendelser kan sendes via Slack i kanalen [#team-fyllut-sendinn](https://nav-it.slack.com/messages/team-fyllut-sendinn/).
