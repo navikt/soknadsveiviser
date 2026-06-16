@@ -7,6 +7,7 @@ const fetch = require("node-fetch");
 const mustacheExpress = require("mustache-express");
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const correlator = require("express-correlation-id");
+const fnrValidator = require("@navikt/fnrvalidator");
 const getDecorator = require("./utils/getDecorator");
 const { getConfig } = require("./utils/config");
 const basePath = require("./utils/basePath");
@@ -97,6 +98,12 @@ server.get(/\/\bsoknader\b\/\w+\/\bnedlasting\b\//, (req, res) => {
 );
 
 server.post(basePath("/api/forsteside"), azureAccessTokenHandler, (req, res, next) => {
+  // valider body
+  const fnr = req.body.bruker?.brukerId;
+  if (fnr && fnrValidator.idnr(fnr).status === "invalid") {
+    res.status(400);
+    return;
+  }
   const foerstesideData = JSON.stringify(req.body);
   fetch(`${skjemabyggingProxyUrl}/foersteside`, {
     method: "POST",
